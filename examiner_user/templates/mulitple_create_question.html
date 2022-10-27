@@ -1,0 +1,72 @@
+{% extends "examiner_base.html" %}
+
+{% block content %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+  {{ m }}
+</div>
+{% endfor %}
+Stwórz nowe pytanie do kursu {{course.name}}
+<br>
+Aktualna ilość pytań: {{course.question|length}}
+<form method="POST" action="">
+  {% csrf_token %}
+  <p>
+    Treść pytania:
+    <br>
+    {{ form.text}}
+  </p>
+  <div id="id_correct_answers">
+    <p>
+      <div class="form-check form-check">
+        <input class="form-check-input" type="checkbox" name="che1" id="Checkbox1" value="1">
+      </div>
+      &nbsp&nbsp&nbsp&nbspOdpowiedź nr. 1
+      {{ form.answer1 }}
+    </p>
+    <p>
+      <div class="form-check form-check">
+        <input class="form-check-input" type="checkbox" name="che2" id="Checkbox1" value="2">
+      </div>
+      &nbsp&nbsp&nbsp&nbspOdpowiedź nr. 2
+      {{ form.answer2 }}
+    </p>
+    <p>
+      <div class="form-check form-check">
+        <input class="form-check-input" type="checkbox" name="che3" id="Checkbox1" value="3">
+      </div>
+      &nbsp&nbsp&nbsp&nbspOdpowiedź nr. 3
+      {{ form.answer3 }}
+    </p>
+    <p>
+      <div class="form-check form-check">
+        <input class="form-check-input" type="checkbox" name="che4" id="Checkbox1" value="4">
+      </div>
+      &nbsp&nbsp&nbsp&nbspOdpowiedź nr. 4
+      {{ form.answer4 }}
+    </p>
+    <p>
+      <div class="form-check form-check">
+        <input class="form-check-input" type="checkbox" name="che5" id="Checkbox1" value="5">
+      </div>
+      &nbsp&nbsp&nbsp&nbspOdpowiedź nr. 5
+      {{ form.answer5 }}
+    </p>
+    {{ form.course.as_hidden }}
+  </div>
+  <button class="btn btn-success" type="submit" id="submit">Dodaj</button>
+</form>
+<a href="{% url 'examiner_user:search-question' pk=course.pk slug=course.name|slugify %}">
+  <button class="btn btn-success mt-1" id="back">
+    Lista pytań
+  </button>
+</a>
+<br>
+<p>
+    Intstrukcja:
+<br>
+  Pytanie musi posiadać od 2 do 5 odpowiedzi. Jeżeli pole tekstowe odpowiadające odpowiedźi zostanie pozostawione puste odpowiedź nie
+  będzie uwzględniona na teście. Należy zaznaczyć która odpowiedź jest prawidłowa poprzez zaznaczenie pola (lub pól w przypadku testów
+  wielokrotnego wyboru) znajdującego się przy polu tekstowym z odpowiedzią.
+</p>
+{% endblock %}

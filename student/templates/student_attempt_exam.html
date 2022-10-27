@@ -1,0 +1,63 @@
+{% extends "student_base.html" %}
+
+{% block content %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+    {{ m }}
+</div>
+{% endfor %}
+<br>
+{% if 0 >= remaining_attempts %}
+    {% if total_attempts == 1 %}
+        <div class="text-center" id="no_attempt">
+            <p>
+                Przykro nam ale podjąłeś już próbę pisania tego testu
+            </p>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <p>
+                Przykro nam ale wszystkie {{total_attempts}} próby pisania testu zostały wykorzystane
+            </p>
+        </div>
+    {% endif %}
+{% else %}
+    <div class="text-center" id="course_name">
+        <h3>{{course.name}}</h3>
+    </div>
+    <div class="text-center">
+        <p>
+            Pozostało ci {{remaining_attempts}} z {{total_attempts}} podejść
+        </p>
+    </div>
+    <br>
+    <div class="text-center">
+        <p>
+            Test składa się z {{course.question_amount}} pytań, by zaliczyć należy udzielić {{course.passing_score}} prawidłowych
+            odpowiedzi. Jest to test {% if course.multiple_answer_questions %}wielokrotnego{% else %}jednokrotnego{% endif %} wyboru.
+            <br>
+            Na rozwiązanie testu masz {{course.time}} minut.
+        </p>
+    </div>
+    <div class="text-center">
+        <p>
+            Czy jesteś pewien że chcesz podejść do testu?
+        </p>
+    </div>
+    <form method="POST" action="{% url 'student:student-pass-exam' pk=course.pk %}">
+        {% csrf_token %}
+        <div class="text-center">
+            <button type="submit" class="btn btn-success mt-1 mb-3 pr-5 pl-5" id="submit">
+                Tak
+            </button>
+        </div>
+    </form>
+    <div class="text-center">
+        <a href="{% url 'student:student-detail-course' pk=course.pk slug=course.name|slugify %}">
+            <button class="btn btn-success mb-5 pr-5 pl-5">
+                Nie
+            </button>
+        </a>
+    </div>
+{% endif %}
+{% endblock %}

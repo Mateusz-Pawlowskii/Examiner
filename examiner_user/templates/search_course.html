@@ -1,0 +1,72 @@
+{% extends "examiner_base.html" %}
+
+{% block content %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+  {{ m }}
+</div>
+{% endfor %}
+<h4>Kursy</h4>
+<a href="{% url 'examiner_user:create-course' %}" id="add">
+  <button class="btn btn-success mb-2">
+    Dodaj
+  </button>
+</a>
+<h4>Szukaj kursów</h4>
+<select id="select">
+  <option id="search1">Szukaj po nazwie</option>
+  <option id="search2">Szukaj po kategorii</option>
+</select>
+  <div id="form1">
+    {{ form.as_p }}
+  </div>
+  <div id="form2" style="display: none;">
+  <br>
+  <select id="id_category">
+    {% for category in categories %}
+    <option id="{{category}}">{{category}}</option>
+    {% endfor %}
+  </select>
+</div>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col" onclick="sortColumn('name')">Nazwa</th>
+      <th scope="col" onclick="sortColumn('category')">Kategoria</th>
+      <th scope="col" onclick="sortColumn('time')">Czas trwania testu</th>
+      <th scope="col" onclick="sortColumn('question_amount')">Ilość pytań</th>
+      <th scope="col" onclick="sortColumn('lesson_amount')">Ilość lekcji</th>
+      <th scope="col" onclick="sortColumn('student_amount')">Ilośc zapisanych studentów</th>
+    </tr>
+  </thead>
+  <tbody id="tbody">
+      
+  </tbody>
+</table>
+<script>
+  let objectList = [];
+  function loadTableData(objectList) {
+  const tableBody = document.getElementById("tbody");
+  let dataHtml = ""
+  for (let object of objectList) {
+    dataHtml += `<tr id="${object.sort_name}"><td id="name_${object.sort_name}">${object.name}</td><td id="category_${object.sort_name}">${object.category}</td>
+      <td id="time_${object.sort_name}">${object.time}</td><td id="question_amount_${object.sort_name}">${object.question_amount}</td>
+      <td id="lesson_amount_${object.sort_name}">${object.lesson_amount}</td><td id="student_amount_${object.sort_name}">
+      ${object.student_amount}</td></tr>`
+  };
+  tableBody.innerHTML = dataHtml;
+};
+</script>
+{% for course in object_list %}
+<script>
+  objectList.push({
+    "name" : "<a href='{% url 'examiner_user:detail-course' pk=course.pk slug=course.name|slugify %}''>{{course.name}}</a>", 
+    "time" : Number("{{course.time}}"), "question_amount" : Number("{{course.question_amount}}"), "sort_name" : "{{course.name}}",
+    "lesson_amount" : Number("{{course.lesson_amount}}"), "student_amount" : Number("{{course.student_amount}}"),
+    "category" : "{{course.category}}", "sort_category" : "{{course.category}}"})
+</script>
+{% endfor %}
+{% load static %}
+<script src="{% static 'js/table_sorting.js' %}"></script>
+<script src="{% static 'js/course_search.js' %}"></script>
+{% endblock %}

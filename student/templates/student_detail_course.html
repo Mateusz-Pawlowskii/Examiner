@@ -1,0 +1,15 @@
+{% extends "student_base.html" %}
+
+{% block content %}
+<p>{{course.name}}</p>
+<br>
+<a href="{% url 'student:student-list-lesson' pk=course.pk slug=course.name|slugify %}">Zobacz lekcje</a>
+{% if course.test_ready %}
+<br>
+<a href="{% url 'student:student-attempt-exam' pk=course.pk slug=course.name|slugify %}" id="exam">Podejdź do egzaminu</a>
+{% endif %}
+{% if passed %}
+<br>
+<a href="{% url 'student:diploma' pk=course.pk slug=course.name|slugify %}">Pobierz Dyplom</a>
+{% endif %}
+{% endblock %}

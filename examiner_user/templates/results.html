@@ -1,0 +1,18 @@
+{% extends "examiner_base.html" %}
+
+{% block content %}
+{{ form.as_p }}
+<h3>Kursy:</h3>
+<div id="courses">
+</div>
+<script>
+    let courseList = [];
+</script>
+{% for course in course_data %}
+<script>
+    courseList.push("<p><a href='{% url 'examiner_user:course-results' pk=course.pk %}''>{{course.name}}</a></p>")
+</script>
+{% endfor %}
+{% load static %}
+<script src="{% static 'js/results.js' %}"></script>
+{% endblock %}

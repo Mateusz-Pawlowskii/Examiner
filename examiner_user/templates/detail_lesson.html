@@ -1,0 +1,27 @@
+{% extends "examiner_base.html" %}
+
+{% block content %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+    {{ m }}
+</div>
+{% endfor %}
+{{ lesson.topic }}
+<br>
+<script type="text/javascript">
+    let material = "{{ lesson.material.name }}"
+    document.write(material.substring(8))
+</script>
+<br>
+<a href="{% url 'examiner_user:edit-lesson-topic' pk=lesson.pk slug=lesson.topic|slugify %}">Zmień temat</a>
+<br>
+<a href="{% url 'examiner_user:edit-lesson-content' pk=lesson.pk slug=lesson.topic|slugify %}">Zmień materiał</a>
+<br>
+<a href="{% url 'examiner_user:view-lesson' pk=lesson.pk slug=lesson.topic|slugify %}">Zobacz lekcje</a>
+<br>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger mt-3" id="submit">Usuń</button>
+</form>
+<a href="{% url 'examiner_user:edit-course' pk=course_pk slug=slug %}"><button class="btn btn-success mt-3">Powrót</button></a>
+{% endblock %}

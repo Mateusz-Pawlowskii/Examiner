@@ -1,0 +1,62 @@
+{% extends "examiner_base.html" %}
+
+{% block content %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+  {{ m }}
+</div>
+{% endfor %}
+Stwórz nowe pytanie do kursu {{course.name}}
+<br>
+Aktualna ilość pytań: {{course.question|length}}
+<form method="POST" action="">
+  {% csrf_token %}
+  <p>
+    Treść pytania:
+    <br>
+    {{ form.text }}
+  </p>
+  <div id="id_correct_answers">
+    <p>
+      <label for="id_answer1">Odpowiedź nr.1:</label>
+      <input type="radio" name="correct_answers" value="1" required id="id_correct_answers_1">
+      {{ form.answer1 }}
+    </p>
+    <p>
+      <label for="id_answer2">Odpowiedź nr.2:</label>
+      <input type="radio" name="correct_answers" value="2" required id="id_correct_answers_2">
+      {{ form.answer2 }}
+    </p>
+    <p>
+      <label for="id_answer3">Odpowiedź nr.3:</label>
+      <input type="radio" name="correct_answers" value="3" required id="id_correct_answers_3">
+      {{ form.answer3 }}
+    </p>
+    <p>
+      <label for="id_answer4">Odpowiedź nr.4:</label>
+      <input type="radio" name="correct_answers" value="4" required id="id_correct_answers_4">
+      {{ form.answer4 }}
+    </p>
+    <p>
+      <label for="id_answer5">Odpowiedź nr.5:</label>
+      <input type="radio" name="correct_answers" value="5" required id="id_correct_answers_5">
+      {{ form.answer5 }}
+    </p>
+    {{ form.course.as_hidden }}
+  </div>
+  <button class="btn btn-success" type="submit" id="submit">Dodaj</button>
+</form>
+<a href="{% url 'examiner_user:search-question' pk=course.pk slug=course.name|slugify %}">
+  <button class="btn btn-success mt-1" id="back">
+    Lista pytań
+  </button>
+</a>
+<br>
+<p>
+  Intstrukcja:
+  <br>
+  Pytanie musi posiadać od 2 do 5 odpowiedzi. Jeżeli pole tekstowe odpowiadające odpowiedźi zostanie pozostawione puste odpowiedź nie
+   będzie uwzględniona na teście. Należy zaznaczyć która odpowiedź jest prawidłowa poprzez zaznaczenie pola (lub pól w przypadku testów
+   wielokrotnego wyboru) znajdującego się przy polu tekstowym z odpowiedzią.
+</p>
+{% endblock %}

@@ -1,0 +1,39 @@
+body{
+    font-family: Arial;
+    background-color: rgb(195, 230, 203);
+}
+
+.ml-cont {
+  margin-left: 205px;
+}
+
+@media (min-width: 1000px) {
+  main {
+  padding-left: 210px;
+  }
+  }
+
+  .small {
+    font-size:11px;
+  }
+
+  .no-display {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  }
+
+  .borderless {
+    border: none;
+  }
+
+  .sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+  width: 200px;
+  z-index: 600;
+  }

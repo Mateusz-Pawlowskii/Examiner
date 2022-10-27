@@ -1,0 +1,77 @@
+{% extends "student_base.html" %}
+
+{% block content %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+  {{ m }}
+</div>
+{% endfor %}
+<h3>Statusy twoich kursów</h3>
+<form method="POST">
+  <select id="select">
+    <option id="search1">Szukaj po nazwie</option>
+    <option id="search2">Szukaj po kategorii</option>
+    <option id="search3">Szukaj po statusie</option>
+  </select>
+  {% csrf_token %}
+  <div id="form1">
+    {{ form1.as_p }}
+  </div>
+  <div id="form2" style="display: none;">
+    <select id="id_category">
+      {% for category in categories %}
+        <option id="{{category}}">{{category}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div id="form3" style="display: none;">
+    {{ form2.as_p }}
+  </div>
+</form>
+Kursy:
+<br>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th width="11%" scope="col" onclick="sortColumn('name')">Kurs</th>
+      <th width="11%" scope="col" onclick="sortColumn('category')">Kategoria</th>
+      <th width="13%" scope="col" onclick="sortColumn('status')">Status</th>
+    </tr>
+  </thead>
+  <tbody id="tbody">
+      
+  </tbody>
+</table>
+<script>
+  let test_marks = [];
+  let objectList = [];
+</script>
+{% for mark in test_marks %}
+<script>
+  test_marks.push("{{mark}}")
+</script>
+{% endfor %}
+<script>
+  function loadTableData(objectList) {
+  const tableBody = document.getElementById("tbody");
+  let dataHtml = ""
+  for (let object of objectList) {
+    dataHtml += `<tr id="${object.sort_name}"><td id="name_stu_${object.sort_name}">${object.name}</td><td>${object.category}</td>
+      <td id='status_${object.sort_name}'>${object.status}</td></tr>`
+  };
+  tableBody.innerHTML = dataHtml;
+};
+</script>
+{% for course in courses %}
+<script>
+  objectList.push({
+    "name" : "<a href='{% url 'student:student-detail-course' pk=course.pk slug=course.name|slugify %}''>{{course.name}}</a>", 
+    "status" : test_marks[Number("{{forloop.counter}}")-1], "sort_status" : test_marks[Number("{{forloop.counter}}")-1],
+    "sort_name" : "{{course.name}}", "category" : "{{course.category}}", "sort_category" : "{{course.category}}"
+      })
+</script>
+{% endfor %}
+{% load static %}
+<script src="{% static 'js/table_sorting.js' %}"></script>
+<script src="{% static 'js/student_course_search.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "student_base.html" %}
+
+{% block content %}
+{% if end_time %}
+<div class="text-right mr-5">
+    Pozostały czas
+    <div id="timer">
+        &nbsp
+    </div>
+</div>
+{% endif %}
+<div class="text-center">
+    <h3>Pytanie {{result.current_question}}</h3>
+</div>
+<div class="text-center">{{question.text}}</div>
+<br><br>
+<form method="POST">
+    {% csrf_token %}
+    <input type="radio" name="correct_answers" value="1" required id="id_correct_answers_1"> {{question.answer1}}
+    <br>
+    <input type="radio" name="correct_answers" value="2" required id="id_correct_answers_2"> {{question.answer2}}
+    <br>
+    {% if question.answer3 %}
+    <input type="radio" name="correct_answers" value="3" required id="id_correct_answers_3"> {{question.answer3}}
+    <br>
+    {% endif %}
+    {% if question.answer4 %}
+    <input type="radio" name="correct_answers" value="4" required id="id_correct_answers_4"> {{question.answer4}}
+    <br>
+    {% endif %}
+    {% if question.answer5 %}
+    <input type="radio" name="correct_answers" value="5" required id="id_correct_answers_5"> {{question.answer5}}
+    {% endif %}
+    <br>
+    <button type="submit" class="btn btn-success mt-1" id="submit">Wyślij odpowiedź</button>
+</form>
+<a href="{% url 'student:test-timeout' pk=result.pk %}">
+    <button hidden class="btn btn-success mt-1" id="timeout">
+        Zakończ test
+    </button>
+</a>
+{% if end_time %}
+    <!-- autocomplete function was provided by courtesy of W3Schools. I didn't write it myself. -->
+    <script>let countDownDate = new Date("{{end_time}}").getTime();</script>
+    {% load static %}
+    <script src="{% static 'js/test_timer.js' %}"></script>
+{% endif %}
+{% endblock %}

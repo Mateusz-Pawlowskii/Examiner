@@ -1,0 +1,29 @@
+{% extends "student_base.html" %}
+
+{% block content %}
+{% load static %}
+<br>
+<div class="text-center">
+  <img src="{% static 'img/logo3.png' %}" height="80" width="300"/>
+</div>
+<br>
+<h2 class="text-center">O programie</h2>
+<br>
+<h4 class="text-center">
+  Jest to demonstracyjna wersja strony służąca do tworzenia i edytowania kursów z możliwością załączenia materiałów szkoleniowych.
+  Główną funkcjonalnością aplikacji jest możliwość tworzenia automatycznie sprawdzanych testów (wielokrotnego lub jednokrotnego wyboru)
+  powiązanych z utworzonymi szkoleniami.<br> Aplikacja umożliwia tworzenie i nadawanie haseł dla nowych kont egzaminatorów i studentów.
+</h4>
+<br>
+<h4 class="text-center">
+  Wersja aplikacji dostępna na platformie heroku jest ogólniedostępna w związku z czym nie zaleca się używania jej do zadań
+  profesjonalnych gdyż wszystkie testy i materiały będą dostępne dla innych użytkowników poprzez ogólnie dostępne konto testowego
+  egzaminatora.
+</h4>
+<br>
+Dane kontaktowe:
+<br>
+Skrzynka mailowa: mm.pawlowski18@gmail.com
+<br>
+Numer telefonu: 506 960 518
+{% endblock %}

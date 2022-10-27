@@ -1,0 +1,85 @@
+{% extends "examiner_base.html" %}
+
+{% block content %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+  {{ m }}
+</div>
+{% endfor %}
+Edytuj pytanie do kursu {{course.name}}
+<form method="POST" action="">
+  {% csrf_token %}
+  <p>
+    Treść pytania:
+    <br>
+    {{ form.text }}
+  </p>
+  <div id="id_correct_answers">
+    <p>
+      <label for="id_answer1">Odpowiedź nr.1:</label>
+      {% if '1' in question.correct_answers %}
+      <input type="radio" name="correct_answers" checked value="1" checked required id="id_correct_answers_1">
+      {% else %}
+      <input type="radio" name="correct_answers" value="1" required id="id_correct_answers_1">
+      {% endif %}
+      {{ form.answer1 }}
+    </p>
+    <p>
+      <label for="id_answer2">Odpowiedź nr.2:</label>
+      {% if '2' in question.correct_answers %}
+      <input type="radio" name="correct_answers" value="2" checked required id="id_correct_answers_2">
+      {% else %}
+      <input type="radio" name="correct_answers" value="2" required id="id_correct_answers_2">
+      {% endif %}
+      {{ form.answer2 }}
+    </p>
+    <p>
+      <label for="id_answer3">Odpowiedź nr.3:</label>
+      {% if '3' in question.correct_answers %}
+      <input type="radio" name="correct_answers" value="3" checked required id="id_correct_answers_3">
+      {% else %}
+      <input type="radio" name="correct_answers" value="3" required id="id_correct_answers_3">
+      {% endif %}
+      {{ form.answer3 }}
+    </p>
+    <p>
+      <label for="id_answer4">Odpowiedź nr.4:</label>
+      {% if '4' in question.correct_answers %}
+      <input type="radio" name="correct_answers" value="4" checked required id="id_correct_answers_4">
+      {% else %}
+      <input type="radio" name="correct_answers" value="4" required id="id_correct_answers_4">
+      {% endif %}
+      {{ form.answer4 }}
+    </p>
+    <p>
+      <label for="id_answer5">Odpowiedź nr.5:</label>
+      {% if '5' in question.correct_answers %}
+      <input type="radio" name="correct_answers" value="5" checked required id="id_correct_answers_5">
+      {% else %}
+      <input type="radio" name="correct_answers" value="5" required id="id_correct_answers_5">
+      {% endif %}
+      {{ form.answer5 }}
+    </p>
+      {{ form.course.as_hidden }}
+  </div>
+  <button class="btn btn-success" type="submit" id="submit_change">Zmień</button>
+</form>
+<form method="POST" action="{% url 'examiner_user:delete-question' question=question.pk course=course.pk slug=course.name|slugify %}">
+  {% csrf_token %}
+  <button class="btn btn-danger mt-1" type="submit" id="submit_delete">Usuń</button>
+</form>
+<a href="{% url 'examiner_user:search-question' pk=course.pk slug=course.name|slugify %}">
+  <button class="btn btn-success mt-1" id="back">
+    Lista pytań
+  </button>
+</a>
+<br>
+<h3>
+    Intstrukcja:
+</h3>
+<p>
+    Pytanie musi posiadać od 2 do 5 odpowiedzi. Jeżeli pole tekstowe odpowiadające odpowiedźi zostanie pozostawione puste odpowiedź nie
+     będzieuwzględniona na teście. Należy zaznaczyć która odpowiedź jest prawidłowa poprzez zaznaczenie pola (lub pól w przypadku testów
+     wielokrotnego wyboru) znajdującego się przy polu tekstowym z odpowiedzią.
+</p>
+{% endblock %}

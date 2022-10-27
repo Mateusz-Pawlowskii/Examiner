@@ -1,0 +1,8 @@
+{% extends "student_base.html" %}
+
+{% block content %}
+{% for lesson in lessons %}
+<br>
+<a href="{% url 'examiner_user:view-lesson' pk=lesson.pk slug=lesson.topic|slugify %}">{{lesson.topic}}</a>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "examiner_base.html" %}
+
+{% block content %}
+Pytania do kursu {{ course.name }}
+{% for question in questions %}
+<br>
+<a href="{% url 'examiner_user:edit-question' pk=question.pk slug=course.name|slugify %}" id="{{forloop.counter}}">{{forloop.counter}}</a>
+{% endfor %}
+<br>
+<a href="{% url 'examiner_user:create-question' pk=course.pk slug=course.name|slugify %}">
+  <button class="btn btn-success mt-5" id="add_question">
+    Dodaj Pytanie
+  </button>
+</a>
+<a href="{% url 'examiner_user:edit-course' pk=course.pk slug=course.name|slugify %}">
+  <button class="btn btn-success mt-5" type="submit" id="edit">
+    Wróc do edycji kursu
+  </button>
+</a>
+{% endblock %}

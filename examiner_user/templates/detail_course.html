@@ -1,0 +1,59 @@
+{% extends "examiner_base.html" %}
+
+{% block content %}
+<h4>Informacje o kursie</h4>
+<p id="name">Nazwa kursu:<b> {{object.name}}</b></p>
+{% if object.category != "" %}
+<p id="category">Kategoria:<b> {{object.category}}</b></p>
+{% endif %}
+
+<table class="table">
+  <tbody>
+    <tr>
+      <td>Typ pytań:<b>{% if object.multiple_answer_questions == True %}
+          wielokrotnego wyboru
+        {% elif object.multiple_answer_questions == False %}
+          jednokrotnego wyboru
+        {% else %}{% endif %}</b>
+      </td>
+      <td id="attempt_amount">
+        Ilość podejść: <b>{{object.attempt_amount}}</b>
+      </td>
+    </tr>
+    <tr>
+      <td id="time">
+        Czas trwania testu:<b>{% if object.time == 0 %}Nieograniczony{% else %} {{object.time}} minut{% endif %}</b>
+      </td>
+      <td>
+        Całkowita ilość pytań:<b> {{questions|length}}</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Ilość pytań podawana studentowi w czasie testu:<b> {{object.question_amount}}</b>
+      </td>
+      <td>
+        Wymagan ilość poprawnych odpowiedzi:<b>{{object.passing_score}}</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Ilość lekcji:<b> {{lessons|length}}</b>
+      </td>
+      <td>
+        Ilość studentów zapisanych na kurs:<b> {{students|length}}</b>
+      </td>
+    </tr>
+  </tbody>
+</table>
+{% if object.test_ready %}
+    <p>Status testu:<b>Test gotowy</b></p>
+{% else %}
+    <p>Status testu:<b>Test niegotowy</b></p>
+{% endif %}
+<a href="{% url 'examiner_user:edit-course' pk=object.pk slug=object.name|slugify %}">
+  <button class="btn btn-success" type="submit" id="edit">
+    Edytuj
+  </button>
+</a>
+{% endblock %}

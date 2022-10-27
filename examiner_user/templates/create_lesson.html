@@ -1,0 +1,22 @@
+{% extends "examiner_base.html" %}
+
+{% block content %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+    {{ m }}
+</div>
+{% endfor %}
+<div class="form-group">
+<form enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    <label for="title">Temat lekcji:</label>
+    {{ form.topic }}
+    <br>
+    {{ form.material }}
+    {{ form.course.as_hidden }}
+    <br>
+    <p>Prosimy o załączanie plików pdf jako lekcji</p>
+    <button class="btn btn-success mt-1" type="submit" id="submit">Dodaj</button>
+</form>
+</div>
+{% endblock %}

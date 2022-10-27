@@ -1,0 +1,25 @@
+{% extends "student_base.html" %}
+
+{% block content %}
+<h3>Wyniki testów z kursu {{course.name}}</h3>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th width="12%" scope="col">Numer podejścia</th>
+      <th width="11%" scope="col">Uzyskany wynik</th>
+      <th width="13%" scope="col">%</th>
+      <th scope="col">Wynik ostateczny</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for result, perc in results %}
+    <tr>
+      <td>{{forloop.counter}}</td>
+      <td id="score_{{course.name}}_{{forloop.counter}}">{{result.current_score}}</td>
+      <td id="perc_{{course.name}}_{{forloop.counter}}">{{perc}}</td>
+      <td id="status_{{course.name}}_{{forloop.counter}}">{% if result.passed %} Zaliczający {% else %} Niezaliczający {% endif %}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

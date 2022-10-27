@@ -1,0 +1,32 @@
+{% extends "examiner_base.html" %}
+
+{% block head %}
+{% load static %}
+<!-- autocomplete function was provided by courtesy of W3Schools. I didn't write it myself. -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/autocomplete.css' %}"/>
+<script src="{% static 'js/autocomplete.js' %}"></script>
+{% endblock %}
+{% block content %}
+<p>Prosze wpisać nazwe studenta który ma zostać dołączony do kursu {{course.name}}</p>
+<div class="form-group">
+    <form autocomplete="off" method="POST">
+        {% csrf_token %}
+        <div class="autocomplete" style="width:300px;">
+            {{ form.student }}
+        </div>
+        {{ form.course.as_hidden }}
+        <br>
+        <button class="btn btn-success mt-3" type="submit" id="submit">Dołącz</button>
+    </form>
+</div>
+<a href="{% url 'examiner_user:attach-student' pk=course.pk %}">
+    <p>Istnieje możliwość dodania studenta poprzez wybranie go z listy </p>
+</a>
+<script>let students=[];</script>
+{% for student in students %}
+<script>students.push("{{student.username}}");</script>
+{% endfor %}
+<script>
+    autocomplete(document.getElementById("id_student"), students);
+</script> 
+{% endblock %}

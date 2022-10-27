@@ -1,0 +1,36 @@
+{% extends "student_base.html" %}
+
+{% block content %}
+{% if timeout == True %}
+<div class="text-center" id="timeout">
+    <p>
+        Czas na wykonanie testu upłynął!
+    </p>
+</div>
+{% endif %}
+<div class="text-center">
+    <p>
+        Zostało uzyskane {{result.current_score}} punktów z {{max_score}}
+    </p>
+</div>
+{% if result.passed == True %}
+    <div class="text-center" id="success">
+        <p>
+            Grtulujemy pomyślnego zdania testu
+        </p>
+    </div>
+{% else %}
+    <div class="text-center" id="failure">
+        <p>
+            Niestety nie udało się zdać testu
+        </p>
+    </div>
+{% endif %}
+<div class="text-center">
+    <a href="{% url 'student:homepage' %}">
+        <button class="btn btn-success mt-1 mb-5" id="ok">
+            Ok
+        </button>
+    </a>
+</div>
+{% endblock %}

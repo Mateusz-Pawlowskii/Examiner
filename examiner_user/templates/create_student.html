@@ -1,0 +1,38 @@
+{% extends "examiner_base.html" %}
+
+{% block content %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+  {{ m }}
+</div>
+{% endfor %}
+<h4>Stwórz nowego studenta</h4>
+<div class="form-group">
+<form method="POST" action="">
+  {% csrf_token %}
+  <p>
+    <label for="id_username">Nazwa użytkownika: (Wymagane. 150 znaków lub mniej. Tylko litery, cyfry i @/./+/-/_ )</label>
+    <input type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus required id="id_username" 
+          class="form-control">
+  </p>
+  <p>
+    <label for="id_password1">Hasło:</label>
+    <input type="password" name="password1" autocomplete="new-password" required id="id_password1" class="form-control">
+    <span class="helptext">
+      <ul>
+        <li>Hasło nie może być podobne do innych danych osobowych.</li>
+        <li>Hasło musi awierać przynajmniej 8 znaków</li>
+        <li>Hasło nie może być popularnie używanym hasłem</li>
+        <li>Hasło nie może się składać z samych cyfr</li>
+      </ul>
+    </span>
+  </p>
+  <p>
+    <label for="id_password2">Potwierdzenie hasła: (Wprowadź ponownie te same hasło co poprzednio w celu weryfikacji)</label>
+    <input type="password" name="password2" autocomplete="new-password" required id="id_password2" class="form-control">
+    <span class="helptext"></span>
+  </p>
+  <button class="btn btn-success" type="submit" id="submit">Utwórz</button>
+</form>
+</div>
+{% endblock %}

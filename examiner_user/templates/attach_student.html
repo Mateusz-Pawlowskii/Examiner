@@ -1,0 +1,17 @@
+{% extends "examiner_base.html" %}
+
+{% block content %}
+<p>Prosze wybrać studenta który ma zostać dołączony do kursu {{course.name}}</p>
+<div class="form-group">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.student }}
+        {{ form.course.as_hidden }}
+        <br>
+        <button class="btn btn-success mt-3" type="submit" id="submit">Dołącz</button>
+    </form>
+</div>
+<a href="{% url 'examiner_user:attach-student-text' pk=course.pk %}">
+    <p>Istnieje możliwość dodania studenta poprzez wpisanie jego nazwy użytkownika</p>
+</a>
+{% endblock %}

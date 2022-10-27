@@ -1,0 +1,168 @@
+{% extends "examiner_base.html" %}
+
+{% block head %}
+{% load static %}
+<!-- autocomplete function was provided by courtesy of W3Schools. I didn't write it myself. -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/autocomplete.css' %}"/>
+<script src="{% static 'js/autocomplete.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+  {{ m }}
+</div>
+{% endfor %}
+<h4>Edytuj kurs {{object.name}}</h4>
+<div class="form-group">
+  <form method="POST">
+    {% csrf_token %}
+    <label for="name">Nazwa kursu:</label>
+    {{course_form.name}}
+    <br>
+    <label for="category">Kategoria kursu:</label>
+    {{course_form.category}}
+    <br>
+    <label for="attempt_amount">Ilość podejść:</label>
+    <br>
+    {{course_form.attempt_amount}}
+    <br>
+    <label for="time"> Czas trwania testu:</label>
+    <br>
+    {{course_form.time}}
+    <br><br>
+    <label for="multiple_answer_questions">Typ pytań:</label>
+    <br>
+    {% if object.multiple_answer_questions == True %}
+    <input type="radio" id="multiple_answer_questions" checked name="multiple_answer_questions" value="on">
+    Wielokrotnego wyboru
+    <br>
+    <input type="radio" id="multiple_answer_questions" name="multiple_answer_questions" value="off">
+    Jednokrotnego wyboru
+    {% else %}
+    <input type="radio" id="multiple_answer_questions" name="multiple_answer_questions" value="on">
+    Wielokrotnego wyboru
+    <br>
+    <input type="radio" id="multiple_answer_questions" checked name="multiple_answer_questions" value="off">
+    Jednokrotnego wyboru
+    {% endif %}
+    <br><br>
+    <label for="question_amount">Ilość pytań podawana studentowi:</label>
+    <br>
+    {{course_form.question_amount}}
+    <br>
+    <label for="passing_score">Ilość poprawnie udzielonych odpowiedzi wymaganych do zaliczenia testu:</label>
+    <br>
+    {{course_form.passing_score}}<br>
+    <div id="perc_score"></div>
+    <label for="test_ready">Test gotowy</label>
+    {{course_form.test_ready}}
+    <br>
+    <button class="btn btn-success mt-2" type="submit" id="submit">Zapisz zmiany</button>
+  </form>
+</div>
+<hr>
+<br>
+<button type="button" class="btn btn-secondary dropdown-toggle tog" id="lesson_nav">Lekcje</button>
+<div class="no-display">
+  <h4>Dodaj nową lekcje</h4>
+  <p>(załącz lekcje jako plik pdf)</p>
+  <div class="form-group">
+    <form enctype="multipart/form-data" method="POST" action="{% url 'examiner_user:create-lesson' pk=object.pk slug=object.name|slugify %}">
+        {% csrf_token %}
+        <label for="title">Temat lekcji:</label>
+        {{ lesson_form.topic }}
+        <br>
+        {{ lesson_form.material }}
+        {{ lesson_form.course.as_hidden }}
+        <br>
+        <button class="btn btn-success mt-1" type="submit" id="submit">Dodaj lekcje</button>
+    </form>
+  </div>
+  <h4>Lista lekcji załączonych do kursu:</h4>
+  {% if not lesson_list %}
+  Brak lekcji
+  {% else %}
+  <table class="table">
+    <tbody>
+      {% for lesson in lesson_list %}
+      <tr>
+        <td class="borderless" style="border: none;">
+          <a href="{% url 'examiner_user:detail-lesson' pk=lesson.pk slug=lesson.topic|slugify %}">
+            {{lesson.topic}}
+          </a>
+        </td>
+        <td class="borderless" style="border: none;">
+          <form method="POST" action="{% url 'examiner_user:detail-lesson' pk=lesson.pk slug=lesson.topic|slugify %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger" id="submit">
+              <div class="small">
+                Usuń lekcje
+              </div>
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+<hr>
+<button typle="button" class="btn btn-secondary dropdown-toggle tog" id="student_nav">Studenci</button>
+<div class="no-display" id="no-display student">
+  <h4>Dodaj nowego studenta</h4> 
+  <p>(wpisz nazwe studenta który ma zostać dołączony do kursu)</p>
+  <div class="form-group" id="form-group student">
+    <form autocomplete="off" method="POST" action="{% url 'examiner_user:attach-student-text' pk=object.pk slug=object.name|slugify %}" id="student_form">
+      {% csrf_token %}
+      <div class="autocomplete" style="width:300px;">
+        {{ student_form.student }}
+      </div>
+      {{ student_form.course.as_hidden }}
+      <br>
+      <button class="btn btn-success mt-3" type="submit" id="submit_student">Dołącz</button>
+    </form>
+  </div>
+  <!-- I'm not sure if that feature is usefull so I disabled it -->
+  <!-- <a href="{% url 'examiner_user:attach-student' pk=object.pk %}"><p>Istnieje możliwość dodania studenta poprzez wybranie go z listy </p></a> -->
+  <script>let students=[];</script>
+  {% for student in students %}
+  <script>students.push("{{student.username}}");</script>
+  {% endfor %}
+  <br>
+  <h4>Studenci przypisani do kursu {{object.name}}</h4>
+  <table class="table">
+    <tbody>
+      {% for student in object.students.all %}
+      <tr>
+        <td class="borderless" style="border:none;" id="{{student.username}}_table">
+          <form method="POST" action="{% url 'examiner_user:unattach-students' pk=object.pk slug=object.name|slugify %}">
+            {% csrf_token %}
+            {{student.username}}</td>
+        <td class="borderless" style="border:none;"><input type="hidden" value="{{student.pk}}" name="student">
+            <button type="submit" class="btn btn-danger ml-2" id="{{student.username}}_delete"><div class="small">Usuń</div></button>
+            </form></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<hr>
+<br>
+<a href="{% url 'examiner_user:create-question' pk=object.pk slug=object.name|slugify %}">
+  <button class="btn btn-success" id="add_question">
+    Dodaj Pytanie
+  </button>
+</a>
+<br>
+<a href="{% url 'examiner_user:search-question' pk=object.pk slug=object.name|slugify %}">
+  <button class="btn btn-success mt-1 mb-5" id="view_questions">
+    Zobacz pytania
+  </button>
+</a>
+<script>
+    autocomplete(document.getElementById("id_student"), students);
+</script>
+<script src="{% static 'js/course_edit.js' %}"></script>
+{% endblock %}

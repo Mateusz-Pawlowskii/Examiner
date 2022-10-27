@@ -1,0 +1,55 @@
+{% extends "examiner_base.html" %}
+
+{% block content %}
+<br><br>
+<p class="text-center">
+  <a href="{% url 'examiner_user:create-examiner' %}" class="btn btn-success my-2 my-lg-0">
+    Dodaj egzaminatora
+  </a>
+</p>
+<br><br>
+<p class="text-center">
+  <a href="{% url 'examiner_user:create-student' %}" class="btn btn-success my-2 my-lg-0" id="create_student">
+    Dodaj studenta
+  </a>
+</p>
+<h4>Szukaj</h4>
+<div id="form1">
+  {{ form.as_p }}
+</div>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col" onclick="sortColumn('name')">Nazwa użytkownika</th>
+      <th scope="col" onclick="sortColumn('login')">Ostatni login</th>
+      <th scope="col" onclick="sortColumn('join')">Data dołączenia</th>
+    </tr>
+  </thead>
+  <tbody id="tbody">
+      
+  </tbody>
+</table>
+<script>
+  let objectList = [];
+  function loadTableData(objectList) {
+  const tableBody = document.getElementById("tbody");
+  let dataHtml = ""
+  for (let object of objectList) {
+    dataHtml += `<tr><td id="${object.sort_name}">${object.name}</td><td>${object.login}</td><td>${object.join}</td></tr>`
+  };
+  tableBody.innerHTML = dataHtml;
+};
+</script>
+{% for student in object_list %}
+<script>
+  objectList.push({"name" : "<a href='{% url 'examiner_user:detail-student' pk=student.pk %}''>{{student.username}}</a>", 
+    "login" : "{% if student.last_login == None %} Brak {% else %}{{student.last_login}}{% endif %}","join":"{{student.date_joined}}",
+    "sort_join" : new Date("{{student.date_joined.isoformat}}"), "sort_name" : "{{student.username}}",
+    "sort_login" : new Date("{% if student.last_login == None %} 08 October 2001 11:32 UTC {% else %}{{student.last_login.isoformat}}{% endif %}"),
+      })
+</script>
+{% endfor %}
+{% load static %}
+<script src="{% static 'js/table_sorting.js' %}"></script>
+<script src="{% static 'js/course_search.js' %}"></script>
+{% endblock %}

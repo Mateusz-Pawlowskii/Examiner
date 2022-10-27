@@ -1,0 +1,96 @@
+{% extends "examiner_base.html" %}
+
+{% block content %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+  {{ m }}
+</div>
+{% endfor %}
+Edytuj pytanie do kursu {{course.name}}
+<form method="POST" action="">
+  {% csrf_token %}
+  <p>
+    Treść pytania:
+    <br>
+    {{ form.text}}
+  </p>
+  <p>
+    <div id="id_correct_answers">
+      <div class="form-check form-check">
+        {% if '1' in question.correct_answers %}
+        <input class="form-check-input" type="checkbox" checked name="che1" id="Checkbox1" value="1">
+        {% else %}
+        <input class="form-check-input" type="checkbox" name="che1" id="Checkbox1" value="1">
+        {% endif %}
+      </div>
+      <p>&nbsp&nbsp&nbsp&nbspOdpowiedź nr. 1</p>
+      {{ form.answer1 }}
+      </p>
+      <p>
+        <div class="form-check form-check">
+          {% if '2' in question.correct_answers %}
+          <input class="form-check-input" type="checkbox" checked name="che2" id="Checkbox1" value="2">
+          {% else %}
+          <input class="form-check-input" type="checkbox" name="che2" id="Checkbox1" value="2">
+          {% endif %}
+        </div>
+        <p>&nbsp&nbsp&nbsp&nbspOdpowiedź nr. 2</p>
+        {{ form.answer2 }}
+      </p>
+      <p>
+        <div class="form-check form-check">
+          {% if '3' in question.correct_answers %}
+          <input class="form-check-input" type="checkbox" checked name="che3" id="Checkbox1" value="3">
+          {% else %}
+          <input class="form-check-input" type="checkbox" name="che3" id="Checkbox1" value="3">
+          {% endif %}
+        </div>
+        <p>&nbsp&nbsp&nbsp&nbspOdpowiedź nr. 3</p>
+        {{ form.answer3 }}
+      </p>
+      <p>
+        <div class="form-check form-check">
+          {% if '4' in question.correct_answers %}
+          <input class="form-check-input" type="checkbox" checked name="che4" id="Checkbox1" value="4">
+          {% else %}
+          <input class="form-check-input" type="checkbox" name="che4" id="Checkbox1" value="4">
+          {% endif %}
+        </div>
+        <p>&nbsp&nbsp&nbsp&nbspOdpowiedź nr. 4</p>
+        {{ form.answer4 }}
+      </p>
+      <p>
+        <div class="form-check form-check">
+          {% if '5' in question.correct_answers %}
+          <input class="form-check-input" type="checkbox" checked name="che5" id="Checkbox1" value="5">
+          {% else %}
+          <input class="form-check-input" type="checkbox" name="che5" id="Checkbox1" value="5">
+          {% endif %}
+        </div>
+        <p>&nbsp&nbsp&nbsp&nbspOdpowiedź nr. 5</p>
+        {{ form.answer5 }}
+      </p>
+      {{ form.correct_answers.as_hidden }}
+      {{ form.course.as_hidden }}
+    </div>
+    <button class="btn btn-success" type="submit" id="submit">Zmień</button>
+</form>
+<form method="POST" action="{% url 'examiner_user:delete-question' question=question.pk course=course.pk slug=course.name|slugify %}">
+  {% csrf_token %}
+  <button class="btn btn-danger mt-1" type="submit" id="submit_delete">Usuń</button>
+</form>
+<a href="{% url 'examiner_user:search-question' pk=course.pk slug=course.name|slugify %}">
+  <button class="btn btn-success mt-1" id="back">
+    Lista pytań
+  </button>
+</a>
+<br>
+<h3>
+    Intstrukcja:
+</h3>
+<p>
+  Pytanie musi posiadać od 2 do 5 odpowiedzi. Jeżeli pole tekstowe odpowiadające odpowiedźi zostanie pozostawione puste odpowiedź nie
+  będzie uwzględniona na teście. Należy zaznaczyć która odpowiedź jest prawidłowa poprzez zaznaczenie pola (lub pól w przypadku testów
+  wielokrotnego wyboru) znajdującego się przy polu tekstowym z odpowiedzią.
+</p>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "student_base.html" %}
+
+{% block content %}
+{% if end_time %}
+<div class="text-right">
+  <p id="timer">
+    &nbsp
+  </p>
+</div>
+{% endif %}
+<h3>Pytanie {{result.current_question}}</h3>
+{{question.text}}
+<form method="POST">
+  {% csrf_token %}
+  <div id="id_correct_answers">
+    <div class="form-check form-check">
+      <input class="form-check-input" type="checkbox" name="che1" id="Checkbox1" value="1">
+    </div>
+    &nbsp&nbsp&nbsp&nbsp {{question.answer1}}
+    <br>
+    <div class="form-check form-check">
+      <input class="form-check-input" type="checkbox" name="che2" id="Checkbox1" value="2">
+    </div>
+    &nbsp&nbsp&nbsp&nbsp {{question.answer2}}
+    <br>
+    {% if question.answer3 %}
+    <div class="form-check form-check">
+      <input class="form-check-input" type="checkbox" name="che3" id="Checkbox1" value="3">
+    </div>
+    &nbsp&nbsp&nbsp&nbsp {{question.answer3}}
+    <br>
+    {% endif %}
+    {% if question.answer4 %}
+    <div class="form-check form-check">
+      <input class="form-check-input" type="checkbox" name="che4" id="Checkbox1" value="4">
+    </div>
+    &nbsp&nbsp&nbsp&nbsp {{question.answer4}}
+    <br>
+    {% endif %}
+    {% if question.answer5 %}
+    <div class="form-check form-check">
+      <input class="form-check-input" type="checkbox" name="che5" id="Checkbox1" value="5">
+    </div>
+    &nbsp&nbsp&nbsp&nbsp {{question.answer5}}
+    {% endif %}
+  </div>
+  <br>
+  <button type="submit" class="btn btn-success mt-1">Wyślij odpowiedź</button>
+</form>
+<a href="{% url 'student:test-finish' pk=result.pk %}">
+  <button hidden class="btn btn-success mt-1" id="timeout">
+    Zakończ test
+  </button>
+</a>
+{% if end_time %}
+  <!-- autocomplete function was provided by courtesy of W3Schools. I didn't write it myself. -->
+  <script>let countDownDate = new Date("{{end_time}}").getTime();</script>
+  {% load static %}
+  <script src="{% static 'js/test_timer.js' %}"></script>
+{% endif %}
+{% endblock %}

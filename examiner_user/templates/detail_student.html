@@ -1,0 +1,77 @@
+{% extends "examiner_base.html" %}
+
+{% block head %}
+{% load static %}
+<!-- autocomplete function was provided by courtesy of W3Schools. I didn't write it myself. -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/autocomplete.css' %}"/>
+<script src="{% static 'js/autocomplete.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+  {{ m }}
+</div>
+{% endfor %}
+<h3>Profil studenta {{student.username}}</h3>
+<h4>Dodaj studenta do kursu</h4> 
+<p>(wpisz nazwe kursu do którego ma zostać dołączony student)</p>
+<div class="form-group">
+  <form autocomplete="off" method="POST">
+    {% csrf_token %}
+      <div class="autocomplete" style="width:300px;">
+        {{ form.course }}
+      </div>
+      {{ form.student.as_hidden }}
+      <br>
+      <button class="btn btn-success mt-3" type="submit" id="submit">Dołącz</button>
+  </form>
+</div>
+Kursy:
+<br>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th width="12%" scope="col" onclick="sortColumn('name')">Nazwa kursu</th>
+      <th scope="col" onclick="sortColumn('status')">Status</th>
+    </tr>
+  </thead>
+  <tbody id="tbody">
+      
+  </tbody>
+</table>
+<script>
+    let test_marks = [];
+    let objectList = [];
+function loadTableData(objectList) {
+  const tableBody = document.getElementById("tbody");
+  let dataHtml = ""
+  for (let object of objectList) {
+    dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td></tr>`
+  };
+  tableBody.innerHTML = dataHtml;
+};
+</script>
+{% for mark in test_marks %}
+<script>
+    test_marks.push("{{mark}}")
+</script>
+{% endfor %}
+{% for course in courses %}
+<script>
+  objectList.push({"name" : "<a href='{% url 'examiner_user:results-course-student' course=course.pk student=student.pk %}''>{{course.name}}</a>", 
+    "status" : test_marks[Number("{{forloop.counter}}")-1], "sort_status" : test_marks[Number("{{forloop.counter}}")-1],
+     "sort_name" : "{{course.name}}"
+     })
+</script>
+{% endfor %}
+<script>let courses=[];</script>
+{% for course in courses %}
+<script>courses.push("{{course.name}}");</script>
+{% endfor %}
+<script>
+  autocomplete(document.getElementById("id_course"), courses);
+</script>
+{% load static %}
+<script src="{% static 'js/table_sorting.js' %}"></script>
+{% endblock %}
