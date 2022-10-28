@@ -7,7 +7,7 @@
     Wróć do ucznia
   </button>
 </a>
-<a href="{% url 'examiner_user:detail-course' pk=course.pk slug=course.name|slugify %}">
+<a href="{% url 'examiner_user:course-results' pk=course.pk %}">
   <button class="btn btn-success mt-1 mb-1" id="back">
     Wróć do kursu
   </button>
