@@ -122,9 +122,10 @@ class StudentQuestion(LoginRequiredMixin, View):
         course = result.course
         questions = Question.objects.filter(course=course)
         question = questions[result.get_order()[result.current_question-1]-1]
-        
+        now = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         context = {"question" : question,
-                   "result" : result}
+                   "result" : result,
+                   "now" : now}
         if course.time > 0:
             end_time = result.end_time.strftime("%m/%d/%Y, %H:%M:%S")
             context["end_time"] = end_time
