@@ -1,7 +1,5 @@
 let x = setInterval(function() {
 
-
-    let now = new Date().getTime();
     // Find the distance between now and the count down date
     let distance = countDownDate - now;
   

@@ -110,7 +110,7 @@ class StudentPassExam(LoginRequiredMixin, View):
         result = Result(course = course,
                         student = request.user)
         result.set_order(question_order)
-        result.end_time = datetime.datetime.now() + datetime.timedelta(minutes=course.time) + datetime.timedelta(hours=2)
+        result.end_time = datetime.datetime.now() + datetime.timedelta(minutes=course.time)
         result.save()
         return redirect(reverse_lazy("student:student-question", kwargs={"pk":result.pk}))
 
