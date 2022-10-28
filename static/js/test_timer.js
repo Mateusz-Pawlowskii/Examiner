@@ -1,10 +1,10 @@
 let x = setInterval(function() {
 
     // Get today's date and time
-    let distanceNow = new Date().getTime() - now;
+    let now = new Date().toUTCString();
   
     // Find the distance between now and the count down date
-    let distance = countDownDate - now - distanceNow;
+    let distance = countDownDate - now;
   
     // Time calculations for minutes and seconds
     let minutes = Math.floor((distance / (1000 * 60)));
