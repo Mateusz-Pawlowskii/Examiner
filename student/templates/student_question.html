@@ -34,6 +34,8 @@
     <br>
     <button type="submit" class="btn btn-success mt-1" id="submit">Wyślij odpowiedź</button>
 </form>
+{{end_time}}
+{{now}}
 <a href="{% url 'student:test-timeout' pk=result.pk %}">
     <button hidden class="btn btn-success mt-1" id="timeout">
         Zakończ test
@@ -43,7 +45,7 @@
     <!-- autocomplete function was provided by courtesy of W3Schools. I didn't write it myself. -->
     <script>
         let countDownDate = new Date("{{end_time}}").getTime();
-        let now = new Date("{{now}}").getTime();
+        let now = new Date().getTime();
     </script>
     {% load static %}
     <script src="{% static 'js/test_timer.js' %}"></script>
