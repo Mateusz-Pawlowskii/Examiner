@@ -2,6 +2,11 @@
 
 {% block content %}
 <h3>Wyniki testów z kursu {{course.name}}</h3>
+<a href="{% url 'student:results-general' %}">
+  <button class="btn btn-success mt-1 mb-1" id="back">
+    Wróć
+  </button>
+</a>
 <table class="table">
   <thead class="thead-dark">
     <tr>
