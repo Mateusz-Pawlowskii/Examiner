@@ -2,4 +2,3 @@ geckodriver.log
 archive/
 pass.txt
 Examiner/.env
-db.sqlite3
