@@ -32,10 +32,8 @@
     <input type="radio" name="correct_answers" value="5" required id="id_correct_answers_5"> {{question.answer5}}
     {% endif %}
     <br>
-    <button type="submit" class="btn btn-success mt-1" id="submit">Wyślij odpowiedź</button>
+    <button type="submit" class="btn btn-success mt-1" id="submit">{{end_time}} oraz {{now}}</button>
 </form>
-{{end_time}}
-{{now}}
 <a href="{% url 'student:test-timeout' pk=result.pk %}">
     <button hidden class="btn btn-success mt-1" id="timeout">
         Zakończ test
