@@ -4,7 +4,12 @@
 <h4>Wyniki testów ucznia {{student.username}} z kursu {{course.name}}</h4>
 <a href="{% url 'examiner_user:detail-student' pk=student.pk %}">
   <button class="btn btn-success mt-1 mb-1" id="back">
-    Wróć
+    Wróć do ucznia
+  </button>
+</a>
+<a href="{% url 'examiner_user:detail-course' pk=course.pk slug=course.name|slugify %}">
+  <button class="btn btn-success mt-1 mb-1" id="back">
+    Wróć do kursu
   </button>
 </a>
 <table class="table">
