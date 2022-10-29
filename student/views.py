@@ -198,6 +198,7 @@ class TestDiploma(LoginRequiredMixin, View):
         pdf.cell(0, 10, txt = f"z wynikiem {best_result.current_score} na {course.question_amount} przez studenta {user.username}", ln = 1, align = 'C')
         pdf.cell(0, 50, txt = "Gratulujemy i życzymy dlaszego powodzenia w nauce", ln = 1, align = 'C')
         pdf.output(f"media/diploma/{course.name}_{user.username}.pdf")
+        return "test"
         return FileResponse(open(f"media/diploma/{course.name}_{user.username}.pdf", "rb"), content_type="application/pdf")
     
 # part about results starts here
