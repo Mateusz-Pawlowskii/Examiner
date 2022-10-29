@@ -125,8 +125,9 @@ class StudentQuestion(LoginRequiredMixin, View):
         context = {"question" : question,
                    "result" : result}
         if course.time > 0:
-            time_left = (datetime.datetime.now() - result.end_time).strftime("%m/%d/%Y, %H:%M:%S")
-            context["time_left"] = time_left
+            end_time = result.end_time.strftime("%m/%d/%Y, %H:%M:%S")
+            context["end_time"] = end_time
+            context["now"] = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         if course.multiple_answer_questions == True:
             return render(request, "student_multiple_question.html", context)
         return render(request, self.template_name, context)
