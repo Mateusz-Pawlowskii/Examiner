@@ -42,7 +42,8 @@
 {% if end_time %}
     <!-- autocomplete function was provided by courtesy of W3Schools. I didn't write it myself. -->
     <script>
-        let countDownDate = new Date("{{end_time}}").getTime();
+        let timeLeft = new Date("{{time_left}}").getTime();
+        let countDownDate = new Date().getTime(); + timeLeft
     </script>
     {% load static %}
     <script src="{% static 'js/test_timer.js' %}"></script>

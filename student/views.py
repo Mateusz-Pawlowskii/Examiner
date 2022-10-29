@@ -110,7 +110,7 @@ class StudentPassExam(LoginRequiredMixin, View):
         result = Result(course = course,
                         student = request.user)
         result.set_order(question_order)
-        result.end_time = datetime.datetime.now() + datetime.timedelta(minutes=course.time) + datetime.timedelta(hours=2)
+        result.end_time = datetime.datetime.now() + datetime.timedelta(minutes=course.time)
         result.save()
         return redirect(reverse_lazy("student:student-question", kwargs={"pk":result.pk}))
 
@@ -125,8 +125,8 @@ class StudentQuestion(LoginRequiredMixin, View):
         context = {"question" : question,
                    "result" : result}
         if course.time > 0:
-            end_time = result.end_time.strftime("%m/%d/%Y, %H:%M:%S")
-            context["end_time"] = end_time
+            time_left = (datetime.datetime.now() - result.end_time).strftime("%m/%d/%Y, %H:%M:%S")
+            context["time_left"] = time_left
         if course.multiple_answer_questions == True:
             return render(request, "student_multiple_question.html", context)
         return render(request, self.template_name, context)
