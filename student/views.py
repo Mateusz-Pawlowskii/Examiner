@@ -191,6 +191,7 @@ class TestDiploma(LoginRequiredMixin, View):
         pdf.add_page()
         # pdf.add_font('DejaVu', '', 'font/ttf/DejaVuSerif.ttf', uni=True)
         # pdf.set_font('DejaVu', '', 14)
+        pdf.set_font('Arial', 'B', 16)
         pdf.image("static/img/diploma.png",0,0,210,297)
         pdf.image("static/img/logo_dip.png",60,20,100,25)
         pdf.cell(0, 50, txt = "", ln = 1, align = 'C')
