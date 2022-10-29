@@ -189,7 +189,7 @@ class TestDiploma(LoginRequiredMixin, View):
         best_result = max(results, key = lambda x : x.current_score)
         pdf = FPDF()
         pdf.add_page()
-        # pdf.add_font('DejaVu', '', 'font/ttf/DejaVuSerif.ttf', uni=True)
+        pdf.add_font('DejaVu', '', 'font/ttf/DejaVuSerif.ttf', uni=True)
         # pdf.set_font('DejaVu', '', 14)
         # pdf.image("static/img/diploma.png",0,0,210,297)
         # pdf.image("static/img/logo_dip.png",60,20,100,25)
@@ -198,7 +198,6 @@ class TestDiploma(LoginRequiredMixin, View):
         # pdf.cell(0, 10, txt = f"z wynikiem {best_result.current_score} na {course.question_amount} przez studenta {user.username}", ln = 1, align = 'C')
         # pdf.cell(0, 50, txt = "Gratulujemy i życzymy dlaszego powodzenia w nauce", ln = 1, align = 'C')
         pdf.output(f"media/diploma/{course.name}_{user.username}.pdf")
-        # return "test"
         return FileResponse(open(f"media/diploma/{course.name}_{user.username}.pdf", "rb"), content_type="application/pdf")
     
 # part about results starts here
