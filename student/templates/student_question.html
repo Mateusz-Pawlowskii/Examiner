@@ -40,12 +40,11 @@
     </button>
 </a>
 {% if end_time %}
-    <!-- autocomplete function was provided by courtesy of W3Schools. I didn't write it myself. -->
     <script>
-        let endTime = new Date("{{end_time}}").getTime();
-        let internalNow = new Date("{{now}}").getTime();
-        let time = endTime - internalNow;
-        let countDownDate = new Date().getTime() + time
+        const endTime = new Date("{{end_time}}").getTime();
+        const internalNow = new Date("{{now}}").getTime();
+        const time = endTime - internalNow;
+        const countDownDate = new Date().getTime() + time
     </script>
     {% load static %}
     <script src="{% static 'js/test_timer.js' %}"></script>
