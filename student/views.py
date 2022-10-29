@@ -187,7 +187,6 @@ class TestDiploma(LoginRequiredMixin, View):
         course = Course.objects.get(pk=self.kwargs["pk"])
         results = Result.objects.filter(course = course, student = user)
         best_result = max(results, key = lambda x : x.current_score)
-        FPDF_FONTPATH = "font/ttf"
         pdf = FPDF()
         pdf.add_page()
         pdf.add_font('DejaVu', '', 'DejaVuSansCondensed.ttf', uni=True)
