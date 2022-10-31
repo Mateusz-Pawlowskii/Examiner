@@ -6,7 +6,7 @@ Pytania do kursu {{ course.name }}
   <tbody>
     {% for question in questions %}
     <tr>
-      <td class="borderless" style="border:none;">{{forloop.counter}}</td>
+      <td class="borderless" style="border:none;">a</td>
       <td class="borderless" style="border:none;">
         <a href="{% url 'examiner_user:edit-question' pk=question.pk slug=course.name|slugify %}">
           <button class="btn btn-success"><div class="small">Edytuj</div></button>
