@@ -266,7 +266,7 @@ class SearchQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         course_pk = self.kwargs["pk"]
-        course_ = Course.objects.filter(pk=course_pk)
+        course_ = get_object_or_404(Course, pk=course_pk)
         questions = Question.objects.filter(course=course_)
         return render(request, self.template_name, {"questions" : questions, "course" : course_})
 

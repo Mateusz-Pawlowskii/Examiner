@@ -6,17 +6,17 @@ Pytania do kursu {{ course.name }}
   <tbody>
     {% for question in questions %}
     <tr>
-      <td>a</td>
-      <td>
-          <button class="btn btn-success">Edytuj</button>
+      <td class="borderless" style="border:none;">{{forloop.counter}}</td>
+      <td class="borderless" style="border:none;">
+        <a href="{% url 'examiner_user:edit-question' pk=question.pk slug=course.name|slugify %}" id="{{forloop.counter}}">
+          <button class="btn btn-success"><div class="small">Edytuj</div></button>
+        </a>
       </td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
-
 <br>
-</a>
 {% endfor %}
 <br>
 <a href="{% url 'examiner_user:create-question' pk=course.pk slug=course.name|slugify %}">
