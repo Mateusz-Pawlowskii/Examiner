@@ -4,7 +4,7 @@
 Pytania do kursu {{ course.name }}
 <table class="table">
   <tbody>
-    <!-- {% for question in questions %} -->
+    {% for question in questions %}
     <tr>
       <td class="borderless" style="border:none;">{{forloop.counter}}</td>
       <td class="borderless" style="border:none;">
@@ -13,7 +13,7 @@ Pytania do kursu {{ course.name }}
         </a>
       </td>
     </tr>
-    <!-- {% endfor %} -->
+    {% endfor %}
   </tbody>
 </table>
 
