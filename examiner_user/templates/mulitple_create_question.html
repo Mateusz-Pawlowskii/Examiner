@@ -8,7 +8,7 @@
 {% endfor %}
 Stwórz nowe pytanie do kursu {{course.name}}
 <br>
-Aktualna ilość pytań: {{course.question|length}}
+Aktualna ilość pytań: {{question_amount}}
 <form method="POST" action="">
   {% csrf_token %}
   <p>

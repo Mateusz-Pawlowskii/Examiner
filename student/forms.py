@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class StudentSearchCourseForm(forms.Form):
-    name = forms.CharField(label="Nazwa", widget=forms.TextInput(attrs={"class":"form-control"}))
+    name = forms.CharField(label="Wyszukaj po nazwie", widget=forms.TextInput(attrs={"class":"form-control"}))
 
 class StudentSearchStatusForm(forms.Form):
     CHOICES= (

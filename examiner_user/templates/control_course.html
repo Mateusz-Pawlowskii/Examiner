@@ -117,7 +117,7 @@
 <button typle="button" class="btn btn-secondary dropdown-toggle tog" id="student_nav">Studenci</button>
 <div class="no-display" id="no-display student">
   <h4>Dodaj nowego studenta</h4> 
-  <p>(wpisz nazwe studenta który ma zostać dołączony do kursu)</p>
+  <p>(wpisz nazwe studenta który ma zostać przypisany do kursu)</p>
   <div class="form-group" id="form-group student">
     <form autocomplete="off" method="POST" action="{% url 'examiner_user:attach-student-text' pk=object.pk slug=object.name|slugify %}" id="student_form">
       {% csrf_token %}
@@ -126,7 +126,7 @@
       </div>
       {{ student_form.course.as_hidden }}
       <br>
-      <button class="btn btn-success mt-3" type="submit" id="submit_student">Dołącz</button>
+      <button class="btn btn-success mt-3" type="submit" id="submit_student">Przypisz</button>
     </form>
   </div>
   <!-- I'm not sure if that feature is usefull so I disabled it -->

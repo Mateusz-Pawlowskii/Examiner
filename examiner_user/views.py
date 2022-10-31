@@ -233,8 +233,10 @@ class CreateQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
         pk = self.kwargs["pk"]
         course_=get_object_or_404(Course, pk=pk)
         form = self.form_class(initial={"course":course_})
+        question_amount = len(Question.objects.filter(course=course_))
         context = {"form" : form,
-                   "course" : course_}
+                   "course" : course_,
+                   "question_amount" : question_amount}
         if course_.multiple_answer_questions is True:
             context["form"] = QuestionFormMultiple(initial={"course":course_})
             return render(request, "mulitple_create_question.html", context)
@@ -282,9 +284,11 @@ class EditQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
         question = self.get_object()
         course_ = question.course
         form = self.form_class(instance=question)
+        question_amount = len(Question.objects.filter(course=course_))
         context = {"form" : form,
                    "course" : course_,
-                   "question" : question}
+                   "question" : question,
+                   "question_amount" : question_amount}
         if course_.multiple_answer_questions is True:
             context["form"] = QuestionFormMultiple(instance=question)
             return render(request, "mulitple_edit_question.html", context)

@@ -7,7 +7,7 @@
 <script src="{% static 'js/autocomplete.js' %}"></script>
 {% endblock %}
 {% block content %}
-<p>Prosze wpisać nazwe studenta który ma zostać dołączony do kursu {{course.name}}</p>
+<p>Prosze wpisać nazwe studenta który ma zostać przypisany do kursu {{course.name}}</p>
 <div class="form-group">
     <form autocomplete="off" method="POST">
         {% csrf_token %}
@@ -16,7 +16,7 @@
         </div>
         {{ form.course.as_hidden }}
         <br>
-        <button class="btn btn-success mt-3" type="submit" id="submit">Dołącz</button>
+        <button class="btn btn-success mt-3" type="submit" id="submit">Przypisz</button>
     </form>
 </div>
 <a href="{% url 'examiner_user:attach-student' pk=course.pk %}">

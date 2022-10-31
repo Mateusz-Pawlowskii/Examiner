@@ -6,7 +6,7 @@
   {{ m }}
 </div>
 {% endfor %}
-<h4>Kursy</h4>
+<h4>Lista kursów</h4>
 <a href="{% url 'examiner_user:create-course' %}" id="add">
   <button class="btn btn-success mb-2">
     Dodaj
@@ -33,9 +33,9 @@
     <tr>
       <th scope="col" onclick="sortColumn('name')">Nazwa</th>
       <th scope="col" onclick="sortColumn('category')">Kategoria</th>
-      <th scope="col" onclick="sortColumn('time')">Czas trwania testu</th>
-      <th scope="col" onclick="sortColumn('question_amount')">Ilość pytań</th>
       <th scope="col" onclick="sortColumn('lesson_amount')">Ilość lekcji</th>
+      <th scope="col" onclick="sortColumn('question_amount')">Ilość pytań</th>
+      <th scope="col" onclick="sortColumn('time')">Czas trwania testu</th>
       <th scope="col" onclick="sortColumn('student_amount')">Ilośc zapisanych studentów</th>
     </tr>
   </thead>
@@ -49,10 +49,12 @@
   const tableBody = document.getElementById("tbody");
   let dataHtml = ""
   for (let object of objectList) {
-    dataHtml += `<tr id="${object.sort_name}"><td id="name_${object.sort_name}">${object.name}</td><td id="category_${object.sort_name}">${object.category}</td>
-      <td id="time_${object.sort_name}">${object.time}</td><td id="question_amount_${object.sort_name}">${object.question_amount}</td>
-      <td id="lesson_amount_${object.sort_name}">${object.lesson_amount}</td><td id="student_amount_${object.sort_name}">
-      ${object.student_amount}</td></tr>`
+    dataHtml += `<tr id="${object.sort_name}"><td id="name_${object.sort_name}">${object.name}</td>
+      <td id="category_${object.sort_name}">${object.category}</td>
+      <td id="lesson_amount_${object.sort_name}">${object.lesson_amount}</td>
+      <td id="question_amount_${object.sort_name}">${object.question_amount}</td>
+      <td id="time_${object.sort_name}">${object.time}</td>
+      <td id="student_amount_${object.sort_name}">${object.student_amount}</td></tr>`
   };
   tableBody.innerHTML = dataHtml;
 };

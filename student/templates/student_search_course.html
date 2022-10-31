@@ -6,7 +6,7 @@
   {{ m }}
 </div>
 {% endfor %}
-<h3>Statusy twoich kursów</h3>
+<h3>Twoje kursy</h3>
 <form method="POST">
   <select id="select">
     <option id="search1">Szukaj po nazwie</option>
@@ -33,7 +33,7 @@ Kursy:
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th width="11%" scope="col" onclick="sortColumn('name')">Kurs</th>
+      <th width="11%" scope="col" onclick="sortColumn('name')">Nazwa</th>
       <th width="11%" scope="col" onclick="sortColumn('category')">Kategoria</th>
       <th width="13%" scope="col" onclick="sortColumn('status')">Status</th>
     </tr>

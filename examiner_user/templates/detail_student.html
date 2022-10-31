@@ -14,8 +14,8 @@
 </div>
 {% endfor %}
 <h3>Profil studenta {{student.username}}</h3>
-<h4>Dodaj studenta do kursu</h4> 
-<p>(wpisz nazwe kursu do którego ma zostać dołączony student)</p>
+<h4>Przypisz kurs do studenta</h4> 
+<p>(wpisz nazwe kursu do którego ma zostać przypisany student)</p>
 <div class="form-group">
   <form autocomplete="off" method="POST">
     {% csrf_token %}
@@ -24,10 +24,15 @@
       </div>
       {{ form.student.as_hidden }}
       <br>
-      <button class="btn btn-success mt-3" type="submit" id="submit">Dołącz</button>
+      <button class="btn btn-success mt-3" type="submit" id="submit">Przypisz</button>
+      <a href="{% url 'examiner_user:students' %}">
+        <button class="btn btn-success mt-3" id="back">
+          Wróć
+        </button>
+      </a>
   </form>
 </div>
-Kursy:
+Kursy przypisane do studenta:
 <br>
 <table class="table">
   <thead class="thead-dark">
