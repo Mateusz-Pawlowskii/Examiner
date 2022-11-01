@@ -1,7 +1,7 @@
 {% extends "examiner_base.html" %}
 
 {% block content %}
-<p>Prosze wybrać studenta który ma zostać przypisany do kursu {{course.name}}</p>
+<p>Prosze wybrać studenta który ma zostać przypisany do kursu <b>{{course.name}}</b></p>
 <div class="form-group">
     <form method="POST">
         {% csrf_token %}

@@ -136,7 +136,7 @@
   <script>students.push("{{student.username}}");</script>
   {% endfor %}
   <br>
-  <h4>Studenci przypisani do kursu {{object.name}}</h4>
+  <h4>Studenci przypisani do kursu <b>{{object.name}}</b></h4>
   <table class="table">
     <tbody>
       {% for student in object.students.all %}

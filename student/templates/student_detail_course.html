@@ -1,7 +1,7 @@
 {% extends "student_base.html" %}
 
 {% block content %}
-<p>{{course.name}}</p>
+<p><b>{{course.name}}</b></p>
 <br>
 <a href="{% url 'student:student-list-lesson' pk=course.pk slug=course.name|slugify %}">Przeglądaj lekcje</a>
 {% if course.test_ready and not passed %}

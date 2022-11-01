@@ -1,7 +1,7 @@
 {% extends "student_base.html" %}
 
 {% block content %}
-<h4>Wyniki testów z kursu {{course.name}}</h4>
+<h4>Wyniki testów z kursu <b>{{course.name}}</b></h4>
 <a href="{% url 'student:results-general' %}">
   <button class="btn btn-success mt-1 mb-1" id="back">
     Wróć
@@ -11,7 +11,7 @@
   <thead class="thead-dark">
     <tr>
       <th width="12%" scope="col">Próba</th>
-      <th width="11%" scope="col">Uzyskane punkty</th>
+      <th width="15%" scope="col">Uzyskane punkty</th>
       <th width="13%" scope="col">%</th>
       <th scope="col">Wynik</th>
     </tr>

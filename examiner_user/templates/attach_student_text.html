@@ -7,7 +7,7 @@
 <script src="{% static 'js/autocomplete.js' %}"></script>
 {% endblock %}
 {% block content %}
-<p>Prosze wpisać nazwe studenta który ma zostać przypisany do kursu {{course.name}}</p>
+<p>Prosze wpisać nazwe studenta który ma zostać przypisany do kursu <b>{{course.name}}</b></p>
 <div class="form-group">
     <form autocomplete="off" method="POST">
         {% csrf_token %}
