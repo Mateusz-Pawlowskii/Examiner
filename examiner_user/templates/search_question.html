@@ -9,7 +9,7 @@ Pytania do kursu {{ course.name }}
       <td class="borderless" style="border:none;">{{forloop.counter}}</td>
       <td class="borderless" style="border:none;">
         <a href="{% url 'examiner_user:edit-question' pk=question.pk slug=course.name|slugify %}">
-          <button class="btn btn-sucess ml-2">
+          <button class="btn btn-success ml-2">
             <div class="small">
               Edytuj
             </div>
