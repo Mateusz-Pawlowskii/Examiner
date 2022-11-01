@@ -5,7 +5,7 @@ function passing_per() {
         document.getElementById('id_passing_score').value = q_amount;
         pass_score = document.getElementById('id_passing_score').value;
     }
-    document.getElementById("perc_score").innerHTML = Math.round(100*pass_score/q_amount + "%");
+    document.getElementById("perc_score").innerHTML = Math.round(100*pass_score/q_amount) + "%";
     }
     passing_per();
     document.getElementById("id_question_amount").addEventListener("change", passing_per);
