@@ -2,10 +2,24 @@
 
 {% block content %}
 Pytania do kursu {{ course.name }}
-{% for question in questions %}
-<br>
-<a href="{% url 'examiner_user:edit-question' pk=question.pk slug=course.name|slugify %}" id="{{forloop.counter}}">{{forloop.counter}}</a>
-{% endfor %}
+<table class="table">
+  <tbody>
+    {% for question in questions %}
+    <tr>
+      <td class="borderless" style="border:none;">{{forloop.counter}}</td>
+      <td class="borderless" style="border:none;">
+        <a href="{% url 'examiner_user:edit-question' pk=question.pk slug=course.name|slugify %}">
+          <button class="btn btn-sucess ml-2">
+            <div class="small">
+              Edytuj
+            </div>
+          </button>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 <br>
 <a href="{% url 'examiner_user:create-question' pk=course.pk slug=course.name|slugify %}">
   <button class="btn btn-success mt-5" id="add_question">
