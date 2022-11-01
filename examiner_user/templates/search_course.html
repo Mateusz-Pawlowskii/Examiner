@@ -51,10 +51,10 @@
   for (let object of objectList) {
     dataHtml += `<tr id="${object.sort_name}"><td id="name_${object.sort_name}">${object.name}</td>
       <td id="category_${object.sort_name}">${object.category}</td>
-      <td id="lesson_amount_${object.sort_name}">${object.lesson_amount}</td>
-      <td id="question_amount_${object.sort_name}">${object.question_amount}</td>
-      <td id="time_${object.sort_name}">${object.time}</td>
-      <td id="student_amount_${object.sort_name}">${object.student_amount}</td></tr>`
+      <td id="lesson_amount_${object.sort_name}" class="text-center">${object.lesson_amount}</td>
+      <td id="question_amount_${object.sort_name}" class="text-center">${object.question_amount}</td>
+      <td id="time_${object.sort_name}" class="text-center">${object.time}</td>
+      <td id="student_amount_${object.sort_name}" class="text-center">${object.student_amount}</td></tr>`
   };
   tableBody.innerHTML = dataHtml;
 };

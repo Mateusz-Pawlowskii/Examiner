@@ -25,7 +25,7 @@
     {% for result, perc in results %}
     <tr>
       <td>{{forloop.counter}}</td>
-      <td class="text-center">{{result.current_score}}</td>
+      <td>{{result.current_score}}</td>
       <td>{{perc}}</td>
       <td>{% if result.passed %} Zaliczający {% else %} Niezaliczający {% endif %}</td>
     </tr>
