@@ -16,7 +16,7 @@
   <thead class="thead-dark">
     <tr>
       <th width="12%" scope="col">Próba</th>
-      <th width="15%" scope="col">Uzyskane punkty</th>
+      <th width="15%" scope="col" class="text-center">Uzyskane punkty</th>
       <th width="13%" scope="col">%</th>
       <th scope="col">Wynik</th>
     </tr>
@@ -25,7 +25,7 @@
     {% for result, perc in results %}
     <tr>
       <td>{{forloop.counter}}</td>
-      <td>{{result.current_score}}</td>
+      <td class="text-center">{{result.current_score}}</td>
       <td>{{perc}}</td>
       <td>{% if result.passed %} Zaliczający {% else %} Niezaliczający {% endif %}</td>
     </tr>
