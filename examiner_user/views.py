@@ -27,7 +27,7 @@ class StudentView(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request):
         context = {"nav_var" : "users",
-                   "object_list" : User.objects.filter(groups=2),
+                   "object_list" : get_object_or_404(User, groups=2),
                    "form" : StudentSearchCourseForm()}
         return render(request, self.template_name, context)
 
@@ -337,7 +337,7 @@ class CreateLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
            filename.rsplit('.', 1)[1].lower() in {"pdf"}
 
     def get(self, request, *args, **kwargs):
-        course_=get_object_or_404(Course, pk=self.kwargs["pk"])
+        course_ = get_object_or_404(Course, pk=self.kwargs["pk"])
         form = self.form_class(initial={"course":course_})
         return render(request, self.template_name, {"form":form, "course":course_})
     
