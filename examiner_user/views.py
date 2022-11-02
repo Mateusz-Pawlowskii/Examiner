@@ -332,10 +332,6 @@ class CreateLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "create_lesson.html"
     form_class = LessonForm
 
-    def check_file(self, filename):
-        return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in {"pdf"}
-
     def get(self, request, *args, **kwargs):
         course_ = get_object_or_404(Course, pk=self.kwargs["pk"])
         form = self.form_class(initial={"course":course_})
@@ -344,14 +340,12 @@ class CreateLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         course_ = get_object_or_404(Course, pk=self.kwargs["pk"])
         form = self.form_class(request.POST, request.FILES)
-        # file = request.FILES["material"]
-        # if self.check_file(file.name):
         if form.is_valid():
             form.save()
             course_.lesson_amount += 1
             course_.save()
-        # else:
-        #     messages.error(request, "Niepoprawne rozszerzenie pliku")
+        else:
+            messages.error(request, "Niepoprawny plik")
         return redirect(reverse_lazy("examiner_user:edit-course", kwargs={"pk":course_.pk, "slug":self.kwargs["slug"]}))
 
 class DetailLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
