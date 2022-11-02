@@ -377,13 +377,12 @@ class DetailLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
 class ViewLesson(LoginRequiredMixin, View):
 
     def check_file(self, filename):
-        filename = filename[7:]
         return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in {"pdf"}
 
     def get(self, request, *args, **kwargs):
         lesson = get_object_or_404(Lesson, pk=self.kwargs["pk"])
-        if self.check_file(lesson.material):
+        if self.check_file(lesson.material[8:]):
             return FileResponse(open(f"media/{lesson.material}", "rb"), content_type="application/pdf")
         else:
             return FileResponse(open(f"media/{lesson.material}", "rb"), as_attachment=True)
