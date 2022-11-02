@@ -332,7 +332,7 @@ class CreateLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "create_lesson.html"
     form_class = LessonForm
 
-    def allowed_file(self, filename):
+    def check_file(self, filename):
         return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in {"pdf"}
 
@@ -344,14 +344,14 @@ class CreateLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         course_ = get_object_or_404(Course, pk=self.kwargs["pk"])
         form = self.form_class(request.POST, request.FILES)
-        file = request.FILES["material"]
-        if self.allowed_file(file.name):
-            if form.is_valid():
-                form.save()
-                course_.lesson_amount += 1
-                course_.save()
-        else:
-            messages.error(request, "Niepoprawne rozszerzenie pliku")
+        # file = request.FILES["material"]
+        # if self.check_file(file.name):
+        if form.is_valid():
+            form.save()
+            course_.lesson_amount += 1
+            course_.save()
+        # else:
+        #     messages.error(request, "Niepoprawne rozszerzenie pliku")
         return redirect(reverse_lazy("examiner_user:edit-course", kwargs={"pk":course_.pk, "slug":self.kwargs["slug"]}))
 
 class DetailLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -375,9 +375,17 @@ class DetailLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
         return redirect(reverse_lazy("examiner_user:edit-course", kwargs={"pk":course.pk, "slug":self.kwargs["slug"]}))
 
 class ViewLesson(LoginRequiredMixin, View):
+
+    def check_file(self, filename):
+        return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in {"pdf"}
+
     def get(self, request, *args, **kwargs):
         lesson = get_object_or_404(Lesson, pk=self.kwargs["pk"])
-        return FileResponse(open(f"media/{lesson.material}", "rb"), content_type="application/pdf")
+        if self.check_file(lesson.material):
+            return FileResponse(open(f"media/{lesson.material}", "rb"), content_type="application/pdf")
+        else:
+            return FileResponse(open(f"media/{lesson.material}", "rb"), as_attachment=True)
 
 class EditLessonContent(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_lesson")
