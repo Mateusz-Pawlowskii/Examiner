@@ -8,7 +8,7 @@
     <tr>
       <td class="borderless" style="border:none;">{{forloop.counter}}</td>
       <td class="borderless" style="border:none;">
-        <a href="{% url 'examiner_user:edit-question' pk=question.pk slug=course.name|slugify %}">
+        <a href="{% url 'examiner_user:edit-question' pk=question.pk slug=course.name|slugify %}" id="{{forloop.counter}}">
           <button class="btn btn-success ml-2">
             <div class="small">
               Edytuj
