@@ -47,8 +47,8 @@ class DetailStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        course = Course.objects.get(name=request.POST["course"])
-        student = User.objects.get(pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, name=request.POST["course"])
+        student = get_object_or_404(User, pk=self.kwargs["pk"])
         course.students.add(student)
         course.student_amount += 1
         course.save()
@@ -104,15 +104,15 @@ class AttachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     form_class = AttachStudentForm
 
     def get(self, request, *args, **kwargs):
-        course = Course.objects.get(pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
         form = self.form_class(initial={"course":course})
         context = {"form":form,
                    "course":course}
         return render(request, self.template_name, context)
     
     def post(self, request, *args, **kwargs):
-        student = User.objects.get(pk=request.POST["student"])
-        course = Course.objects.get(pk=request.POST["course"])
+        student = get_object_or_404(User, pk=request.POST["student"])
+        course = get_object_or_404(Course, pk=request.POST["course"])
         course.students.add(student)
         course.student_amount += 1
         course.save()
@@ -124,7 +124,7 @@ class AttachStudentText(LoginRequiredMixin, PermissionRequiredMixin, View):
     form_class = AttachStudentTextForm
 
     def get(self, request, *args, **kwargs):
-        course = Course.objects.get(pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
         form = self.form_class(initial={"course":course})
         context = {"form":form,
                    "course":course,
@@ -132,8 +132,8 @@ class AttachStudentText(LoginRequiredMixin, PermissionRequiredMixin, View):
         return render(request, self.template_name, context)
     
     def post(self, request, *args, **kwargs):
-        student = User.objects.get(username=request.POST["student"])
-        course = Course.objects.get(pk=self.kwargs["pk"])
+        student = get_object_or_404(User, username=request.POST["student"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
         course.students.add(student)
         course.student_amount += 1
         course.save()
@@ -143,8 +143,8 @@ class UnattachStudents(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.view_user")
     
     def post(self, request, *args, **kwargs):
-        course = Course.objects.get(pk=self.kwargs["pk"])
-        student = User.objects.get(pk=request.POST["student"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
+        student = get_object_or_404(User, pk=request.POST["student"])
         course.students.remove(student)
         course.student_amount -= 1
         course.save()
@@ -183,7 +183,7 @@ class DetailCourse(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
-        course = Course.objects.get(pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
         context["questions"] = Question.objects.filter(course=course)
         context["lessons"] = Lesson.objects.filter(course=course)
         context["students"] = User.objects.filter(course=course)
@@ -196,7 +196,7 @@ class ControlCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     form_class = CourseEditForm
 
     def get(self, request, *args, **kwargs):
-        course = Course.objects.get(pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
         course_form = self.form_class(instance=course)
         lesson_list = Lesson.objects.filter(course=course)
         context = {"object" : course,
@@ -209,7 +209,7 @@ class ControlCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        course = Course.objects.get(pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
         if request.POST["multiple_answer_questions"] == "on":
             course.multiple_answer_questions = True
         else:
@@ -360,14 +360,14 @@ class DetailLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
     queryset = Lesson.objects.all()
 
     def get(self, request, *args, **kwargs):
-        lesson = Lesson.objects.get(pk=self.kwargs["pk"])
+        lesson = get_object_or_404(Lesson, pk=self.kwargs["pk"])
         context = {"lesson":lesson,
                    "course_pk":lesson.course.pk,
                    "slug" : self.kwargs["slug"]}
         return render(request, self.template_name, context)
     
     def post(self, request, *args, **kwargs):
-        lesson = Lesson.objects.get(pk=self.kwargs["pk"])
+        lesson = get_object_or_404(Lesson, pk=self.kwargs["pk"])
         course = lesson.course
         lesson.delete()
         course.lesson_amount -= 1
@@ -376,7 +376,7 @@ class DetailLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
 
 class ViewLesson(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        lesson = Lesson.objects.get(pk=self.kwargs["pk"])
+        lesson = get_object_or_404(Lesson, pk=self.kwargs["pk"])
         return FileResponse(open(f"media/{lesson.material}", "rb"), content_type="application/pdf")
 
 class EditLessonContent(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -447,8 +447,8 @@ class ExaminerResultView(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.view_user")
 
     def get(self, request, *args, **kwargs):
-        course = Course.objects.get(pk=self.kwargs["course"])
-        student = User.objects.get(pk=self.kwargs["student"])
+        course = get_object_or_404(Course, pk=self.kwargs["course"])
+        student = get_object_or_404(User, pk=self.kwargs["student"])
         results = Result.objects.filter(course=course, student=student)
         perc = []
         for result in results:
@@ -470,7 +470,7 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         return 0
 
     def get(self, request, *args, **kwargs):
-        course = Course.objects.get(pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
         students = User.objects.filter(course=course)
         context = {"course" : course,
                    "students" : students}

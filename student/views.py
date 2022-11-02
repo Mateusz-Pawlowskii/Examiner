@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, View
 from django.http import FileResponse
@@ -42,7 +42,7 @@ class StudentDetailCourse(LoginRequiredMixin, View):
     template_name = "student_detail_course.html"
 
     def get(self, request, **kwargs):
-        course = Course.objects.get(pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
         context = {"course":course}
         # this code is related to diploma feature and I don't know if it should exist
         user = request.user
@@ -57,7 +57,7 @@ class StudentListLesson(LoginRequiredMixin, View):
     template_name = "student_list_lesson.html"
 
     def get(self, request, **kwargs):
-        course = Course.objects.get(pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
         lessons = Lesson.objects.filter(course=course)
         context = {"lessons" : lessons}
         return render(request, self.template_name, context)
@@ -67,7 +67,7 @@ class StudentAttemptExam(LoginRequiredMixin, View):
     template_name = "student_attempt_exam.html"
 
     def get(self, request, *args, **kwargs):
-        course = Course.objects.get(pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
         results = Result.objects.filter(course=course, student=request.user)
         used_attempts = len(results)
         total_attempts = course.attempt_amount
@@ -85,11 +85,11 @@ class StudentPassExam(LoginRequiredMixin, View):
         for result in student_results:
             if result.finished is False:
                 return redirect(reverse_lazy("student:student-question", kwargs={"pk":result.pk}))
-        course = Course.objects.get(pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
         return redirect(reverse_lazy("student:student-attempt-exam", kwargs={"pk":course.pk}))
 
     def post(self, request, *args, **kwargs):
-        course = Course.objects.get(pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
         questions = Question.objects.filter(course=course)
         raw_question_amount = len(questions)
         stated_question_amount = course.question_amount
@@ -118,7 +118,7 @@ class StudentQuestion(LoginRequiredMixin, View):
     template_name = "student_question.html"
 
     def get(self, request, *args, **kwargs):
-        result = Result.objects.get(pk=self.kwargs["pk"])
+        result = get_object_or_404(Result, pk=self.kwargs["pk"])
         course = result.course
         questions = Question.objects.filter(course=course)
         question = questions[result.get_order()[result.current_question-1]-1]
@@ -133,7 +133,7 @@ class StudentQuestion(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        result = Result.objects.get(pk=self.kwargs["pk"])
+        result = get_object_or_404(Result, pk=self.kwargs["pk"])
         course = result.course
         questions = Question.objects.filter(course=course)
         question = questions[result.get_order()[result.current_question-1]-1]
@@ -163,7 +163,7 @@ class TestFinish(LoginRequiredMixin, View):
     timeout = False
 
     def get(self, request, *args, **kwargs):
-        result = Result.objects.get(pk=self.kwargs["pk"])
+        result = get_object_or_404(Result, pk=self.kwargs["pk"])
         result.finished = True
         result.save()
         course = result.course
@@ -184,7 +184,7 @@ class TestDiploma(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         user = request.user
-        course = Course.objects.get(pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
         results = Result.objects.filter(course = course, student = user)
         best_result = max(results, key = lambda x : x.current_score)
         pdf = FPDF()
@@ -205,7 +205,7 @@ class StudentResultView(LoginRequiredMixin, View):
     template_name = "student_result_view.html"
 
     def get(self, request, *args, **kwargs):
-        course = Course.objects.get(pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
         results = Result.objects.filter(course=course, student=request.user)
         perc = []
         for result in results:
