@@ -135,10 +135,10 @@ class TestExaminer(LiveServerTestCase):
         # user checks if student is appeneded
         # student_nav must be double clicked due to unscrolling aimation
         click_id(self.browser, "student_nav")
-        # click_id(self.browser, "student_nav")
+        time.sleep(1)
+        click_id(self.browser, "student_nav")
         self.assertIsNotNone(self.browser.find_element(By.ID, "testowyStudent_table"))
         # user removes student from course
-        time.sleep(20)
         click_id(self.browser, "testowyStudent_delete")
         click_id(self.browser, "student_nav")
         # user checks if there is no student in the course student list

@@ -9,7 +9,7 @@ import time
 # Create your tests here.
 
 # settings for testing
-home_adress = "http://127.0.0.1:8000"
+home_adress = "https://examiner-mp.herokuapp.com"
 test_login_examiner = "Test"
 test_login = "Test_student"
 # both test accounts are assumed to use same password
