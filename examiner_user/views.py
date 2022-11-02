@@ -27,7 +27,7 @@ class StudentView(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request):
         context = {"nav_var" : "users",
-                   "object_list" : get_object_or_404(User, groups=2),
+                   "object_list" : User.objects.filter(groups=2),
                    "form" : StudentSearchCourseForm()}
         return render(request, self.template_name, context)
 
@@ -37,7 +37,7 @@ class DetailStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     form_class = AttachCourseTextForm
 
     def get(self, request, *args, **kwargs):
-        student = User.objects.get(pk=self.kwargs["pk"])
+        student = get_object_or_404(User, pk=self.kwargs["pk"])
         courses = Course.objects.filter(students=student)
         test_marks = test_mark(courses, student)
         context = {"student" : student,
