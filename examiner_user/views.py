@@ -385,7 +385,8 @@ class ViewLesson(LoginRequiredMixin, View):
         if self.check_file(lesson.material):
             return FileResponse(open(f"media/{lesson.material}", "rb"), content_type="application/pdf")
         else:
-            return FileResponse(open(f"media/{lesson.material}", "rb"), as_attachment=True)
+            pass
+        #     return FileResponse(open(f"media/{lesson.material}", "rb"), as_attachment=True)
 
 class EditLessonContent(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_lesson")
