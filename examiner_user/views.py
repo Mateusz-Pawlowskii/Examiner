@@ -377,7 +377,7 @@ class DetailLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
 class ViewLesson(LoginRequiredMixin, View):
 
     def check_file(self, filename):
-        filename = filename[8:]
+        filename = filename[9:]
         return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in {"pdf"}
 
