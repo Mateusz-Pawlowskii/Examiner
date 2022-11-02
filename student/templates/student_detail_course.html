@@ -12,6 +12,7 @@
 <br>
 <a href="{% url 'student:diploma' pk=course.pk slug=course.name|slugify %}">Pobierz Dyplom</a>
 {% endif %}
+<br>
 <a href="{% url 'student:student-search-course' %}">
     <button class="btn btn-success mt-1" id="back">
       Wróć
