@@ -382,9 +382,8 @@ class ViewLesson(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         lesson = get_object_or_404(Lesson, pk=self.kwargs["pk"])
-        if self.check_file(lesson.material):
-            pass
-            # return FileResponse(open(f"media/{lesson.material}", "rb"), content_type="application/pdf")
+        if self.check_file(lesson.material[0][8:]):
+            return FileResponse(open(f"media/{lesson.material}", "rb"), content_type="application/pdf")
         else:
             return FileResponse(open(f"media/{lesson.material}", "rb"), as_attachment=True)
 
