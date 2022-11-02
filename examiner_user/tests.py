@@ -4,11 +4,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
+import time
 
 # Create your tests here.
 
 # settings for testing
-home_adress = "http://127.0.0.1:8000"
+home_adress = "https://examiner-mp.herokuapp.com"
 test_login = "Test"
 test_password = "JBfP64Zbk3mKBYAt"
 geko_driver_directory = ""
@@ -137,6 +138,7 @@ class TestExaminer(LiveServerTestCase):
         click_id(self.browser, "student_nav")
         self.assertIsNotNone(self.browser.find_element(By.ID, "testowyStudent_table"))
         # user removes student from course
+        time.sleep(20)
         click_id(self.browser, "testowyStudent_delete")
         click_id(self.browser, "student_nav")
         # user checks if there is no student in the course student list
