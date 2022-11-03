@@ -1,8 +1,8 @@
-function search1 (event) {
+function search1 () {
     document.getElementById("form1").style.display = "block";
     document.getElementById("form2").style.display = "none";
 }
-function search2 (event) {
+function search2 () {
     document.getElementById("form1").style.display = "none";
     document.getElementById("form2").style.display = "block";
 }
@@ -32,10 +32,10 @@ function nameSearch () {
 };
     };
     if (document.getElementById("search1")) {
-        document.getElementById("search1").addEventListener("click", search1);
+        document.getElementById("search1").addEventListener("click", search1, true);
     }
     if (document.getElementById("search2")) {
-        document.getElementById("search2").addEventListener("click", search2);
+        document.getElementById("search2").addEventListener("click", search2, true);
     }
     if (document.getElementById("id_category")) {
     document.getElementById("id_category").addEventListener("change", categorySearch);
