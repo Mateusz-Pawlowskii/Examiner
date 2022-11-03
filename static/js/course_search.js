@@ -1,10 +1,12 @@
 function search1 () {
     document.getElementById("form1").style.display = "block";
     document.getElementById("form2").style.display = "none";
+    console.log("search1")
 }
 function search2 () {
     document.getElementById("form1").style.display = "none";
     document.getElementById("form2").style.display = "block";
+    console.log("search2")
 }
 function categorySearch () {
     const content = document.getElementById("id_category");
