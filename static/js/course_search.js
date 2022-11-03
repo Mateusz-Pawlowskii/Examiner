@@ -32,10 +32,14 @@ function nameSearch () {
 };
     };
     if (document.getElementById("search1")) {
-        document.getElementById("search1").addEventListener("click", search1, true);
+        console.log("search1detec")
+        document.getElementById("search1").addEventListener("click", search1);
+        console.log("search1listen")
     }
     if (document.getElementById("search2")) {
-        document.getElementById("search2").addEventListener("click", search2, true);
+        console.log("search2detec")
+        document.getElementById("search2").addEventListener("click", search2);
+        console.log("search2listen")
     }
     if (document.getElementById("id_category")) {
     document.getElementById("id_category").addEventListener("change", categorySearch);
