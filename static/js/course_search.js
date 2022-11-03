@@ -42,6 +42,4 @@ function nameSearch () {
     }
     document.getElementById("id_name").addEventListener("change", nameSearch);
 
-    window.onload = () => {
-        search1()
-      };
+    search1()
