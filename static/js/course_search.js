@@ -32,7 +32,7 @@ function nameSearch () {
 };
     };
     if (document.getElementById("search1")) {
-        document.getElementById("search1").addEventListener("mouseover", search1);
+        document.getElementById("search1").addEventListener("mouseover", search1); 
     }
     if (document.getElementById("search2")) {
         document.getElementById("search2").addEventListener("mouseover", search2);
