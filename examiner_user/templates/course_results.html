@@ -101,9 +101,9 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
 </script>
 {% for student in students %}
 <script>
-  objectList.push({"name" : "<a href='{% url 'examiner_user:results-course-student' course=course.pk student=student.pk %}''>{{student.username}}</a>", 
+  objectList.push({"name" : "<a href='{% url 'examiner_user:results-course-student' course=course.pk student=student.pk %}''>{{student.username}}</a>",
     "status" : test_marks[Number("{{forloop.counter}}")-1], "sort_status" : test_marks[Number("{{forloop.counter}}")-1],
-    "sort_name" : "{{student.username}}", "pk" : "{{student.pk}}"
+    "sort_name" : "{{student.username}}", "pk" : "{{student.pk}}", "sort_pk" : "{{student.pk}}"
      })
 </script>
 {% endfor %}
