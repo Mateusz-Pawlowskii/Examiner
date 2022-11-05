@@ -88,7 +88,7 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
   const tableBody = document.getElementById("tbody");
   let dataHtml = ""
   for (let object of objectList) {
-    if (`${object.ststus}` === "Zaliczony") {
+    if (`${object.status}` === "Zaliczony") {
       dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td><td><button class = "btn btn-success">Dyplom</button>{% endif %}</td></tr>`
     }
     else {
