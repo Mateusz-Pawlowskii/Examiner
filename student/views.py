@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, View
 from django.http import FileResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 import random
 import datetime
 from django.contrib import messages
@@ -43,7 +44,8 @@ class StudentDetailCourse(LoginRequiredMixin, View):
 
     def get(self, request, **kwargs):
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
-        context = {"course":course}
+        context = {"course":course,
+                   "student": request.user}
         # this code is related to diploma feature and I don't know if it should exist
         user = request.user
         results = Result.objects.filter(student = user, course = course)
@@ -183,7 +185,7 @@ class TestTimeOut(TestFinish):
 class TestDiploma(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
-        user = request.user
+        user = get_object_or_404(User, pk=self.kwargs["student"])
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
         results = Result.objects.filter(course = course, student = user)
         best_result = max(results, key = lambda x : x.current_score)

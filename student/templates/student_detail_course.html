@@ -10,7 +10,7 @@
 {% endif %}
 {% if passed %}
 <br>
-<a href="{% url 'student:diploma' pk=course.pk slug=course.name|slugify %}">Pobierz Dyplom</a>
+<a href="{% url 'student:diploma' pk=course.pk student=student.pk slug=course.name|slugify %}">Pobierz Dyplom</a>
 {% endif %}
 <br>
 <a href="{% url 'student:student-search-course' %}">

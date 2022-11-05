@@ -16,5 +16,5 @@ urlpatterns = [
     path("exam/finish/timeout/<int:pk>", TestTimeOut.as_view(), name="test-timeout"),
     path("course/results/<int:pk>", StudentResultView.as_view(), name="course-results"),
     path("results/general", StudentResultGeneralView.as_view(), name="results-general"),
-    path("diploma/<int:pk>/<slug:slug>", TestDiploma.as_view(), name="diploma")
+    path("diploma/<int:pk>/<int:student>/<slug:slug>", TestDiploma.as_view(), name="diploma")
 ]
