@@ -207,7 +207,7 @@ class TestDiploma(LoginRequiredMixin, View):
         pdf.set_font('DejaVu', '', 17)
         pdf.cell(0, 15, txt = "z wynikiem pozytywnym", ln = 1, align = 'C')
         perc = round((best_result.current_score/course.question_amount)*100)
-        pdf.cell(0, 15, txt = f"Osiągnął wynik {perc}%", ln = 1, align = 'C')
+        pdf.cell(0, 15, txt = f"osiągnął wynik {perc}%", ln = 1, align = 'C')
         pdf.cell(0, 15, txt = f"uzyskując {best_result.current_score} z {course.question_amount} punktów", ln = 1, align = 'C')
         pdf.cell(0, 50, txt = "Gratulujemy i życzymy dlaszego powodzenia w nauce", ln = 1, align = 'C')
         pdf.output(f"media/diploma/{course.name}_{user.username}.pdf")
