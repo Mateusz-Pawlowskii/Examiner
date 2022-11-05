@@ -176,7 +176,7 @@ class TestFinish(LoginRequiredMixin, View):
         context = {"result" : result,
                    "max_score" : max_score,
                    "timeout" : self.timeout,
-                   "perc" : (result.current_score/max_score)*100}
+                   "perc" : round((result.current_score/max_score)*100)}
         return render(request, self.template_name, context)
 
 class TestTimeOut(TestFinish):
