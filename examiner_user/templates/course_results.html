@@ -62,6 +62,7 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
     <tr>
       <th width="12%" scope="col" onclick="sortColumn('name')">Student</th>
       <th width="11%" scope="col" onclick="sortColumn('status')">Status</th>
+      <th></th>
     </tr>
   </thead>
   <tbody id="tbody">
@@ -87,7 +88,7 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
   const tableBody = document.getElementById("tbody");
   let dataHtml = ""
   for (let object of objectList) {
-    dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td></tr>`
+    dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td></tr><td>{% if ${object.ststus} == "Zaliczony" %}<a href="{% url 'student:diploma' pk=course.pk slug=course.name|slugify %}"><button class = "btn btn-success">Dyplom</button></a>{% endif %}</td>`
   };
   tableBody.innerHTML = dataHtml;
 };
