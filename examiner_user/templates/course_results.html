@@ -89,7 +89,7 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
   let dataHtml = ""
   for (let object of objectList) {
     if (String(object.status) === "Zaliczony") {
-      dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td><td><button class = "btn btn-success">Dyplom</button></td></tr>`
+      dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td><td><a href="{% url 'student:diploma' pk=course.pk slug=course.name|slugify %}"><button class = "btn btn-success">Dyplom</button></a></td></tr>`
     }
     else {
       dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td></tr>`
