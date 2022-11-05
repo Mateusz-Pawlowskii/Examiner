@@ -33,8 +33,10 @@
     <br>
     <div class="text-center">
         <p>
+            Jest to test {% if course.multiple_answer_questions %}wielokrotnego{% else %}jednokrotnego{% endif %} wyboru.
+            <br>
             Test składa się z {{course.question_amount}} pytań, by zaliczyć należy udzielić {{course.passing_score}} prawidłowych
-            odpowiedzi. Jest to test {% if course.multiple_answer_questions %}wielokrotnego{% else %}jednokrotnego{% endif %} wyboru.
+            odpowiedzi.
             <br>
             Na rozwiązanie testu masz {{course.time}} minut.
         </p>
