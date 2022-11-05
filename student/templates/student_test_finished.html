@@ -1,6 +1,7 @@
 {% extends "student_base.html" %}
 
 {% block content %}
+<h4 class="text-center">Podsumowanie testu</h4>
 {% if timeout == True %}
 <div class="text-center" id="timeout">
     <p>
@@ -10,7 +11,8 @@
 {% endif %}
 <div class="text-center">
     <p>
-        Zostało uzyskane {{result.current_score}} punktów z {{max_score}}
+        Osiągnąłeś wynik {{perc}}%
+        Zostało uzyskane {{result.current_score}} z {{max_score}} punktów.
     </p>
 </div>
 {% if result.passed == True %}
