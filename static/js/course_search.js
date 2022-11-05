@@ -31,6 +31,15 @@ function nameSearch () {
     loadTableData(searchObjectList);
 };
     };
+    function selectFunction () {
+        if (document.getElementById("select").value === "Szukaj po nazwie") {
+            search1()
+        }
+        else if (document.getElementById("select").value === "Szukaj po kategorii") {
+            search2()
+        }
+    }
+    document.getElementById("select").addEventListener("change", selectFunction)
     if (document.getElementById("search1")) {
         document.getElementById("search1").addEventListener("mousedown", search1);
     }
