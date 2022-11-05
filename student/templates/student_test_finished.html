@@ -1,7 +1,11 @@
 {% extends "student_base.html" %}
 
 {% block content %}
-<h4 class="text-center">Podsumowanie testu</h4>
+<h4 class="text-center">
+    Podsumowanie testu
+    <br>
+    {{course.name}}
+</h4>
 {% if timeout == True %}
 <div class="text-center" id="timeout">
     <p>
