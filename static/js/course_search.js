@@ -18,6 +18,7 @@ function categorySearch () {
     loadTableData(searchObjectList);
 }
 function nameSearch () {
+    console.log("test")
     const content = document.getElementById("id_name").value;
     if (content === "") {
         loadTableData(objectList)
