@@ -43,5 +43,8 @@ function nameSearch () {
     if (document.getElementById("id_category")) {
     document.getElementById("id_category").addEventListener("change", categorySearch);
     }
+    if (document.getElementById("id_name")) {
+        document.getElementById("id_name").addEventListener("change", nameSearch);
+        }
     search1()
     document.getElementById("id_name").addEventListener("change", nameSearch);
