@@ -18,7 +18,6 @@ function categorySearch () {
     loadTableData(searchObjectList);
 }
 function nameSearch () {
-    console.log("test")
     const content = document.getElementById("id_name").value;
     if (content === "") {
         loadTableData(objectList)
@@ -44,6 +43,5 @@ function nameSearch () {
     if (document.getElementById("id_category")) {
     document.getElementById("id_category").addEventListener("change", categorySearch);
     }
-    document.getElementById("id_name").addEventListener("change", nameSearch);
-
     search1()
+    document.getElementById("id_name").addEventListener("change", nameSearch);
