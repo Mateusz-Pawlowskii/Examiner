@@ -39,12 +39,13 @@ function nameSearch () {
             search2()
         }
     }
+    if (document.getElementById("select")) {
     document.getElementById("select").addEventListener("change", selectFunction)
+        }
     if (document.getElementById("id_category")) {
     document.getElementById("id_category").addEventListener("change", categorySearch);
-    }
+        }
     if (document.getElementById("id_name")) {
         document.getElementById("id_name").addEventListener("change", nameSearch);
         }
     search1()
-    document.getElementById("id_name").addEventListener("change", nameSearch);
