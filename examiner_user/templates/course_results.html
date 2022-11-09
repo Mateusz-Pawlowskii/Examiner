@@ -60,8 +60,9 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th width="20%" scope="col" onclick="sortColumn('name')">Student</th>
-      <th width="20%" scope="col" onclick="sortColumn('status')">Status</th>
+      {% load static %}
+      <th width="20%" scope="col" onclick="sortColumn('name',1)">Student <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th width="20%" scope="col" onclick="sortColumn('status',2)">Status <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
       <th></th>
     </tr>
   </thead>
@@ -84,6 +85,7 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
 {% endfor %}
 <script>
   let objectList = [];
+  let columnNum = 3;
   function loadTableData(objectList) {
   const tableBody = document.getElementById("tbody");
   let dataHtml = ""

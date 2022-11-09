@@ -19,10 +19,11 @@
 </div>
 <table class="table">
   <thead class="thead-dark">
-    <tr>
-      <th scope="col" onclick="sortColumn('name')">Nazwa użytkownika</th>
-      <th scope="col" onclick="sortColumn('login')">Ostatni login</th>
-      <th scope="col" onclick="sortColumn('join')">Data dołączenia</th>
+    <tr id="first_row">
+      {% load static %}
+      <th id="th1" scope="col" onclick="sortColumn('name',1)">Nazwa użytkownika <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th id="th2" scope="col" onclick="sortColumn('login',2)">Ostatni login <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
+      <th id="th3" scope="col" onclick="sortColumn('join',3)">Data dołączenia <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
     </tr>
   </thead>
   <tbody id="tbody">
@@ -30,6 +31,7 @@
   </tbody>
 </table>
 <script>
+  let columnNum = 4;
   let objectList = [];
   function loadTableData(objectList) {
   const tableBody = document.getElementById("tbody");

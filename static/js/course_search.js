@@ -15,11 +15,13 @@ function categorySearch () {
             searchObjectList.push(object);
         };
 };
+    placeButtons()
     loadTableData(searchObjectList);
 }
 function nameSearch () {
     const content = document.getElementById("id_name").value;
     if (content === "") {
+        placeButtons()
         loadTableData(objectList)
     } else {
     let searchObjectList = [];
@@ -28,6 +30,7 @@ function nameSearch () {
             searchObjectList.push(object);
         };
 };
+    placeButtons()
     loadTableData(searchObjectList);
 };
     };

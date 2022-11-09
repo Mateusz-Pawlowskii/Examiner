@@ -526,14 +526,14 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
 # does not clean the database after selenium-created views so I needed a seprate view for tearDown
 class Clean_up(View):
     def get(self, request, *args, **kwargs):
-        while Course.objects.filter(name="Niezaliczony").first():
-            Course.objects.filter(name="Niezaliczony").first().delete()
-        while Course.objects.filter(name="Brak czasu").first():
-            Course.objects.filter(name="Brak czasu").first().delete()
-        while Course.objects.filter(name="Testowa nazwa kursu").first():
-            Course.objects.filter(name="Testowa nazwa kursu").first().delete()
-        if Course.objects.filter(name="Edytowana nazwa kursu").first():
-            Course.objects.filter(name="Edytowana nazwa kursu").first().delete()
-        if User.objects.filter(username="testowyStudent").first():
-            User.objects.filter(username="testowyStudent").first().delete()
+        # while Course.objects.filter(name="Niezaliczony").first():
+        #     Course.objects.filter(name="Niezaliczony").first().delete()
+        # while Course.objects.filter(name="Brak czasu").first():
+        #     Course.objects.filter(name="Brak czasu").first().delete()
+        # while Course.objects.filter(name="Testowa nazwa kursu").first():
+        #     Course.objects.filter(name="Testowa nazwa kursu").first().delete()
+        # if Course.objects.filter(name="Edytowana nazwa kursu").first():
+        #     Course.objects.filter(name="Edytowana nazwa kursu").first().delete()
+        # if User.objects.filter(username="testowyStudent").first():
+        #     User.objects.filter(username="testowyStudent").first().delete()
         return redirect(reverse_lazy("exam:home-redirect"))

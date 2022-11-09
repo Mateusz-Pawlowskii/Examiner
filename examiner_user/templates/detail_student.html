@@ -37,8 +37,9 @@ Kursy przypisane do studenta:
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col" onclick="sortColumn('name')">Nazwa kursu</th>
-      <th scope="col" onclick="sortColumn('status')">Status</th>
+      {% load static %}
+      <th scope="col" onclick="sortColumn('name',1)">Nazwa kursu <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('status',2)">Status <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
     </tr>
   </thead>
   <tbody id="tbody">
@@ -48,6 +49,7 @@ Kursy przypisane do studenta:
 <script>
     let test_marks = [];
     let objectList = [];
+    let columnNum = 3;
 function loadTableData(objectList) {
   const tableBody = document.getElementById("tbody");
   let dataHtml = ""

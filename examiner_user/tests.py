@@ -9,7 +9,7 @@ import time
 # Create your tests here.
 
 # settings for testing
-home_adress = "https://examiner-mp.herokuapp.com"
+home_adress = "http://127.0.0.1:8000/"
 test_login = "Test"
 test_password = "JBfP64Zbk3mKBYAt"
 geko_driver_directory = ""

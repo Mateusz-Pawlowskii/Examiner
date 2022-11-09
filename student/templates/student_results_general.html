@@ -26,9 +26,10 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th width="11%" scope="col" onclick="sortColumn('name')">Kurs</th>
-      <th width="11%" scope="col" onclick="sortColumn('category')">Kategoria</th>
-      <th width="13%" scope="col" onclick="sortColumn('status')">Status</th>
+      {% load static %}
+      <th width="11%" scope="col" onclick="sortColumn('name',1)">Kurs <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th width="11%" scope="col" onclick="sortColumn('category',2)">Kategoria <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
+      <th width="13%" scope="col" onclick="sortColumn('status',3)">Status <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
     </tr>
   </thead>
   <tbody id="tbody">
@@ -36,7 +37,8 @@
   </tbody>
 </table>
 <script>
-  let test_marks = []
+  let test_marks = [];
+  let columnNum = 4;
 </script>
 {% for mark in marks %}
 <script>

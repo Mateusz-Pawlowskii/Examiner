@@ -30,13 +30,14 @@
 </div>
 <table class="table">
   <thead class="thead-dark">
-    <tr>
-      <th scope="col" onclick="sortColumn('name')">Nazwa</th>
-      <th scope="col" onclick="sortColumn('category')">Kategoria</th>
-      <th scope="col" onclick="sortColumn('lesson_amount')" class="text-center">Ilość lekcji</th>
-      <th scope="col" onclick="sortColumn('question_amount')" class="text-center">Ilość pytań</th>
-      <th scope="col" onclick="sortColumn('time')" class="text-center">Czas trwania testu</th>
-      <th scope="col" onclick="sortColumn('student_amount')" class="text-center">Ilośc zapisanych studentów</th>
+    <tr id="tr">
+      {% load static %}
+      <th scope="col" onclick="sortColumn('name',1)" class="text-center">Nazwa <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('category',2)" class="text-center">Kategoria <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('lesson_amount',3)" class="text-center">Ilość lekcji <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('question_amount',4)" class="text-center">Ilość pytań <img id="img4" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('time',5)" class="text-center">Czas trwania testu <img id="img5" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('student_amount',6)" class="text-center">Ilośc zapisanych studentów <img id="img6" src="{% static 'img/sorting_button.png' %}"></th>
     </tr>
   </thead>
   <tbody id="tbody">
@@ -44,6 +45,7 @@
   </tbody>
 </table>
 <script>
+  let columnNum = 7;
   let objectList = [];
   function loadTableData(objectList) {
   const tableBody = document.getElementById("tbody");

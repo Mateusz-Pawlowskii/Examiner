@@ -1,6 +1,13 @@
 let sortDirection = false;
 
-  function sortColumn(columnName) {
+  function placeButtons () {
+    for (let i = 1; i < columnNum; i++) {
+      let img = document.getElementById(`img${i}`)
+      img.src = "/static/img/sorting_button.png"
+    }
+  }
+  
+  function sortColumn(columnName, columnId) {
       const dataType = typeof objectList[0][columnName];
       sortDirection = !sortDirection;
       switch(dataType) {
@@ -11,6 +18,13 @@ let sortDirection = false;
             sortStringColumn(sortDirection,"sort_" + columnName);
       };
       loadTableData(objectList);
+      placeButtons()
+      let button = document.getElementById(`img${columnId}`)
+      if (sortDirection) {
+        button.src = `/static/img/sorting_buttdn.png`
+      } else {
+        button.src =  `/static/img/sorting_buttup.png`
+      }
     };
 
     function sortNumberColumn(sort, columnName) {
