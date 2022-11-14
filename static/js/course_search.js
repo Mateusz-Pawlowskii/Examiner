@@ -49,6 +49,6 @@ function nameSearch () {
     document.getElementById("id_category").addEventListener("change", categorySearch);
         }
     if (document.getElementById("id_name")) {
-        document.getElementById("id_name").addEventListener("change", nameSearch);
+        document.getElementById("id_name").addEventListener("keyup", nameSearch);
         }
     search1()

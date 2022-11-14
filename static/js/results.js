@@ -23,4 +23,4 @@ function loadData(courseList) {
     loadData(searchObjectList);
 };
     };
-  document.getElementById("id_name").addEventListener("change", nameSearch);
+  document.getElementById("id_name").addEventListener("keyup", nameSearch);

@@ -58,5 +58,5 @@ document.getElementById("search1").addEventListener("click", search1);
 document.getElementById("search2").addEventListener("click", search2);
 document.getElementById("search3").addEventListener("click", search3);
 document.getElementById("id_status").addEventListener("change", statusSearch);
-document.getElementById("id_name").addEventListener("change", nameSearch);
+document.getElementById("id_name").addEventListener("keyup", nameSearch);
 document.getElementById("id_category").addEventListener("change", categorySearch);
