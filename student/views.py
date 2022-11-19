@@ -192,7 +192,7 @@ class TestDiploma(LoginRequiredMixin, View):
         best_result = max(results, key = lambda x : x.current_score)
         pdf = FPDF()
         pdf.add_page()
-        pdf.add_font('DejaVu', '', 'font/ttf/DejaVuSerif.ttf', uni=True)
+        pdf.add_font('DejaVu', '', 'static/font/ttf/DejaVuSerif.ttf', uni=True)
         pdf.set_font('DejaVu', '', 50)
         pdf.image("static/img/diploma.png",0,0,210,297)
         pdf.image("static/img/logo_dip.png",60,20,100,25)
