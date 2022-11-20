@@ -1,0 +1,57 @@
+{% extends "platform_base.html" %}
+
+{% block content %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+  {{ m }}
+</div>
+{% endfor %}
+<br><br>
+<p class="text-center">
+  <a href="{% url 'platform_admin:create-student-group' %}" class="btn btn-success my-2 my-lg-0">
+    Dodaj grupe studencką
+  </a>
+</p>
+<br><br>
+<h4>Szukaj</h4>
+<div id="form1">
+  {{ form.as_p }}
+</div>
+<table class="table">
+  <thead class="thead-dark">
+    <tr id="first_row">
+      {% load static %}
+      <th id="th1" scope="col" onclick="sortColumn('name',1)">Nazwa grupy <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th id="th2" scope="col" onclick="sortColumn('login',2)">Ilość studentów <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
+      <th id="th3" scope="col" onclick="sortColumn('join',3)">Ilość kursów <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
+    </tr>
+  </thead>
+  <tbody id="tbody">
+      
+  </tbody>
+</table>
+<script>
+  let columnNum = 4;
+  let objectList = [];
+  function loadTableData(objectList) {
+  const tableBody = document.getElementById("tbody");
+  let dataHtml = ""
+  for (let object of objectList) {
+    dataHtml += `<tr><td id="${object.sort_name}">${object.name}</td><td>${object.student_amount}</td>
+                <td>${object.course_amount}</td></tr>`
+  };
+  tableBody.innerHTML = dataHtml;
+};
+</script>
+{% for group in object_list %}
+<script>
+  objectList.push({"name" : "<a href='{% url 'platform_admin:edit-student-group' pk=group.pk %}''>{{group.name}}</a>",
+    "student_amount" : "{{group.students.all|length}}", "course_amount" : "{{group.courses.all|length}}",
+     "sort_name" : "{{group.name}}",
+      })
+</script>
+{% endfor %}
+{% load static %}
+<script src="{% static 'js/table_sorting.js' %}"></script>
+<script src="{% static 'js/course_search.js' %}"></script>
+{% endblock %}

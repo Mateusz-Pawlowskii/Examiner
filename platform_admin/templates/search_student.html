@@ -1,12 +1,18 @@
-{% extends "examiner_base.html" %}
+{% extends "platform_base.html" %}
 
 {% block content %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+  {{ m }}
+</div>
+{% endfor %}
 <br><br>
 <p class="text-center">
-  <a href="{% url 'examiner_user:create-student' %}" class="btn btn-success my-2 my-lg-0" id="create_student">
+  <a href="{% url 'platform_admin:create-student' %}" class="btn btn-success my-2 my-lg-0">
     Dodaj studenta
   </a>
 </p>
+<br><br>
 <h4>Szukaj</h4>
 <div id="form1">
   {{ form.as_p }}
@@ -36,12 +42,14 @@
   tableBody.innerHTML = dataHtml;
 };
 </script>
+<script src="{% static 'js/month_translation.js' %}"></script>
 {% for student in object_list %}
 <script>
-  objectList.push({"name" : "<a href='{% url 'examiner_user:detail-student' pk=student.pk %}''>{{student.username}}</a>", 
-    "login" : "{% if student.last_login == None %} Brak {% else %}{{student.last_login}}{% endif %}","join":"{{student.date_joined}}",
-    "sort_join" : new Date("{{student.date_joined.isoformat}}"), "sort_name" : "{{student.username}}",
-    "sort_login" : new Date("{% if student.last_login == None %} 08 October 2001 11:32 UTC {% else %}{{student.last_login.isoformat}}{% endif %}"),
+  objectList.push({"name" : "<a href='{% url 'platform_admin:edit-student' pk=student.pk %}''>{{student.username}}</a>", 
+    "login" : month_conv("{% if student.last_login == None %} Brak {% else %}{{student.last_login}}{% endif %}"),
+    "join" : month_conv("{{student.date_joined}}"), "sort_join" : new Date("{{student.date_joined.isoformat}}"),
+    "sort_name" : "{{student.username}}", "sort_login" :
+    new Date("{% if student.last_login == None %} 08 October 2001 11:32 UTC {% else %}{{student.last_login.isoformat}}{% endif %}"),
       })
 </script>
 {% endfor %}

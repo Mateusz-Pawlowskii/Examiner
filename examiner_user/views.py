@@ -11,7 +11,7 @@ from operator import attrgetter
 
 from .forms import (CourseForm, QuestionForm, QuestionFormMultiple, LessonForm, AttachStudentForm, AttachStudentTextForm, 
                     LessonRenameForm, LessonEditForm, CourseEditForm, AttachCourseTextForm)
-from exam.models import Course, Lesson, Question, Result
+from exam.models import Course, Lesson, Question, Result, Platform
 from student.forms import StudentSearchCourseForm
 from exam.functions import test_mark, course_mark
 # Create your views here.
@@ -54,31 +54,10 @@ class DetailStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
         course.save()
         return redirect(reverse_lazy("examiner_user:detail-student", kwargs={"pk":self.kwargs["pk"]}))
 
-class CreateExaminer(LoginRequiredMixin, PermissionRequiredMixin, View):
-    template_name = "create_examiner.html"
-    permission_required = ("auth.add_user")
-
-    def get(self, request):
-        form = UserCreationForm()
-        context = {"form" : form,}
-        return render(request, self.template_name, context)
-    
-    def post(self, request):
-        form = UserCreationForm(request.POST)
-        context = {"form" : form}
-        if form.is_valid():
-            form.save()
-            group = get_object_or_404(Group, name="Examiner")
-            users = User.objects.all()
-            user = users.order_by('-date_joined').first()
-            group.user_set.add(user)
-            user.save()
-        else:
-            messages.error(request, "Niepoprawne dane")
-        return redirect(reverse_lazy("examiner_user:homepage"))
-
-class CreateStudent(CreateExaminer):
+class CreateStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "create_student.html"
+    permission_required = ("auth.add_user")
+    redirect = "examiner_user:students"
 
     def get(self, request):
         form = UserCreationForm()
@@ -90,13 +69,15 @@ class CreateStudent(CreateExaminer):
         if form.is_valid():
             form.save()
             group = get_object_or_404(Group, name="Student")
+            platform = Platform.objects.get(users=request.user)
             users = User.objects.all()
             user = users.order_by('-date_joined').first()
             group.user_set.add(user)
+            platform.users.add(user)
             user.save()
         else:
             messages.error(request, "Niepoprawne dane")
-        return redirect(reverse_lazy("examiner_user:students"))
+        return redirect(reverse_lazy(self.redirect))
 
 class AttachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.change_user")

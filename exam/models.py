@@ -1,8 +1,16 @@
 from django.contrib.auth.models import User
 from django.db import models
 import json
+from django.core.files.storage import FileSystemStorage
+
+logo_fs = FileSystemStorage(location='/media/logos')
 
 # Create your models here.
+class Platform(models.Model):
+    name = models.CharField(max_length = 3000)
+    users = models.ManyToManyField(User)
+    logo = models.ImageField(storage=logo_fs, blank=True, null=True)
+
 class Course(models.Model):
     students = models.ManyToManyField(User)
     name = models.CharField(max_length = 100)
@@ -15,6 +23,13 @@ class Course(models.Model):
     test_ready = models.BooleanField(default=False)
     passing_score = models.PositiveSmallIntegerField(default=0)
     category = models.CharField(max_length=100, default="")
+    platform = models.ForeignKey(Platform, on_delete = models.CASCADE, blank=True, null=True)
+
+class StudentGroup(models.Model):
+    name = models.CharField(max_length = 100)
+    platform = models.ForeignKey(Platform, on_delete = models.CASCADE, blank=True, null=True)
+    students = models.ManyToManyField(User)
+    courses = models.ManyToManyField(Course)
 
 class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete = models.CASCADE)

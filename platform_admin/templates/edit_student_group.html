@@ -1,0 +1,203 @@
+{% extends "platform_base.html" %}
+
+{% block head %}
+{% load static %}
+<!-- autocomplete function was provided by courtesy of W3Schools. I didn't write it myself. -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/autocomplete.css' %}"/>
+<script src="{% static 'js/autocomplete.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+  {{ m }}
+</div>
+{% endfor %}
+<h4>Grupa studencka {{group.name}}</h4>
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button class="btn btn-success" type="submit" id="submit">Zmień nazwę</button>
+</form>
+<hr>
+<button type="button" class="btn btn-secondary dropdown-toggle tog mt-1" id="lesson_nav">Studenci</button>
+<div class="no-display">
+<p>Prosze wpisać nazwe studenta który ma zostać przypisany do grupy <b>{{group.name}}</b></p>
+<div class="form-group">
+    <form autocomplete="off" method="POST" action="{% url 'platform_admin:attach-student' pk=group.pk %}">
+        {% csrf_token %}
+        <div class="autocomplete" style="width:300px;">
+            {{ student_form.student }}
+        </div>
+        {{ student_form.group.as_hidden }}
+        <br>
+        <button class="btn btn-success mt-3" type="submit" id="submit">Przypisz</button>
+    </form>
+</div>
+<h4>Szukaj</h4>
+<div>
+  <input id="id_name" class="form-control">
+</div>
+<br>
+<table class="table">
+  <thead class="thead-dark">
+    <tr id="first_row">
+      {% load static %}
+      <th id="th1" scope="col" onclick="sortColumn('name',1)">Nazwa użytkownika <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th id="th2" scope="col" onclick="sortColumn('login',2)">Ostatni login <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
+      <th id="th3" scope="col" onclick="sortColumn('join',3)">Data dołączenia <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody id="tbody">
+      
+  </tbody>
+</table>
+</div>
+<hr>
+<button type="button" class="btn btn-secondary dropdown-toggle tog mt-1" id="lesson_nav">Kursy</button>
+<div class="no-display">
+  <p>Prosze wpisać nazwe kursu który ma zostać przypisany do grupy <b>{{group.name}}</b></p>
+<div class="form-group">
+    <form autocomplete="off" method="POST" action="{% url 'platform_admin:attach-course' pk=group.pk %}">
+        {% csrf_token %}
+        <div class="autocomplete" style="width:300px;">
+            {{ course_form.course }}
+        </div>
+        {{ course_form.group.as_hidden }}
+        <br>
+        <button class="btn btn-success mt-3" type="submit" id="submit">Przypisz</button>
+    </form>
+</div>
+<h4>Szukaj kursów</h4>
+<select id="select">
+  <option id="course_search1" selected="selected">Szukaj po nazwie</option>
+  <option id="course_search2">Szukaj po kategorii</option>
+</select>
+<br>
+  <div id="course_form1">
+    <input id="course_id_name" class="form-control">
+  </div>
+  <div id="course_form2">
+  <br>
+  <select id="course_id_category">
+    {% for category in categories %}
+    <option id="{{category}}">{{category}}</option>
+    {% endfor %}
+  </select>
+</div>
+<br>
+<table class="table">
+  <thead class="thead-dark">
+    <tr id="first_course_row">
+      {% load static %}
+      <th scope="col" onclick="courseSortColumn('name',1)" class="text-center">Nazwa <img id="course_img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="courseSortColumn('category',2)" class="text-center">Kategoria <img id="course_img2" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="courseSortColumn('lesson_amount',3)" class="text-center">Ilość lekcji <img id="course_img3" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody id="course_tbody">
+      
+  </tbody>
+</table>
+</div>
+<hr>
+<a href="{% url 'platform_admin:student-group-search' %}">
+  <button class="btn btn-success mt-1" id="back">
+    Wróć
+  </button>
+</a>
+<script>
+  let students=[];
+  let courses=[];
+</script>
+{% for student in all_students %}
+  <script>students.push("{{student.username}}");</script>
+{% endfor %}
+{% for course in all_courses %}
+<script>courses.push("{{course.name}}");</script>
+{% endfor %}
+<script>
+    autocomplete(document.getElementById("id_student"), students);
+    autocomplete(document.getElementById("id_course"), courses);
+</script>
+
+<script>
+var acc = document.getElementsByClassName("tog");
+    var i;
+    
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+      });
+    }
+</script>
+<script>
+    let columnNum = 4;
+    let objectList = [];
+    function loadTableData(objectList) {
+    const tableBody = document.getElementById("tbody");
+    let dataHtml = ""
+    for (let object of objectList) {
+      dataHtml += `<tr><td id="${object.sort_name}">${object.name}</td><td>${object.login}</td><td>${object.join}</td>
+                  <td>${object.delete}</td></tr>`
+    };
+    tableBody.innerHTML = dataHtml;
+  };
+  </script>
+  <script src="{% static 'js/month_translation.js' %}"></script>
+  {% for student in group_students %}
+  <script>
+    objectList.push({"name" : "{{student.username}}", 
+      "login" : month_conv("{% if student.last_login == None %} Brak {% else %}{{student.last_login}}{% endif %}"),
+      "join" : month_conv("{{student.date_joined}}"), "sort_join" : new Date("{{student.date_joined.isoformat}}"),
+      "sort_name" : "{{student.username}}", "sort_login" :
+      new Date("{% if student.last_login == None %} 08 October 2001 11:32 UTC {% else %}{{student.last_login.isoformat}}{% endif %}"),
+      "delete" : `<form method="POST" action="{% url 'platform_admin:unattach-student' pk=group.pk %}">
+                  {% csrf_token %}
+                  <input type="hidden" value="{{student.pk}}" name="student">
+                  <button type="submit" class="btn btn-danger ml-2" id="{{student.username}}_delete">Usuń</button></form>`
+        })
+  </script>
+  {% endfor %}
+  <script>
+    let courseObjectList = [];
+    function courseLoadTableData(courseObjectList) {
+    const tableBody = document.getElementById("course_tbody");
+    let dataHtml = ""
+    for (let object of courseObjectList) {
+      dataHtml += `<tr><td id="${object.sort_name}">${object.name}</td><td>${object.category}</td><td>${object.lesson_amount}</td>
+                  <td>${object.delete}</td></tr>`
+    };
+    tableBody.innerHTML = dataHtml;
+  };
+  </script>
+  {% for course in group_courses %}
+  <script>
+    courseObjectList.push({"name" : "{{course.name}}", "category" : "{{course.category}}",
+    "lesson_amount" : Number("{{course.lesson_amount}}"), "sort_name" : "{{course.name}}", "sort_category" : "{{course.category}}",
+      "delete" : `<form method="POST" action="{% url 'platform_admin:unattach-course' pk=group.pk %}">
+                  {% csrf_token %}
+                  <input type="hidden" value="{{course.pk}}" name="course">
+                  <button type="submit" class="btn btn-danger ml-2" id="{{course.name}}_delete">Usuń</button></form>`
+        })
+  </script>
+  {% endfor %}
+  {% load static %}
+  <script src="{% static 'js/table_sorting.js' %}"></script>
+  <script src="{% static 'js/course_search.js' %}"></script>
+  <script src="{% static 'js/student_group_sort_search.js' %}"></script>
+<script>
+  window.onload = () => {
+    loadTableData(objectList)
+    courseLoadTableData(courseObjectList)
+  };
+</script>
+{% endblock %}

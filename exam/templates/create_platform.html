@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br><br>
+<h4 class="text-center">Prosimy o nazwanie swojej platformy e-learningowej</h4>
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <p class="text-center">
+        <input class="btn btn-success" type="submit" id="register" value="Stwórz platformę">
+    </p>
+</form>
+{% endblock %}

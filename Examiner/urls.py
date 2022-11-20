@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from exam.views import RedirectHomepage, RedirectHomepage
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("", RedirectHomepage.as_view(), name="homepage"),
@@ -23,5 +25,9 @@ urlpatterns = [
     path('home/', include ("exam.urls")),
     path('student/', include ("student.urls")),
     path('examiner/', include ("examiner_user.urls")),
+    path('platform/', include ("platform_admin.urls")),
     path("accounts/profile/", RedirectHomepage.as_view(), name="login-redirect")
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

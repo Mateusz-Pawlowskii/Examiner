@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import (ExaminerHomepage, CreateStudent,  CreateExaminer, CreateCourse, SearchCourse, DetailCourse, ControlCourse, 
+from .views import (ExaminerHomepage, CreateStudent, CreateCourse, SearchCourse, DetailCourse, ControlCourse, 
                     CreateQuestion, SearchQuestion, EditQuestion, DeleteQuestion, CreateLesson, DetailLesson, ViewLesson,
                     EditLessonContent, AttachStudent, UnattachStudents, AttachStudentText, EditLessonTopic, StudentView, DetailStudent, 
                     ExaminerResultView, GenralResultView, CourseResults, Clean_up)
@@ -8,7 +8,6 @@ from .views import (ExaminerHomepage, CreateStudent,  CreateExaminer, CreateCour
 app_name="examiner_user"
 urlpatterns = [
     path("homepage/", ExaminerHomepage.as_view(), name="homepage"),
-    path("create_examiner/", CreateExaminer.as_view(), name = "create-examiner"),
     path("create_student/", CreateStudent.as_view(), name="create-student"),
     path("create_course/", CreateCourse.as_view(), name="create-course"),
     path("search_course/", SearchCourse.as_view(),name="search-course"),

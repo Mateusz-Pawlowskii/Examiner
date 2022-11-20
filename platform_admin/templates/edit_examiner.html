@@ -1,0 +1,70 @@
+{% extends "platform_base.html" %}
+
+{% block content %}
+<h4>Egzaminator {{examiner.username}}</h4>
+<h5>Zmień nazwe użytkownika:</h5>
+<div class="form-group">
+    <form method="POST" action="">
+        {% csrf_token %}
+        <label for="id_username">Nazwa użytkownika: (Wymagane. 150 znaków lub mniej. Tylko litery, cyfry i @/./+/-/_)</label>
+        {{form.as_p}}
+        <button class="btn btn-success mt-1" type="submit" id="submit">Zmień nazwe</button>
+    </form>
+</div>
+<h5>Nadaj nowe hasło:</h5>
+<div class="form-group">
+  <form method="POST" action="{% url 'platform_admin:change-password' pk=examiner.pk %}">
+    {% csrf_token %}
+    <p>
+      <label for="id_new_password1">Hasło:</label>
+      <input type="password" name="new_password1" autocomplete="new-password" required id="id_new_password1" class="form-control">
+      <span class="helptext2">
+        <ul>
+          <li>Hasło nie może być podobne do innych danych osobowych.</li>
+          <li>Hasło musi awierać przynajmniej 8 znaków</li>
+          <li>Hasło nie może być popularnie używanym hasłem</li>
+          <li>Hasło nie może się składać z samych cyfr</li>
+        </ul>
+      </span>
+    </p>
+    <p>
+      <label for="id_new_password2">Potwierdzenie hasła: (Wprowadź ponownie te same hasło co poprzednio w celu weryfikacji)</label>
+      <input type="password" name="new_password2" autocomplete="new-password" required id="id_new_password2" class="form-control">
+      <button class="btn btn-success mt-1" type="submit" id="submit">Zmień hasło</button>
+    </p>
+  </form>
+</div>
+<a href="{% url 'platform_admin:examiner-search' %}">
+  <button class="btn btn-success mt-1" id="back">
+    Wróć
+  </button>
+</a>
+<br>
+<button class="btn btn-danger mt-1" type="button" data-toggle="modal" data-target="#deleteModal">Usuń egzaminatora</button>
+<div class="modal fade" id="deleteModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Usunięcie użytkownika</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        Czy na pewno chcesz skasować użytkownika {{examiner.username}}? Tej decyzji nie da się cofnąć.
+      </div>
+      <div class="modal-footer">
+        <form method="POST" action="{% url 'platform_admin:delete-user' pk=examiner.pk %}">
+          {% csrf_token %}
+        <button class="btn btn-danger" type="submit" id="submit">Usuń egzaminatora</button>
+        <button type="button" class="btn btn-info" data-dismiss="modal">Cofnij</button>
+      </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+  document.getElementsByClassName("helptext")[0].style.display = "none";
+  document.getElementsByTagName("strong")[0].style.display = "none";
+  document.getElementsByTagName("label")[1].style.display = "none";
+</script>
+{% endblock %}

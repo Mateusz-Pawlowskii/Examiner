@@ -2,6 +2,11 @@
 
 {% block content %}
 {% load static %}
+{% for m in messages %}
+<div class="alert alert-info" role="alert">
+  {{ m }}
+</div>
+{% endfor %}
 <br>
 <div class="text-center">
   <img src="{% static 'img/logo3.png' %}" height="80" width="300"/>
@@ -23,11 +28,16 @@
 </h3>
 <br>
 <p class="text-center">
-  <a href="{% url 'exam:login' %}" class="btn btn-success my-2 my-lg-0" id="login">
+  <a href="{% url 'exam:login' %}" class="btn btn-success pr-4 pl-4 my-2 my-lg-0" id="login">
     Zaloguj się
   </a>
 </p>
 <br>
+<p class="text-center">
+  <a href="{% url 'exam:register' %}" class="btn btn-success my-2 my-lg-0" id="register">
+    Zarejestruj się
+  </a>
+</p>
 <p class="text-center">
   Dane dla konta testowego
   <br>

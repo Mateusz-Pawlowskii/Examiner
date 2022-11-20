@@ -1,0 +1,26 @@
+{% extends "platform_base.html" %}
+
+{% block content %}
+{% load static %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+  {{ m }}
+</div>
+{% endfor %}
+<br>
+{% if platform.logo|length == 0 %}
+<div class="text-center"><img src="{% static 'img/logo3.png' %}" height="80" width="300"/></div>
+{% else %}
+<div class="text-center"><img src="{{MEDIA_URL}}{{platform.logo}}" height="80" width="300"/></div>
+{% endif %}
+<br>
+{{platform.logo}}
+<form enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    {{form.name}}
+    <br>
+    {{form.logo}}
+    <br>
+    <button class="btn btn-success mt-3" type="submit" id="submit">Zapisz zmiany</button>
+</form>
+{% endblock %}

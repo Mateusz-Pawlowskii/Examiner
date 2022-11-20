@@ -1,0 +1,4 @@
+{% autoescape off %}
+Witaj {{ user.username }},
+Prosimy o potwierdzenie rejestracji,http://{{ domain }}{% url 'exam:activate' pk=pk token=token %}
+{% endautoescape %}
