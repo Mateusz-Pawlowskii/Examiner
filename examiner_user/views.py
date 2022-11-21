@@ -9,16 +9,21 @@ from django.http import FileResponse
 from django.http import HttpResponseRedirect
 from operator import attrgetter
 
-from .forms import (CourseForm, QuestionForm, QuestionFormMultiple, LessonForm, AttachStudentForm, AttachStudentTextForm, 
+from .forms import (CourseForm, QuestionForm, QuestionFormMultiple, LessonForm, AttachCourseToGroupForm, AttachStudentTextForm, 
                     LessonRenameForm, LessonEditForm, CourseEditForm, AttachCourseTextForm)
-from exam.models import Course, Lesson, Question, Result, Platform
+from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup
 from student.forms import StudentSearchCourseForm
 from exam.functions import test_mark, course_mark
 # Create your views here.
 
-class ExaminerHomepage(LoginRequiredMixin, TemplateView):
+class ExaminerHomepage(LoginRequiredMixin, View):
     template_name = "examiner_homepage.html"
-    extra_context = {"nav_var":"homepage"}
+
+    def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
+        context = {"nav_var":"homepage",
+                   "platform" : platform}
+        return render(request, self.template_name, context)
 
 # part about users starts here
 class StudentView(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -26,9 +31,11 @@ class StudentView(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.view_user")
 
     def get(self, request):
+        platform = Platform.objects.get(users=request.user)
         context = {"nav_var" : "users",
-                   "object_list" : User.objects.filter(groups=2),
-                   "form" : StudentSearchCourseForm()}
+                   "object_list" : User.objects.filter(groups=2, platform=platform),
+                   "form" : StudentSearchCourseForm(),
+                   "platform" : platform}
         return render(request, self.template_name, context)
 
 class DetailStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -37,13 +44,17 @@ class DetailStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     form_class = AttachCourseTextForm
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         student = get_object_or_404(User, pk=self.kwargs["pk"])
         courses = Course.objects.filter(students=student)
+        all_courses = Course.objects.filter(platform=platform)
         test_marks = test_mark(courses, student)
         context = {"student" : student,
                    "courses" : courses,
                    "test_marks" : test_marks,
-                   "form" : self.form_class()}
+                   "form" : self.form_class(),
+                   "platform" : platform,
+                   "all_courses" : all_courses}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -60,8 +71,10 @@ class CreateStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     redirect = "examiner_user:students"
 
     def get(self, request):
+        platform = Platform.objects.get(users=request.user)
         form = UserCreationForm()
-        context = {"form" : form}
+        context = {"form" : form,
+                   "platform" : platform}
         return render(request, self.template_name, context)
     
     def post(self, request):
@@ -79,74 +92,60 @@ class CreateStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
             messages.error(request, "Niepoprawne dane")
         return redirect(reverse_lazy(self.redirect))
 
-class AttachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
+class AttachCourseText(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.change_user")
-    template_name = "attach_student.html"
-    form_class = AttachStudentForm
-
-    def get(self, request, *args, **kwargs):
-        course = get_object_or_404(Course, pk=self.kwargs["pk"])
-        form = self.form_class(initial={"course":course})
-        context = {"form":form,
-                   "course":course}
-        return render(request, self.template_name, context)
-    
-    def post(self, request, *args, **kwargs):
-        student = get_object_or_404(User, pk=request.POST["student"])
-        course = get_object_or_404(Course, pk=request.POST["course"])
-        course.students.add(student)
-        course.student_amount += 1
-        course.save()
-        return redirect(reverse_lazy("examiner_user:edit-course", kwargs={"pk":self.kwargs["pk"]}))
-
-class AttachStudentText(LoginRequiredMixin, PermissionRequiredMixin, View):
-    permission_required = ("auth.change_user")
-    template_name = "attach_student_text.html"
     form_class = AttachStudentTextForm
 
-    def get(self, request, *args, **kwargs):
-        course = get_object_or_404(Course, pk=self.kwargs["pk"])
-        form = self.form_class(initial={"course":course})
-        context = {"form":form,
-                   "course":course,
-                   "students":User.objects.filter(groups=2)}
-        return render(request, self.template_name, context)
-    
     def post(self, request, *args, **kwargs):
-        student = get_object_or_404(User, username=request.POST["student"])
+        group = get_object_or_404(StudentGroup, name=request.POST["group"])
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
-        course.students.add(student)
-        course.student_amount += 1
-        course.save()
+        group.courses.add(course)
+        group.save()
         return redirect(reverse_lazy("examiner_user:edit-course", kwargs={"pk":self.kwargs["pk"],"slug":self.kwargs["slug"]}))
 
-class UnattachStudents(LoginRequiredMixin, PermissionRequiredMixin, View):
-    permission_required = ("auth.view_user")
+class UnattachGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = ("exam.change_course")
     
     def post(self, request, *args, **kwargs):
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
-        student = get_object_or_404(User, pk=request.POST["student"])
-        course.students.remove(student)
-        course.student_amount -= 1
-        course.save()
-        students = course.students
-        context = {"course":course,
-                   "students":students}
+        group = get_object_or_404(StudentGroup, pk=request.POST["group"])
+        group.courses.remove(course)
+        group.save()
         return redirect(reverse_lazy("examiner_user:edit-course", kwargs={"pk":self.kwargs["pk"], "slug":self.kwargs["slug"]}))
 
 # part about courses starts here
-class CreateCourse(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class CreateCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.add_course")
     template_name="create_course.html"
     form_class = CourseForm
-    success_url = reverse_lazy("examiner_user:search-course")
+
+    def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
+        context = {"form" : self.form_class(),
+                   "platform" : platform}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            platform = Platform.objects.get(users=request.user)
+            courses = Course.objects.all()
+            course = courses.last()
+            platform.course_set.add(course)
+            course.save()
+            messages.info(request, "Kurs został pomyślnie utworzony")
+            return redirect(reverse_lazy("examiner_user:search-course"))
+        messages.error(request, "Nie udało się stworzyć kursu")
+        return HttpResponseRedirect(self.request.path_info)
 
 class SearchCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.view_course")
     template_name="search_course.html"
 
     def get(self, request, *args, **kwargs):
-        queryset = Course.objects.all()
+        platform = Platform.objects.get(users=request.user)
+        queryset = Course.objects.filter(platform=platform)
         categories = []
         for course in queryset:
             categories.append(course.category)
@@ -154,38 +153,49 @@ class SearchCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         context = {"nav_var":"search_course",
                      "form" : StudentSearchCourseForm(),
                      "categories" : categories,
-                     "object_list" : queryset}
+                     "object_list" : queryset,
+                     "platform" : platform}
         return render(request, self.template_name, context)
 
-class DetailCourse(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class DetailCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.view_course")
     queryset = Course.objects.all()
     template_name="detail_course.html"
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
-        context["questions"] = Question.objects.filter(course=course)
-        context["lessons"] = Lesson.objects.filter(course=course)
-        context["students"] = User.objects.filter(course=course)
-        return context
+        allowed_courses = Course.objects.filter(platform=platform)
+        context = {"object" : course,
+                   "questions" : Question.objects.filter(course=course),
+                   "lessons" : Lesson.objects.filter(course=course),
+                   "students" : User.objects.filter(course=course),
+                   "platform" : platform}
+        if course in allowed_courses:
+            return render(request, self.template_name, context)
+        messages.error(request, "Nie udało się odnaleźc kursu kursu")
+        return redirect(reverse_lazy("examiner_user:search-course"))
 
 class ControlCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_course")
-    queryset = Course.objects.all()
     template_name="control_course.html"
     form_class = CourseEditForm
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
+        if course not in Course.objects.filter(platform=platform):
+            messages.error(request, "Brak uprawnień")
+            return redirect(reverse_lazy("examiner_user:search-course"))
         course_form = self.form_class(instance=course)
         lesson_list = Lesson.objects.filter(course=course)
         context = {"object" : course,
                    "course_form" : course_form,
                    "lesson_form" : LessonForm(initial={"course" : course}),
                    "lesson_list" : lesson_list,
-                   "student_form" : AttachStudentTextForm(),
-                   "students" : User.objects.filter(groups=2),
+                   "group_form" : AttachCourseToGroupForm(initial={"course" : course}),
+                   "student_groups" : StudentGroup.objects.filter(platform=platform),
+                   "platform" : platform
                    }
         return render(request, self.template_name, context)
 
@@ -211,13 +221,15 @@ class CreateQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
     form_class = QuestionForm
         
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         pk = self.kwargs["pk"]
         course_=get_object_or_404(Course, pk=pk)
         form = self.form_class(initial={"course":course_})
         question_amount = len(Question.objects.filter(course=course_))
         context = {"form" : form,
                    "course" : course_,
-                   "question_amount" : question_amount}
+                   "question_amount" : question_amount,
+                   "platform" : platform}
         if course_.multiple_answer_questions is True:
             context["form"] = QuestionFormMultiple(initial={"course":course_})
             return render(request, "mulitple_create_question.html", context)
@@ -246,10 +258,14 @@ class SearchQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.view_question")
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         course_pk = self.kwargs["pk"]
         course_ = get_object_or_404(Course, pk=course_pk)
         questions = Question.objects.filter(course=course_)
-        return render(request, self.template_name, {"questions" : questions, "course" : course_})
+        context = {"questions" : questions,
+                   "course" : course_,
+                   "platform" : platform}
+        return render(request, self.template_name, context)
 
 class EditQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_question")
@@ -262,6 +278,7 @@ class EditQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
         return get_object_or_404(Question, pk=pk)
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         question = self.get_object()
         course_ = question.course
         form = self.form_class(instance=question)
@@ -269,7 +286,8 @@ class EditQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
         context = {"form" : form,
                    "course" : course_,
                    "question" : question,
-                   "question_amount" : question_amount}
+                   "question_amount" : question_amount,
+                   "platform" : platform}
         if course_.multiple_answer_questions is True:
             context["form"] = QuestionFormMultiple(instance=question)
             return render(request, "mulitple_edit_question.html", context)
@@ -314,9 +332,13 @@ class CreateLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
     form_class = LessonForm
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         course_ = get_object_or_404(Course, pk=self.kwargs["pk"])
         form = self.form_class(initial={"course":course_})
-        return render(request, self.template_name, {"form":form, "course":course_})
+        context = {"form" : form,
+                   "course" : course_,
+                   "platform" : platform}
+        return render(request, self.template_name, context)
     
     def post(self, request, *args, **kwargs):
         course_ = get_object_or_404(Course, pk=self.kwargs["pk"])
@@ -335,10 +357,12 @@ class DetailLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
     queryset = Lesson.objects.all()
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         lesson = get_object_or_404(Lesson, pk=self.kwargs["pk"])
         context = {"lesson":lesson,
                    "course_pk":lesson.course.pk,
-                   "slug" : self.kwargs["slug"]}
+                   "slug" : self.kwargs["slug"],
+                   "platform" : platform}
         return render(request, self.template_name, context)
     
     def post(self, request, *args, **kwargs):
@@ -372,10 +396,14 @@ class EditLessonContent(LoginRequiredMixin, PermissionRequiredMixin, View):
            filename.rsplit('.', 1)[1].lower() in {"pdf"}
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         lesson = get_object_or_404(Lesson, pk=self.kwargs["pk"])
         course_ = lesson.course
         form = self.form_class(instance=lesson)
-        return render(request, self.template_name, {"form":form, "course":course_})
+        context = {"form":form,
+                   "course":course_,
+                   "platform" : platform}
+        return render(request, self.template_name, context)
     
     def post(self, request, *args, **kwargs):
         lesson = get_object_or_404(Lesson, pk=self.kwargs["pk"])
@@ -399,10 +427,14 @@ class EditLessonTopic(LoginRequiredMixin, PermissionRequiredMixin, View):
     form_class = LessonRenameForm
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         lesson = get_object_or_404(Lesson, pk=self.kwargs["pk"])
         course_=lesson.course
         form = self.form_class(instance=lesson)
-        return render(request, self.template_name, {"form":form, "course":course_})
+        context = {"form":form,
+                   "course":course_,
+                   "platform" : platform}
+        return render(request, self.template_name, context)
     
     def post(self, request, *args, **kwargs):
         lesson = get_object_or_404(Lesson, pk=self.kwargs["pk"])
@@ -419,10 +451,12 @@ class GenralResultView(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.view_result")
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         courses = Course.objects.all()
         context = {"course_data" : courses,
                    "nav_var" : "results",
-                   "form" : StudentSearchCourseForm()}
+                   "form" : StudentSearchCourseForm(),
+                   "platform" : platform}
         return render(request, self.template_name, context)
 
 class ExaminerResultView(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -430,6 +464,7 @@ class ExaminerResultView(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.view_user")
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["course"])
         student = get_object_or_404(User, pk=self.kwargs["student"])
         results = Result.objects.filter(course=course, student=student)
@@ -438,7 +473,8 @@ class ExaminerResultView(LoginRequiredMixin, PermissionRequiredMixin, View):
             perc.append(round(100*result.current_score/course.question_amount))
         context = {"course" : course,
                    "results" : zip(results , perc),
-                   "student" : student}
+                   "student" : student,
+                   "platform" : platform}
         return render(request, self.template_name, context)
 
 class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -453,10 +489,12 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         return 0
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
         students = User.objects.filter(course=course)
         context = {"course" : course,
-                   "students" : students}
+                   "students" : students,
+                   "platform" : platform}
         context["questions"] = Question.objects.filter(course=course)
         context["lessons"] = Lesson.objects.filter(course=course)
         context["students"] = User.objects.filter(course=course)

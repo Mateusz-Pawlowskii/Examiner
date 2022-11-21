@@ -1,0 +1,85 @@
+{% extends "platform_base.html" %}
+
+{% block content %}
+<h4>Informacje o kursie</h4>
+<p id="name">Nazwa kursu:<b> {{object.name}}</b></p>
+{% if object.category != "" %}
+<p id="category">Kategoria:<b> {{object.category}}</b></p>
+{% endif %}
+
+<table class="table">
+  <tbody>
+    <tr>
+      <td>Typ pytań:<b>{% if object.multiple_answer_questions == True %}
+          wielokrotnego wyboru
+        {% elif object.multiple_answer_questions == False %}
+          jednokrotnego wyboru
+        {% else %}{% endif %}</b>
+      </td>
+      <td id="attempt_amount">
+        Ilość podejść: <b>{{object.attempt_amount}}</b>
+      </td>
+    </tr>
+    <tr>
+      <td id="time">
+        Czas trwania testu:<b>{% if object.time == 0 %}Nieograniczony{% else %} {{object.time}} minut{% endif %}</b>
+      </td>
+      <td>
+        Całkowita ilość pytań:<b> {{questions|length}}</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Ilość pytań podawana studentowi w czasie testu:<b> {{object.question_amount}}</b>
+      </td>
+      <td>
+        Wymagan ilość poprawnych odpowiedzi:<b>{{object.passing_score}}</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Ilość lekcji:<b> {{lessons|length}}</b>
+      </td>
+      <td>
+        Ilość studentów zapisanych na kurs:<b> {{students|length}}</b>
+      </td>
+    </tr>
+  </tbody>
+</table>
+{% if object.test_ready %}
+    <p>Status testu:<b>Test gotowy</b></p>
+{% else %}
+    <p>Status testu:<b>Test niegotowy</b></p>
+{% endif %}
+<br>
+<button class="btn btn-danger mt-1" type="button" data-toggle="modal" data-target="#deleteModal">Usuń kurs</button>
+<div class="modal fade" id="deleteModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Usunięcie kursu</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        Czy na pewno chcesz skasować kurs {{object.name}}? Tej decyzji nie da się cofnąć. Materiały lekcyjne załączone do kursu nie
+        będą mogły zostać odzyskane. Wszystkie informacje o egzmianie dołączonym do kursu (pytania, wyniki studentów) również zostaną
+        utracone.
+      </div>
+      <div class="modal-footer">
+        <form method="POST" action="">
+          {% csrf_token %}
+        <button class="btn btn-danger" type="submit" id="submit">Usuń kurs</button>
+        <button type="button" class="btn btn-info" data-dismiss="modal">Cofnij</button>
+      </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<br>
+<a href="{% url 'platform_admin:edit-student-group' pk=group.pk %}">
+  <button class="btn btn-success mt-1">
+    Wróć
+  </button>
+</a>
+{% endblock %}

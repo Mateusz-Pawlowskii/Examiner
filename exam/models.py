@@ -3,7 +3,9 @@ from django.db import models
 import json
 from django.core.files.storage import FileSystemStorage
 
-logo_fs = FileSystemStorage(location='/media/logos')
+
+logo_fs = FileSystemStorage(location='media/logos', base_url="/media/logos")
+lesson_fs = FileSystemStorage(location='media/lessons', base_url="/media/lessons")
 
 # Create your models here.
 class Platform(models.Model):
@@ -17,7 +19,6 @@ class Course(models.Model):
     multiple_answer_questions = models.BooleanField(default=False)
     time = models.PositiveSmallIntegerField(default=0)
     question_amount = models.PositiveSmallIntegerField(default=0)
-    student_amount = models.PositiveSmallIntegerField(default=0)
     lesson_amount = models.PositiveSmallIntegerField(default=0)
     attempt_amount = models.PositiveSmallIntegerField(default=3)
     test_ready = models.BooleanField(default=False)
@@ -34,7 +35,7 @@ class StudentGroup(models.Model):
 class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete = models.CASCADE)
     topic = models.CharField(max_length=100)
-    material = models.FileField(upload_to="lessons")
+    material = models.FileField(storage=lesson_fs)
 
     def delete(self, *args, **kwargs):
         self.material.delete(self.material.name)

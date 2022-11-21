@@ -16,7 +16,11 @@
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-transparent">
       <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
+          {% if platform.logo|length == 0 %}
           <img src="{% static 'img/logo3.png' %}" height="50" width="170"/>
+          {% else %}
+          <img class="side_logo" src="/media/logos/{{platform.logo}}"/>
+          {% endif %}
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>&nbsp</span>
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span id="current_username"><b>{{request.user.username}}</b></span>
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>&nbsp</span>

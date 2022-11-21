@@ -113,39 +113,37 @@
   {% endif %}
 </div>
 <hr>
-<button typle="button" class="btn btn-secondary dropdown-toggle tog" id="student_nav">Studenci</button>
+<button typle="button" class="btn btn-secondary dropdown-toggle tog" id="student_nav">Grupy Studenckie</button>
 <div class="no-display" id="no-display student">
-  <h4>Dodaj nowego studenta</h4> 
-  <p>(wpisz nazwe studenta który ma zostać przypisany do kursu)</p>
+  <h4>Dodaj nową grupe studencką</h4> 
+  <p>(wpisz nazwe grupy która ma zostać przypisana do kursu)</p>
   <div class="form-group" id="form-group student">
-    <form autocomplete="off" method="POST" action="{% url 'examiner_user:attach-student-text' pk=object.pk slug=object.name|slugify %}" id="student_form">
+    <form autocomplete="off" method="POST" action="{% url 'examiner_user:attach-course-text' pk=object.pk slug=object.name|slugify %}" id="group_form">
       {% csrf_token %}
       <div class="autocomplete" style="width:300px;">
-        {{ student_form.student }}
+        {{ group_form.group }}
       </div>
-      {{ student_form.course.as_hidden }}
+      {{ group_form.course.as_hidden }}
       <br>
       <button class="btn btn-success mt-3" type="submit" id="submit_student">Przypisz</button>
     </form>
   </div>
-  <!-- I'm not sure if that feature is usefull so I disabled it -->
-  <!-- <a href="{% url 'examiner_user:attach-student' pk=object.pk %}"><p>Istnieje możliwość dodania studenta poprzez wybranie go z listy </p></a> -->
-  <script>let students=[];</script>
-  {% for student in students %}
-  <script>students.push("{{student.username}}");</script>
+  <script>let groups=[];</script>
+  {% for group in student_groups %}
+  <script>groups.push("{{group.name}}");</script>
   {% endfor %}
   <br>
-  <h4>Studenci przypisani do kursu <b>{{object.name}}</b></h4>
+  <h4>Grupy przypisane do kursu <b>{{object.name}}</b></h4>
   <table class="table">
     <tbody>
-      {% for student in object.students.all %}
+      {% for group in object.studentgroup_set.all %}
       <tr>
-        <td class="borderless" style="border:none;" id="{{student.username}}_table">
-          <form method="POST" action="{% url 'examiner_user:unattach-students' pk=object.pk slug=object.name|slugify %}">
+        <td class="borderless" style="border:none;" id="{{group.name}}_table">
+          <form method="POST" action="{% url 'examiner_user:unattach-group' pk=object.pk slug=object.name|slugify %}">
             {% csrf_token %}
-            {{student.username}}</td>
-        <td class="borderless" style="border:none;"><input type="hidden" value="{{student.pk}}" name="student">
-            <button type="submit" class="btn btn-danger ml-2" id="{{student.username}}_delete"><div class="small">Usuń</div></button>
+            {{group.name}}</td>
+        <td class="borderless" style="border:none;"><input type="hidden" value="{{group.pk}}" name="group">
+            <button type="submit" class="btn btn-danger ml-2" id="{{group.username}}_delete"><div class="small">Usuń</div></button>
             </form></td>
       </tr>
       {% endfor %}
@@ -165,7 +163,7 @@
   </button>
 </a>
 <script>
-    autocomplete(document.getElementById("id_student"), students);
+    autocomplete(document.getElementById("id_group"), groups);
 </script>
 <script src="{% static 'js/course_edit.js' %}"></script>
 {% endblock %}

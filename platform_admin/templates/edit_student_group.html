@@ -103,6 +103,31 @@
 </table>
 </div>
 <hr>
+<br>
+<button class="btn btn-danger mt-1" type="button" data-toggle="modal" data-target="#deleteModal">Usuń grupe</button>
+<div class="modal fade" id="deleteModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Usunięcie grupy studenckiej</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        Czy na pewno chcesz skasować grupe studencką {{group.name}}? Tej decyzji nie da się cofnąć, a kursy i uczniowie przypisani
+        do grupy zostaną od niej odłączeni.
+      </div>
+      <div class="modal-footer">
+        <form method="POST" action="{% url 'platform_admin:delete-group' pk=group.pk %}">
+          {% csrf_token %}
+        <button class="btn btn-danger" type="submit" id="submit">Usuń grupe</button>
+        <button type="button" class="btn btn-info" data-dismiss="modal">Cofnij</button>
+      </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<br>
 <a href="{% url 'platform_admin:student-group-search' %}">
   <button class="btn btn-success mt-1" id="back">
     Wróć
@@ -181,7 +206,8 @@ var acc = document.getElementsByClassName("tog");
   </script>
   {% for course in group_courses %}
   <script>
-    courseObjectList.push({"name" : "{{course.name}}", "category" : "{{course.category}}",
+    courseObjectList.push({"name" : `<a href="{% url 'platform_admin:platform-detail-course' pk=course.pk group=group.pk %}">{{course.name}}</a>`,
+     "category" : "{{course.category}}",
     "lesson_amount" : Number("{{course.lesson_amount}}"), "sort_name" : "{{course.name}}", "sort_category" : "{{course.category}}",
       "delete" : `<form method="POST" action="{% url 'platform_admin:unattach-course' pk=group.pk %}">
                   {% csrf_token %}

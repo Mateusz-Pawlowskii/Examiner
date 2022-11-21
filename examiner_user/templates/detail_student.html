@@ -73,7 +73,7 @@ function loadTableData(objectList) {
 </script>
 {% endfor %}
 <script>let courses=[];</script>
-{% for course in courses %}
+{% for course in all_courses %}
 <script>courses.push("{{course.name}}");</script>
 {% endfor %}
 <script>

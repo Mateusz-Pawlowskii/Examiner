@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.forms.widgets import ClearableFileInput
 from django.core.exceptions import ValidationError
 
-from exam.models import Course, Question, Lesson
+from exam.models import Course, Question, Lesson, StudentGroup
 
 class CourseForm(forms.ModelForm):
     class Meta:
@@ -87,3 +87,7 @@ class LessonRenameForm(forms.ModelForm):
         model = Lesson
         fields = ["topic", "course"]
     topic = forms.CharField( widget=forms.TextInput(attrs={"class":"form-control"}))
+
+class AttachCourseToGroupForm(forms.Form):
+    course = forms.ModelChoiceField(queryset=Course.objects.all())
+    group =  forms.CharField(label="Nazwa grupy", widget=forms.TextInput(attrs={"class":"form-control"}))

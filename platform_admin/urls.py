@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import (PlatformHomepage, ExaminerSearch, CreateExaminer, EditExaminer, ChangePassword, DeleteUser, StudentSearch,
                     PlatformCreateStudent, EditStudent, StudentGroupSearch, EditStudentGroup, CreateStudentGroup, AttachStudent,
-                    UnattachStudent, AttachCourse, UnattachCourse, SettingsView)
+                    UnattachStudent, AttachCourse, UnattachCourse, SettingsView, DeleteGroup, PlatformDetailCourse)
 
 app_name="platform_admin"
 urlpatterns = [
@@ -22,5 +22,7 @@ urlpatterns = [
     path("student-group/unattach/student/<int:pk>/", UnattachStudent.as_view(), name="unattach-student"),
     path("student-group/attach/course/<int:pk>/", AttachCourse.as_view(), name="attach-course"),
     path("student-group/unattach/course/<int:pk>/", UnattachCourse.as_view(), name="unattach-course"),
-    path("settings/", SettingsView.as_view(), name="settings")
+    path("settings/", SettingsView.as_view(), name="settings"),
+    path("student-group/delete/<int:pk>", DeleteGroup.as_view(), name="delete-group"),
+    path("student-group/course/<int:group>/<int:pk>", PlatformDetailCourse.as_view(), name="platform-detail-course")
 ]

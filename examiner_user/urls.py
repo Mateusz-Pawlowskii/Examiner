@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import (ExaminerHomepage, CreateStudent, CreateCourse, SearchCourse, DetailCourse, ControlCourse, 
-                    CreateQuestion, SearchQuestion, EditQuestion, DeleteQuestion, CreateLesson, DetailLesson, ViewLesson,
-                    EditLessonContent, AttachStudent, UnattachStudents, AttachStudentText, EditLessonTopic, StudentView, DetailStudent, 
-                    ExaminerResultView, GenralResultView, CourseResults, Clean_up)
+from .views import (ExaminerHomepage, CreateStudent, CreateCourse, SearchCourse, DetailCourse, ControlCourse,  CreateQuestion,
+                    SearchQuestion, EditQuestion, DeleteQuestion, CreateLesson, DetailLesson, ViewLesson, EditLessonContent,
+                    UnattachGroup, AttachCourseText, EditLessonTopic, StudentView, DetailStudent, ExaminerResultView,
+                    GenralResultView, CourseResults, Clean_up)
 
 app_name="examiner_user"
 urlpatterns = [
@@ -22,9 +22,8 @@ urlpatterns = [
     path("course/view/lesson/<int:pk>/<slug:slug>", ViewLesson.as_view(), name="view-lesson"),
     path("course/edit/lesson/content/<int:pk>/<slug:slug>", EditLessonContent.as_view(), name="edit-lesson-content"),
     path("course/edit/lesson/topic/<int:pk>/<slug:slug>", EditLessonTopic.as_view(), name="edit-lesson-topic"),
-    path("attach/student/<int:pk>/", AttachStudent.as_view(), name="attach-student"),
-    path("course/list/students/<int:pk>/<slug:slug>", UnattachStudents.as_view(), name="unattach-students"),
-    path("attach/student/text/<int:pk>/<slug:slug>", AttachStudentText.as_view(), name="attach-student-text"),
+    path("course/list/group/<int:pk>/<slug:slug>", UnattachGroup.as_view(), name="unattach-group"),
+    path("attach/course/text/<int:pk>/<slug:slug>", AttachCourseText.as_view(), name="attach-course-text"),
     path("users", StudentView.as_view(), name="students"),
     path("users/detail/<int:pk>", DetailStudent.as_view(), name="detail-student"),
     path("user/course/results/<int:course>/<int:student>", ExaminerResultView.as_view(), name="results-course-student"),

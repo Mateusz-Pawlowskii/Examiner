@@ -8,10 +8,16 @@
 </div>
 {% endfor %}
 <br>
-  <div class="text-center"><img src="{% static 'img/logo3.png' %}" height="80" width="300"/></div>
-  <br>
-  <h2 class="text-center">O programie</h2>
-  <br>
+{% if platform.logo|length == 0 %}
+<div class="text-center"><img src="{% static 'img/logo3.png' %}" height="80" width="300"/></div>
+{% else %}
+<div class="text-center"><img class="center_logo" src="/media/logos/{{platform.logo}}"/></div>
+{% endif %}
+<br>
+<h1 class="text-center">{{platform.name}}</h1>
+<br>
+<h2 class="text-center">O programie</h2>
+<br>
 <h4 class="text-center">
   Jest to demonstracyjna wersja strony służąca do tworzenia i edytowania kursów z możliwością załączenia materiałów szkoleniowych.
   Główną funkcjonalnością aplikacji jest możliwość tworzenia automatycznie sprawdzanych testów (wielokrotnego lub jednokrotnego wyboru)

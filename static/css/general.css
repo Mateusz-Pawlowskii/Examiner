@@ -3,6 +3,20 @@ body{
     background-color: rgb(195, 230, 203);
 }
 
+.center_logo{
+  max-height:100px;
+  max-width:300px;
+  height:auto;
+  width:auto;
+}
+
+.side_logo{
+  max-height:50px;
+  max-width:170px;
+  height:auto;
+  width:auto;
+}
+
 .ml-cont {
   margin-left: 205px;
 }

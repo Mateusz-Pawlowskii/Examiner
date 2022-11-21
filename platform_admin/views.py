@@ -10,7 +10,7 @@ from django.http import HttpResponseRedirect
 from operator import attrgetter
 from django.core.files.storage import FileSystemStorage
 
-from exam.models import Platform, StudentGroup, Course
+from exam.models import Platform, StudentGroup, Course, Question, Lesson
 from student.forms import StudentSearchCourseForm
 from examiner_user.views import CreateStudent
 from .forms import (UserNameChangeForm, StudentGroupForm, AttachStudentForm, AttachCourseForm, ReverseAttachStudentForm, 
@@ -34,7 +34,8 @@ class ExaminerSearch(LoginRequiredMixin, PermissionRequiredMixin, View):
         platform = Platform.objects.get(users=request.user)
         context = {"nav_var" : "examiners",
                    "object_list" : User.objects.filter(groups=1, platform=platform),
-                   "form" : StudentSearchCourseForm()}
+                   "form" : StudentSearchCourseForm(),
+                   "platform" : platform}
         return render(request, self.template_name, context)
 
 class CreateExaminer(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -42,8 +43,10 @@ class CreateExaminer(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.add_user")
 
     def get(self, request):
+        platform = Platform.objects.get(users=request.user)
         form = UserCreationForm()
-        context = {"form" : form}
+        context = {"form" : form,
+                   "platform" : platform}
         return render(request, self.template_name, context)
     
     def post(self, request):
@@ -66,9 +69,11 @@ class EditExaminer(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.change_user")
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         examiner = get_object_or_404(User, pk=self.kwargs["pk"])
         context = {"examiner" : examiner,
-                   "form" : UserNameChangeForm(instance=examiner)}
+                   "form" : UserNameChangeForm(instance=examiner),
+                   "platform" : platform}
         return render(request, self.template_name, context)
     
     def post(self, request, *args, **kwargs):
@@ -110,7 +115,8 @@ class StudentSearch(LoginRequiredMixin, PermissionRequiredMixin, View):
         platform = Platform.objects.get(users=request.user)
         context = {"nav_var" : "students",
                    "object_list" : User.objects.filter(groups=2, platform=platform),
-                   "form" : StudentSearchCourseForm()}
+                   "form" : StudentSearchCourseForm(),
+                   "platform" : platform}
         return render(request, self.template_name, context)
 
 class PlatformCreateStudent(CreateStudent):
@@ -122,10 +128,12 @@ class EditStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.change_user")
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         student = get_object_or_404(User, pk=self.kwargs["pk"])
         context = {"student" : student,
                    "form" : UserNameChangeForm(instance=student),
-                   "attach_form" : ReverseAttachStudentForm()}
+                   "attach_form" : ReverseAttachStudentForm(),
+                   "platform" : platform}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -144,7 +152,8 @@ class StudentGroupSearch(LoginRequiredMixin, PermissionRequiredMixin, View):
         platform = Platform.objects.get(users=request.user)
         context = {"nav_var" : "student_group",
                    "object_list" : StudentGroup.objects.filter(platform=platform),
-                   "form" : StudentSearchCourseForm()}
+                   "form" : StudentSearchCourseForm(),
+                   "platform" : platform}
         return render(request, self.template_name, context)
 
 class CreateStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -152,8 +161,10 @@ class CreateStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.add_studentgroup")
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         form = StudentGroupForm()
-        context = {"form" : form}
+        context = {"form" : form,
+                   "platform" : platform}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -191,7 +202,8 @@ class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
                    "course_form" : course_form,
                    "all_courses" : Course.objects.filter(platform=platform),
                    "group_courses" : group_courses,
-                   "categories" : categories}
+                   "categories" : categories,
+                   "platform" : platform}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -201,6 +213,36 @@ class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
             form.save()
         else:
             messages.error(request, "Edycja grupy nie powiodła się")
+        return redirect(reverse_lazy("platform_admin:student-group-search"))
+
+class PlatformDetailCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
+    template_name = "platform_detail_course.html"
+    permission_required = ("exam.delete_course")
+
+    def get(self, request, *args, **kwargs):
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
+        context = {"object" : course,
+                   "questions" : Question.objects.filter(course=course),
+                   "group" : StudentGroup.objects.get(pk=self.kwargs["group"]),
+                   "lessons" : Lesson.objects.filter(course=course),
+                   "students" : User.objects.filter(course=course),
+                   "platform" : Platform.objects.get(users=request.user)}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        group = self.kwargs["group"]
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
+        course.delete()
+        messages.info(request, "Kurs został usuniety")
+        return redirect(reverse_lazy("platform_admin:edit-student-group", kwargs={"pk" : group}))
+
+class DeleteGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = ("exam.delete_studentgroup")
+
+    def post(self, request, *args, **kwargs):
+        student_group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
+        student_group.delete()
+        messages.info(request, "Grupa usunięta")
         return redirect(reverse_lazy("platform_admin:student-group-search"))
 
 class AttachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -260,9 +302,6 @@ class SettingsView(LoginRequiredMixin, PermissionRequiredMixin, View):
         form = EditPlatformForm(request.POST, request.FILES, instance=platform)
         if form.is_valid():
             form.save()
-            # file = request.FILES["logo"]
-            # fs = FileSystemStorage(location='/media/logos')
-            # fs.save(file.name, file)
             messages.error(request, "Ustawienia zostały zapisane")
         else:
             messages.info(request, "Niepoprawne logo")

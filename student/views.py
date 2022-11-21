@@ -9,20 +9,26 @@ import datetime
 from django.contrib import messages
 from fpdf import FPDF
 
-from exam.models import Course, Lesson, Question, Result
+from exam.models import Course, Lesson, Question, Result, Platform
 from exam.functions import test_mark
 from .forms import StudentSearchCourseForm, StudentSearchStatusForm
 
 
 # Create your views here.
-class HomepageView(TemplateView):
+class HomepageView(View):
     template_name = "student_homepage.html"
-    extra_context= {"nav_var":"homepage"}
+
+    def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
+        context= {"nav_var":"homepage",
+                  "platform" : platform}
+        return render(request, self.template_name, context)
 
 class StudentSearchCourse(LoginRequiredMixin, View):
     template_name = "student_search_course.html"
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         student = request.user
         courses = Course.objects.filter(students=student)
         test_marks = test_mark(courses, student)
@@ -36,17 +42,20 @@ class StudentSearchCourse(LoginRequiredMixin, View):
                    "nav_var" : "search_course",
                    "form1" : StudentSearchCourseForm(),
                    "form2" : StudentSearchStatusForm(),
-                   "categories" : categories}
+                   "categories" : categories,
+                   "platform" : platform}
         return render(request, self.template_name, context)
 
 class StudentDetailCourse(LoginRequiredMixin, View):
     template_name = "student_detail_course.html"
 
     def get(self, request, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
         context = {"course":course,
-                   "student": request.user}
-        # this code is related to diploma feature and I don't know if it should exist
+                   "student": request.user,
+                   "platform" : platform}
+        # this code checks if the student passed in order to display them diploma link
         user = request.user
         results = Result.objects.filter(student = user, course = course)
         for result in results:
@@ -59,9 +68,11 @@ class StudentListLesson(LoginRequiredMixin, View):
     template_name = "student_list_lesson.html"
 
     def get(self, request, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
         lessons = Lesson.objects.filter(course=course)
-        context = {"lessons" : lessons}
+        context = {"lessons" : lessons,
+                   "platform" : platform}
         return render(request, self.template_name, context)
 
 # Part about Examination starts here
@@ -69,6 +80,7 @@ class StudentAttemptExam(LoginRequiredMixin, View):
     template_name = "student_attempt_exam.html"
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
         results = Result.objects.filter(course=course, student=request.user)
         used_attempts = len(results)
@@ -76,7 +88,8 @@ class StudentAttemptExam(LoginRequiredMixin, View):
         remaining_attempts = total_attempts - used_attempts
         context = {"course" : course,
                    "total_attempts" : total_attempts,
-                   "remaining_attempts" : remaining_attempts}
+                   "remaining_attempts" : remaining_attempts,
+                   "platform" : platform}
         return render(request, self.template_name, context)
 
 class StudentPassExam(LoginRequiredMixin, View):
@@ -120,12 +133,14 @@ class StudentQuestion(LoginRequiredMixin, View):
     template_name = "student_question.html"
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         result = get_object_or_404(Result, pk=self.kwargs["pk"])
         course = result.course
         questions = Question.objects.filter(course=course)
         question = questions[result.get_order()[result.current_question-1]-1]
         context = {"question" : question,
-                   "result" : result}
+                   "result" : result,
+                   "platform" : platform}
         if course.time > 0:
             end_time = result.end_time.strftime("%m/%d/%Y, %H:%M:%S")
             context["end_time"] = end_time
@@ -165,6 +180,7 @@ class TestFinish(LoginRequiredMixin, View):
     timeout = False
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         result = get_object_or_404(Result, pk=self.kwargs["pk"])
         result.finished = True
         result.save()
@@ -176,7 +192,8 @@ class TestFinish(LoginRequiredMixin, View):
         context = {"result" : result,
                    "max_score" : max_score,
                    "timeout" : self.timeout,
-                   "perc" : round((result.current_score/max_score)*100)}
+                   "perc" : round((result.current_score/max_score)*100),
+                   "platform" : platform}
         return render(request, self.template_name, context)
 
 class TestTimeOut(TestFinish):
@@ -218,13 +235,15 @@ class StudentResultView(LoginRequiredMixin, View):
     template_name = "student_result_view.html"
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
         results = Result.objects.filter(course=course, student=request.user)
         perc = []
         for result in results:
             perc.append(round(100*result.current_score/course.question_amount))
         context = {"course" : course,
-                   "results" : zip(results, perc)}
+                   "results" : zip(results, perc),
+                   "platform" : platform}
         return render(request, self.template_name, context)
 
 class StudentResultGeneralView(LoginRequiredMixin, View):
@@ -232,6 +251,7 @@ class StudentResultGeneralView(LoginRequiredMixin, View):
     template_name="student_results_general.html"
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         student_courses = Course.objects.filter(students = request.user)
         student_marks = test_mark(student_courses, request.user)
         categories = []
@@ -243,6 +263,6 @@ class StudentResultGeneralView(LoginRequiredMixin, View):
                    "marks" : student_marks,
                    "form1" : StudentSearchCourseForm(),
                    "form2" : StudentSearchStatusForm(),
-                   "categories" : categories
-                   }
+                   "categories" : categories,
+                   "platform" : platform}
         return render(request, self.template_name, context)
