@@ -1,14 +1,14 @@
 {% extends "platform_base.html" %}
 
 {% block content %}
-<h4>Egzaminator {{examiner.username}}</h4>
+<h4>Egzaminator <b>{{examiner.username}}</b></h4>
 <h5>Zmień nazwe użytkownika:</h5>
 <div class="form-group">
     <form method="POST" action="">
         {% csrf_token %}
         <label for="id_username">Nazwa użytkownika: (Wymagane. 150 znaków lub mniej. Tylko litery, cyfry i @/./+/-/_)</label>
         {{form.as_p}}
-        <button class="btn btn-success mt-1" type="submit" id="submit">Zmień nazwe</button>
+        <button class="btn btn-success mt-1 myButton" type="submit" id="submit">Zmień nazwe</button>
     </form>
 </div>
 <h5>Nadaj nowe hasło:</h5>
@@ -30,17 +30,17 @@
     <p>
       <label for="id_new_password2">Potwierdzenie hasła: (Wprowadź ponownie te same hasło co poprzednio w celu weryfikacji)</label>
       <input type="password" name="new_password2" autocomplete="new-password" required id="id_new_password2" class="form-control">
-      <button class="btn btn-success mt-1" type="submit" id="submit">Zmień hasło</button>
+      <button class="btn btn-success mt-1 myButton" type="submit" id="submit">Zmień hasło</button>
     </p>
   </form>
 </div>
 <a href="{% url 'platform_admin:examiner-search' %}">
-  <button class="btn btn-success mt-1" id="back">
+  <button class="btn btn-success mt-1 myButton" id="back">
     Wróć
   </button>
 </a>
 <br>
-<button class="btn btn-danger mt-1" type="button" data-toggle="modal" data-target="#deleteModal">Usuń egzaminatora</button>
+<button class="btn btn-danger mt-1 myButton" type="button" data-toggle="modal" data-target="#deleteModal">Usuń egzaminatora</button>
 <div class="modal fade" id="deleteModal">
   <div class="modal-dialog">
     <div class="modal-content">

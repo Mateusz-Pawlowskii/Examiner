@@ -5,48 +5,18 @@
 {% endblock %}
 
 {% block content %}
-<h4>Informacje o kursie</h4>
+<h4>Informacje o wynikach dla grupy <b>{{group.name}}</b></h4>
 <p>Nazwa kursu:<b> {{course.name}}</b></p>
 {% if course.category != "" %}
 <p>Kategoria:<b> {{course.category}}</b></p>
 {% endif %}
-<table class="table">
-  <tbody>
-    <tr>
-      <td>Typ pytań:<b>{% if course.multiple_answer_questions == True %}</b>
-            wielokrotnego wyboru
-          {% elif course.multiple_answer_questions == False %}
-            jednokrotnego wyboru
-          {% else %}{% endif %}</td>
-      <td>Ilość podejść: <b>{{course.attempt_amount}}</b></td>
-    </tr>
-    <tr>
-      <td>Czas trwania testu:<b>{% if course.time == 0 %}Nieograniczony{% else %} {{course.time}} minut{% endif %}</b></td>
-      <td>Całkowita ilość pytań:<b> {{questions|length}}</b></td>
-    </tr>
-    <tr>
-      <td>Ilość pytań podawana studentowi w czasie testu:<b> {{course.question_amount}}</b></td>
-      <td>Wymagan ilość poprawnych odpowiedzi:<b>{{course.passing_score}}</b></td>
-    </tr>
-    <tr>
-      <td>Ilość lekcji:<b> {{lessons|length}}</b></td>
-      <td>Ilość studentów zapisanych na kurs:<b> {{course_information.student_amount}}</b></td>
-    </tr>
-  </tbody>
-</table>
-{% if course.test_ready %}
-  <p>Status testu:<b>Test gotowy</b></p>
-{% else %}
-  <p>Status testu:<b>Test niegotowy</b></p>
-{% endif %}
-<hr>
+<p>Nazwa grupy:<b> {{group.name}}</b></p>
 <h4>Statystyki</h4>
-Ilość uczniów którzy ukończyli kurs: <b>{{course_information.passed_students}}</b><br>
-Ilość uczniów którzy zakończyli test niepowodzeniem: <b>{{course_information.failed_students}}</b><br>
-Ilość uczniów którzy są w trakcie kursu: <b>{{course_information.current_students}}</b><br>
-Ilość pomyślnych podejść do testu: <b>{{course_information.passed_results}}</b><br>
-Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_results}}</b><br><br>
-<hr>
+Ilość uczniów z grupy którzy ukończyli kurs: <b>{{course_information.passed_students}}</b><br>
+Ilość uczniów z grupy którzy zakończyli test niepowodzeniem: <b>{{course_information.failed_students}}</b><br>
+Ilość uczniów z grupy którzy są w trakcie kursu: <b>{{course_information.current_students}}</b><br>
+Ilość pomyślnych podejść do testu w grupie: <b>{{course_information.passed_results}}</b><br>
+Ilość niepomyślnych podejść do testu w grupie: <b>{{course_information.failed_results}}</b><br><br>
 <div class="row">
   <div class="col-sm-3">    
     <canvas id="myChart1"></canvas>
@@ -56,17 +26,13 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
   </div>
 </div>
 <hr>
-<p><b>Ilość studentów zapisanych na kurs:</b> {{students|length}}</p>
-<p>Poszczególne grupy studenckie zapisane do kursu:</p>
-{% for group in groups %}
-<p><a href="{% url 'examiner_user:results-course-group' course=course.pk group=group.pk %}">{{group.name}}</a></p>
-{% endfor %}
-<a href="{% url 'examiner_user:results' %}">
-  <button class = "btn btn-success">
-    Wróć
-  </button>
-</a>
-<p> Lista wszystkich studentów</p>
+<p><b>Ilość studentów w grupie:</b> {{students|length}}</p>
+<a href="{% url 'examiner_user:course-results' pk=course.pk %}">
+    <button class = "btn btn-success">
+      Wróć
+    </button>
+  </a>
+<p> Lista studentów</p>
 <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -80,7 +46,6 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
         
   </tbody>
 </table>
-
 <script>
   let test_marks = []
 </script>
@@ -93,25 +58,25 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
   let objectList = [];
   let columnNum = 3;
   function loadTableData(objectList) {
-    const tableBody = document.getElementById(`tbody`);
-    let dataHtml = ""
-    for (let object of objectList) {
-      if (String(object.status) === "Zaliczony") {
-        dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td><td><a href="/student/diploma/{{course.pk}}/${object.pk}/{{course.name|slugify}}"><button class = "btn btn-success">Dyplom</button></a></td></tr>`
-      }
-      else {
-        dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td></tr>`
-      }
-      
-    };
-    tableBody.innerHTML = dataHtml;
+  const tableBody = document.getElementById("tbody");
+  let dataHtml = ""
+  for (let object of objectList) {
+    if (String(object.status) === "Zaliczony") {
+      dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td><td><a href="/student/diploma/{{course.pk}}/${object.pk}/{{course.name|slugify}}"><button class = "btn btn-success">Dyplom</button></a></td></tr>`
+    }
+    else {
+      dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td></tr>`
+    }
+    
   };
+  tableBody.innerHTML = dataHtml;
+};
 </script>
 {% for student in students %}
 <script>
-  objectList.push({"name" : "<a href='{% url 'examiner_user:results-course-student' course=course.pk student=student.0 %}''>{{student.1}}</a>",
-    "status" : test_marks[Number("{{student.3}}")], "sort_status" : test_marks[Number("{{student.3}}")],
-    "sort_name" : "{{student.1}}", "pk" : "{{student.0}}"
+  objectList.push({"name" : "<a href='{% url 'examiner_user:results-course-student' course=course.pk student=student.pk %}''>{{student.username}}</a>",
+    "status" : test_marks[Number("{{forloop.counter}}")-1], "sort_status" : test_marks[Number("{{forloop.counter}}")-1],
+    "sort_name" : "{{student.username}}", "pk" : "{{student.pk}}"
      })
 </script>
 {% endfor %}

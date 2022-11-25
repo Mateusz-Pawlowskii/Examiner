@@ -67,9 +67,9 @@ Kursy:
 {% for course in courses %}
 <script>
   objectList.push({
-    "name" : "<a href='{% url 'student:student-detail-course' pk=course.pk slug=course.name|slugify %}''>{{course.name}}</a>", 
+    "name" : "<a href='{% url 'student:student-detail-course' pk=course.0 slug=course.1|slugify %}''>{{course.1}}</a>", 
     "status" : test_marks[Number("{{forloop.counter}}")-1], "sort_status" : test_marks[Number("{{forloop.counter}}")-1],
-    "sort_name" : "{{course.name}}", "category" : "{{course.category}}", "sort_category" : "{{course.category}}"
+    "sort_name" : "{{course.1}}", "category" : "{{course.2}}", "sort_category" : "{{course.2}}"
       })
 </script>
 {% endfor %}

@@ -59,9 +59,9 @@
 </script>
 {% for course in courses %}
 <script>
-  objectList.push({"name" : "<a href='{% url 'student:course-results' pk=course.pk %}''>{{course.name}}</a>", 
+  objectList.push({"name" : "<a href='{% url 'student:course-results' pk=course.0 %}''>{{course.1}}</a>", 
   "status" : test_marks[Number("{{forloop.counter}}")-1], "sort_status" : test_marks[Number("{{forloop.counter}}")-1],
-  "sort_name" : "{{course.name}}", "category" : "{{course.category}}", "sort_category" : "{{course.category}}"
+  "sort_name" : "{{course.1}}", "category" : "{{course.2}}", "sort_category" : "{{course.2}}"
     })
 </script>
 {% endfor %}

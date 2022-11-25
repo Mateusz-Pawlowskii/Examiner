@@ -52,7 +52,7 @@
     <p>Status testu:<b>Test niegotowy</b></p>
 {% endif %}
 <br>
-<button class="btn btn-danger mt-1" type="button" data-toggle="modal" data-target="#deleteModal">Usuń kurs</button>
+<button class="btn btn-danger mt-1 myButton" type="button" data-toggle="modal" data-target="#deleteModal">Usuń kurs</button>
 <div class="modal fade" id="deleteModal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -78,7 +78,7 @@
 </div>
 <br>
 <a href="{% url 'platform_admin:edit-student-group' pk=group.pk %}">
-  <button class="btn btn-success mt-1">
+  <button class="btn btn-success mt-1 myButton">
     Wróć
   </button>
 </a>

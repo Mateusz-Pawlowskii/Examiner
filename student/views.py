@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, View
+from django.views.generic import View
 from django.http import FileResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -9,10 +9,9 @@ import datetime
 from django.contrib import messages
 from fpdf import FPDF
 
-from exam.models import Course, Lesson, Question, Result, Platform
-from exam.functions import test_mark
+from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup
+from exam.functions import test_mark, get_courses_for_student, get_categories
 from .forms import StudentSearchCourseForm, StudentSearchStatusForm
-
 
 # Create your views here.
 class HomepageView(View):
@@ -26,22 +25,20 @@ class HomepageView(View):
 
 class StudentSearchCourse(LoginRequiredMixin, View):
     template_name = "student_search_course.html"
+    form_class_1 = StudentSearchCourseForm
+    form_class_2 = StudentSearchStatusForm
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         student = request.user
-        courses = Course.objects.filter(students=student)
-        test_marks = test_mark(courses, student)
-        categories = []
-        for course in courses:
-            categories.append(course.category)
-        categories = set(categories)
+        data = get_courses_for_student(student)
+        categories = get_categories(data[0])
         context = {"student" : student,
-                   "courses" : courses,
-                   "test_marks" : test_marks,
+                   "courses" : data[0],
+                   "test_marks" : data[1],
                    "nav_var" : "search_course",
-                   "form1" : StudentSearchCourseForm(),
-                   "form2" : StudentSearchStatusForm(),
+                   "form1" : self.form_class_1(),
+                   "form2" : self.form_class_2(),
                    "categories" : categories,
                    "platform" : platform}
         return render(request, self.template_name, context)
@@ -49,19 +46,22 @@ class StudentSearchCourse(LoginRequiredMixin, View):
 class StudentDetailCourse(LoginRequiredMixin, View):
     template_name = "student_detail_course.html"
 
+    def check_passed(self, request, course):
+        """this code checks if the student passed in order to display them diploma link"""
+        user = request.user
+        results = Result.objects.filter(student = user, course = course)
+        for result in results:
+            if result.passed == True:
+                return True
+        return False
+
     def get(self, request, **kwargs):
         platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
         context = {"course":course,
                    "student": request.user,
                    "platform" : platform}
-        # this code checks if the student passed in order to display them diploma link
-        user = request.user
-        results = Result.objects.filter(student = user, course = course)
-        for result in results:
-            if result.passed == True:
-                context["passed"] = True
-                break
+        context["passed"] = self.check_passed(request, course)
         return render(request, self.template_name, context)
 
 class StudentListLesson(LoginRequiredMixin, View):
@@ -96,11 +96,11 @@ class StudentPassExam(LoginRequiredMixin, View):
     template_name = "student_pass_exam.html"
 
     def get(self, request, **kwargs):
-        student_results = Result.objects.filter(student = request.user)
+        course = get_object_or_404(Course, pk=self.kwargs["pk"])
+        student_results = Result.objects.filter(student = request.user, course=course)
         for result in student_results:
             if result.finished is False:
                 return redirect(reverse_lazy("student:student-question", kwargs={"pk":result.pk}))
-        course = get_object_or_404(Course, pk=self.kwargs["pk"])
         return redirect(reverse_lazy("student:student-attempt-exam", kwargs={"pk":course.pk}))
 
     def post(self, request, *args, **kwargs):
@@ -113,7 +113,7 @@ class StudentPassExam(LoginRequiredMixin, View):
         if stated_question_amount > raw_question_amount or stated_question_amount == 0 or course.test_ready == False:
             messages.error(request, "Kurs nie jest gotowy")
             return redirect(reverse_lazy("student:student-attempt-exam", kwargs={"pk":course.pk}))
-        student_results = Result.objects.filter(student = request.user)
+        student_results = Result.objects.filter(student = request.user, course=course)
         for result in student_results:
             if result.finished is False:
                 return redirect(reverse_lazy("student:student-question", kwargs={"pk":result.pk}))
@@ -132,31 +132,19 @@ class StudentPassExam(LoginRequiredMixin, View):
 class StudentQuestion(LoginRequiredMixin, View):
     template_name = "student_question.html"
 
-    def get(self, request, *args, **kwargs):
-        platform = Platform.objects.get(users=request.user)
-        result = get_object_or_404(Result, pk=self.kwargs["pk"])
-        course = result.course
-        questions = Question.objects.filter(course=course)
-        question = questions[result.get_order()[result.current_question-1]-1]
-        context = {"question" : question,
-                   "result" : result,
-                   "platform" : platform}
-        if course.time > 0:
-            end_time = result.end_time.strftime("%m/%d/%Y, %H:%M:%S")
-            context["end_time"] = end_time
-            context["now"] = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-        if course.multiple_answer_questions == True:
-            return render(request, "student_multiple_question.html", context)
-        return render(request, self.template_name, context)
+    def end_time(self, context, result):
+        """It gives information about finish time to page"""
+        end_time = result.end_time.strftime("%m/%d/%Y, %H:%M:%S")
+        context["end_time"] = end_time
+        context["now"] = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+        return context
 
-    def post(self, request, *args, **kwargs):
-        result = get_object_or_404(Result, pk=self.kwargs["pk"])
-        course = result.course
-        questions = Question.objects.filter(course=course)
-        question = questions[result.get_order()[result.current_question-1]-1]
+    def evaluate_answer(self, request, course, question):
+        """Checks if the answer is correct and returns 1 when it is and 0 when not"""
         if course.multiple_answer_questions == False:
             if question.correct_answers == request.POST.get("correct_answers"):
-                result.current_score += 1
+                return 1
+            return 0
         else:
             score_bar = len(question.correct_answers)
             internal_points = 0
@@ -168,7 +156,30 @@ class StudentQuestion(LoginRequiredMixin, View):
                     else:
                         wrong_answer = True
             if wrong_answer == False and score_bar == internal_points:
-                result.current_score += 1
+                return 1
+            return 0
+
+    def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
+        result = get_object_or_404(Result, pk=self.kwargs["pk"])
+        course = result.course
+        questions = Question.objects.filter(course=course)
+        question = questions[result.get_order()[result.current_question-1]-1]
+        context = {"question" : question,
+                   "result" : result,
+                   "platform" : platform}
+        if course.time > 0:
+            context = self.end_time(context, result)
+        if course.multiple_answer_questions == True:
+            return render(request, "student_multiple_question.html", context)
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        result = get_object_or_404(Result, pk=self.kwargs["pk"])
+        course = result.course
+        questions = Question.objects.filter(course=course)
+        question = questions[result.get_order()[result.current_question-1]-1]
+        result.current_score += self.evaluate_answer(request, course, question)
         result.current_question += 1
         result.save()
         if result.current_question > course.question_amount:
@@ -199,7 +210,6 @@ class TestFinish(LoginRequiredMixin, View):
 class TestTimeOut(TestFinish):
     timeout = True
 
-# This code is related to diploma feature, I don't know if it's a good idea to use
 class TestDiploma(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
@@ -249,20 +259,18 @@ class StudentResultView(LoginRequiredMixin, View):
 class StudentResultGeneralView(LoginRequiredMixin, View):
     queryset = Course.objects.all()
     template_name="student_results_general.html"
+    form_class_1 = StudentSearchCourseForm
+    form_class_2 = StudentSearchStatusForm
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        student_courses = Course.objects.filter(students = request.user)
-        student_marks = test_mark(student_courses, request.user)
-        categories = []
-        for course in student_courses:
-            categories.append(course.category)
-        categories = set(categories)
+        data = get_courses_for_student(request.user)
+        categories = get_categories(data[0])
         context = {"nav_var": "results",
-                   "courses": student_courses,
-                   "marks" : student_marks,
-                   "form1" : StudentSearchCourseForm(),
-                   "form2" : StudentSearchStatusForm(),
+                   "courses": data[0],
+                   "marks" : data[1],
+                   "form1" : self.form_class_1(),
+                   "form2" : self.form_class_2(),
                    "categories" : categories,
                    "platform" : platform}
         return render(request, self.template_name, context)

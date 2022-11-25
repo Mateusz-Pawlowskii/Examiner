@@ -1,19 +1,21 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, View, TemplateView
-from django.contrib.auth.models import User, Group
+from django.views.generic import View
+from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.http import FileResponse
 from django.http import HttpResponseRedirect
 from operator import attrgetter
 
 from .forms import (CourseForm, QuestionForm, QuestionFormMultiple, LessonForm, AttachCourseToGroupForm, AttachStudentTextForm, 
-                    LessonRenameForm, LessonEditForm, CourseEditForm, AttachCourseTextForm)
+                    LessonRenameForm, LessonEditForm, CourseEditForm, AttachStudentTextForm)
 from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup
 from student.forms import StudentSearchCourseForm
+from platform_admin.views import (PlatformCreateStudent, StudentGroupSearch, CreateStudentGroup, EditStudentGroup, AttachCourse, 
+                                  AttachStudent, UnattachStudent)
 from exam.functions import test_mark, course_mark
+from .functions import get_maximum_result, initialize_course_information, get_result_data
 # Create your views here.
 
 class ExaminerHomepage(LoginRequiredMixin, View):
@@ -29,72 +31,59 @@ class ExaminerHomepage(LoginRequiredMixin, View):
 class StudentView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "students.html"
     permission_required = ("auth.view_user")
+    form_class = StudentSearchCourseForm
 
     def get(self, request):
         platform = Platform.objects.get(users=request.user)
         context = {"nav_var" : "users",
                    "object_list" : User.objects.filter(groups=2, platform=platform),
-                   "form" : StudentSearchCourseForm(),
+                   "form" : self.form_class(),
                    "platform" : platform}
         return render(request, self.template_name, context)
 
 class DetailStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "detail_student.html"
     permission_required = ("auth.view_user")
-    form_class = AttachCourseTextForm
+    form_class = AttachStudentTextForm
+
+    def get_course_data(self, groups, student):
+        test_marks = []
+        course_data = []
+        for group in groups:
+            courses = Course.objects.filter(studentgroup=group)
+            test_marks.extend(test_mark(courses, student))
+            for course in courses:
+                course_data.append([course.pk, course.name])
+        return (course_data, test_marks)
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         student = get_object_or_404(User, pk=self.kwargs["pk"])
-        courses = Course.objects.filter(students=student)
-        all_courses = Course.objects.filter(platform=platform)
-        test_marks = test_mark(courses, student)
+        groups = StudentGroup.objects.filter(students=student)
+        course_data = self.get_course_data(groups, student)
+        all_groups = StudentGroup.objects.filter(platform=platform)
         context = {"student" : student,
-                   "courses" : courses,
-                   "test_marks" : test_marks,
+                   "courses" : course_data[0],
+                   "test_marks" : course_data[1],
                    "form" : self.form_class(),
                    "platform" : platform,
-                   "all_courses" : all_courses}
+                   "groups" : groups,
+                   "all_groups" : all_groups}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        course = get_object_or_404(Course, name=request.POST["course"])
+        group = get_object_or_404(StudentGroup, name=request.POST["group"])
         student = get_object_or_404(User, pk=self.kwargs["pk"])
-        course.students.add(student)
-        course.student_amount += 1
-        course.save()
+        group.students.add(student)
+        group.save()
         return redirect(reverse_lazy("examiner_user:detail-student", kwargs={"pk":self.kwargs["pk"]}))
 
-class CreateStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
-    template_name = "create_student.html"
-    permission_required = ("auth.add_user")
+class CreateStudent(PlatformCreateStudent):
     redirect = "examiner_user:students"
-
-    def get(self, request):
-        platform = Platform.objects.get(users=request.user)
-        form = UserCreationForm()
-        context = {"form" : form,
-                   "platform" : platform}
-        return render(request, self.template_name, context)
-    
-    def post(self, request):
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            group = get_object_or_404(Group, name="Student")
-            platform = Platform.objects.get(users=request.user)
-            users = User.objects.all()
-            user = users.order_by('-date_joined').first()
-            group.user_set.add(user)
-            platform.users.add(user)
-            user.save()
-        else:
-            messages.error(request, "Niepoprawne dane")
-        return redirect(reverse_lazy(self.redirect))
+    base = "examiner_base.html"
 
 class AttachCourseText(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.change_user")
-    form_class = AttachStudentTextForm
 
     def post(self, request, *args, **kwargs):
         group = get_object_or_404(StudentGroup, name=request.POST["group"])
@@ -112,6 +101,16 @@ class UnattachGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
         group.courses.remove(course)
         group.save()
         return redirect(reverse_lazy("examiner_user:edit-course", kwargs={"pk":self.kwargs["pk"], "slug":self.kwargs["slug"]}))
+
+class UnattachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = ("exam.change_course")
+
+    def post(self, request, *args, **kwargs):
+        course = get_object_or_404(Course, pk=request.POST["course"])
+        group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
+        group.courses.remove(course)
+        group.save()
+        return redirect(reverse_lazy("examiner_user:examiner-edit-group", kwargs={"pk":self.kwargs["pk"]}))
 
 # part about courses starts here
 class CreateCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -142,6 +141,7 @@ class CreateCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
 class SearchCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.view_course")
     template_name="search_course.html"
+    form_class = StudentSearchCourseForm
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
@@ -151,7 +151,7 @@ class SearchCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
             categories.append(course.category)
         categories = set(categories)
         context = {"nav_var":"search_course",
-                     "form" : StudentSearchCourseForm(),
+                     "form" : self.form_class(),
                      "categories" : categories,
                      "object_list" : queryset,
                      "platform" : platform}
@@ -273,13 +273,9 @@ class EditQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name="edit_question.html" 
     form_class = QuestionForm
 
-    def get_object(self):
-        pk = self.kwargs["pk"]
-        return get_object_or_404(Question, pk=pk)
-
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        question = self.get_object()
+        question = get_object_or_404(Question, pk=self.kwargs["pk"])
         course_ = question.course
         form = self.form_class(instance=question)
         question_amount = len(Question.objects.filter(course=course_))
@@ -382,9 +378,9 @@ class ViewLesson(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         lesson = get_object_or_404(Lesson, pk=self.kwargs["pk"])
         if self.check_file(str(lesson.material)):
-            return FileResponse(open(f"media/{lesson.material}", "rb"), content_type="application/pdf")
+            return FileResponse(open(f"media/lessons/{lesson.material}", "rb"), content_type="application/pdf")
         else:
-            return FileResponse(open(f"media/{lesson.material}", "rb"), as_attachment=True)
+            return FileResponse(open(f"media/lessons/{lesson.material}", "rb"), as_attachment=True)
 
 class EditLessonContent(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_lesson")
@@ -449,13 +445,14 @@ class EditLessonTopic(LoginRequiredMixin, PermissionRequiredMixin, View):
 class GenralResultView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "results.html"
     permission_required = ("exam.view_result")
+    form_class = StudentSearchCourseForm
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        courses = Course.objects.all()
+        courses = Course.objects.filter(platform=platform)
         context = {"course_data" : courses,
                    "nav_var" : "results",
-                   "form" : StudentSearchCourseForm(),
+                   "form" : self.form_class(),
                    "platform" : platform}
         return render(request, self.template_name, context)
 
@@ -481,55 +478,99 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "course_results.html"
     permission_required = ("auth.view_user")
 
-    def get_maximum_result(self, student, course):
-        results = Result.objects.filter(course=course, student=student)
-        if results:
-            result = max(results, key=attrgetter("current_score")).current_score
-            return result
-        return 0
+    def remove_repeating_students(self, students):
+        students = set(students)
+        students = list(students)
+        return sorted(students, key = lambda student: student[3])
+
+    def update_context(self, context, student_list, student_no, passed_no, failed_no,
+                       not_yet_mark_no, course_information, test_marks):
+        context["student_list"] = student_list
+        context["student_no"] = student_no
+        context["pass_no"] = [passed_no, failed_no, not_yet_mark_no]
+        context["course_information"] = course_information
+        context["pass_list"] = [ "Zaliczony", "Niezaliczony", "Jeszcze nie ukończony"]
+        context["test_marks"] = test_marks
+        return context
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
-        students = User.objects.filter(course=course)
+        groups = StudentGroup.objects.filter(courses=course, platform=platform)
         context = {"course" : course,
-                   "students" : students,
-                   "platform" : platform}
+                   "groups" : groups,
+                   "platform" : platform
+                   }
         context["questions"] = Question.objects.filter(course=course)
         context["lessons"] = Lesson.objects.filter(course=course)
-        context["students"] = User.objects.filter(course=course)
-        course_information = {"pk" : course.pk,
-                                "name" : course.name,
-                                "passed_students" : 0,
-                                "failed_students" : 0,
-                                "current_students" : 0,
-                                "passed_results" : 0,
-                                "failed_results" : 0
-                                }
-        for student in User.objects.filter(groups=2, course=course):
+        course_information = initialize_course_information(course)
+        students = []
+        test_marks = []
+        for group in groups:
+            group_students = User.objects.filter(studentgroup=group, platform=platform)
+            test_marks.extend(course_mark(course, group_students))
+            for student in group_students:
+                students.append((student.pk,student.username, get_maximum_result(student, course),
+                course_information["student_amount"]))
+                course_information["student_amount"] += 1
+                if test_mark([course], student)[0] == "Zaliczony":
+                    course_information["passed_students"] += 1
+                elif test_mark([course], student)[0] == "Niezaliczony":
+                    course_information["failed_students"] += 1
+                else:
+                    course_information["current_students"] += 1
+        context["students"] = self.remove_repeating_students(students)
+        # Part for graphs starts here
+        students = sorted(context["students"], key = lambda student: student[2], reverse=True)
+        student_no = []
+        student_list = []
+        for student in students:
+            results = Result.objects.filter(course=course, student=User.objects.get(pk=student[0]))
+            if results:
+                result = max(results, key=attrgetter("current_score"))
+                student_no.append(100 * result.current_score/course.question_amount)
+                student_list.append(student[1])
+        course_information = get_result_data(course_information, course)
+        passed_no = test_marks.count("Zaliczony")
+        failed_no = test_marks.count("Niezaliczony")
+        not_yet_mark_no = test_marks.count("Jeszcze nie ukończony")
+        context = self.update_context(context, student_list, student_no, passed_no, failed_no,
+                                      not_yet_mark_no, course_information, test_marks)
+        return render(request, self.template_name, context)
+
+class CourseGroupResults(LoginRequiredMixin, PermissionRequiredMixin, View):
+    template_name = "course_group_results.html"
+    permission_required = ("exam.view_result")
+
+    def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
+        course = get_object_or_404(Course, pk=self.kwargs["course"])
+        group = get_object_or_404(StudentGroup, pk=self.kwargs["group"])
+        students = User.objects.filter(studentgroup=group)
+        context = {"course" : course,
+                   "students" : students,
+                   "group" : group,
+                   "platform" : platform}
+        course_information = initialize_course_information(course)
+        for student in User.objects.filter(studentgroup=group):
             if test_mark([course], student)[0] == "Zaliczony":
                 course_information["passed_students"] += 1
             elif test_mark([course], student)[0] == "Niezaliczony":
                 course_information["failed_students"] += 1
             else:
                 course_information["current_students"] += 1
-            results = Result.objects.filter(course=course)
-            for result in results:
-                if result.passed == True:
-                    course_information["passed_results"] += 1
-                else:
-                    course_information["failed_results"] += 1
+        course_information = get_result_data(course_information, course)
         context["course_information"] = course_information
-        context["test_marks"] = course_mark(course, students)
+        test_marks = course_mark(course, students)
         # Part for graphs starts here
-        passed_no = context["test_marks"].count("Zaliczony")
-        failed_no = context["test_marks"].count("Niezaliczony")
-        not_yet_mark_no = context["test_marks"].count("Jeszcze nie ukończony")
+        passed_no = test_marks.count("Zaliczony")
+        failed_no = test_marks.count("Niezaliczony")
+        not_yet_mark_no = test_marks.count("Jeszcze nie ukończony")
         context["pass_list"] = [ "Zaliczony", "Niezaliczony", "Jeszcze nie ukończony"]
         context["pass_no"] = [passed_no, failed_no, not_yet_mark_no]
         student_list = []
         student_no = []
-        students = sorted(students, key = lambda student: self.get_maximum_result(student, course), reverse=True)
+        students = sorted(students, key = lambda student: get_maximum_result(student, course), reverse=True)
         for student in students:
             results = Result.objects.filter(course=course, student=student)
             if results:
@@ -538,7 +579,32 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
                 student_list.append(student.username)
         context["student_list"] = student_list
         context["student_no"] = student_no
+        context["test_marks"] = test_marks
         return render(request, self.template_name, context)
+
+# Student group views
+class StudentGroupView(StudentGroupSearch):
+    side = "examiner"
+    base = "examiner_base.html"
+
+class ExaminerCreateGroup(CreateStudentGroup):
+    side = "examiner"
+    base = "examiner_base.html"
+    redirect_to = "examiner_user:student-group"
+
+class ExaminerEditGroup(EditStudentGroup):
+    side = "examiner"
+    base = "examiner_base.html"
+    redirect_to = "examiner_user:student-group"
+
+class ExaminerAttachCourse(AttachCourse):
+    redirect_to = "examiner_user:examiner-edit-group"
+
+class ExaminerAttachStudent(AttachStudent):
+    redirect_to = "examiner_user:examiner-edit-group"
+
+class ExaminerUnattachStudent(UnattachStudent):
+    redirect_to = "examiner_user:examiner-edit-group"
 
 # Test views
 # Selenium cleans up the database on its own only when models are created with objectModel.create() methods and

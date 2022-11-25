@@ -14,13 +14,24 @@
 </div>
 {% endfor %}
 <h4>Profil studenta <b>{{student.username}}</b></h4>
-<h4>Przypisz kurs do studenta</h4> 
-<p>(wpisz nazwe kursu do którego ma zostać przypisany student)</p>
+{% if groups|length == 1 %}
+<p>Należy do grupy:
+{% elif groups|length == 0 %}
+<p>Student nie został przypisany do żadnej grupy
+{% else %}
+<p>Należy do grup:
+{% endif %}
+{% for group in groups %}
+<br><a href="{% url 'examiner_user:examiner-edit-group' pk=group.pk %}">{{group.name}}</a>
+{% endfor %}
+</p>
+<h4>Przypisz grupe do studenta</h4> 
+<p>(wpisz nazwe grupy do której ma zostać przypisany student)</p>
 <div class="form-group">
   <form autocomplete="off" method="POST">
     {% csrf_token %}
       <div class="autocomplete" style="width:300px;">
-        {{ form.course }}
+        {{ form.group }}
       </div>
       {{ form.student.as_hidden }}
       <br>
@@ -66,18 +77,18 @@ function loadTableData(objectList) {
 {% endfor %}
 {% for course in courses %}
 <script>
-  objectList.push({"name" : "<a href='{% url 'examiner_user:results-course-student' course=course.pk student=student.pk %}''>{{course.name}}</a>", 
+  objectList.push({"name" : "<a href='{% url 'examiner_user:results-course-student' course=course.0 student=student.pk %}''>{{course.1}}</a>", 
     "status" : test_marks[Number("{{forloop.counter}}")-1], "sort_status" : test_marks[Number("{{forloop.counter}}")-1],
-     "sort_name" : "{{course.name}}"
+     "sort_name" : "{{course.1}}"
      })
 </script>
 {% endfor %}
-<script>let courses=[];</script>
-{% for course in all_courses %}
-<script>courses.push("{{course.name}}");</script>
+<script>let groups=[];</script>
+{% for group in all_groups %}
+<script>groups.push("{{group.name}}");</script> 
 {% endfor %}
 <script>
-  autocomplete(document.getElementById("id_course"), courses);
+  autocomplete(document.getElementById("id_group"), groups);
 </script>
 {% load static %}
 <script src="{% static 'js/table_sorting.js' %}"></script>

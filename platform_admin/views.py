@@ -1,18 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, View, TemplateView
+from django.views.generic import View
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 from django.contrib import messages
-from django.http import FileResponse
 from django.http import HttpResponseRedirect
-from operator import attrgetter
-from django.core.files.storage import FileSystemStorage
 
 from exam.models import Platform, StudentGroup, Course, Question, Lesson
 from student.forms import StudentSearchCourseForm
-from examiner_user.views import CreateStudent
+from exam.functions import get_categories
 from .forms import (UserNameChangeForm, StudentGroupForm, AttachStudentForm, AttachCourseForm, ReverseAttachStudentForm, 
                    EditPlatformForm)
 # Create your views here.
@@ -29,34 +26,34 @@ class PlatformHomepage(LoginRequiredMixin, View):
 class ExaminerSearch(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "search_examiner.html"
     permission_required = ("auth.view_user")
+    form_class = StudentSearchCourseForm
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         context = {"nav_var" : "examiners",
                    "object_list" : User.objects.filter(groups=1, platform=platform),
-                   "form" : StudentSearchCourseForm(),
+                   "form" : self.form_class(),
                    "platform" : platform}
         return render(request, self.template_name, context)
 
 class CreateExaminer(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "create_examiner.html"
     permission_required = ("auth.add_user")
+    form_class = UserCreationForm
 
     def get(self, request):
         platform = Platform.objects.get(users=request.user)
-        form = UserCreationForm()
+        form = self.form_class()
         context = {"form" : form,
                    "platform" : platform}
         return render(request, self.template_name, context)
     
     def post(self, request):
-        form = UserCreationForm(request.POST)
+        form = self.form_class(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
             group = get_object_or_404(Group, name="Examiner")
             platform = Platform.objects.get(users=request.user)
-            users = User.objects.all()
-            user = users.order_by('-date_joined').first()
             group.user_set.add(user)
             platform.users.add(user)
             user.save()
@@ -67,28 +64,30 @@ class CreateExaminer(LoginRequiredMixin, PermissionRequiredMixin, View):
 class EditExaminer(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "edit_examiner.html"
     permission_required = ("auth.change_user")
+    form_class = UserNameChangeForm
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         examiner = get_object_or_404(User, pk=self.kwargs["pk"])
         context = {"examiner" : examiner,
-                   "form" : UserNameChangeForm(instance=examiner),
+                   "form" : self.form_class(instance=examiner),
                    "platform" : platform}
         return render(request, self.template_name, context)
     
     def post(self, request, *args, **kwargs):
         examiner = get_object_or_404(User, pk=self.kwargs["pk"])
-        form = UserNameChangeForm(request.POST, instance=examiner)
+        form = self.form_class(request.POST, instance=examiner)
         if form.is_valid():
             form.save()
             return redirect(reverse_lazy("platform_admin:homepage"))
 
 class ChangePassword(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.change_user")
+    form_class = SetPasswordForm
 
     def post(self, request, *args, **kwargs):
         user = get_object_or_404(User, pk=self.kwargs["pk"])
-        form = SetPasswordForm(data=request.POST, user=user)
+        form = self.form_class(data=request.POST, user=user)
         if form.is_valid():
             form.save()
             messages.info(request, "Hasło zostało pomyślnie zmienione")
@@ -110,29 +109,58 @@ class DeleteUser(LoginRequiredMixin, PermissionRequiredMixin, View):
 class StudentSearch(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "search_student.html"
     permission_required = ("auth.view_user")
+    form_class = StudentSearchCourseForm
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         context = {"nav_var" : "students",
                    "object_list" : User.objects.filter(groups=2, platform=platform),
-                   "form" : StudentSearchCourseForm(),
+                   "form" : self.form_class(),
                    "platform" : platform}
         return render(request, self.template_name, context)
 
-class PlatformCreateStudent(CreateStudent):
+class PlatformCreateStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
+    template_name = "create_student.html"
+    permission_required = ("auth.add_user")
+    form_class = UserCreationForm
     redirect = "platform_admin:student-search"
+    base = "platform_base.html"
 
-# I was thinking about inhereting EditExaminer but I was afraid that it might make code less clean
+    def get(self, request):
+        platform = Platform.objects.get(users=request.user)
+        form = self.form_class()
+        context = {"form" : form,
+                   "base" : self.base,
+                   "platform" : platform}
+        return render(request, self.template_name, context)
+    
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            user = form.save()
+            group = get_object_or_404(Group, name="Student")
+            platform = Platform.objects.get(users=request.user)
+            group.user_set.add(user)
+            platform.users.add(user)
+            user.save()
+        else:
+            messages.error(request, "Niepoprawne dane")
+        return redirect(reverse_lazy(self.redirect))
+
 class EditStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "edit_student.html"
     permission_required = ("auth.change_user")
+    form_class_1 = UserNameChangeForm
+    form_class_2 = ReverseAttachStudentForm
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
+        all_groups = StudentGroup.objects.filter(platform=platform)
         student = get_object_or_404(User, pk=self.kwargs["pk"])
         context = {"student" : student,
-                   "form" : UserNameChangeForm(instance=student),
-                   "attach_form" : ReverseAttachStudentForm(),
+                   "form" : self.form_class_1(instance=student),
+                   "attach_form" : self.form_class_2(),
+                   "all_groups" : all_groups,
                    "platform" : platform}
         return render(request, self.template_name, context)
 
@@ -147,28 +175,37 @@ class EditStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
 class StudentGroupSearch(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "search_student_group.html"
     permission_required = ("exam.view_studentgroup")
+    form_class = StudentSearchCourseForm
+    side = "platform"
+    base = "platform_base.html"
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         context = {"nav_var" : "student_group",
                    "object_list" : StudentGroup.objects.filter(platform=platform),
-                   "form" : StudentSearchCourseForm(),
+                   "form" : self.form_class(),
+                   "side" : self.side,
+                   "base" : self.base,
                    "platform" : platform}
         return render(request, self.template_name, context)
 
 class CreateStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "create_student_group.html"
     permission_required = ("exam.add_studentgroup")
+    form_class = StudentGroupForm
+    redirect_to = "platform_admin:student-group-search"
+    base = "platform_base.html"
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        form = StudentGroupForm()
+        form = self.form_class()
         context = {"form" : form,
+                   "base" : self.base,
                    "platform" : platform}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        form = StudentGroupForm(request.POST)
+        form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
             platform = Platform.objects.get(users=request.user)
@@ -177,11 +214,14 @@ class CreateStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
             platform.save()
         else:
             messages.error(request, "Stworzenie grupy nie powiodło się")
-        return redirect(reverse_lazy("platform_admin:student-group-search"))
+        return redirect(reverse_lazy(self.redirect_to))
 
 class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "edit_student_group.html"
     permission_required = ("exam.change_studentgroup")
+    redirect_to = "platform_admin:student-group-search"
+    base = "platform_base.html"
+    side = "platform"
 
     def get(self, request, *args, **kwargs):
         student_group = StudentGroup.objects.get(pk=self.kwargs["pk"])
@@ -190,10 +230,7 @@ class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
         course_form = AttachCourseForm(initial={"group" : student_group})
         platform = Platform.objects.get(users=request.user)
         group_courses = Course.objects.filter(studentgroup=student_group)
-        categories = []
-        for course in group_courses:
-            categories.append(course.category)
-        categories = set(categories)
+        categories = get_categories(group_courses)
         context = {"group" : student_group,
                    "form" : form,
                    "student_form" : student_form,
@@ -203,6 +240,8 @@ class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
                    "all_courses" : Course.objects.filter(platform=platform),
                    "group_courses" : group_courses,
                    "categories" : categories,
+                   "base" : self.base,
+                   "side" : self.side,
                    "platform" : platform}
         return render(request, self.template_name, context)
 
@@ -213,7 +252,7 @@ class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
             form.save()
         else:
             messages.error(request, "Edycja grupy nie powiodła się")
-        return redirect(reverse_lazy("platform_admin:student-group-search"))
+        return redirect(reverse_lazy(self.redirect_to))
 
 class PlatformDetailCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "platform_detail_course.html"
@@ -247,33 +286,36 @@ class DeleteGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
 
 class AttachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.change_user")
+    redirect_to = "platform_admin:edit-student-group"
 
     def post(self, request, *args, **kwargs):
         student = get_object_or_404(User, username=request.POST["student"])
         student_group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
         student_group.students.add(student)
         student_group.save()
-        return redirect(reverse_lazy("platform_admin:edit-student-group", kwargs={"pk":self.kwargs["pk"]}))
+        return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"]}))
 
 class UnattachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.change_user")
+    redirect_to = "platform_admin:edit-student-group"
     
     def post(self, request, *args, **kwargs):
         group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
         student = get_object_or_404(User, pk=request.POST["student"])
         group.students.remove(student)
         group.save()
-        return redirect(reverse_lazy("platform_admin:edit-student-group", kwargs={"pk":self.kwargs["pk"]}))
+        return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"]}))
 
 class AttachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_course")
+    redirect_to = "platform_admin:edit-student-group"
 
     def post(self, request, *args, **kwargs):
         course = get_object_or_404(Course, name=request.POST["course"])
         student_group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
         student_group.courses.add(course)
         student_group.save()
-        return redirect(reverse_lazy("platform_admin:edit-student-group", kwargs={"pk":self.kwargs["pk"]}))
+        return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"]}))
 
 class UnattachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_course")
@@ -289,17 +331,18 @@ class UnattachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
 class SettingsView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "settings.html"
     permission_required = ("exam.change_platform")
+    form_class = EditPlatformForm
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        context = {"form" : EditPlatformForm(instance=platform),
+        context = {"form" : self.form_class(instance=platform),
                    "platform" : platform,
                    "nav_var" : "settings"}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        form = EditPlatformForm(request.POST, request.FILES, instance=platform)
+        form = self.form_class(request.POST, request.FILES, instance=platform)
         if form.is_valid():
             form.save()
             messages.error(request, "Ustawienia zostały zapisane")

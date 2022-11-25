@@ -22,7 +22,7 @@
           <img class="side_logo" src="/media/logos/{{platform.logo}}"/>
           {% endif %}
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>&nbsp</span>
-          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span id="current_username"><b>{{request.user.username}}</b></span>
+          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span id="current_username">Egzaminator: <b>{{request.user.username}}</b></span>
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>&nbsp</span>
           {% if nav_var == "homepage" %}
           <a href="{% url 'exam:home-redirect' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true" id="homepage">
@@ -49,6 +49,15 @@
           {% else %}
           <a href="{% url 'examiner_user:students' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="users">
             <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Użytkownicy</span>
+          </a>
+          {% endif %}
+          {% if nav_var == "student_group" %}
+          <a href="{% url 'examiner_user:student-group' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true" id="users">
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Grupy studentów</span>
+          </a>
+          {% else %}
+          <a href="{% url 'examiner_user:student-group' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="users">
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Grupy studentów</span>
           </a>
           {% endif %}
           {% if nav_var == "results" %}

@@ -78,9 +78,9 @@ class AttachStudentForm(forms.Form):
 class AttachStudentTextForm(AttachStudentForm):
     student = forms.CharField(label="Nazwa użytkownika ucznia", widget=forms.TextInput(attrs={"class":"form-control"}))
 
-class AttachCourseTextForm(forms.Form):
+class AttachStudentTextForm(forms.Form):
     student = forms.ModelChoiceField(queryset=User.objects.filter(groups = 2))
-    course =  forms.CharField(label="Nazwa kursu", widget=forms.TextInput(attrs={"class":"form-control"}))
+    group =  forms.CharField(label="Nazwa grupy", widget=forms.TextInput(attrs={"class":"form-control"}))
 
 class LessonRenameForm(forms.ModelForm):
     class Meta:

@@ -46,6 +46,25 @@ class RedirectHomepage(View):
 class RegistraitionView(View):
     template_name = "registration.html"
 
+    def add_to_platform_admin_group(user):
+        """adds user to platform admin group and marks them as inactive"""
+        user.is_active = False
+        group = get_object_or_404(Group, name="Platform_Admin")
+        group.user_set.add(user)
+        user.save()
+
+    def send_registraition_mail(request, user, mail):
+        current_site = get_current_site(request)
+        mail_subject = 'Aktywuj swoje konto na Examinerze'
+        message = render_to_string('activate_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'pk': user.pk,
+            'token':account_activation_token.make_token(user),
+        })
+        email = EmailMessage(mail_subject, message, to=[mail])
+        email.send()
+
     def get(self, request):
         user_form = MyUserCreationForm()
         context = {"user_form" : user_form,}
@@ -55,23 +74,9 @@ class RegistraitionView(View):
         form = MyUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            user.is_active = False
-            group = get_object_or_404(Group, name="Platform_Admin")
-            group.user_set.add(user)
-            user.save()
-            current_site = get_current_site(request)
-            mail_subject = 'Aktywuj swoje konto na Examinerze'
-            message = render_to_string('activate_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'pk': user.pk,
-                'token':account_activation_token.make_token(user),
-            })
-            to_email = form.cleaned_data.get('email')
-            email = EmailMessage(
-                        mail_subject, message, to=[to_email]
-            )
-            email.send()
+            self.add_to_platform_admin_group(user)
+            mail = form.cleaned_data.get('email')
+            self.send_registraition_mail(request, user, mail)
             messages.info(request, "Email informacyjny został wysłany, prosimy sprawdzić skrzynkę pocztową")
         else:
             messages.error(request, "Niepoprawne dane, możliwe że nazwa użytkownika jest zajęta")

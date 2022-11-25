@@ -3,8 +3,12 @@ body{
     background-color: rgb(195, 230, 203);
 }
 
+.myButton {
+  width: 200px;
+}
+
 .center_logo{
-  max-height:100px;
+  max-height:150px;
   max-width:300px;
   height:auto;
   width:auto;
