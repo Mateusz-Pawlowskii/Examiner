@@ -6,12 +6,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.utils.timezone import make_aware
+from django.utils.text import slugify
+from datetime import datetime
 
-from exam.models import Platform, StudentGroup, Course, Question, Lesson
+from exam.models import Platform, StudentGroup, Course, Question, Lesson, Term
 from student.forms import StudentSearchCourseForm
-from exam.functions import get_categories
+from exam.functions import get_categories, get_timeover
 from .forms import (UserNameChangeForm, StudentGroupForm, AttachStudentForm, AttachCourseForm, ReverseAttachStudentForm, 
-                   EditPlatformForm)
+                   EditPlatformForm, ChangeTermForm)
 # Create your views here.
 class PlatformHomepage(LoginRequiredMixin, View):
     template_name = "platform_homepage.html"
@@ -231,6 +234,17 @@ class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
         platform = Platform.objects.get(users=request.user)
         group_courses = Course.objects.filter(studentgroup=student_group)
         categories = get_categories(group_courses)
+        terms = []
+        for course in group_courses:
+            term_info = []
+            term = Term.objects.filter(group=student_group,course=course).first()
+            term_info.append(term)
+            if get_timeover(student_group, course):
+                term_info.append("(Termin upłynął)")
+            else:
+                term_info.append(" ")
+            terms.append(term_info)
+
         context = {"group" : student_group,
                    "form" : form,
                    "student_form" : student_form,
@@ -242,6 +256,8 @@ class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
                    "categories" : categories,
                    "base" : self.base,
                    "side" : self.side,
+                   "terms" : terms,
+                   "term_form" : ChangeTermForm(),
                    "platform" : platform}
         return render(request, self.template_name, context)
 
@@ -315,6 +331,8 @@ class AttachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         student_group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
         student_group.courses.add(course)
         student_group.save()
+        term = Term(time=make_aware(datetime.strptime(request.POST["term"],"%Y-%m-%d")), group=student_group, course=course)
+        term.save()
         return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"]}))
 
 class UnattachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -323,9 +341,25 @@ class UnattachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
         course = get_object_or_404(Course, pk=request.POST["course"])
+        term = Term.objects.filter(course=course, group=group)
+        term.delete()
         group.courses.remove(course)
         group.save()
         return redirect(reverse_lazy("platform_admin:edit-student-group", kwargs={"pk":self.kwargs["pk"]}))
+
+class ChangeTerm(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = ("exam.change_course")
+    redirect_to = "platform_admin:edit-student-group"
+    redirect_arg = "pk"
+
+    def post(self, request, *args, **kwargs):
+        course = Course.objects.get(pk=self.kwargs["course"])
+        group = StudentGroup.objects.get(pk=self.kwargs["pk"])
+        term = Term.objects.filter(course=course,group=group).first()
+        time = request.POST["time"]
+        term.time = time
+        term.save()
+        return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs[self.redirect_arg],"slug" : slugify(group.name)}))
 
 # views about settings
 class SettingsView(LoginRequiredMixin, PermissionRequiredMixin, View):

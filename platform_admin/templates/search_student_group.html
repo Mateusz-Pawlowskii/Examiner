@@ -8,7 +8,7 @@
 {% endfor %}
 <br><br>
 <p class="text-center">
-  {% if side == platform %}
+  {% if side == "platform" %}
   <a href="{% url 'platform_admin:create-student-group' %}" class="btn btn-success my-2 my-lg-0 myButton">
   {% else %}
   <a href="{% url 'examiner_user:examiner-create-group' %}" class="btn btn-success my-2 my-lg-0 myButton">
@@ -49,8 +49,9 @@
 </script>
 {% for group in object_list %}
 <script>
-  objectList.push({"name" : `{% if side == "platform" %}<a href='{% url 'platform_admin:edit-student-group' pk=group.pk %}''>
-    {{group.name}}</a>{% else %}<a href='{% url 'examiner_user:examiner-edit-group' pk=group.pk %}''>{{group.name}}</a>{% endif %}`,
+  objectList.push({"name" : `{% if side == "platform" %}
+    <a href='{% url 'platform_admin:edit-student-group' pk=group.pk slug=group.name|slugify %}''>{{group.name}}</a>{% else %}
+    <a href='{% url 'examiner_user:examiner-edit-group' pk=group.pk slug=group.name|slugify %}''>{{group.name}}</a>{% endif %}`,
     "student_amount" : "{{group.students.all|length}}", "course_amount" : "{{group.courses.all|length}}",
      "sort_name" : "{{group.name}}",
       })

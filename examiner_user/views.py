@@ -10,11 +10,12 @@ from operator import attrgetter
 
 from .forms import (CourseForm, QuestionForm, QuestionFormMultiple, LessonForm, AttachCourseToGroupForm, AttachStudentTextForm, 
                     LessonRenameForm, LessonEditForm, CourseEditForm, AttachStudentTextForm)
-from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup
+from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Term
 from student.forms import StudentSearchCourseForm
 from platform_admin.views import (PlatformCreateStudent, StudentGroupSearch, CreateStudentGroup, EditStudentGroup, AttachCourse, 
-                                  AttachStudent, UnattachStudent)
-from exam.functions import test_mark, course_mark
+                                  AttachStudent, UnattachStudent, ChangeTerm)
+from platform_admin.forms import ChangeTermForm
+from exam.functions import test_mark, course_mark, get_timeover
 from .functions import get_maximum_result, initialize_course_information, get_result_data
 # Create your views here.
 
@@ -181,6 +182,20 @@ class ControlCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name="control_course.html"
     form_class = CourseEditForm
 
+    def get_term_data(self, course):
+        course_groups = course.studentgroup_set.all()
+        terms = []
+        for group in course_groups:
+            term_info = []
+            term = Term.objects.filter(group=group,course=course).first()
+            term_info.append(term)
+            if get_timeover(group, course):
+                term_info.append("(Termin upłynął)")
+            else:
+                term_info.append(" ")
+            terms.append(term_info)
+        return terms
+
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
@@ -195,6 +210,8 @@ class ControlCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
                    "lesson_list" : lesson_list,
                    "group_form" : AttachCourseToGroupForm(initial={"course" : course}),
                    "student_groups" : StudentGroup.objects.filter(platform=platform),
+                   "terms" : self.get_term_data(course),
+                   "term_form" : ChangeTermForm(),
                    "platform" : platform
                    }
         return render(request, self.template_name, context)
@@ -508,7 +525,8 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         test_marks = []
         for group in groups:
             group_students = User.objects.filter(studentgroup=group, platform=platform)
-            test_marks.extend(course_mark(course, group_students))
+            timeover = get_timeover(group, course)
+            test_marks.extend(course_mark(course, group_students, timeover))
             for student in group_students:
                 students.append((student.pk,student.username, get_maximum_result(student, course),
                 course_information["student_amount"]))
@@ -561,7 +579,8 @@ class CourseGroupResults(LoginRequiredMixin, PermissionRequiredMixin, View):
                 course_information["current_students"] += 1
         course_information = get_result_data(course_information, course)
         context["course_information"] = course_information
-        test_marks = course_mark(course, students)
+        timeover = get_timeover(group, course)
+        test_marks = course_mark(course, students, timeover)
         # Part for graphs starts here
         passed_no = test_marks.count("Zaliczony")
         failed_no = test_marks.count("Niezaliczony")
@@ -605,6 +624,13 @@ class ExaminerAttachStudent(AttachStudent):
 
 class ExaminerUnattachStudent(UnattachStudent):
     redirect_to = "examiner_user:examiner-edit-group"
+
+class ExaminerChangeTerm(ChangeTerm):
+    redirect_to = "examiner_user:examiner-edit-group"
+
+class ExaminerChangeTermCourse(ChangeTerm):
+    redirect_to = "examiner_user:edit-course"
+    redirect_arg = "course"
 
 # Test views
 # Selenium cleans up the database on its own only when models are created with objectModel.create() methods and

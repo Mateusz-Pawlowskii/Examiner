@@ -9,8 +9,8 @@ import datetime
 from django.contrib import messages
 from fpdf import FPDF
 
-from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup
-from exam.functions import test_mark, get_courses_for_student, get_categories
+from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Term
+from exam.functions import get_courses_for_student, get_categories, get_timeover
 from .forms import StudentSearchCourseForm, StudentSearchStatusForm
 
 # Create your views here.
@@ -46,6 +46,12 @@ class StudentSearchCourse(LoginRequiredMixin, View):
 class StudentDetailCourse(LoginRequiredMixin, View):
     template_name = "student_detail_course.html"
 
+    def get_term(self, request, course):
+        user = request.user
+        group = StudentGroup.objects.filter(students=user, courses=course).first()
+        term = Term.objects.filter(group=group, course=course).first()
+        return (term.time, get_timeover(group, course))
+
     def check_passed(self, request, course):
         """this code checks if the student passed in order to display them diploma link"""
         user = request.user
@@ -58,8 +64,10 @@ class StudentDetailCourse(LoginRequiredMixin, View):
     def get(self, request, **kwargs):
         platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
+        term = self.get_term(request, course)
         context = {"course":course,
                    "student": request.user,
+                   "term" : term,
                    "platform" : platform}
         context["passed"] = self.check_passed(request, course)
         return render(request, self.template_name, context)

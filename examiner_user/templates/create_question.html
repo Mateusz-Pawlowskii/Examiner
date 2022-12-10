@@ -44,10 +44,10 @@ Aktualna ilość pytań: {{question_amount}}
     </p>
     {{ form.course.as_hidden }}
   </div>
-  <button class="btn btn-success" type="submit" id="submit">Dodaj</button>
+  <button class="btn btn-success myButton" type="submit" id="submit">Dodaj</button>
 </form>
 <a href="{% url 'examiner_user:search-question' pk=course.pk slug=course.name|slugify %}">
-  <button class="btn btn-success mt-1" id="back">
+  <button class="btn btn-success mt-1 myButton" id="back">
     Lista pytań
   </button>
 </a>

@@ -67,3 +67,8 @@ class Question(models.Model):
     answer5 = models.CharField(max_length = 200, blank = True, null = True)
     correct_answers = models.CharField(max_length = 50)
     course = models.ForeignKey(Course, on_delete = models.CASCADE, blank = True, null = True)
+
+class Term(models.Model):
+    course = models.ForeignKey(Course, on_delete = models.CASCADE)
+    group = models.ForeignKey(StudentGroup, on_delete = models.CASCADE)
+    time = models.DateTimeField(null=True)

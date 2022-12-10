@@ -4,7 +4,8 @@ from .views import (ExaminerHomepage, CreateStudent, CreateCourse, SearchCourse,
                     SearchQuestion, EditQuestion, DeleteQuestion, CreateLesson, DetailLesson, ViewLesson, EditLessonContent,
                     UnattachGroup, AttachCourseText, EditLessonTopic, StudentView, DetailStudent, ExaminerResultView,
                     GenralResultView, CourseResults, CourseGroupResults, StudentGroupView, ExaminerCreateGroup, ExaminerEditGroup,
-                    UnattachCourse, ExaminerAttachCourse, ExaminerAttachStudent, ExaminerUnattachStudent, Clean_up)
+                    UnattachCourse, ExaminerAttachCourse, ExaminerAttachStudent, ExaminerUnattachStudent, ExaminerChangeTerm,
+                    ExaminerChangeTermCourse,Clean_up)
 
 app_name="examiner_user"
 urlpatterns = [
@@ -37,6 +38,8 @@ urlpatterns = [
     path("results/course/group/<int:group>/<int:course>/", CourseGroupResults.as_view(), name="results-course-group"),
     path("student/group/", StudentGroupView.as_view(), name="student-group"),
     path("student/group/create/", ExaminerCreateGroup.as_view(), name="examiner-create-group"),
-    path("student/group/edit/<int:pk>", ExaminerEditGroup.as_view(), name="examiner-edit-group"),
+    path("student/group/edit/<int:pk>/<slug:slug>/", ExaminerEditGroup.as_view(), name="examiner-edit-group"),
+    path("student/group/edit/term/<int:pk>/<int:course>/", ExaminerChangeTerm.as_view(), name="examiner-change-term"),
+    path("student/group/edit/term/course/<int:pk>/<int:course>/", ExaminerChangeTermCourse.as_view(), name="course-change-term"),
     path("test", Clean_up.as_view(), name="test")
 ]

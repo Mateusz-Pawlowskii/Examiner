@@ -11,5 +11,6 @@ function month_conv(date) {
     date = date.replace("Oct","pazdz")
     date = date.replace("Nov","listop")
     date = date.replace("Dec","grudz")
+    date = date.replace(", midnight","")
     return date
 }

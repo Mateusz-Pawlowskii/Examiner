@@ -58,16 +58,16 @@
     <label for="test_ready">Test gotowy</label>
     {{course_form.test_ready}}
     <br>
-    <button class="btn btn-success mt-2" type="submit" id="submit">Zapisz zmiany</button>
+    <button class="btn btn-success mt-2 myButton" type="submit" id="submit">Zapisz zmiany</button>
   </form>
 </div>
 <a href="{% url 'examiner_user:detail-course' pk=object.pk slug=object.name|slugify %}">
-  <button class="btn btn-success mt-1 mb-5">
+  <button class="btn btn-success mt-1 mb-5 myButton">
     Wróć
   </button>
 </a>
 <hr>
-<button type="button" class="btn btn-secondary dropdown-toggle tog" id="lesson_nav">Lekcje</button>
+<button type="button" class="btn btn-secondary dropdown-toggle tog myButton" id="lesson_nav">Lekcje</button>
 <div class="no-display">
   <h4>Dodaj nową lekcje</h4>
   <p>(załącz lekcje jako plik pdf)</p>
@@ -80,7 +80,7 @@
         {{ lesson_form.material }}
         {{ lesson_form.course.as_hidden }}
         <br>
-        <button class="btn btn-success mt-1" type="submit" id="submit">Dodaj lekcje</button>
+        <button class="btn btn-success mt-1 myButton" type="submit" id="submit">Dodaj lekcje</button>
     </form>
   </div>
   <h4>Lista lekcji załączonych do kursu:</h4>
@@ -97,35 +97,58 @@
           </a>
         </td>
         <td class="borderless" style="border: none;">
-          <form method="POST" action="{% url 'examiner_user:detail-lesson' pk=lesson.pk slug=lesson.topic|slugify %}">
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger" id="submit">
+            <button type="button" class="btn btn-danger" id="submit" data-toggle="modal" data-target="#deleteModal{{forloop.counter}}">
               <div class="small">
                 Usuń lekcje
               </div>
             </button>
-          </form>
         </td>
       </tr>
+      <div class="modal fade" id="deleteModal{{forloop.counter}}">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Usunięcie lekcji</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              Czy na pewno chcesz skasować lekcje {{lesson.topic}}? Tej decyzji nie da się cofnąć.
+            </div>
+            <div class="modal-footer">
+              <form method="POST" action="{% url 'examiner_user:detail-lesson' pk=lesson.pk slug=lesson.topic|slugify %}">
+                {% csrf_token %}
+              <button class="btn btn-danger" type="submit" id="submit">Usuń lekcje</button>
+              <button type="button" class="btn btn-info" data-dismiss="modal">Cofnij</button>
+            </form>
+            </div>
+      
+          </div>
+        </div>
+      </div>
       {% endfor %}
     </tbody>
   </table>
   {% endif %}
 </div>
 <hr>
-<button typle="button" class="btn btn-secondary dropdown-toggle tog" id="student_nav">Grupy Studenckie</button>
+<button typle="button" class="btn btn-secondary dropdown-toggle tog myButton" id="student_nav">Grupy Studenckie</button>
 <div class="no-display" id="no-display student">
   <h4>Dodaj nową grupe studencką</h4> 
-  <p>(wpisz nazwe grupy która ma zostać przypisana do kursu)</p>
   <div class="form-group" id="form-group student">
     <form autocomplete="off" method="POST" action="{% url 'examiner_user:attach-course-text' pk=object.pk slug=object.name|slugify %}" id="group_form">
       {% csrf_token %}
       <div class="autocomplete" style="width:300px;">
+        <label for="group_id">(wpisz nazwe grupy która ma zostać przypisana do kursu)</label>
         {{ group_form.group }}
+      </div>
+      <div style="width:300px;">
+        <label for="term_id">Data do której studenci z grupy mają ukończyć kurs:</label>
+        {{ group_form.term }}
       </div>
       {{ group_form.course.as_hidden }}
       <br>
-      <button class="btn btn-success mt-3" type="submit" id="submit_student">Przypisz</button>
+      <button class="btn btn-success mt-3 myButton" type="submit" id="submit_student">Przypisz</button>
     </form>
   </div>
   <script>let groups=[];</script>
@@ -139,26 +162,65 @@
       {% for group in object.studentgroup_set.all %}
       <tr>
         <td class="borderless" style="border:none;" id="{{group.name}}_table">
+            {{group.name}}
+        </td>
+        <td width="21%">
+          <div id="term_{{forloop.counter}}"></div>
+        </td>
+        <td>
+            <button class="btn btn-success mt-1" type="button" data-toggle="modal" data-target="#changeModal{{forloop.counter}}">
+              Zmień date
+            </button>
+        </td>
+        <td class="borderless" style="border:none;">
           <form method="POST" action="{% url 'examiner_user:unattach-group' pk=object.pk slug=object.name|slugify %}">
             {% csrf_token %}
-            {{group.name}}</td>
-        <td class="borderless" style="border:none;"><input type="hidden" value="{{group.pk}}" name="group">
-            <button type="submit" class="btn btn-danger ml-2" id="{{group.username}}_delete"><div class="small">Usuń</div></button>
-            </form></td>
+            <input type="hidden" value="{{group.pk}}" name="group">
+            <button type="submit" class="btn btn-danger ml-2" id="{{group.username}}_delete">
+              <div class="small">
+                Usuń
+              </div>
+            </button>
+          </form>
+        </td>
       </tr>
+      <div class="modal fade" id="changeModal{{forloop.counter}}">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Zmień termin ukończenia kursu</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              Zmiana terminu ukończenia kursu <b>{{course.name}}</b>
+              <br>
+              Można zastosować rózne formaty zapisu np.RRRR-MM-DD
+              <form method="POST" action="{% url 'examiner_user:course-change-term' pk=group.pk course=object.pk %}">
+                {% csrf_token %}
+                {{term_form.time}}
+              </div>
+            <div class="modal-footer">
+              <button class="btn btn-success" type="submit" id="submit">Zmień</button>
+              <button type="button" class="btn btn-info" data-dismiss="modal">Anuluj</button>
+            </form>
+            </div>
+      
+          </div>
+        </div>
+      </div>
       {% endfor %}
     </tbody>
   </table>
 </div>
 <hr>
 <a href="{% url 'examiner_user:create-question' pk=object.pk slug=object.name|slugify %}">
-  <button class="btn btn-success" id="add_question">
+  <button class="btn btn-success myButton" id="add_question">
     Dodaj Pytanie
   </button>
 </a>
 <br>
 <a href="{% url 'examiner_user:search-question' pk=object.pk slug=object.name|slugify %}">
-  <button class="btn btn-success mt-1 mb-5" id="view_questions">
+  <button class="btn btn-success mt-1 mb-5 myButton" id="view_questions">
     Zobacz pytania
   </button>
 </a>
@@ -166,4 +228,13 @@
     autocomplete(document.getElementById("id_group"), groups);
 </script>
 <script src="{% static 'js/course_edit.js' %}"></script>
+<script src="{% static 'js/month_translation.js' %}"></script>
+{% for term in terms %}
+  {% if term.0.course == object %}
+    <script>
+      document.getElementById("term_{{forloop.counter}}").innerHTML = month_conv("{{term.0.time}}" + "{{term.1}}&nbsp&nbsp&nbsp")
+    </script>
+  {% endif %}
+{% endfor %}
+
 {% endblock %}

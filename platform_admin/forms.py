@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm
 
-from exam.models import StudentGroup, Platform
+from exam.models import StudentGroup, Platform, Term
 class UserNameChangeForm(UserChangeForm):
     class Meta:
         model = User
@@ -25,6 +25,7 @@ class ReverseAttachStudentForm(forms.Form):
 
 class AttachCourseForm(forms.Form):
     course = forms.CharField(label="Nazwa kursu", widget=forms.TextInput(attrs={"class":"form-control"}))
+    term = forms.DateTimeField(label="Data ukończenia kursu", widget=forms.TextInput(attrs={"class":"form-control"}))
     group = forms.ModelChoiceField(queryset=StudentGroup.objects.all())
 
 class EditPlatformForm(forms.ModelForm):
@@ -32,3 +33,8 @@ class EditPlatformForm(forms.ModelForm):
         model = Platform
         fields = ["name","logo"]
     name = forms.CharField(label="Nazwa platformy", widget=forms.Textarea(attrs={'name':'text', 'rows':4, 'cols':170}))
+
+class ChangeTermForm(forms.ModelForm):
+    class Meta:
+        model = Term
+        fields = ["time"]

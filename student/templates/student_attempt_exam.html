@@ -49,14 +49,14 @@
     <form method="POST" action="{% url 'student:student-pass-exam' pk=course.pk %}">
         {% csrf_token %}
         <div class="text-center">
-            <button type="submit" class="btn btn-success mt-1 mb-3 pr-5 pl-5" id="submit">
+            <button type="submit" class="btn btn-success mt-1 mb-3 pr-5 pl-5 myButton" id="submit">
                 Tak
             </button>
         </div>
     </form>
     <div class="text-center">
         <a href="{% url 'student:student-detail-course' pk=course.pk slug=course.name|slugify %}">
-            <button class="btn btn-success mb-5 pr-5 pl-5">
+            <button class="btn btn-success mb-5 pr-5 pl-5 myButton">
                 Nie
             </button>
         </a>

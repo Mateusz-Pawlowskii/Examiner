@@ -45,17 +45,21 @@
     {% endif %}
   </div>
   <br>
-  <button type="submit" class="btn btn-success mt-1">Wyślij odpowiedź</button>
+  <button type="submit" class="btn btn-success mt-1 myButton">Wyślij odpowiedź</button>
 </form>
 <a href="{% url 'student:test-finish' pk=result.pk %}">
-  <button hidden class="btn btn-success mt-1" id="timeout">
+  <button hidden class="btn btn-success mt-1 myButton" id="timeout">
     Zakończ test
   </button>
 </a>
 {% if end_time %}
-  <!-- autocomplete function was provided by courtesy of W3Schools. I didn't write it myself. -->
-  <script>let countDownDate = new Date("{{end_time}}").getTime();</script>
-  {% load static %}
-  <script src="{% static 'js/test_timer.js' %}"></script>
+<script>
+  const endTime = new Date("{{end_time}}").getTime();
+  const internalNow = new Date("{{now}}").getTime();
+  const time = endTime - internalNow;
+  const countDownDate = new Date().getTime() + time
+</script>
+{% load static %}
+<script src="{% static 'js/test_timer.js' %}"></script>
 {% endif %}
 {% endblock %}

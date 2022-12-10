@@ -52,12 +52,12 @@
     <p>Status testu:<b>Test niegotowy</b></p>
 {% endif %}
 <a href="{% url 'examiner_user:edit-course' pk=object.pk slug=object.name|slugify %}">
-  <button class="btn btn-success" type="submit" id="edit">
+  <button class="btn btn-success myButton" type="submit" id="edit">
     Edytuj
   </button>
 </a>
 <a href="{% url 'examiner_user:search-course' %}">
-  <button class="btn btn-success">
+  <button class="btn btn-success myButton">
     Wróć
   </button>
 </a>

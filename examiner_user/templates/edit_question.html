@@ -63,14 +63,14 @@ Aktualna ilość pytań: {{question_amount}}
     </p>
       {{ form.course.as_hidden }}
   </div>
-  <button class="btn btn-success" type="submit" id="submit_change">Zmień</button>
+  <button class="btn btn-success myButton" type="submit" id="submit_change">Zmień</button>
 </form>
 <form method="POST" action="{% url 'examiner_user:delete-question' question=question.pk course=course.pk slug=course.name|slugify %}">
   {% csrf_token %}
-  <button class="btn btn-danger mt-1" type="submit" id="submit_delete">Usuń</button>
+  <button class="btn btn-danger mt-1 myButton" type="submit" id="submit_delete">Usuń</button>
 </form>
 <a href="{% url 'examiner_user:search-question' pk=course.pk slug=course.name|slugify %}">
-  <button class="btn btn-success mt-1" id="back">
+  <button class="btn btn-success mt-1 myButton" id="back">
     Lista pytań
   </button>
 </a>

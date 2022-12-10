@@ -1,23 +1,35 @@
-from .models import Result, StudentGroup, Course
+import datetime
+from django.utils.timezone import make_aware
 
+from .models import Result, StudentGroup, Course, Term
+
+def get_timeover(group, course):
+    """Tells if given group have run out of time to finish given course"""
+    term = Term.objects.filter(group=group, course=course).first()
+    if term.time < make_aware(datetime.datetime.now()):
+        return True
+    else:
+        return False
 
 def test_mark(courses, student):
     """Return list of strings representing status corresponding to each course for a given student"""
     out = []
     for course in courses:
+        group = StudentGroup.objects.filter(students=student, courses=course).first()
+        timeover = get_timeover(group, course)
         results = Result.objects.filter(course=course, student=student)
         test_marked = False
         for result in results:
             if result.passed == True and test_marked == False:
                 out.append("Zaliczony")
                 test_marked = True
-        if test_marked == False and len(results) >= course.attempt_amount:
+        if test_marked == False and len(results) >= course.attempt_amount or timeover:
             out.append("Niezaliczony")
         elif test_marked == False:
             out.append("Jeszcze nie ukończony")
     return out
 
-def course_mark(course, students):
+def course_mark(course, students, timeover):
     """Returns list of stings representing status corresponding to each student for a given course"""
     out = []
     for student in students:
@@ -27,7 +39,7 @@ def course_mark(course, students):
             if result.passed == True and test_marked == False:
                 out.append("Zaliczony")
                 test_marked = True
-        if test_marked == False and len(results) >= course.attempt_amount:
+        if test_marked == False and len(results) >= course.attempt_amount or timeover:
             out.append("Niezaliczony")
         elif test_marked == False:
             out.append("Jeszcze nie ukończony")

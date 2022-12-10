@@ -3,12 +3,12 @@
 {% block content %}
 <h4>Wyniki testów ucznia <b>{{student.username}}</b> z kursu <b>{{course.name}}</b></h4>
 <a href="{% url 'examiner_user:detail-student' pk=student.pk %}">
-  <button class="btn btn-success mt-1 mb-1" id="back">
+  <button class="btn btn-success mt-1 mb-1 myButton" id="back">
     Wróć do ucznia
   </button>
 </a>
 <a href="{% url 'examiner_user:course-results' pk=course.pk %}">
-  <button class="btn btn-success mt-1 mb-1" id="back">
+  <button class="btn btn-success mt-1 mb-1 myButton" id="back">
     Wróć do kursu
   </button>
 </a>

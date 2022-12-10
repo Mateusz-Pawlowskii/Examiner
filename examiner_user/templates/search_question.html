@@ -22,12 +22,12 @@
 </table>
 <br>
 <a href="{% url 'examiner_user:create-question' pk=course.pk slug=course.name|slugify %}">
-  <button class="btn btn-success mt-5" id="add_question">
+  <button class="btn btn-success mt-5 myButton" id="add_question">
     Dodaj Pytanie
   </button>
 </a>
 <a href="{% url 'examiner_user:edit-course' pk=course.pk slug=course.name|slugify %}">
-  <button class="btn btn-success mt-5" type="submit" id="edit">
+  <button class="btn btn-success mt-5 myButton" type="submit" id="edit">
     Wróc do edycji kursu
   </button>
 </a>

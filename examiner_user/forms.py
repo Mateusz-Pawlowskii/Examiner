@@ -91,3 +91,4 @@ class LessonRenameForm(forms.ModelForm):
 class AttachCourseToGroupForm(forms.Form):
     course = forms.ModelChoiceField(queryset=Course.objects.all())
     group =  forms.CharField(label="Nazwa grupy", widget=forms.TextInput(attrs={"class":"form-control"}))
+    term = forms.DateTimeField(label="Data ukończenia kursu", widget=forms.TextInput(attrs={"class":"form-control"}))

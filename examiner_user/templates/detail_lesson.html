@@ -19,9 +19,27 @@
 <br>
 <a href="{% url 'examiner_user:view-lesson' pk=lesson.pk slug=lesson.topic|slugify %}">Zobacz lekcje</a>
 <br>
-<form method="POST">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger mt-3" id="submit">Usuń</button>
-</form>
-<a href="{% url 'examiner_user:edit-course' pk=course_pk slug=slug %}"><button class="btn btn-success mt-3">Powrót</button></a>
+<button type="button" class="btn btn-danger mt-3 myButton" id="del" data-toggle="modal" data-target="#deleteModal">Usuń</button>
+<div class="modal fade" id="deleteModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Usunięcie lekcji</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          Czy na pewno chcesz skasować lekcje {{lesson.topic}}? Tej decyzji nie da się cofnąć.
+        </div>
+        <div class="modal-footer">
+          <form method="POST">
+            {% csrf_token %}
+          <button class="btn btn-danger" type="submit" id="submit">Usuń lekcje</button>
+          <button type="button" class="btn btn-info" data-dismiss="modal">Cofnij</button>
+        </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+<a href="{% url 'examiner_user:edit-course' pk=course_pk slug=slug %}"><button class="btn btn-success mt-3 myButton">Powrót</button></a>
 {% endblock %}

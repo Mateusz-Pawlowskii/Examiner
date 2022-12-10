@@ -24,7 +24,7 @@
 <div class="no-display">
 <p>Prosze wpisać nazwe studenta który ma zostać przypisany do grupy <b>{{group.name}}</b></p>
 <div class="form-group">
-  {% if side == platform %}
+  {% if side == "platform" %}
     <form autocomplete="off" method="POST" action="{% url 'platform_admin:attach-student' pk=group.pk %}">
   {% else %}
     <form autocomplete="off" method="POST" action="{% url 'examiner_user:examiner-attach-student' pk=group.pk %}">
@@ -61,18 +61,23 @@
 <hr>
 <button type="button" class="btn btn-secondary dropdown-toggle tog mt-1 myButton" id="lesson_nav">Kursy</button>
 <div class="no-display">
-  <p>Prosze wpisać nazwe kursu który ma zostać przypisany do grupy <b>{{group.name}}</b></p>
 <div class="form-group">
-  {% if side == platform %}
+  {% if side == "platform" %}
     <form autocomplete="off" method="POST" action="{% url 'platform_admin:attach-course' pk=group.pk %}">
   {% else %}
     <form autocomplete="off" method="POST" action="{% url 'examiner_user:examiner-attach-course' pk=group.pk %}">
   {% endif %}
         {% csrf_token %}
         <div class="autocomplete" style="width:300px;">
+          <label for="course_id">Prosze wpisać nazwe kursu który ma zostać przypisany do grupy <b>{{group.name}}</b>:</label>
             {{ course_form.course }}
-        </div>
-        {{ course_form.group.as_hidden }}
+          </div>
+          <br>
+          <label for="term_id">Data do której studenci z grupy mają ukończyć kurs:</label>
+          <div style="width:300px;">
+            {{ course_form.term }}
+          </div>
+            {{ course_form.group.as_hidden }}
         <br>
         <button class="btn btn-success mt-3 myButton" type="submit" id="submit">Przypisz</button>
     </form>
@@ -101,7 +106,7 @@
       {% load static %}
       <th scope="col" onclick="courseSortColumn('name',1)" class="text-center">Nazwa <img id="course_img1" src="{% static 'img/sorting_button.png' %}"></th>
       <th scope="col" onclick="courseSortColumn('category',2)" class="text-center">Kategoria <img id="course_img2" src="{% static 'img/sorting_button.png' %}"></th>
-      <th scope="col" onclick="courseSortColumn('term',3)" class="text-center">Ilość lekcji <img id="course_img3" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="courseSortColumn('term',3)" class="text-center">Termin ukończenia <img id="course_img3" src="{% static 'img/sorting_button.png' %}"></th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -112,7 +117,7 @@
 </div>
 <hr>
 <br>
-{% if side == platform %}
+{% if side == "platform" %}
 <button class="btn btn-danger mt-1 myButton" type="button" data-toggle="modal" data-target="#deleteModal">Usuń grupe</button>
 <div class="modal fade" id="deleteModal">
   <div class="modal-dialog">
@@ -138,7 +143,7 @@
 </div>
 <br>
 {% endif %}
-{% if side == platform %}
+{% if side == "platform" %}
 <a href="{% url 'platform_admin:student-group-search' %}">
 {% else %}
 <a href="{% url 'examiner_user:student-group' %}">
@@ -201,11 +206,11 @@ var acc = document.getElementsByClassName("tog");
       "join" : month_conv("{{student.date_joined}}"), "sort_join" : new Date("{{student.date_joined.isoformat}}"),
       "sort_name" : "{{student.username}}", "sort_login" :
       new Date("{% if student.last_login == None %} 08 October 2001 11:32 UTC {% else %}{{student.last_login.isoformat}}{% endif %}"),
-      "delete" : `{% if side == platform %}<form method="POST" action="{% url 'platform_admin:unattach-student' pk=group.pk %}">
-      {% else %}<form method="POST" action="{% url 'examiner_user:examiner-unattach-student' pk=group.pk %}{% endif %}">
+      "delete" : `{% if side == "platform" %}<form method="POST" action="{% url 'platform_admin:unattach-student' pk=group.pk %}">
+      {% else %}<form method="POST" action="{% url 'examiner_user:examiner-unattach-student' pk=group.pk %}">{% endif %}
                   {% csrf_token %}
                   <input type="hidden" value="{{student.pk}}" name="student">
-                  <button type="submit" class="btn btn-danger ml-2" id="{{student.username}}_delete">Usuń</button></form>`
+                  <button type="submit" class="btn btn-danger ml-2 myButton" id="{{student.username}}_delete">Usuń</button></form>`
         })
   </script>
   {% endfor %}
@@ -215,7 +220,7 @@ var acc = document.getElementsByClassName("tog");
     const tableBody = document.getElementById("course_tbody");
     let dataHtml = ""
     for (let object of courseObjectList) {
-      dataHtml += `<tr><td id="${object.sort_name}">${object.name}</td><td>${object.category}</td><td>${object.lesson_amount}</td>
+      dataHtml += `<tr><td id="${object.sort_name}">${object.name}</td><td>${object.category}</td><td class="text-center">${object.term}</td>
                   <td>${object.delete}</td></tr>`
     };
     tableBody.innerHTML = dataHtml;
@@ -226,14 +231,45 @@ var acc = document.getElementsByClassName("tog");
     courseObjectList.push({"name" : `{% if side == "platform" %}<a href="{% url 'platform_admin:platform-detail-course' pk=course.pk group=group.pk %}">
     {{course.name}}</a>{% else %}<a href="{% url 'examiner_user:detail-course' pk=course.pk slug=course.name|slugify %}">
     {{course.name}}</a>{% endif %}`, "category" : "{{course.category}}",
-    "lesson_amount" : Number("{{course.lesson_amount}}"), "sort_name" : "{{course.name}}", "sort_category" : "{{course.category}}",
-      "delete" : `<form method="POST" action={% if side == "platform" %}"{% url 'platform_admin:unattach-course' pk=group.pk %}"
-      {% else %}"{% url 'examiner_user:examiner-unattach-course' pk=group.pk %}"{% endif %}>
+    "term" : month_conv(`{% for term in terms %}{% if term.0.course == course %}{{term.0.time}} {{term.1}}&nbsp&nbsp&nbsp
+    <button class="btn btn-success mt-1" type="button" data-toggle="modal" data-target="#changeModal{{forloop.counter}}">
+      Zmień date</button>{% endif %}{% endfor %}`),
+     "sort_name" : "{{course.name}}", "sort_category" : "{{course.category}}",
+      "delete" : `{% if side == "platform" %}<form method="POST" action="{% url 'platform_admin:unattach-course' pk=group.pk %}">
+      {% else %}<form method="POST" action="{% url 'examiner_user:examiner-unattach-course' pk=group.pk %}">{% endif %}
                   {% csrf_token %}
                   <input type="hidden" value="{{course.pk}}" name="course">
-                  <button type="submit" class="btn btn-danger ml-2" id="{{course.name}}_delete">Usuń</button></form>`
+                  <button type="submit" class="btn btn-danger ml-2 myButton" id="{{course.name}}_delete">Usuń</button></form>`
         })
   </script>
+  <div class="modal fade" id="changeModal{{forloop.counter}}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Zmień termin ukończenia kursu</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          Zmiana terminu ukończenia kursu <b>{{course.name}}</b>
+          <br>
+          Można zastosować rózne formaty zapisu np.RRRR-MM-DD
+          {% if side == "platform" %}
+          <form method="POST" action="{% url 'platform_admin:change-term' pk=group.pk course=course.pk %}">
+          {% else %}
+          <form method="POST" action="{% url 'examiner_user:examiner-change-term' pk=group.pk course=course.pk %}">
+          {% endif %}
+            {% csrf_token %}
+            {{term_form.time}}
+          </div>
+        <div class="modal-footer">
+          <button class="btn btn-success" type="submit" id="submit">Zmień</button>
+          <button type="button" class="btn btn-info" data-dismiss="modal">Anuluj</button>
+        </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>
   {% endfor %}
   {% load static %}
   <script src="{% static 'js/table_sorting.js' %}"></script>
