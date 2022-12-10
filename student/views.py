@@ -221,6 +221,7 @@ class TestTimeOut(TestFinish):
 class TestDiploma(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         user = get_object_or_404(User, pk=self.kwargs["student"])
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
         results = Result.objects.filter(course = course, student = user)
@@ -230,9 +231,12 @@ class TestDiploma(LoginRequiredMixin, View):
         pdf.add_font('DejaVu', '', 'static/font/ttf/DejaVuSerif.ttf', uni=True)
         pdf.set_font('DejaVu', '', 50)
         pdf.image("static/img/diploma.png",0,0,210,297)
-        pdf.image("static/img/logo_dip.png",60,20,100,25)
+        if len(platform.logo) == 0:
+            pdf.image("static/img/logo_dip.png",60,20,100,25)
+        else:
+            pdf.image(f"media/logos/{platform.logo}",65,20,80,40)
         pdf.cell(0, 50, txt = "", ln = 1, align = 'C')
-        pdf.cell(0, 20, txt = "Dyplom", ln = 1, align = 'C')
+        pdf.cell(0, 30, txt = "Dyplom", ln = 1, align = 'C')
         pdf.set_font('DejaVu', '', 17)
         pdf.cell(0, 20, txt = f"{user.username}", ln = 1, align = 'C')
         pdf.set_font('DejaVu', '', 17)
