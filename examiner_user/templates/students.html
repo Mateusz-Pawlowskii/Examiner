@@ -36,11 +36,13 @@
   tableBody.innerHTML = dataHtml;
 };
 </script>
+<script src="{% static 'js/month_translation.js' %}"></script>
 {% for student in object_list %}
 <script>
   objectList.push({"name" : "<a href='{% url 'examiner_user:detail-student' pk=student.pk %}''>{{student.username}}</a>", 
-    "login" : "{% if student.last_login == None %} Brak {% else %}{{student.last_login}}{% endif %}","join":"{{student.date_joined}}",
-    "sort_join" : new Date("{{student.date_joined.isoformat}}"), "sort_name" : "{{student.username}}",
+    "login" : month_conv("{% if student.last_login == None %} Brak {% else %}{{student.last_login}}{% endif %}"),
+    "join" : month_conv("{{student.date_joined}}"), "sort_join" : new Date("{{student.date_joined.isoformat}}"),
+    "sort_name" : "{{student.username}}",
     "sort_login" : new Date("{% if student.last_login == None %} 08 October 2001 11:32 UTC {% else %}{{student.last_login.isoformat}}{% endif %}"),
       })
 </script>

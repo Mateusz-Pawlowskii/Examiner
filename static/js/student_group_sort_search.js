@@ -28,7 +28,7 @@ let courseSortDirection = false;
     };
 
     function courseSortNumberColumn(sort, columnName) {
-      objectList = courseObjectList.sort((p1,p2) => {
+      courseObjectList = courseObjectList.sort((p1,p2) => {
         return sort ? p1[columnName] - p2[columnName] : p2[columnName] - p1[columnName]
       })
     };

@@ -235,6 +235,7 @@ var acc = document.getElementsByClassName("tog");
     <button class="btn btn-success mt-1" type="button" data-toggle="modal" data-target="#changeModal{{forloop.counter}}">
       Zmień date</button>{% endif %}{% endfor %}`),
      "sort_name" : "{{course.name}}", "sort_category" : "{{course.category}}",
+     "sort_term" : new Date(`{% for term in terms %}{% if term.0.course == course %}{{term.0.time.isoformat}}{% endif %}{% endfor %}`),
       "delete" : `{% if side == "platform" %}<form method="POST" action="{% url 'platform_admin:unattach-course' pk=group.pk %}">
       {% else %}<form method="POST" action="{% url 'examiner_user:examiner-unattach-course' pk=group.pk %}">{% endif %}
                   {% csrf_token %}
