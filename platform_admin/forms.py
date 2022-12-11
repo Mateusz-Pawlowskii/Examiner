@@ -2,6 +2,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm
+from django.forms.widgets import ClearableFileInput
 
 from exam.models import StudentGroup, Platform, Term
 class UserNameChangeForm(UserChangeForm):
@@ -28,11 +29,17 @@ class AttachCourseForm(forms.Form):
     term = forms.DateTimeField(label="Data ukończenia kursu", widget=forms.TextInput(attrs={"class":"form-control"}))
     group = forms.ModelChoiceField(queryset=StudentGroup.objects.all())
 
+class ClearableFileInputPL(ClearableFileInput):
+    clear_checkbox_label = 'Wyczyść'
+    initial_text = 'Obecny'
+    input_text = 'Nowy'
+
 class EditPlatformForm(forms.ModelForm):
     class Meta:
         model = Platform
         fields = ["name","logo"]
     name = forms.CharField(label="Nazwa platformy", widget=forms.Textarea(attrs={'name':'text', 'rows':4, 'cols':170}))
+    logo = forms.ImageField(required=False, widget=ClearableFileInputPL)
 
 class ChangeTermForm(forms.ModelForm):
     class Meta:
