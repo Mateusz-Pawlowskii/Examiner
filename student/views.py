@@ -10,7 +10,7 @@ from django.contrib import messages
 from fpdf import FPDF
 
 from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Term
-from exam.functions import get_courses_for_student, get_categories, get_timeover
+from exam.functions import get_courses_for_student, get_categories, get_timeover, get_grade_data, student_grades
 from .forms import StudentSearchCourseForm, StudentSearchStatusForm
 
 # Create your views here.
@@ -29,9 +29,10 @@ class StudentSearchCourse(LoginRequiredMixin, View):
     form_class_2 = StudentSearchStatusForm
 
     def get(self, request, *args, **kwargs):
-        platform = Platform.objects.get(users=request.user)
         student = request.user
+        platform = Platform.objects.get(users=student)
         data = get_courses_for_student(student)
+        grades_list = student_grades(data[2], student)
         categories = get_categories(data[0])
         context = {"student" : student,
                    "courses" : data[0],
@@ -40,6 +41,8 @@ class StudentSearchCourse(LoginRequiredMixin, View):
                    "form1" : self.form_class_1(),
                    "form2" : self.form_class_2(),
                    "categories" : categories,
+                   "grades" : get_grade_data(platform),
+                   "grades_list" : grades_list,
                    "platform" : platform}
         return render(request, self.template_name, context)
 
@@ -275,8 +278,10 @@ class StudentResultGeneralView(LoginRequiredMixin, View):
     form_class_2 = StudentSearchStatusForm
 
     def get(self, request, *args, **kwargs):
-        platform = Platform.objects.get(users=request.user)
-        data = get_courses_for_student(request.user)
+        student = request.user
+        platform = Platform.objects.get(users=student)
+        data = get_courses_for_student(student)
+        grades_list = student_grades(data[2], student)
         categories = get_categories(data[0])
         context = {"nav_var": "results",
                    "courses": data[0],
@@ -284,5 +289,7 @@ class StudentResultGeneralView(LoginRequiredMixin, View):
                    "form1" : self.form_class_1(),
                    "form2" : self.form_class_2(),
                    "categories" : categories,
+                   "grades" : get_grade_data(platform),
+                   "grades_list" : grades_list,
                    "platform" : platform}
         return render(request, self.template_name, context)

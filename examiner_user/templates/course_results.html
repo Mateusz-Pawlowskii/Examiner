@@ -73,6 +73,7 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
       {% load static %}
       <th width="20%" scope="col" onclick="sortColumn('name',1)">Student <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
       <th width="20%" scope="col" onclick="sortColumn('status',2)">Status <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('grade',3)">{% if grades %}Ocena{% else %}%{% endif %} <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
       <th></th>
     </tr>
   </thead>
@@ -80,27 +81,48 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
         
   </tbody>
 </table>
-
 <script>
-  let test_marks = []
+  let test_marks = [];
+  let grades_list = [];
+  let columnNum = 4;
+  let grades = true;
 </script>
+{% if not grades %}
+<script>
+   grades = false;
+</script>
+{% endif %}
 {% for mark in test_marks %}
 <script>
-  test_marks.push("{{mark}}")
+    test_marks.push("{{mark}}")
+</script>
+{% endfor %}
+{% for grade in grades_list %}
+<script>
+  if (grades) {
+    var grade = "{{grade}}";
+  } else {
+    var grade = Math.round(Number("{{grade}}"));
+    if (isNaN(grade)) grade = 0;
+  }
+  grades_list.push(grade)
 </script>
 {% endfor %}
 <script>
   let objectList = [];
-  let columnNum = 3;
   function loadTableData(objectList) {
     const tableBody = document.getElementById(`tbody`);
     let dataHtml = ""
     for (let object of objectList) {
       if (String(object.status) === "Zaliczony") {
-        dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td><td><a href="/student/diploma/{{course.pk}}/${object.pk}/{{course.name|slugify}}"><button class = "btn btn-success">Dyplom</button></a></td></tr>`
+        dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td>
+          {% if grades_list|length != 0 %}<td>${object.grade}</td>{% endif %}
+          <td><a href="/student/diploma/{{course.pk}}/${object.pk}/{{course.name|slugify}}">
+          <button class = "btn btn-success">Dyplom</button></a></td></tr>`
       }
       else {
-        dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td></tr>`
+        dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td>
+          {% if grades_list|length != 0 %}<td>${object.grade}</td>{% endif %}</tr>`
       }
       
     };
@@ -111,7 +133,8 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
 <script>
   objectList.push({"name" : "<a href='{% url 'examiner_user:results-course-student' course=course.pk student=student.0 %}''>{{student.1}}</a>",
     "status" : test_marks[Number("{{student.3}}")], "sort_status" : test_marks[Number("{{student.3}}")],
-    "sort_name" : "{{student.1}}", "pk" : "{{student.0}}"
+    "sort_name" : "{{student.1}}", "pk" : "{{student.0}}", "grade" : grades_list[Number("{{forloop.counter0}}")],
+    "sort_grade" : grades_list[Number("{{forloop.counter0}}")]
      })
 </script>
 {% endfor %}

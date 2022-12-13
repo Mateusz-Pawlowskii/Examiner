@@ -3,8 +3,9 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm
 from django.forms.widgets import ClearableFileInput
+from django.core.exceptions import ValidationError
 
-from exam.models import StudentGroup, Platform, Term
+from exam.models import StudentGroup, Platform, Term, Grade
 class UserNameChangeForm(UserChangeForm):
     class Meta:
         model = User
@@ -45,3 +46,17 @@ class ChangeTermForm(forms.ModelForm):
     class Meta:
         model = Term
         fields = ["time"]
+
+class GradeForm(forms.ModelForm):
+    class Meta:
+        model = Grade
+        fields = ["name","bar","platform"]
+    name = forms.CharField(label="", widget=forms.TextInput(attrs={"class":"form-control"}))
+
+    def clean_bar(self):
+        data = self.cleaned_data['bar']
+        if data < 0:
+            raise ValidationError("Pułap nie może być ujemny")
+        if data > 100:
+            raise ValidationError("Ocena nie może być przyznawana powyżej 100%")
+        return data

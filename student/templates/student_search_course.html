@@ -34,9 +34,10 @@ Kursy:
   <thead class="thead-dark">
     <tr>
       {% load static %}
-      <th width="11%" scope="col" onclick="sortColumn('name',1)">Nazwa <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
-      <th width="11%" scope="col" onclick="sortColumn('category',2)">Kategoria <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
-      <th width="13%" scope="col" onclick="sortColumn('status',3)">Status <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('name',1)">Nazwa <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('category',2)">Kategoria <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('status',3)">Status <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('grade', 4)">{% if grades %}Ocena{% else %}%{% endif %} <img id="img4" src="{% static 'img/sorting_button.png' %}"></th>
     </tr>
   </thead>
   <tbody id="tbody">
@@ -46,11 +47,29 @@ Kursy:
 <script>
   let test_marks = [];
   let objectList = [];
-  let columnNum = 4;
+  let grades_list = [];
+  let columnNum = 5;
+  let grades = true;
 </script>
+{% if not grades %}
+<script>
+   grades = false;
+</script>
+{% endif %}
 {% for mark in test_marks %}
 <script>
-  test_marks.push("{{mark}}")
+    test_marks.push("{{mark}}")
+</script>
+{% endfor %}
+{% for grade in grades_list %}
+<script>
+  if (grades) {
+    var grade = "{{grade}}";
+  } else {
+    var grade = Math.round(Number("{{grade}}"));
+    if (isNaN(grade)) grade = 0;
+  }
+  grades_list.push(grade)
 </script>
 {% endfor %}
 <script>
@@ -59,7 +78,7 @@ Kursy:
   let dataHtml = ""
   for (let object of objectList) {
     dataHtml += `<tr id="${object.sort_name}"><td id="name_stu_${object.sort_name}">${object.name}</td><td>${object.category}</td>
-      <td id='status_${object.sort_name}'>${object.status}</td></tr>`
+      <td id='status_${object.sort_name}'>${object.status}</td><td>${object.grade}</td></tr>`
   };
   tableBody.innerHTML = dataHtml;
 };
@@ -68,8 +87,9 @@ Kursy:
 <script>
   objectList.push({
     "name" : "<a href='{% url 'student:student-detail-course' pk=course.0 slug=course.1|slugify %}''>{{course.1}}</a>", 
-    "status" : test_marks[Number("{{forloop.counter}}")-1], "sort_status" : test_marks[Number("{{forloop.counter}}")-1],
-    "sort_name" : "{{course.1}}", "category" : "{{course.2}}", "sort_category" : "{{course.2}}"
+    "status" : test_marks[Number("{{forloop.counter0}}")], "sort_status" : test_marks[Number("{{forloop.counter0}}")],
+    "sort_name" : "{{course.1}}", "category" : "{{course.2}}", "sort_category" : "{{course.2}}",
+    "grade" : grades_list[Number("{{forloop.counter0}}")], "sort_grade" : grades_list[Number("{{forloop.counter0}}")]
       })
 </script>
 {% endfor %}

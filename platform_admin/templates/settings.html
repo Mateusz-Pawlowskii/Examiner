@@ -22,4 +22,59 @@
     <br>
     <button class="btn btn-success mt-3 myButton" type="submit" id="submit">Zapisz zmiany</button>
 </form>
+<hr>
+<h3>Oceny</h3>
+<p>
+  Istnieje opcja ustalania ocen przypisywanym studentom po ukończeniu kursu. Należy podać wyswietlaną nazwę oceny oraz minimalną
+  ilość procent zaliczonych pytań na egzaminie potrzebną do uzyskania danej oceny. Student otrzyma najwyżej punktowaną ocenę
+  która spełnia podane wymogi procentowe. Zaliczenie kursu nie zależy od uzyskanej oceny lecz od zaliczającej ilości poprawnych
+  odpowiedzi ustalanej dla kazdego kursu osobno. Celem ocen jest dokładniejszy opis pomyślnych zaliczeń.
+</p>
+<p>
+  Istnieją też dwa gotowe systemy oceniania- szkolny (1,2,3,4,5,6) oraz akademicki (2,3,3.5,4,4.5,5) które można wykorzystać
+  klikając na odpowiedni przycisk.
+</p>
+<form method="POST" action="{% url 'platform_admin:default-grades' grading_sys='school' %}">
+  {% csrf_token %}
+  <button class="btn btn-success myButton" type="submit" id="submit">System szkolny</button>
+</form>
+<form method="POST" action="{% url 'platform_admin:default-grades' grading_sys='academic' %}">
+  {% csrf_token %}
+  <button class="btn btn-success mt-1 myButton" type="submit" id="submit">System akademicki</button>
+</form>
+<form method="POST" action="{% url 'platform_admin:change-grade' change='add' pk=0 %}">
+  {% csrf_token %}
+  <label> Podaj nazwe oceny:</label><br>
+  {{grade_form.name}}
+  <label for="id_bar">Podaj wymagany pułap procentowy:</label><br>
+  {{grade_form.bar}}%
+  {{grade_form.platform.as_hidden}}
+  <br>
+  <button class="btn btn-success mt-3 myButton" type="submit" id="submit">Dodaj ocenę</button>
+</form>
+<p>Obecnie używane oceny:</p>
+<table class="table">
+  <thead class="thead-dark">
+    <tr id="first_row">
+      {% load static %}
+      <th id="th1" scope="col" width="20%">Nazwa</th>
+      <th id="th2" scope="col">Pułap</th>
+      <th id="th3" scope="col"></th>
+    </tr>
+  </thead>
+  <tbody id="tbody">
+    {% for grade in grades %}
+      <tr>
+        <td>{{grade.name}}</td>
+        <td>{{grade.bar}}%</td>
+        <td>
+          <form method="POST" action="{% url 'platform_admin:change-grade' change='delete' pk=grade.pk %}">
+            {% csrf_token %}
+            <button class="btn btn-danger myButton" type="submit" id="submit">Usuń</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}

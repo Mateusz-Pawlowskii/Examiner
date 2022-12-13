@@ -41,6 +41,11 @@ class Lesson(models.Model):
         self.material.delete(self.material.name)
         super().delete(*args,**kwargs)
 
+class Grade(models.Model):
+    name = models.CharField(max_length = 100)
+    bar = models.PositiveSmallIntegerField()
+    platform = models.ForeignKey(Platform, on_delete = models.CASCADE)
+
 class Result(models.Model):
     course = models.ForeignKey(Course, on_delete = models.CASCADE)
     student = models.ForeignKey(User, on_delete = models.CASCADE)

@@ -10,11 +10,11 @@ from django.utils.timezone import make_aware
 from django.utils.text import slugify
 from datetime import datetime
 
-from exam.models import Platform, StudentGroup, Course, Question, Lesson, Term
+from exam.models import Platform, StudentGroup, Course, Question, Lesson, Term, Grade
 from student.forms import StudentSearchCourseForm
 from exam.functions import get_categories, get_timeover
 from .forms import (UserNameChangeForm, StudentGroupForm, AttachStudentForm, AttachCourseForm, ReverseAttachStudentForm, 
-                   EditPlatformForm, ChangeTermForm)
+                   EditPlatformForm, ChangeTermForm, GradeForm)
 # Create your views here.
 class PlatformHomepage(LoginRequiredMixin, View):
     template_name = "platform_homepage.html"
@@ -369,8 +369,11 @@ class SettingsView(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
+        grades = sorted(Grade.objects.filter(platform=platform), key = lambda grade:grade.bar, reverse=True)
         context = {"form" : self.form_class(instance=platform),
                    "platform" : platform,
+                   "grade_form" : GradeForm(initial={"platform":platform}),
+                   "grades" : grades,
                    "nav_var" : "settings"}
         return render(request, self.template_name, context)
 
@@ -383,3 +386,66 @@ class SettingsView(LoginRequiredMixin, PermissionRequiredMixin, View):
         else:
             messages.info(request, "Niepoprawne logo")
         return HttpResponseRedirect(self.request.path_info)
+
+class ChangeGradeView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = ("exam.add_grade")
+    form_class = GradeForm
+
+    def post(self, request, *args, **kwargs):
+        if self.kwargs["change"] == "add":
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.info(request, "Pomyslnie dodano nową ocenę")
+                return redirect(reverse_lazy("platform_admin:settings"))
+            messages.error(request, "Niepoprawne dane dotyczące oceny")
+            return redirect(reverse_lazy("platform_admin:settings"))
+        elif self.kwargs["change"] == "delete":
+            grade = get_object_or_404(Grade, pk=self.kwargs["pk"])
+            grade.delete()
+            messages.info(request, "Pomyslnie skasowano ocenę")
+            return redirect(reverse_lazy("platform_admin:settings"))
+        return redirect(reverse_lazy("platform_admin:settings"))
+
+class DefaultGrades(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = ("exam.add_grade")
+
+    def create_school_grading(self, platform):
+        """This function creates standard school grades and adds them
+        to the given platform"""
+        Grade(name="1", bar=0, platform=platform).save()
+        Grade(name="2", bar=40, platform=platform).save()
+        Grade(name="3", bar=55, platform=platform).save()
+        Grade(name="4", bar=70, platform=platform).save()
+        Grade(name="5", bar=84, platform=platform).save()
+        Grade(name="6", bar=96, platform=platform).save()
+    
+    def create_academic_grading(self, platform):
+        """This function creates standard university grades and adds them
+        to the given platform"""
+        Grade(name="2", bar=0, platform=platform).save()
+        Grade(name="3", bar=51, platform=platform).save()
+        Grade(name="3.5", bar=61, platform=platform).save()
+        Grade(name="4", bar=71, platform=platform).save()
+        Grade(name="4.5", bar=81, platform=platform).save()
+        Grade(name="5", bar=91, platform=platform).save()
+    
+    def clear_old_grades(self, grades):
+        for grade in grades:
+            grade.delete()
+
+    def post(self, request, *args, **kwargs):
+        grading_system = self.kwargs["grading_sys"]
+        platform = Platform.objects.get(users=request.user)
+        present_grades = Grade.objects.filter(platform=platform)
+        if grading_system == "school":
+            self.clear_old_grades(present_grades)
+            self.create_school_grading(platform)
+            messages.info(request, "Pomyślnie wprowadzono szkolny system oceniania")
+        elif grading_system == "academic":
+            self.clear_old_grades(present_grades)
+            self.create_academic_grading(platform)
+            messages.info(request, "Pomyślnie wprowadzono uniwersytecki system oceniania")
+        else:
+            messages.error(request, "Wystapił błąd w ustawianiu gotowych ocen") 
+        return redirect(reverse_lazy("platform_admin:settings"))

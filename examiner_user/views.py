@@ -10,12 +10,12 @@ from operator import attrgetter
 
 from .forms import (CourseForm, QuestionForm, QuestionFormMultiple, LessonForm, AttachCourseToGroupForm, AttachStudentTextForm, 
                     LessonRenameForm, LessonEditForm, CourseEditForm, AttachStudentTextForm)
-from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Term
+from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Term, Grade
 from student.forms import StudentSearchCourseForm
 from platform_admin.views import (PlatformCreateStudent, StudentGroupSearch, CreateStudentGroup, EditStudentGroup, AttachCourse, 
                                   AttachStudent, UnattachStudent, ChangeTerm)
 from platform_admin.forms import ChangeTermForm
-from exam.functions import test_mark, course_mark, get_timeover
+from exam.functions import test_mark, course_mark, get_timeover, student_grades, course_grades, get_grade_data
 from .functions import get_maximum_result, initialize_course_information, get_result_data
 # Create your views here.
 
@@ -50,12 +50,14 @@ class DetailStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     def get_course_data(self, groups, student):
         test_marks = []
         course_data = []
+        grades_list = []
         for group in groups:
             courses = Course.objects.filter(studentgroup=group)
             test_marks.extend(test_mark(courses, student))
+            grades_list.extend(student_grades(courses, student))
             for course in courses:
                 course_data.append([course.pk, course.name])
-        return (course_data, test_marks)
+        return (course_data, test_marks, grades_list)
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
@@ -66,10 +68,12 @@ class DetailStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
         context = {"student" : student,
                    "courses" : course_data[0],
                    "test_marks" : course_data[1],
+                   "grades_list" : course_data[2],
                    "form" : self.form_class(),
                    "platform" : platform,
                    "groups" : groups,
-                   "all_groups" : all_groups}
+                   "all_groups" : all_groups,
+                   "grades" : get_grade_data(platform)}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -501,13 +505,14 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         return sorted(students, key = lambda student: student[3])
 
     def update_context(self, context, student_list, student_no, passed_no, failed_no,
-                       not_yet_mark_no, course_information, test_marks):
+                       not_yet_mark_no, course_information, test_marks, grades_list):
         context["student_list"] = student_list
         context["student_no"] = student_no
         context["pass_no"] = [passed_no, failed_no, not_yet_mark_no]
         context["course_information"] = course_information
         context["pass_list"] = [ "Zaliczony", "Niezaliczony", "Jeszcze nie ukończony"]
         context["test_marks"] = test_marks
+        context["grades_list"] = grades_list
         return context
 
     def get(self, request, *args, **kwargs):
@@ -516,6 +521,7 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         groups = StudentGroup.objects.filter(courses=course, platform=platform)
         context = {"course" : course,
                    "groups" : groups,
+                   "grades" : get_grade_data(platform),
                    "platform" : platform
                    }
         context["questions"] = Question.objects.filter(course=course)
@@ -523,10 +529,12 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         course_information = initialize_course_information(course)
         students = []
         test_marks = []
+        grades_list = []
         for group in groups:
             group_students = User.objects.filter(studentgroup=group, platform=platform)
             timeover = get_timeover(group, course)
             test_marks.extend(course_mark(course, group_students, timeover))
+            grades_list.extend(course_grades(course, group_students))
             for student in group_students:
                 students.append((student.pk,student.username, get_maximum_result(student, course),
                 course_information["student_amount"]))
@@ -553,7 +561,7 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         failed_no = test_marks.count("Niezaliczony")
         not_yet_mark_no = test_marks.count("Jeszcze nie ukończony")
         context = self.update_context(context, student_list, student_no, passed_no, failed_no,
-                                      not_yet_mark_no, course_information, test_marks)
+                                      not_yet_mark_no, course_information, test_marks, grades_list)
         return render(request, self.template_name, context)
 
 class CourseGroupResults(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -568,6 +576,7 @@ class CourseGroupResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         context = {"course" : course,
                    "students" : students,
                    "group" : group,
+                   "grades" : get_grade_data(platform),
                    "platform" : platform}
         course_information = initialize_course_information(course)
         for student in User.objects.filter(studentgroup=group):
@@ -581,6 +590,7 @@ class CourseGroupResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         context["course_information"] = course_information
         timeover = get_timeover(group, course)
         test_marks = course_mark(course, students, timeover)
+        grades_list = course_grades(course, students)
         # Part for graphs starts here
         passed_no = test_marks.count("Zaliczony")
         failed_no = test_marks.count("Niezaliczony")
@@ -599,6 +609,7 @@ class CourseGroupResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         context["student_list"] = student_list
         context["student_no"] = student_no
         context["test_marks"] = test_marks
+        context["grades_list"] = grades_list
         return render(request, self.template_name, context)
 
 # Student group views
