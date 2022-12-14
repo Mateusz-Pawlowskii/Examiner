@@ -11,7 +11,7 @@
 <h4>Student <b>{{student.username}}</b></h4>
 <h5>Zmień nazwe użytkownika:</h5>
 <div class="form-group">
-    <form method="POST" action="{% url 'platform_admin:edit-examiner' pk=student.pk %}">
+    <form method="POST" action="{% url 'platform_admin:edit-examiner' pk=student.pk slug=student.username|slugify %}">
         {% csrf_token %}
         <label for="id_username">Nazwa użytkownika: (Wymagane. 150 znaków lub mniej. Tylko litery, cyfry i @/./+/-/_)</label>
         {{form.as_p}}

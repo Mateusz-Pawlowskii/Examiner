@@ -11,7 +11,7 @@
 <p>Kategoria:<b> {{course.category}}</b></p>
 {% endif %}
 <p>Nazwa grupy:<b> {{group.name}}</b></p>
-<a href="{% url 'platform_admin:group-report' course=course.pk group=group.pk %}">
+<a href="{% url 'platform_admin:group-report' course=course.pk group=group.pk slug=course.name|slugify %}">
   <button class = "btn btn-success myButton">Raport</button>
 </a>
 <h4>Statystyki</h4>

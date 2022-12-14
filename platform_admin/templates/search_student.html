@@ -45,7 +45,7 @@
 <script src="{% static 'js/month_translation.js' %}"></script>
 {% for student in object_list %}
 <script>
-  objectList.push({"name" : "<a href='{% url 'platform_admin:edit-student' pk=student.pk %}''>{{student.username}}</a>", 
+  objectList.push({"name" : "<a href='{% url 'platform_admin:edit-student' pk=student.pk slug=student.username|slugify %}''>{{student.username}}</a>", 
     "login" : month_conv("{% if student.last_login == None %} Brak {% else %}{{student.last_login}}{% endif %}"),
     "join" : month_conv("{{student.date_joined}}"), "sort_join" : new Date("{{student.date_joined.isoformat}}"),
     "sort_name" : "{{student.username}}", "sort_login" :

@@ -199,7 +199,7 @@ var acc = document.getElementsByClassName("tog");
   <script src="{% static 'js/month_translation.js' %}"></script>
   {% for student in group_students %}
   <script>
-    objectList.push({"name" : `{% if side == "platform" %}<a href="{% url 'platform_admin:edit-student' pk=student.pk %}">
+    objectList.push({"name" : `{% if side == "platform" %}<a href="{% url 'platform_admin:edit-student' pk=student.pk slug=student.username|slugify %}">
       {{student.username}}</a>{% else %}<a href="{% url 'examiner_user:detail-student' pk=student.pk %}">
       {{student.username}}</a>{% endif %}`, 
       "login" : month_conv("{% if student.last_login == None %} Brak {% else %}{{student.last_login}}{% endif %}"),

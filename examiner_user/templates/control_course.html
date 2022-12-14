@@ -173,7 +173,7 @@
             </button>
         </td>
         <td width="10%">
-          <a href="{% url 'platform_admin:group-report' course=object.pk group=group.pk %}">
+          <a href="{% url 'platform_admin:group-report' course=object.pk group=group.pk slug=course.name|slugify %}">
             <button class = "btn btn-success small">Raport</button>
           </a>
         </td>
