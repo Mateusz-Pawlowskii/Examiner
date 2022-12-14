@@ -12,7 +12,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import views as auth_views
 
 from .tokens import account_activation_token
-from .forms import PlatformForm, MyUserCreationForm
+from .forms import PlatformForm, MyUserCreationForm, SetPasswordFormPL
 from .models import Platform
 # Create your views here.
 class HomepageView(TemplateView):
@@ -123,6 +123,7 @@ class ResetDone(auth_views.PasswordResetDoneView):
     template_name = "password_reset_sent.html"
 
 class ResetConfirm(auth_views.PasswordResetConfirmView):
+    form_class = SetPasswordFormPL
     template_name = "password_reset_confirm.html"
     def get_success_url(self):
         return (reverse_lazy("exam:password-reset-complete"))
