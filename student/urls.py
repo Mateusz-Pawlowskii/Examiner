@@ -5,7 +5,7 @@ from .views import (HomepageView, StudentSearchCourse, StudentDetailCourse, Stud
 
 app_name="student"
 urlpatterns = [
-    path("homepage/", HomepageView.as_view(), name="homepage"),
+    path("homepage", HomepageView.as_view(), name="homepage"),
     path("course/search", StudentSearchCourse.as_view(), name="student-search-course"),
     path("course/detail/<int:pk>/<slug:slug>", StudentDetailCourse.as_view(), name="student-detail-course"),
     path("lesson/list/<int:pk>/<slug:slug>", StudentListLesson.as_view(), name="student-list-lesson"),
