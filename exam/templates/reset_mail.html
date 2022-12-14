@@ -1,0 +1,5 @@
+{% autoescape off %}
+Witaj {{ user.username }},
+Otrzymaliśmy prośbe o zmiane hasła dla konta administratora dla twojej platformy e-learningowej.
+Aby nadać kontu nowe hasło prosze wejść w link: {{ protocol }}://{{ domain }}{% url 'exam:password-reset-confirm' uidb64=uid token=token %}
+{% endautoescape %}

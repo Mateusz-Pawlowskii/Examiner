@@ -23,7 +23,13 @@
     </div>
     <button type="submit" class="btn btn-success myButton" id="submit">Zaloguj się</button>
 </form>
-<a href="{% url 'exam:homepage' %}" class="btn btn-success mt-5 myButton" id="return">
+<a href="{% url 'exam:homepage' %}" class="btn btn-success mt-4 mb-5 myButton" id="return">
     Wróć
 </a>
+<br>
+<p>
+  <a href="{% url 'exam:reset-password' %}">
+    Jesteś administratorem platformy a zapomniałeś hasła?
+  </a>
+</p>
 {% endblock %}

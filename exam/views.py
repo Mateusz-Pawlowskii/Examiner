@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.auth import views as auth_views
 
 from .tokens import account_activation_token
 from .forms import PlatformForm, MyUserCreationForm
@@ -46,14 +47,14 @@ class RedirectHomepage(View):
 class RegistraitionView(View):
     template_name = "registration.html"
 
-    def add_to_platform_admin_group(user):
+    def add_to_platform_admin_group(self, user):
         """adds user to platform admin group and marks them as inactive"""
         user.is_active = False
         group = get_object_or_404(Group, name="Platform_Admin")
         group.user_set.add(user)
         user.save()
 
-    def send_registraition_mail(request, user, mail):
+    def send_registraition_mail(self, request, user, mail):
         current_site = get_current_site(request)
         mail_subject = 'Aktywuj swoje konto na Examinerze'
         message = render_to_string('activate_email.html', {
@@ -111,3 +112,20 @@ class PlatformCreate(View):
             platform.users.add(request.user)
             platform.save()
             return redirect(reverse_lazy("platform_admin:homepage"))
+
+class PasswordReset(auth_views.PasswordResetView):
+    template_name = "password_reset.html"
+    email_template_name = "reset_mail.html"
+    def get_success_url(self):
+        return (reverse_lazy("exam:password-reset-done"))
+
+class ResetDone(auth_views.PasswordResetDoneView):
+    template_name = "password_reset_sent.html"
+
+class ResetConfirm(auth_views.PasswordResetConfirmView):
+    template_name = "password_reset_confirm.html"
+    def get_success_url(self):
+        return (reverse_lazy("exam:password-reset-complete"))
+
+class ResetComplete(auth_views.PasswordResetCompleteView):
+    template_name = "password_reset_complete.html"
