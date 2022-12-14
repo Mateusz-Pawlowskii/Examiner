@@ -11,6 +11,9 @@
 <p>Kategoria:<b> {{course.category}}</b></p>
 {% endif %}
 <p>Nazwa grupy:<b> {{group.name}}</b></p>
+<a href="{% url 'platform_admin:group-report' course=course.pk group=group.pk %}">
+  <button class = "btn btn-success myButton">Raport</button>
+</a>
 <h4>Statystyki</h4>
 Ilość uczniów z grupy którzy ukończyli kurs: <b>{{course_information.passed_students}}</b><br>
 Ilość uczniów z grupy którzy zakończyli test niepowodzeniem: <b>{{course_information.failed_students}}</b><br>
@@ -96,7 +99,7 @@ Ilość niepomyślnych podejść do testu w grupie: <b>{{course_information.fail
 };
 </script>
 {% for student in students %}
-<script>
+<script> 
   objectList.push({"name" : "<a href='{% url 'examiner_user:results-course-student' course=course.pk student=student.pk %}''>{{student.username}}</a>",
     "status" : test_marks[Number("{{forloop.counter0}}")], "sort_status" : test_marks[Number("{{forloop.counter0}}")],
     "sort_name" : "{{student.username}}", "pk" : "{{student.pk}}", "grade" : grades_list[Number("{{forloop.counter0}}")],

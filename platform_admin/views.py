@@ -9,10 +9,12 @@ from django.http import HttpResponseRedirect
 from django.utils.timezone import make_aware
 from django.utils.text import slugify
 from datetime import datetime
+from fpdf import FPDF, HTMLMixin
+from django.http import FileResponse
 
 from exam.models import Platform, StudentGroup, Course, Question, Lesson, Term, Grade
 from student.forms import StudentSearchCourseForm
-from exam.functions import get_categories, get_timeover
+from exam.functions import get_categories, get_timeover, course_mark, course_grades, get_grade_data
 from .forms import (UserNameChangeForm, StudentGroupForm, AttachStudentForm, AttachCourseForm, ReverseAttachStudentForm, 
                    EditPlatformForm, ChangeTermForm, GradeForm)
 # Create your views here.
@@ -360,6 +362,43 @@ class ChangeTerm(LoginRequiredMixin, PermissionRequiredMixin, View):
         term.time = time
         term.save()
         return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs[self.redirect_arg],"slug" : slugify(group.name)}))
+
+class GroupReport(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = ("exam.view_studentgroup")
+
+    class HTML_PDF(FPDF, HTMLMixin):
+        pass
+
+    def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
+        group = get_object_or_404(StudentGroup, pk=self.kwargs["group"])
+        students = sorted(User.objects.filter(studentgroup=group), key= lambda student:student.username)
+        course = get_object_or_404(Course, pk=self.kwargs["course"])
+        timeover = get_timeover(group, course)
+        test_marks = course_mark(course, students, timeover)
+        grades_list = course_grades(course, students)
+        perc_sign = "%"
+        pdf = self.HTML_PDF()
+        pdf.add_page()
+        pdf.add_font('DejaVu', '', 'static/font/ttf/DejaVuSerif.ttf', uni=True)
+        pdf.set_font('DejaVu', '', 20)
+        pdf.multi_cell(0, 20, txt = f"Wyniki grupy {group.name} z kursu {course.name}", align = 'C', ln=2)
+        pdf.set_font('DejaVu', '', 15)
+        pdf.multi_cell(80, 15, txt = f"Nazwa studenta", ln=3)
+        pdf.multi_cell(80, 15, txt = f"Status", ln=3)
+        if get_grade_data(platform):
+            pdf.multi_cell(80, 15, txt = f"Ocena", ln=3)
+            perc_sign = ""
+        else:
+            pdf.multi_cell(80, 15, txt = f"%", ln=3)
+        pdf.ln(6)
+        for index in range(0,len(students)):
+            pdf.multi_cell(80, 15, txt = f"{students[index].username}", ln=3)
+            pdf.multi_cell(80, 15, txt = f"{test_marks[index]}", ln=3)
+            pdf.multi_cell(80, 15, txt = f"{grades_list[index]}{perc_sign}", ln=3)
+            pdf.ln(6)
+        pdf.output(f"media/raports/raport.pdf")
+        return FileResponse(open(f"media/raports/raport.pdf", "rb"), content_type="application/pdf")
 
 # views about settings
 class SettingsView(LoginRequiredMixin, PermissionRequiredMixin, View):

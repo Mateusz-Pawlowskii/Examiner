@@ -58,7 +58,7 @@ def student_grades(courses, student):
         result = results[-1]
         score = (result.current_score*100)/course.question_amount
         if len(grades) == 0:
-            out.append(score)
+            out.append(round(score))
             continue
         for grade in grades:
             if score > grade.bar:
@@ -82,7 +82,7 @@ def course_grades(course, students):
         result = results[-1]
         score = (result.current_score*100)/course.question_amount
         if len(grades) == 0:
-            out.append(score)
+            out.append(round(score))
             continue
         for grade in grades:
             if score > grade.bar:

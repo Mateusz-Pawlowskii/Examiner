@@ -560,6 +560,7 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         passed_no = test_marks.count("Zaliczony")
         failed_no = test_marks.count("Niezaliczony")
         not_yet_mark_no = test_marks.count("Jeszcze nie ukończony")
+        # Part for graphs ends here
         context = self.update_context(context, student_list, student_no, passed_no, failed_no,
                                       not_yet_mark_no, course_information, test_marks, grades_list)
         return render(request, self.template_name, context)
@@ -606,6 +607,7 @@ class CourseGroupResults(LoginRequiredMixin, PermissionRequiredMixin, View):
                 result = max(results, key=attrgetter("current_score"))
                 student_no.append(100 * result.current_score/course.question_amount)
                 student_list.append(student.username)
+        # Part for graphs ends here
         context["student_list"] = student_list
         context["student_no"] = student_no
         context["test_marks"] = test_marks

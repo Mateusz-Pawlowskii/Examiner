@@ -227,7 +227,7 @@ var acc = document.getElementsByClassName("tog");
   };
   </script>
   {% for course in group_courses %}
-  <script>
+  <script> 
     courseObjectList.push({"name" : `{% if side == "platform" %}<a href="{% url 'platform_admin:platform-detail-course' pk=course.pk group=group.pk %}">
     {{course.name}}</a>{% else %}<a href="{% url 'examiner_user:detail-course' pk=course.pk slug=course.name|slugify %}">
     {{course.name}}</a>{% endif %}`, "category" : "{{course.category}}",

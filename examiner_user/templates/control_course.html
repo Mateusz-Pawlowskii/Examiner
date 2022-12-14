@@ -167,10 +167,15 @@
         <td width="21%">
           <div id="term_{{forloop.counter}}"></div>
         </td>
-        <td>
-            <button class="btn btn-success mt-1" type="button" data-toggle="modal" data-target="#changeModal{{forloop.counter}}">
+        <td width="10%">
+            <button class="btn btn-success small" type="button" data-toggle="modal" data-target="#changeModal{{forloop.counter}}">
               Zmień date
             </button>
+        </td>
+        <td width="10%">
+          <a href="{% url 'platform_admin:group-report' course=object.pk group=group.pk %}">
+            <button class = "btn btn-success small">Raport</button>
+          </a>
         </td>
         <td class="borderless" style="border:none;">
           <form method="POST" action="{% url 'examiner_user:unattach-group' pk=object.pk slug=object.name|slugify %}">
@@ -212,7 +217,7 @@
     </tbody>
   </table>
 </div>
-<hr>
+<hr> 
 <a href="{% url 'examiner_user:create-question' pk=object.pk slug=object.name|slugify %}">
   <button class="btn btn-success myButton" id="add_question">
     Dodaj Pytanie

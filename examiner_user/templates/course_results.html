@@ -59,7 +59,12 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
 <p><b>Ilość studentów zapisanych na kurs:</b> {{students|length}}</p>
 <p>Poszczególne grupy studenckie zapisane do kursu:</p>
 {% for group in groups %}
-<p><a href="{% url 'examiner_user:results-course-group' course=course.pk group=group.pk %}">{{group.name}}</a></p>
+<p>
+  <a href="{% url 'examiner_user:results-course-group' course=course.pk group=group.pk %}">{{group.name}}</a>
+  <a href="{% url 'platform_admin:group-report' course=course.pk group=group.pk %}">
+    <button class = "btn btn-success small">Raport</button>
+  </a>
+</p>
 {% endfor %}
 <a href="{% url 'examiner_user:results' %}">
   <button class = "btn btn-success myButton">
