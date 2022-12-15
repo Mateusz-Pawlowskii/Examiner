@@ -11,12 +11,14 @@ from django.utils.text import slugify
 from datetime import datetime
 from fpdf import FPDF, HTMLMixin
 from django.http import FileResponse
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 
 from exam.models import Platform, StudentGroup, Course, Question, Lesson, Term, Grade
 from student.forms import StudentSearchCourseForm
 from exam.functions import get_categories, get_timeover, course_mark, course_grades, get_grade_data
 from .forms import (UserNameChangeForm, StudentGroupForm, AttachStudentForm, AttachCourseForm, ReverseAttachStudentForm, 
-                   EditPlatformForm, ChangeTermForm, GradeForm)
+                   EditPlatformForm, ChangeTermForm, GradeForm, FeedbackForm)
 # Create your views here.
 class PlatformHomepage(LoginRequiredMixin, View):
     template_name = "platform_homepage.html"
@@ -26,6 +28,29 @@ class PlatformHomepage(LoginRequiredMixin, View):
         context = {"nav_var" : "homepage",
                    "platform" : platform}
         return render(request, self.template_name, context)
+
+class FeedbackView(View):
+    template_name = "feedback.html"
+    side = "platform"
+    base = "platform_base.html"
+    form_class = FeedbackForm
+
+    def get(self, request, *args, **kwargs):
+        context = {"base" : self.base,
+                   "form" : self.form_class}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        mail_subject = 'Opinia'
+        message = render_to_string('feedback_email.html', {
+            "side" : self.side,
+            "points" : request.POST["points"],
+            "feedback" : request.POST["feedback"]
+        })
+        email = EmailMessage(mail_subject, message, to=["mm.pawlowski18@gmail.com"])
+        email.send()
+        messages.info(request, "Dziękujemy za podzielenie się z nami swoją opinią")
+        return redirect(reverse_lazy("exam:home-redirect"))
 
 # Examiner managment views
 class ExaminerSearch(LoginRequiredMixin, PermissionRequiredMixin, View):

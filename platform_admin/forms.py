@@ -60,3 +60,9 @@ class GradeForm(forms.ModelForm):
         if data > 100:
             raise ValidationError("Ocena nie może być przyznawana powyżej 100%")
         return data
+
+class FeedbackForm(forms.Form):
+    points = forms.ChoiceField(required=True, label = "Na ile oceniasz aplikacje Examiner w skali od 1 do 5?",
+        choices=[('1','1'),('2','2'),("3","3"),("4","4"), ("5","5")])
+    feedback = forms.CharField(required=False, label = "Uwagi słowne:", 
+        widget=forms.Textarea(attrs={'name':'text', 'rows':4, 'cols':170}))

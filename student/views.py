@@ -11,6 +11,7 @@ from fpdf import FPDF
 
 from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Term
 from exam.functions import get_courses_for_student, get_categories, get_timeover, get_grade_data, student_grades
+from platform_admin.views import FeedbackView
 from .forms import StudentSearchCourseForm, StudentSearchStatusForm
 
 # Create your views here.
@@ -22,6 +23,10 @@ class HomepageView(View):
         context= {"nav_var":"homepage",
                   "platform" : platform}
         return render(request, self.template_name, context)
+
+class StudentFeedback(FeedbackView):
+    side = "student"
+    base = "student_base.html"
 
 class StudentSearchCourse(LoginRequiredMixin, View):
     template_name = "student_search_course.html"

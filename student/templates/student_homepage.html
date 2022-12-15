@@ -2,6 +2,11 @@
 
 {% block content %}
 {% load static %}
+{% for m in messages %}
+<div class="alert alert-warning" role="alert">
+  {{ m }}
+</div>
+{% endfor %}
 <br>
 {% if platform.logo|length == 0 %}
 <div class="text-center"><img src="{% static 'img/logo3.png' %}" height="80" width="300"/></div>
@@ -18,6 +23,10 @@
   Główną funkcjonalnością aplikacji jest możliwość tworzenia automatycznie sprawdzanych testów (wielokrotnego lub jednokrotnego wyboru)
   powiązanych z utworzonymi szkoleniami.<br> Aplikacja umożliwia tworzenie i nadawanie haseł dla nowych kont egzaminatorów i studentów.
 </h4>
+<br>
+<a href = "{% url 'student:student-feedback' %}">
+  <button class="btn btn-success myButton">Udziel opinii</button>
+</a>
 <br>
 Dane kontaktowe:
 <br>

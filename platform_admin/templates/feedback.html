@@ -1,0 +1,24 @@
+{% extends base %}
+
+{% block content %}
+<div class="text-center">
+<h3>Zgłoszenie uwag lub sugestii</h3>
+<br>
+<p>
+    Naszym celem jest rozwój i poprawa działania aplikacji Examiner. W tym celu zbieramy opinie, uwagi i skargi od użytkowników
+    strony które są dla nas cennym źródłem informacji. Jesteśmy wielce wdzięczni za czas i uwage poświeconą na wypełnienie
+    formulaża ewaluacyjnego. Jest on zupełnie anonimowy.
+</p>
+<form method="POST">
+    {% csrf_token %}
+    <label for="id_points">Na ile punktów oceniasz aplikacje Examiner w skali od 1 do 5?</label>
+    <br>
+    {{form.points}}
+    <br>
+    <label for="id_feedback">Uwagi słowne:</label>
+    {{form.feedback}}
+    <br>
+    <input type="submit" value="Prześlij opinie" class="btn btn-success mt-2 myButton">
+</form>
+</div>
+{% endblock %}

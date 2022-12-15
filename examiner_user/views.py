@@ -13,7 +13,7 @@ from .forms import (CourseForm, QuestionForm, QuestionFormMultiple, LessonForm, 
 from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Term, Grade
 from student.forms import StudentSearchCourseForm
 from platform_admin.views import (PlatformCreateStudent, StudentGroupSearch, CreateStudentGroup, EditStudentGroup, AttachCourse, 
-                                  AttachStudent, UnattachStudent, ChangeTerm)
+                                  AttachStudent, UnattachStudent, ChangeTerm, FeedbackView)
 from platform_admin.forms import ChangeTermForm
 from exam.functions import test_mark, course_mark, get_timeover, student_grades, course_grades, get_grade_data
 from .functions import get_maximum_result, initialize_course_information, get_result_data
@@ -27,6 +27,10 @@ class ExaminerHomepage(LoginRequiredMixin, View):
         context = {"nav_var":"homepage",
                    "platform" : platform}
         return render(request, self.template_name, context)
+
+class ExaminerFeedback(FeedbackView):
+    side = "examiner"
+    base = "examiner_base.html"
 
 # part about users starts here
 class StudentView(LoginRequiredMixin, PermissionRequiredMixin, View):
