@@ -77,3 +77,7 @@ class Term(models.Model):
     course = models.ForeignKey(Course, on_delete = models.CASCADE)
     group = models.ForeignKey(StudentGroup, on_delete = models.CASCADE)
     time = models.DateTimeField(null=True)
+
+class Activity(models.Model):
+    kind = models.CharField(max_length = 50)
+    time = models.DateTimeField(auto_now_add=True)

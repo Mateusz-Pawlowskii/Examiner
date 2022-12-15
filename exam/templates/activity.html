@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+Activity
+
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        {% load static %}
+        <th scope="col">Kind</th>
+        <th scope="col">Time</th>
+      </tr>
+    </thead>
+    <tbody id="tbody">
+        {% for activity in activities %}
+        <tr>
+            <td>{{activity.kind}}</td>
+            <td>{{activity.time}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

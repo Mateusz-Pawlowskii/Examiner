@@ -13,7 +13,7 @@ from django.contrib.auth import views as auth_views
 
 from .tokens import account_activation_token
 from .forms import PlatformForm, MyUserCreationForm, SetPasswordFormPL
-from .models import Platform
+from .models import Platform, Activity
 # Create your views here.
 class HomepageView(TemplateView):
     template_name = "homepage.html"
@@ -25,6 +25,7 @@ class HomeLoginView(LoginView):
 
 class RedirectHomepage(View):
     def get(self, request):
+        Activity(kind="visit").save()
         if hasattr(request.user.groups.first(), "name"):
             if request.user.groups.first().name == "Platform_Admin":
                 if request.user.is_active:
@@ -72,6 +73,7 @@ class RegistraitionView(View):
         return render(request, self.template_name, context)
     
     def post(self, request):
+        Activity(kind="registration").save()
         form = MyUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
@@ -130,3 +132,11 @@ class ResetConfirm(auth_views.PasswordResetConfirmView):
 
 class ResetComplete(auth_views.PasswordResetCompleteView):
     template_name = "password_reset_complete.html"
+
+class ActivityView(View):
+    template_name = "activity.html"
+
+    def get(self, request, *args, **kwargs):
+        activities = Activity.objects.all()[::-1]
+        context = {"activities" : activities}
+        return render(request, self.template_name, context)
