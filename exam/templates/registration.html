@@ -34,6 +34,13 @@
         <label for="id_email">{% trans "Mail adress" %}:</label>
         <input type="email" name="email" required id="id_email" class="form-control">
     </p>
+    <div class="form-check form-check">
+      <input class="form-check-input" type="checkbox" name="che1" required id="Checkbox1" value="">
+    </div>
+    &nbsp&nbsp&nbsp&nbsp<a href="" data-toggle="modal" data-target="#privacy_policy">
+      {% trans "I agree with privacy policy" %}
+    </a>
+  </p>
     <p class="text-center">
         <input class="btn btn-success myButton" type="submit" id="register" value="{% trans 'Register' %}">
     </p>
@@ -44,4 +51,5 @@
         {% trans "Back" %}
     </a>
 </p>
+{% include "privacy_policy.html" %}
 {% endblock %}

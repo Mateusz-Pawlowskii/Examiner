@@ -13,11 +13,13 @@
 {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
 {% for language in languages %}
 <a href="/{{language.code}}/">
-  <button class ="btn btn-success mb-1 myButton">
+  <button class ="btn btn-success mb-4 myButton">
     {{language.name_local|title}}
   </button>
 </a>
 {% endfor %}
+<button class="btn btn-success mb-4 myButton" type="button" data-toggle="modal" data-target="#privacy_policy">
+  {% trans 'Privacy policy' %}</button>
 <br>
 <div class="text-center">
   <img src="{% static 'img/logo3.png' %}" height="80" width="300"/>
@@ -58,4 +60,5 @@
 {% trans "E-mail adress: mm.pawlowski18@gmail.com" %}
 <br>
 {% trans "Phone number: +48 506 960 518" %}
+{% include "privacy_policy.html" %}
 {% endblock %}
