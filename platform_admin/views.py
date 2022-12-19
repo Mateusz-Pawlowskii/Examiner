@@ -13,6 +13,7 @@ from fpdf import FPDF, HTMLMixin
 from django.http import FileResponse
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
+from django.utils.translation import gettext_lazy as _
 
 from exam.models import Platform, StudentGroup, Course, Question, Lesson, Term, Grade
 from student.forms import StudentSearchCourseForm
@@ -36,12 +37,14 @@ class FeedbackView(View):
     form_class = FeedbackForm
 
     def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         context = {"base" : self.base,
-                   "form" : self.form_class}
+                   "form" : self.form_class,
+                   "platform" : platform}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        mail_subject = 'Opinia'
+        mail_subject = _('Opinion')
         message = render_to_string('feedback_email.html', {
             "side" : self.side,
             "points" : request.POST["points"],
@@ -49,7 +52,7 @@ class FeedbackView(View):
         })
         email = EmailMessage(mail_subject, message, to=["mm.pawlowski18@gmail.com"])
         email.send()
-        messages.info(request, "Dziękujemy za podzielenie się z nami swoją opinią")
+        messages.info(request, _("Thank you for sharing your opinion"))
         return redirect(reverse_lazy("exam:home-redirect"))
 
 # Examiner managment views
@@ -88,7 +91,7 @@ class CreateExaminer(LoginRequiredMixin, PermissionRequiredMixin, View):
             platform.users.add(user)
             user.save()
         else:
-            messages.error(request, "Niepoprawne dane")
+            messages.error(request, _("Incorrect data"))
         return redirect(reverse_lazy("platform_admin:examiner-search"))
 
 class EditExaminer(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -120,10 +123,10 @@ class ChangePassword(LoginRequiredMixin, PermissionRequiredMixin, View):
         form = self.form_class(data=request.POST, user=user)
         if form.is_valid():
             form.save()
-            messages.info(request, "Hasło zostało pomyślnie zmienione")
+            messages.info(request, _("Password sucessfully changed"))
             return redirect(reverse_lazy("platform_admin:examiner-search"))
         else:
-            messages.error(request, "Niepoprawne dane. Podane hasła nie zgadzają się lub nie spełniają wymogów")
+            messages.error(request, _("Incorrect data. Passwords do not match or doesen't fulfill the requirements"))
             return redirect(reverse_lazy("platform_admin:examiner-search"))
 
 class DeleteUser(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -132,7 +135,7 @@ class DeleteUser(LoginRequiredMixin, PermissionRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         user = get_object_or_404(User, pk=self.kwargs["pk"])
         user.delete()
-        messages.info(request, "Użytkownik usunięty")
+        messages.info(request, _("User deleted"))
         return redirect(reverse_lazy("platform_admin:examiner-search"))
 
 # student managment views
@@ -174,7 +177,7 @@ class PlatformCreateStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
             platform.users.add(user)
             user.save()
         else:
-            messages.error(request, "Niepoprawne dane")
+            messages.error(request, _("Incorrect data"))
         return redirect(reverse_lazy(self.redirect))
 
 class EditStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -243,7 +246,7 @@ class CreateStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
             platform.studentgroup_set.add(student_group)
             platform.save()
         else:
-            messages.error(request, "Stworzenie grupy nie powiodło się")
+            messages.error(request, _("Group creation failed"))
         return redirect(reverse_lazy(self.redirect_to))
 
 class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -267,7 +270,7 @@ class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
             term = Term.objects.filter(group=student_group,course=course).first()
             term_info.append(term)
             if get_timeover(student_group, course):
-                term_info.append("(Termin upłynął)")
+                term_info.append(_("(Term expired)"))
             else:
                 term_info.append(" ")
             terms.append(term_info)
@@ -294,7 +297,7 @@ class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
         if form.is_valid():
             form.save()
         else:
-            messages.error(request, "Edycja grupy nie powiodła się")
+            messages.error(request, _("Group edit failed"))
         return redirect(reverse_lazy(self.redirect_to))
 
 class PlatformDetailCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -315,7 +318,7 @@ class PlatformDetailCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         group = self.kwargs["group"]
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
         course.delete()
-        messages.info(request, "Kurs został usuniety")
+        messages.info(request, _("Course deleted"))
         return redirect(reverse_lazy("platform_admin:edit-student-group", kwargs={"pk" : group}))
 
 class DeleteGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -324,7 +327,7 @@ class DeleteGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         student_group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
         student_group.delete()
-        messages.info(request, "Grupa usunięta")
+        messages.info(request, _("Group deleted"))
         return redirect(reverse_lazy("platform_admin:student-group-search"))
 
 class AttachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -407,23 +410,24 @@ class GroupReport(LoginRequiredMixin, PermissionRequiredMixin, View):
         pdf.add_page()
         pdf.add_font('DejaVu', '', 'static/font/ttf/DejaVuSerif.ttf', uni=True)
         pdf.set_font('DejaVu', '', 20)
-        pdf.multi_cell(0, 20, txt = f"Wyniki grupy {group.name} z kursu {course.name}", align = 'C', ln=2)
+        pdf.multi_cell(0, 20, txt = _("Group %(group)s results from %(course)s course") % 
+        {"group" : group.name, "course" : course.name}, align = 'C', ln=2)
         pdf.set_font('DejaVu', '', 15)
-        pdf.multi_cell(80, 15, txt = f"Nazwa studenta", ln=3)
-        pdf.multi_cell(80, 15, txt = f"Status", ln=3)
+        pdf.multi_cell(80, 15, txt = _("Student name"), ln=3)
+        pdf.multi_cell(80, 15, txt = _("Status"), ln=3)
         if get_grade_data(platform):
-            pdf.multi_cell(80, 15, txt = f"Ocena", ln=3)
+            pdf.multi_cell(80, 15, txt = _("Grade"), ln=3)
             perc_sign = ""
         else:
-            pdf.multi_cell(80, 15, txt = f"%", ln=3)
+            pdf.multi_cell(80, 15, txt = "%", ln=3)
         pdf.ln(6)
         for index in range(0,len(students)):
             pdf.multi_cell(80, 15, txt = f"{students[index].username}", ln=3)
             pdf.multi_cell(80, 15, txt = f"{test_marks[index]}", ln=3)
             pdf.multi_cell(80, 15, txt = f"{grades_list[index]}{perc_sign}", ln=3)
             pdf.ln(6)
-        pdf.output(f"media/raports/raport.pdf")
-        return FileResponse(open(f"media/raports/raport.pdf", "rb"), content_type="application/pdf")
+        pdf.output("media/raports/raport.pdf")
+        return FileResponse(open("media/raports/raport.pdf", "rb"), content_type="application/pdf")
 
 # views about settings
 class SettingsView(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -446,9 +450,9 @@ class SettingsView(LoginRequiredMixin, PermissionRequiredMixin, View):
         form = self.form_class(request.POST, request.FILES, instance=platform)
         if form.is_valid():
             form.save()
-            messages.error(request, "Ustawienia zostały zapisane")
+            messages.error(request, _("Settings saved"))
         else:
-            messages.info(request, "Niepoprawne logo")
+            messages.info(request, _("Incorrect logo"))
         return HttpResponseRedirect(self.request.path_info)
 
 class ChangeGradeView(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -460,14 +464,14 @@ class ChangeGradeView(LoginRequiredMixin, PermissionRequiredMixin, View):
             form = self.form_class(request.POST)
             if form.is_valid():
                 form.save()
-                messages.info(request, "Pomyslnie dodano nową ocenę")
+                messages.info(request, _("New grade sucessfully added"))
                 return redirect(reverse_lazy("platform_admin:settings"))
-            messages.error(request, "Niepoprawne dane dotyczące oceny")
+            messages.error(request, _("Incorrect grade data"))
             return redirect(reverse_lazy("platform_admin:settings"))
         elif self.kwargs["change"] == "delete":
             grade = get_object_or_404(Grade, pk=self.kwargs["pk"])
             grade.delete()
-            messages.info(request, "Pomyslnie skasowano ocenę")
+            messages.info(request, _("Grade deleted"))
             return redirect(reverse_lazy("platform_admin:settings"))
         return redirect(reverse_lazy("platform_admin:settings"))
 
@@ -505,11 +509,11 @@ class DefaultGrades(LoginRequiredMixin, PermissionRequiredMixin, View):
         if grading_system == "school":
             self.clear_old_grades(present_grades)
             self.create_school_grading(platform)
-            messages.info(request, "Pomyślnie wprowadzono szkolny system oceniania")
+            messages.info(request, _("School grading system sucessfully implemented"))
         elif grading_system == "academic":
             self.clear_old_grades(present_grades)
             self.create_academic_grading(platform)
-            messages.info(request, "Pomyślnie wprowadzono uniwersytecki system oceniania")
+            messages.info(request, _("Academic grading system sucessfully implemented"))
         else:
-            messages.error(request, "Wystapił błąd w ustawianiu gotowych ocen") 
+            messages.error(request, _("Default grade implementation error"))
         return redirect(reverse_lazy("platform_admin:settings"))

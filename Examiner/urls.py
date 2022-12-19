@@ -18,8 +18,9 @@ from django.urls import path, include
 from exam.views import RedirectHomepage, RedirectHomepage
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls.i18n import i18n_patterns
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     path("", RedirectHomepage.as_view(), name="homepage"),
     path('admin/', admin.site.urls),
     path('home/', include ("exam.urls")),
@@ -27,7 +28,7 @@ urlpatterns = [
     path('examiner/', include ("examiner_user.urls")),
     path('platform/', include ("platform_admin.urls")),
     path("accounts/profile/", RedirectHomepage.as_view(), name="login-redirect")
-]
+)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

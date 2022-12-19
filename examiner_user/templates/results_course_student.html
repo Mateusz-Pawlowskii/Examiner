@@ -1,24 +1,26 @@
 {% extends "examiner_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
-<h4>Wyniki testów ucznia <b>{{student.username}}</b> z kursu <b>{{course.name}}</b></h4>
+<h4>{% trans "Results of student" %} <b>{{student.username}}</b> {% trans "from course" %} <b>{{course.name}}</b></h4>
 <a href="{% url 'examiner_user:detail-student' pk=student.pk %}">
   <button class="btn btn-success mt-1 mb-1 myButton" id="back">
-    Wróć do ucznia
+    {% trans "Back to student" %}
   </button>
 </a>
 <a href="{% url 'examiner_user:course-results' pk=course.pk %}">
   <button class="btn btn-success mt-1 mb-1 myButton" id="back">
-    Wróć do kursu
+    {% trans "Back to course" %}
   </button>
 </a>
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th width="6%" scope="col">Próba</th>
-      <th width="15%" scope="col" class="text-center">Uzyskane punkty</th>
+      <th width="6%" scope="col">{% trans "Attempt" %}</th>
+      <th width="15%" scope="col" class="text-center">{% trans "Score" %}</th>
       <th width="13%" scope="col">%</th>
-      <th scope="col">Wynik</th>
+      <th scope="col">{% trans "Result" %}</th>
     </tr>
   </thead>
   <tbody>
@@ -27,7 +29,7 @@
       <td>{{forloop.counter}}</td>
       <td class="text-center">{{result.current_score}}</td>
       <td>{{perc}}</td>
-      <td>{% if result.passed %} Zaliczający {% else %} Niezaliczający {% endif %}</td>
+      <td>{% if result.passed %} {% trans "Passing" %} {% else %} {% trans "Failing" %} {% endif %}</td>
     </tr>
     {% endfor %}
   </tbody>

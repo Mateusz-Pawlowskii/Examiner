@@ -1,5 +1,6 @@
 {% autoescape off %}
-Witaj {{ user.username }},
-Otrzymaliśmy prośbe o zmiane hasła dla konta administratora dla twojej platformy e-learningowej.
-Aby nadać kontu nowe hasło prosze wejść w link: {{ protocol }}://{{ domain }}{% url 'exam:password-reset-confirm' uidb64=uid token=token %}
+{% load i18n %}
+{% trans "Hello" %} {{ user.username }},
+{% trans "We recieved password change request for platform admin account" %}"
+{% trans "In order to give new password to account use link" %}: {{ protocol }}://{{ domain }}{% url 'exam:password-reset-confirm' uidb64=uid token=token %}
 {% endautoescape %}

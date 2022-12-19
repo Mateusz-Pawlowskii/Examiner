@@ -1,14 +1,19 @@
 {% extends "student_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 {% if end_time %}
-<div class="text-right">
+<div class="text-right mr-5">
+  {% trans "Time remaining" %}
   <p id="timer">
     &nbsp
   </p>
 </div>
 {% endif %}
-<h4>Pytanie {{result.current_question}}</h4>
+<div class="text-center">
+  <h4>{% trans "Question nr." %} {{result.current_question}}</h4>
+</div>
 {{question.text}}
 <form method="POST">
   {% csrf_token %}
@@ -45,11 +50,11 @@
     {% endif %}
   </div>
   <br>
-  <button type="submit" class="btn btn-success mt-1 myButton">Wyślij odpowiedź</button>
+  <button type="submit" class="btn btn-success mt-1 myButton">{% trans "Send answer" %}</button>
 </form>
 <a href="{% url 'student:test-finish' pk=result.pk %}">
   <button hidden class="btn btn-success mt-1 myButton" id="timeout">
-    Zakończ test
+    {% trans "Finish exam" %}
   </button>
 </a>
 {% if end_time %}

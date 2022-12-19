@@ -1,25 +1,27 @@
 {% extends "examiner_base.html" %}
 
+{% load i18n %}
+
 {% block head %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 {% endblock %}
 
 {% block content %}
-<h4>Informacje o wynikach dla grupy <b>{{group.name}}</b></h4>
-<p>Nazwa kursu:<b> {{course.name}}</b></p>
+<h4>{% trans "Results information for group" %} <b>{{group.name}}</b></h4>
+<p>{% trans "Course name" %}:<b> {{course.name}}</b></p>
 {% if course.category != "" %}
-<p>Kategoria:<b> {{course.category}}</b></p>
+<p>{% trans "Category" %}:<b> {{course.category}}</b></p>
 {% endif %}
-<p>Nazwa grupy:<b> {{group.name}}</b></p>
+<p>{% trans "Group name" %}:<b> {{group.name}}</b></p>
 <a href="{% url 'platform_admin:group-report' course=course.pk group=group.pk slug=course.name|slugify %}">
-  <button class = "btn btn-success myButton">Raport</button>
+  <button class = "btn btn-success myButton">{% trans "Report" %}</button>
 </a>
-<h4>Statystyki</h4>
-Ilość uczniów z grupy którzy ukończyli kurs: <b>{{course_information.passed_students}}</b><br>
-Ilość uczniów z grupy którzy zakończyli test niepowodzeniem: <b>{{course_information.failed_students}}</b><br>
-Ilość uczniów z grupy którzy są w trakcie kursu: <b>{{course_information.current_students}}</b><br>
-Ilość pomyślnych podejść do testu w grupie: <b>{{course_information.passed_results}}</b><br>
-Ilość niepomyślnych podejść do testu w grupie: <b>{{course_information.failed_results}}</b><br><br>
+<h4>{% trans "Statistics" %}</h4>
+{% trans "Amount of students from the group that passed the course" %}: <b>{{course_information.passed_students}}</b><br>
+{% trans "Amount of students from the group that failed the course" %}: <b>{{course_information.failed_students}}</b><br>
+{% trans "Amount of students from the group that haven't finished the course yet" %}: <b>{{course_information.current_students}}</b><br>
+{% trans "Amount of passed exam attempts in the group" %}: <b>{{course_information.passed_results}}</b><br>
+{% trans "Amount of failed exam attempts in the group" %}: <b>{{course_information.failed_results}}</b><br><br>
 <div class="row">
   <div class="col-sm-3">    
     <canvas id="myChart1"></canvas>
@@ -29,20 +31,20 @@ Ilość niepomyślnych podejść do testu w grupie: <b>{{course_information.fail
   </div>
 </div>
 <hr>
-<p><b>Ilość studentów w grupie:</b> {{students|length}}</p>
+<p><b>{% trans "Total amount of students in the group" %}:</b> {{students|length}}</p>
 <a href="{% url 'examiner_user:course-results' pk=course.pk %}">
     <button class = "btn btn-success myButton">
-      Wróć
+      {% trans "Back" %}
     </button>
   </a>
-<p> Lista studentów</p>
+<p> {% trans "Student List" %}</p>
 <table class="table">
   <thead class="thead-dark">
     <tr>
       {% load static %}
       <th width="20%" scope="col" onclick="sortColumn('name',1)">Student <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
       <th width="20%" scope="col" onclick="sortColumn('status',2)">Status <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
-      <th scope="col" onclick="sortColumn('grade',3)">{% if grades %}Ocena{% else %}%{% endif %} <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('grade',3)">{% if grades %}{% trans "Grade" %}{% else %}%{% endif %} <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
       <th></th>
     </tr>
   </thead>
@@ -83,11 +85,11 @@ Ilość niepomyślnych podejść do testu w grupie: <b>{{course_information.fail
   const tableBody = document.getElementById("tbody");
   let dataHtml = ""
   for (let object of objectList) {
-    if (String(object.status) === "Zaliczony") {
+    if (String(object.status) === "{% trans 'Passed' %}") {
       dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td>
         {% if grades_list|length != 0 %}<td>${object.grade}</td>{% endif %}
         <td><a href="/student/diploma/{{course.pk}}/${object.pk}/{{course.name|slugify}}">
-        <button class = "btn btn-success">Dyplom</button></a></td></tr>`
+        <button class = "btn btn-success">{% trans 'Diploma' %}</button></a></td></tr>`
     }
     else {
       dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td>
@@ -130,7 +132,7 @@ Ilość niepomyślnych podejść do testu w grupie: <b>{{course_information.fail
 {% endfor %}
 {% for value in student_no %}
 <script>
-  student_no.push(Number("{{value}}"))
+  student_no.push(Math.round(Number("{{value}}")))
 </script>
 {% endfor %}
 <script>
@@ -168,7 +170,7 @@ const myChart2 = new Chart(ctx2, {
     data: {
         labels: student_list,
         datasets: [{
-            label: '% wyniku',
+            label: '{% trans "% score" %}',
             data: student_no,
             backgroundColor: [
                 'rgba(75, 192, 192, 0.2)',
@@ -184,16 +186,13 @@ const myChart2 = new Chart(ctx2, {
         }]
     },
     options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
+      scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  },
 });
 </script>
 <script src="{% static 'js/table_sorting.js' %}"></script>
-<script src="{% static 'js/course_search.js' %}"></script>
 {% endblock %}

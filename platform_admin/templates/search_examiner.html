@@ -1,5 +1,7 @@
 {% extends "platform_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 {% for m in messages %}
 <div class="alert alert-warning" role="alert">
@@ -9,11 +11,11 @@
 <br><br>
 <p class="text-center">
   <a href="{% url 'platform_admin:create-examiner' %}" class="btn btn-success my-2 my-lg-0 myButton">
-    Dodaj egzaminatora
+    {% trans "Create examiner" %}
   </a>
 </p>
 <br><br>
-<h4>Szukaj</h4>
+<h4>{% trans "Search" %}</h4>
 <div id="form1">
   {{ form.as_p }}
 </div>
@@ -21,9 +23,9 @@
   <thead class="thead-dark">
     <tr id="first_row">
       {% load static %}
-      <th id="th1" scope="col" onclick="sortColumn('name',1)">Nazwa użytkownika <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
-      <th id="th2" scope="col" onclick="sortColumn('login',2)">Ostatni login <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
-      <th id="th3" scope="col" onclick="sortColumn('join',3)">Data dołączenia <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
+      <th id="th1" scope="col" onclick="sortColumn('name',1)">{% trans "Username" %} <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th id="th2" scope="col" onclick="sortColumn('login',2)">{% trans "Last login" %} <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
+      <th id="th3" scope="col" onclick="sortColumn('join',3)">{% trans "Join date" %} <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
     </tr>
   </thead>
   <tbody id="tbody">
@@ -42,12 +44,11 @@
   tableBody.innerHTML = dataHtml;
 };
 </script>
-<script src="{% static 'js/month_translation.js' %}"></script>
 {% for examiner in object_list %}
 <script>
   objectList.push({"name" : "<a href='{% url 'platform_admin:edit-examiner' pk=examiner.pk slug=examiner.username|slugify %}''>{{examiner.username}}</a>", 
-    "login" : month_conv("{% if examiner.last_login == None %} Brak {% else %}{{examiner.last_login}}{% endif %}"),
-    "join" : month_conv("{{examiner.date_joined}}"), "sort_join" : new Date("{{examiner.date_joined.isoformat}}"),
+    "login" : "{% if examiner.last_login == None %} {% trans 'None' %} {% else %}{{examiner.last_login}}{% endif %}",
+    "join" : "{{examiner.date_joined}}", "sort_join" : new Date("{{examiner.date_joined.isoformat}}"),
     "sort_name" : "{{examiner.username}}", "sort_login" : 
     new Date("{% if examiner.last_login == None %} 08 October 2001 11:32 UTC {% else %}{{examiner.last_login.isoformat}}{% endif %}"),
       })

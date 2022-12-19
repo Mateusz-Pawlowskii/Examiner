@@ -1,45 +1,47 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 <h4>Stwórz nową platformę e-learningową i zarejestruj jej administratora</h4>
 <div class="form-group">
   <form method="POST" id="user_form">
     {% csrf_token %}
     <p>
-      <label for="id_username">Nazwa użytkownika: (Wymagane. 150 znaków lub mniej. Tylko litery, cyfry i @/./+/-/_)</label>
+      <label for="id_username">{% trans "Username: (Required. 150 characters or less. Only letters, numerals and @/./+/-/_)" %}</label>
       <input type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" class="form-control"
             autofocus required id="id_username">
       <span class="helptext"></span>
     </p>
     <p>
-      <label for="id_password1">Hasło:</label>
+      <label for="id_password1">{% trans "Password" %}:</label>
       <input type="password" name="password1" autocomplete="new-password" required id="id_password1" class="form-control">
       <span class="helptext">
         <ul>
-          <li>Hasło nie może być podobne do innych danych osobowych.</li>
-          <li>Hasło musi awierać przynajmniej 8 znaków</li>
-          <li>Hasło nie może być popularnie używanym hasłem</li>
-          <li>Hasło nie może się składać z samych cyfr</li>
+          <li>{% trans "Your password can’t be too similar to your other personal information." %}</li>
+          <li>{% trans "Your password must contain at least 8 characters." %}</li>
+          <li>{% trans "Your password can’t be a commonly used password." %}</li>
+          <li>{% trans "Your password can’t be entirely numeric." %}</li>
         </ul>
       </span>
     </p>
     <p>
-      <label for="id_password2">Potwierdzenie hasła: (Wprowadź ponownie te same hasło co poprzednio w celu weryfikacji)</label>
+      <label for="id_password2">{% trans "Password confirmation (enter the same password as before)" %}</label>
       <input type="password" name="password2" autocomplete="new-password" required id="id_password2" class="form-control">
       <span class="helptext"></span>
     </p>
     <p>
-        <label for="id_email">Email:</label>
+        <label for="id_email">{% trans "Mail adress" %}:</label>
         <input type="email" name="email" required id="id_email" class="form-control">
     </p>
     <p class="text-center">
-        <input class="btn btn-success myButton" type="submit" id="register" value="Zarejestruj">
+        <input class="btn btn-success myButton" type="submit" id="register" value="{% trans 'Register' %}">
     </p>
   </form>
 </div>
 <p class="text-center">
     <a href="{% url 'exam:homepage' %}" class="btn btn-success pl-4 pr-4 myButton" id="return">
-        Wróć
+        {% trans "Back" %}
     </a>
 </p>
 {% endblock %}

@@ -1,11 +1,22 @@
 {% extends "platform_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 {% load static %}
 {% for m in messages %}
 <div class="alert alert-warning" role="alert">
   {{ m }}
 </div>
+{% endfor %}
+{% get_available_languages as AVAILABLE_LANGUAGES %}
+{% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+{% for language in languages %}
+<a href="/{{language.code}}/">
+  <button class ="btn btn-success mb-1 myButton">
+    {{language.name_local|title}}
+  </button>
+</a>
 {% endfor %}
 <br>
 {% if platform.logo|length == 0 %}
@@ -16,23 +27,23 @@
   <br>
   <h1 class="text-center">{{platform.name}}</h1>
   <br>
-  <h2 class="text-center">O programie</h2>
+  <h2 class="text-center">{% trans "About Examiner" %}</h2>
   <br>
 <h4 class="text-center">
-  Jest to demonstracyjna wersja strony służąca do tworzenia i edytowania kursów z możliwością załączenia materiałów szkoleniowych.
-  Główną funkcjonalnością aplikacji jest możliwość tworzenia automatycznie sprawdzanych testów (wielokrotnego lub jednokrotnego wyboru)
-  powiązanych z utworzonymi szkoleniami.
+  {% blocktranslate %}This site allows creation and edition of courses and uploading course materials.
+  Main functionality of application is creation of automatically checked exams (multiple or single choice 
+  questions) assigned to courses. {% endblocktranslate %}
   <br>
-  Aplikacja umożliwia tworzenie i nadawanie haseł dla nowych kont egzaminatorów i studentów.
+  {% trans "Application allows creation of new student and examiner accounts" %}
 </h4>
 <br>
 <a href = "{% url 'platform_admin:platform-feedback' %}">
-  <button class="btn btn-success myButton">Udziel opinii</button>
+  <button class="btn btn-success myButton">{% trans "Share feedback" %}</button>
 </a>
 <br>
-Dane kontaktowe:
+{% trans "Contact info:" %}
 <br>
-Skrzynka mailowa: mm.pawlowski18@gmail.com
+{% trans "E-mail adress: mm.pawlowski18@gmail.com" %}
 <br>
-Numer telefonu: 506 960 518
+{% trans "Phone number: +48 506 960 518" %}
 {% endblock %}

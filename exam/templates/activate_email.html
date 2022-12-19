@@ -1,4 +1,5 @@
 {% autoescape off %}
-Witaj {{ user.username }},
-Prosimy o potwierdzenie rejestracji,http://{{ domain }}{% url 'exam:activate' pk=pk token=token %}
+{% load i18n %}
+{% trans "Hello" %} {{ user.username }},
+{% trans "Please, confirm your registration" %},http://{{ domain }}{% url 'exam:activate' pk=pk token=token %}
 {% endautoescape %}

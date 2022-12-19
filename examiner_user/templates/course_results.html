@@ -1,51 +1,54 @@
 {% extends "examiner_base.html" %}
 
+{% load i18n %}
+
 {% block head %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 {% endblock %}
 
 {% block content %}
-<h4>Informacje o kursie</h4>
-<p>Nazwa kursu:<b> {{course.name}}</b></p>
+<h4>{% trans "Course information" %}</h4>
+<p>{% trans "Course name" %}:<b> {{course.name}}</b></p>
 {% if course.category != "" %}
-<p>Kategoria:<b> {{course.category}}</b></p>
+<p>{% trans "Category" %}:<b> {{course.category}}</b></p>
 {% endif %}
 <table class="table">
   <tbody>
     <tr>
-      <td>Typ pytań:<b>{% if course.multiple_answer_questions == True %}</b>
-            wielokrotnego wyboru
+      <td>{% trans "Question type" %}:<b>{% if course.multiple_answer_questions == True %}</b>
+            {% trans "Multiple choice" %}
           {% elif course.multiple_answer_questions == False %}
-            jednokrotnego wyboru
+            {% trans "Single choice" %}
           {% else %}{% endif %}</td>
-      <td>Ilość podejść: <b>{{course.attempt_amount}}</b></td>
+      <td>{% trans "Attempt amount" %}: <b>{{course.attempt_amount}}</b></td>
     </tr>
     <tr>
-      <td>Czas trwania testu:<b>{% if course.time == 0 %}Nieograniczony{% else %} {{course.time}} minut{% endif %}</b></td>
-      <td>Całkowita ilość pytań:<b> {{questions|length}}</b></td>
+      <td>{% trans "Test duration" %}:<b>{% if course.time == 0 %}{% trans "Unlimited" %}{% else %}
+         {{course.time}} {% trans "minutes" %}{% endif %}</b></td>
+      <td>{% trans "Total question amount" %}:<b> {{questions|length}}</b></td>
     </tr>
     <tr>
-      <td>Ilość pytań podawana studentowi w czasie testu:<b> {{course.question_amount}}</b></td>
-      <td>Wymagan ilość poprawnych odpowiedzi:<b>{{course.passing_score}}</b></td>
+      <td>{% trans "Amount of questions given to student" %}:<b> {{course.question_amount}}</b></td>
+      <td>{% trans "Amount of correct answers required to pass the exam" %}:<b>{{course.passing_score}}</b></td>
     </tr>
     <tr>
-      <td>Ilość lekcji:<b> {{lessons|length}}</b></td>
-      <td>Ilość studentów zapisanych na kurs:<b> {{course_information.student_amount}}</b></td>
+      <td>{% trans "Lesson amount" %}:<b> {{lessons|length}}</b></td>
+      <td>{% trans "Amount of students assigned to course" %}:<b> {{course_information.student_amount}}</b></td>
     </tr>
   </tbody>
 </table>
 {% if course.test_ready %}
-  <p>Status testu:<b>Test gotowy</b></p>
+  <p>{% trans "Test status" %}:<b>{% trans "Exam ready" %}</b></p>
 {% else %}
-  <p>Status testu:<b>Test niegotowy</b></p>
+  <p>{% trans "Test status" %}:<b>{% trans "Exam not ready" %}</b></p>
 {% endif %}
 <hr>
-<h4>Statystyki</h4>
-Ilość uczniów którzy ukończyli kurs: <b>{{course_information.passed_students}}</b><br>
-Ilość uczniów którzy zakończyli test niepowodzeniem: <b>{{course_information.failed_students}}</b><br>
-Ilość uczniów którzy są w trakcie kursu: <b>{{course_information.current_students}}</b><br>
-Ilość pomyślnych podejść do testu: <b>{{course_information.passed_results}}</b><br>
-Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_results}}</b><br><br>
+<h4>{% trans "Statistics" %}</h4>
+{% trans "Amount of students that finished the course" %}: <b>{{course_information.passed_students}}</b><br>
+{% trans "Amount of students that failed the course" %}: <b>{{course_information.failed_students}}</b><br>
+{% trans "Amount of students that haven't finished the course yet" %}: <b>{{course_information.current_students}}</b><br>
+{% trans "Amount of passed exam attempts" %}: <b>{{course_information.passed_results}}</b><br>
+{% trans "Amount of failed exam attempts" %}: <b>{{course_information.failed_results}}</b><br><br>
 <hr>
 <div class="row">
   <div class="col-sm-3">    
@@ -56,29 +59,29 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
   </div>
 </div>
 <hr>
-<p><b>Ilość studentów zapisanych na kurs:</b> {{students|length}}</p>
-<p>Poszczególne grupy studenckie zapisane do kursu:</p>
+<p><b>{% trans "Amount of students assigned to course" %}:</b> {{students|length}}</p>
+<p>{% trans "Student groups assigned to course" %}:</p>
 {% for group in groups %}
 <p>
   <a href="{% url 'examiner_user:results-course-group' course=course.pk group=group.pk %}">{{group.name}}</a>
   <a href="{% url 'platform_admin:group-report' course=course.pk group=group.pk slug=course.name|slugify %}">
-    <button class = "btn btn-success small">Raport</button>
+    <button class = "btn btn-success small">{% trans "Report" %}</button>
   </a>
 </p>
 {% endfor %}
 <a href="{% url 'examiner_user:results' %}">
   <button class = "btn btn-success myButton">
-    Wróć
+    {% trans "Back" %}
   </button>
 </a>
-<p> Lista wszystkich studentów</p>
+<p> {% trans "List of all students" %}</p>
 <table class="table">
   <thead class="thead-dark">
     <tr>
       {% load static %}
       <th width="20%" scope="col" onclick="sortColumn('name',1)">Student <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
       <th width="20%" scope="col" onclick="sortColumn('status',2)">Status <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
-      <th scope="col" onclick="sortColumn('grade',3)">{% if grades %}Ocena{% else %}%{% endif %} <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('grade',3)">{% if grades %}{% trans "Grade" %}{% else %}%{% endif %} <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
       <th></th>
     </tr>
   </thead>
@@ -119,17 +122,17 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
     const tableBody = document.getElementById(`tbody`);
     let dataHtml = ""
     for (let object of objectList) {
-      if (String(object.status) === "Zaliczony") {
+      if (String(object.status) === "{% trans 'Passed' %}") {
         dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td>
           {% if grades_list|length != 0 %}<td>${object.grade}</td>{% endif %}
-          <td><a href="/student/diploma/{{course.pk}}/${object.pk}/{{course.name|slugify}}">
-          <button class = "btn btn-success">Dyplom</button></a></td></tr>`
+          <td><a href="/{{request.LANGUAGE_CODE}}/student/diploma/{{course.pk}}/${object.pk}/{{course.name|slugify}}">
+          <button class = "btn btn-success">{% trans "Diploma" %}</button></a></td></tr>`
       }
       else {
         dataHtml += `<tr><td>${object.name}</td><td>${object.status}</td>
           {% if grades_list|length != 0 %}<td>${object.grade}</td>{% endif %}</tr>`
       }
-      
+
     };
     tableBody.innerHTML = dataHtml;
   };
@@ -166,7 +169,7 @@ Ilość niepomyślnych podejść do testu: <b>{{course_information.failed_result
 {% endfor %}
 {% for value in student_no %}
 <script>
-  student_no.push(Number("{{value}}"))
+  student_no.push(Number("{{value}}"));
 </script>
 {% endfor %}
 <script>
@@ -204,7 +207,7 @@ const myChart2 = new Chart(ctx2, {
     data: {
         labels: student_list,
         datasets: [{
-            label: '% wyniku',
+            label: '{% trans "% score" %}',
             data: student_no,
             backgroundColor: [
                 'rgba(75, 192, 192, 0.2)',
@@ -231,5 +234,4 @@ const myChart2 = new Chart(ctx2, {
 });
 </script>
 <script src="{% static 'js/table_sorting.js' %}"></script>
-<script src="{% static 'js/course_search.js' %}"></script>
 {% endblock %}

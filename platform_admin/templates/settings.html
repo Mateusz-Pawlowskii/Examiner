@@ -1,5 +1,7 @@
 {% extends "platform_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 {% load static %}
 {% for m in messages %}
@@ -20,45 +22,45 @@
     <br>
     {{form.logo}}
     <br>
-    <button class="btn btn-success mt-3 myButton" type="submit" id="submit">Zapisz zmiany</button>
+    <button class="btn btn-success mt-3 myButton" type="submit" id="submit">{% trans "Save settings" %}</button>
 </form>
 <hr>
-<h3>Oceny</h3>
+<h3>{% trans "Grades" %}</h3>
 <p>
-  Istnieje opcja ustalania ocen przypisywanym studentom po ukończeniu kursu. Należy podać wyswietlaną nazwę oceny oraz minimalną
-  ilość procent zaliczonych pytań na egzaminie potrzebną do uzyskania danej oceny. Student otrzyma najwyżej punktowaną ocenę
-  która spełnia podane wymogi procentowe. Zaliczenie kursu nie zależy od uzyskanej oceny lecz od zaliczającej ilości poprawnych
-  odpowiedzi ustalanej dla kazdego kursu osobno. Celem ocen jest dokładniejszy opis pomyślnych zaliczeń.
+  {% blocktranslate %}There's a functionality that awards grades to students after exams.You should enter displayed grade name and
+  minimal percentage bar for achieving given grade. Student recieves highest grade that fulfils percentage bar requirements.
+  Passing course is independent of the grade as it's determined by passing amount of correct answers which is set separetely
+  for each course. The goal of grading system is more precise description of sucessfully passed exams.{% endblocktranslate %}
 </p>
 <p>
-  Istnieją też dwa gotowe systemy oceniania- szkolny (1,2,3,4,5,6) oraz akademicki (2,3,3.5,4,4.5,5) które można wykorzystać
-  klikając na odpowiedni przycisk.
+  {% blocktranslate %}There are two default grading systems- school (1,2,3,4,5,6) and academic (2,3,3.5,4,4.5,5) Which can be set
+  by pressing apropriate button.{% endblocktranslate %}
 </p>
 <form method="POST" action="{% url 'platform_admin:default-grades' grading_sys='school' %}">
   {% csrf_token %}
-  <button class="btn btn-success myButton" type="submit" id="submit">System szkolny</button>
+  <button class="btn btn-success myButton" type="submit" id="submit">{% trans "School system" %}</button>
 </form>
 <form method="POST" action="{% url 'platform_admin:default-grades' grading_sys='academic' %}">
   {% csrf_token %}
-  <button class="btn btn-success mt-1 myButton" type="submit" id="submit">System akademicki</button>
+  <button class="btn btn-success mt-1 myButton" type="submit" id="submit">{% trans "Academic system" %}</button>
 </form>
 <form method="POST" action="{% url 'platform_admin:change-grade' change='add' pk=0 %}">
   {% csrf_token %}
-  <label> Podaj nazwe oceny:</label><br>
+  <label> {% trans "Grade name:" %}</label><br>
   {{grade_form.name}}
-  <label for="id_bar">Podaj wymagany pułap procentowy:</label><br>
+  <label for="id_bar">{% trans "Required percentage bar:" %}</label><br>
   {{grade_form.bar}}%
   {{grade_form.platform.as_hidden}}
   <br>
-  <button class="btn btn-success mt-3 myButton" type="submit" id="submit">Dodaj ocenę</button>
+  <button class="btn btn-success mt-3 myButton" type="submit" id="submit">{% trans "Add grade" %}</button>
 </form>
-<p>Obecnie używane oceny:</p>
+<p>{% trans "Currently used grades:" %}</p>
 <table class="table">
   <thead class="thead-dark">
     <tr id="first_row">
       {% load static %}
-      <th id="th1" scope="col" width="20%">Nazwa</th>
-      <th id="th2" scope="col">Pułap</th>
+      <th id="th1" scope="col" width="20%">{% trans "Name" %}</th>
+      <th id="th2" scope="col">{% trans "Bar" %}</th>
       <th id="th3" scope="col"></th>
     </tr>
   </thead>
@@ -70,7 +72,7 @@
         <td>
           <form method="POST" action="{% url 'platform_admin:change-grade' change='delete' pk=grade.pk %}">
             {% csrf_token %}
-            <button class="btn btn-danger myButton" type="submit" id="submit">Usuń</button>
+            <button class="btn btn-danger myButton" type="submit" id="submit">{% trans "Delete" %}</button>
           </form>
         </td>
       </tr>

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 {% load static %}
 {% for m in messages %}
@@ -7,42 +9,53 @@
   {{ m }}
 </div>
 {% endfor %}
+{% get_available_languages as AVAILABLE_LANGUAGES %}
+{% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+{% for language in languages %}
+<a href="/{{language.code}}/">
+  <button class ="btn btn-success mb-1 myButton">
+    {{language.name_local|title}}
+  </button>
+</a>
+{% endfor %}
 <br>
 <div class="text-center">
   <img src="{% static 'img/logo3.png' %}" height="80" width="300"/>
 </div>
 <br>
-<h2 class="text-center">
-  O programie
-</h2>
-<br>
-<h3 class="text-center">
-  Witamy w aplikacji Examiner. Jest to prezentacyjna wersja strony służąca do tworzenia i edytowania kursów z możliwością załączenia materiałów
-  szkoleniowych. Główną funkcjonalnością aplikacji jest możliwość tworzenia automatycznie sprawdzanych testów (wielokrotnego lub jednokrotnego wyboru)
-  powiązanych z utworzonymi szkoleniami.<br> Aplikacja umożliwia tworzenie i nadawanie haseł dla nowych kont egzaminatorów i studentów.
-</h3>
-<br>
+<h2 class="text-center">{% trans "About Examiner" %}</h2>
+  <br>
+<h4 class="text-center">
+  {% blocktranslate %}Welcome to Examiner. This site allows creation and edition of courses and uploading course materials.
+  Main functionality of application is creation of automatically checked exams (multiple or single choice 
+  questions) assigned to courses. {% endblocktranslate %}
+  <br>
+  {% trans "Application allows creation of new student and examiner accounts" %}
+</h4>
 <p class="text-center">
   <a href="{% url 'exam:login' %}" class="btn btn-success pr-4 pl-4 my-2 my-lg-0 myButton" id="login">
-    Zaloguj się
+    {% trans "Sign in" %}
   </a>
 </p>
 <br>
 <p class="text-center">
   <a href="{% url 'exam:register' %}" class="btn btn-success my-2 my-lg-0 myButton" id="register">
-    Zarejestruj się
+    {% trans "Register" %}
   </a>
 </p>
 <p class="text-center">
-  Dane dla konta testowego
+  {% trans "Test account credentials" %}
   <br>
   Login:Test
   <br>
-  Hasło:JBfP64Zbk3mKBYAt
+  {% trans "Password" %}:JBfP64Zbk3mKBYAt
 </p>
-Dane kontaktowe:
 <br>
-Skrzynka mailowa: mm.pawlowski18@gmail.com
+</a>
 <br>
-Numer telefonu: 506 960 518
+{% trans "Contact info:" %}
+<br>
+{% trans "E-mail adress: mm.pawlowski18@gmail.com" %}
+<br>
+{% trans "Phone number: +48 506 960 518" %}
 {% endblock %}

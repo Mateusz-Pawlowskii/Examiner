@@ -1,24 +1,26 @@
 {% extends base %}
 
+{% load i18n %}
+
 {% block content %}
 <div class="text-center">
-<h3>Zgłoszenie uwag lub sugestii</h3>
+<h3>{% trans "Report suggestion or criticism" %}</h3>
 <br>
 <p>
-    Naszym celem jest rozwój i poprawa działania aplikacji Examiner. W tym celu zbieramy opinie, uwagi i skargi od użytkowników
-    strony które są dla nas cennym źródłem informacji. Jesteśmy wielce wdzięczni za czas i uwage poświeconą na wypełnienie
-    formulaża ewaluacyjnego. Jest on zupełnie anonimowy.
+    {% blocktranslate %}Our goal is continous development and improvment of Examiner app. For this puropuse we gather opinions, 
+    suggestions and criticisms from site users which are valuable source of information for us. We are very grateful
+    that you devote your time and attention to fill evaluation form. It's completely anonymous." {% endblocktranslate %}
 </p>
 <form method="POST">
     {% csrf_token %}
-    <label for="id_points">Na ile punktów oceniasz aplikacje Examiner w skali od 1 do 5?</label>
+    <label for="id_points">{% trans "How would you score Examiner aplication on a 1 to 5 scale?" %}</label>
     <br>
     {{form.points}}
     <br>
-    <label for="id_feedback">Uwagi słowne:</label>
+    <label for="id_feedback">{% trans "Feedback:" %}</label><br>
     {{form.feedback}}
     <br>
-    <input type="submit" value="Prześlij opinie" class="btn btn-success mt-2 myButton">
+    <input type="submit" value="{% trans 'Send opinion' %}" class="btn btn-success mt-2 myButton">
 </form>
 </div>
 {% endblock %}

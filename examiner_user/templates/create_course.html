@@ -1,17 +1,19 @@
 {% extends "examiner_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 {% for m in messages %}
 <div class="alert alert-warning" role="alert">
     {{ m }}
 </div>
 {% endfor %}
-<h4>Stwórz nowy kurs</h4>
+<h4>{% trans "Create new course" %}</h4>
 <div class="form-group">
     <form method="POST" action="">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="btn btn-success myButton" type="submit" id="submit">Utwórz</button>
+        <button class="btn btn-success myButton" type="submit" id="submit">{% trans "Create" %}</button>
     </form>
 </div>
 {% endblock %}

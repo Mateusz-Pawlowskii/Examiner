@@ -1,45 +1,43 @@
 {% extends "student_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 <h4><b>{{course.name}}</b></h4>
-<p>Kurs należy ukończyć do: <b id="date"></b></p>
+<p>{% trans "Course should be finished before" %}: <b id="date"></b></p>
 <br>
 <a href="{% url 'student:student-list-lesson' pk=course.pk slug=course.name|slugify %}">
   <button class="btn btn-success mt-1 myButton" id="view-lesson">
-    Przeglądaj lekcje
+    {% trans "View lessons" %}
   </button>
 </a>
 {% if course.test_ready and not passed and not term.1 %}
 <br>
 <a href="{% url 'student:student-attempt-exam' pk=course.pk slug=course.name|slugify %}" id="exam">
   <button class="btn btn-success mt-1 myButton" id="exam">
-    Podejdź do egzaminu
+    {% trans "Attempt exam" %}
   </button>
 </a>
 {% endif %}
 {% if term.1 and not passed %}
 <br>
 <button class="btn btn-danger mt-1 myButton" id="exam">
-  Termin upłynął
+  {% trans "Deadline expired" %}
 </button>
 {% endif %}
 {% if passed %}
 <br>
 <a href="{% url 'student:diploma' pk=course.pk student=student.pk slug=course.name|slugify %}">
   <button class="btn btn-success mt-1 myButton" id="back">
-    Pobierz Dyplom
+    {% trans "View diploma" %}
   </button>
 </a>
 {% endif %}
 <br>
 <a href="{% url 'student:student-search-course' %}">
     <button class="btn btn-success mt-1 myButton" id="back">
-      Wróć
+      {% trans "Back" %}
     </button>
   </a>
   {% load static %}
-  <script src="{% static 'js/month_translation.js' %}"></script>
-  <script>
-    document.getElementById("date").innerHTML = month_conv("{{term.0}}")
-  </script>
 {% endblock %}

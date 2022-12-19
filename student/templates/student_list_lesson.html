@@ -1,6 +1,9 @@
 {% extends "student_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
+<h3>{% trans "Lessons" %}</h3>
 {% for lesson in lessons %}
 <br>
 <a href="{% url 'examiner_user:view-lesson' pk=lesson.pk slug=lesson.topic|slugify %}">{{lesson.topic}}</a>

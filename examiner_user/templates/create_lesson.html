@@ -1,5 +1,7 @@
 {% extends "examiner_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 {% for m in messages %}
 <div class="alert alert-warning" role="alert">
@@ -9,14 +11,14 @@
 <div class="form-group">
 <form enctype="multipart/form-data" method="POST">
     {% csrf_token %}
-    <label for="title">Temat lekcji:</label>
+    <label for="title">{% trans "Lesson topic" %}:</label>
     {{ form.topic }}
     <br>
     {{ form.material }}
     {{ form.course.as_hidden }}
     <br>
-    <p>Prosimy o załączanie plików pdf jako lekcji</p>
-    <button class="btn btn-success mt-1 myButton" type="submit" id="submit">Dodaj</button>
+    <p>{% trans "Add pdf files as learning resources" %}</p>
+    <button class="btn btn-success mt-1 myButton" type="submit" id="submit">{% trans "Add" %}</button>
 </form>
 </div>
 {% endblock %}

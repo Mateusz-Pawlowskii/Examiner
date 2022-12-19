@@ -1,12 +1,14 @@
 {% extends "student_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
-<h4>Twoje wyniki</h4>
+<h4>{% trans "Your results" %}</h4>
 <form method="POST">
   <select id="select">
-    <option id="search1">Szukaj po nazwie</option>
-    <option id="search2">Szukaj po kategorii</option>
-    <option id="search3">Szukaj po statusie</option>
+    <option id="search1">{% trans "Search by name" %}</option>
+    <option id="search2">{% trans "Search by category" %}</option>
+    <option id="search3">{% trans "Search by status" %}</option>
   </select>
   {% csrf_token %}
   <div id="form1">
@@ -23,15 +25,15 @@
     {{ form2.as_p }}
   </div>
 </form>
-Wyniki:
+{% trans "Results" %}:
 <table class="table">
   <thead class="thead-dark">
     <tr>
       {% load static %}
-      <th scope="col" onclick="sortColumn('name',1)">Kurs <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
-      <th scope="col" onclick="sortColumn('category',2)">Kategoria <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('name',1)">{% trans "Course" %} <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('category',2)">{% trans "Category" %} <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
       <th scope="col" onclick="sortColumn('status',3)">Status <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
-      <th scope="col" onclick="sortColumn('grade', 4)">{% if grades %}Ocena{% else %}%{% endif %} <img id="img4" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('grade', 4)">{% if grades %}{% trans "Grade" %}{% else %}%{% endif %} <img id="img4" src="{% static 'img/sorting_button.png' %}"></th>
     </tr>
   </thead>
   <tbody id="tbody">

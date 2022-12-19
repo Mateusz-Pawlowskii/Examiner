@@ -1,23 +1,25 @@
 {% extends "examiner_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 {% for m in messages %}
 <div class="alert alert-warning" role="alert">
   {{ m }}
 </div>
 {% endfor %}
-<h4>Edytuj pytanie do kursu <b>{{course.name}}</b></h4>
-Aktualna ilość pytań: {{question_amount}}
+<h4>{% trans "Edit question from course" %} <b>{{course.name}}</b></h4>
+{% trans "Total question amount" %}: {{question_amount}}
 <form method="POST" action="">
   {% csrf_token %}
   <p>
-    Treść pytania:
+    {% trans "Question text" %}:
     <br>
     {{ form.text }}
   </p>
   <div id="id_correct_answers">
     <p>
-      <label for="id_answer1">Odpowiedź nr.1:</label>
+      <label for="id_answer1">{% trans "Answer" %} nr.1:</label>
       {% if '1' in question.correct_answers %}
       <input type="radio" name="correct_answers" checked value="1" checked required id="id_correct_answers_1">
       {% else %}
@@ -26,7 +28,7 @@ Aktualna ilość pytań: {{question_amount}}
       {{ form.answer1 }}
     </p>
     <p>
-      <label for="id_answer2">Odpowiedź nr.2:</label>
+      <label for="id_answer2">{% trans "Answer" %} nr.2:</label>
       {% if '2' in question.correct_answers %}
       <input type="radio" name="correct_answers" value="2" checked required id="id_correct_answers_2">
       {% else %}
@@ -35,7 +37,7 @@ Aktualna ilość pytań: {{question_amount}}
       {{ form.answer2 }}
     </p>
     <p>
-      <label for="id_answer3">Odpowiedź nr.3:</label>
+      <label for="id_answer3">{% trans "Answer" %} nr.3:</label>
       {% if '3' in question.correct_answers %}
       <input type="radio" name="correct_answers" value="3" checked required id="id_correct_answers_3">
       {% else %}
@@ -44,7 +46,7 @@ Aktualna ilość pytań: {{question_amount}}
       {{ form.answer3 }}
     </p>
     <p>
-      <label for="id_answer4">Odpowiedź nr.4:</label>
+      <label for="id_answer4">{% trans "Answer" %} nr.4:</label>
       {% if '4' in question.correct_answers %}
       <input type="radio" name="correct_answers" value="4" checked required id="id_correct_answers_4">
       {% else %}
@@ -53,7 +55,7 @@ Aktualna ilość pytań: {{question_amount}}
       {{ form.answer4 }}
     </p>
     <p>
-      <label for="id_answer5">Odpowiedź nr.5:</label>
+      <label for="id_answer5">{% trans "Answer" %} nr.5:</label>
       {% if '5' in question.correct_answers %}
       <input type="radio" name="correct_answers" value="5" checked required id="id_correct_answers_5">
       {% else %}
@@ -63,23 +65,23 @@ Aktualna ilość pytań: {{question_amount}}
     </p>
       {{ form.course.as_hidden }}
   </div>
-  <button class="btn btn-success myButton" type="submit" id="submit_change">Zmień</button>
+  <button class="btn btn-success myButton" type="submit" id="submit_change">{% trans "Change" %}</button>
 </form>
 <form method="POST" action="{% url 'examiner_user:delete-question' question=question.pk course=course.pk slug=course.name|slugify %}">
   {% csrf_token %}
-  <button class="btn btn-danger mt-1 myButton" type="submit" id="submit_delete">Usuń</button>
+  <button class="btn btn-danger mt-1 myButton" type="submit" id="submit_delete">{% trans "Delete" %}</button>
 </form>
 <a href="{% url 'examiner_user:search-question' pk=course.pk slug=course.name|slugify %}">
   <button class="btn btn-success mt-1 myButton" id="back">
-    Lista pytań
+    {% trans "Question list" %}
   </button>
 </a>
 <br>
 <p>
-    Intstrukcja:
+    {% trans "Instruction" %}:
     <br>
-    Pytanie musi posiadać od 2 do 5 odpowiedzi. Jeżeli pole tekstowe odpowiadające odpowiedźi zostanie pozostawione puste odpowiedź nie
-     będzieuwzględniona na teście. Należy zaznaczyć która odpowiedź jest prawidłowa poprzez zaznaczenie pola (lub pól w przypadku testów
-     wielokrotnego wyboru) znajdującego się przy polu tekstowym z odpowiedzią.
+    {% transblock %}Question should have 2 to 5 answers. If text field corresponding to the answer is left blank answer will
+    not be included in exam. Correct answer is marked by checking field (or fields in case of multiple answer questions) situated
+    next to text area with answer.{% endtransblock %}
 </p>
 {% endblock %}

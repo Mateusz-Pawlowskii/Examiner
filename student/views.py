@@ -8,6 +8,7 @@ import random
 import datetime
 from django.contrib import messages
 from fpdf import FPDF
+from django.utils.translation import gettext_lazy as _
 
 from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Term
 from exam.functions import get_courses_for_student, get_categories, get_timeover, get_grade_data, student_grades
@@ -127,7 +128,7 @@ class StudentPassExam(LoginRequiredMixin, View):
         # safety measure to prevent starting tests which have less questions prepered than questions for display or when there are
         # no questions to display
         if stated_question_amount > raw_question_amount or stated_question_amount == 0 or course.test_ready == False:
-            messages.error(request, "Kurs nie jest gotowy")
+            messages.error(request, _("Course isn't ready"))
             return redirect(reverse_lazy("student:student-attempt-exam", kwargs={"pk":course.pk}))
         student_results = Result.objects.filter(student = request.user, course=course)
         for result in student_results:
@@ -244,18 +245,19 @@ class TestDiploma(LoginRequiredMixin, View):
         else:
             pdf.image(f"media/logos/{platform.logo}",65,20,80,40)
         pdf.cell(0, 50, txt = "", ln = 1, align = 'C')
-        pdf.cell(0, 30, txt = "Dyplom", ln = 1, align = 'C')
+        pdf.cell(0, 30, txt = _("Diploma"), ln = 1, align = 'C')
         pdf.set_font('DejaVu', '', 17)
         pdf.cell(0, 20, txt = f"{user.username}", ln = 1, align = 'C')
-        pdf.cell(0, 15, txt = "ukończył kurs", ln = 1, align = 'C')
+        pdf.cell(0, 15, txt = _("finished course"), ln = 1, align = 'C')
         pdf.cell(0, 15, txt = f"{course.name}", ln = 1, align = 'C')
-        pdf.cell(0, 15, txt = "z wynikiem pozytywnym", ln = 1, align = 'C')
+        pdf.cell(0, 15, txt = _("with passing result"), ln = 1, align = 'C')
         perc = round((best_result.current_score/course.question_amount)*100)
-        pdf.cell(0, 15, txt = f"osiągnął wynik {perc}%", ln = 1, align = 'C')
-        pdf.cell(0, 15, txt = f"uzyskując {best_result.current_score} z {course.question_amount} punktów", ln = 1, align = 'C')
-        pdf.cell(0, 50, txt = "Gratulujemy i życzymy dlaszego powodzenia w nauce", ln = 1, align = 'C')
-        pdf.output(f"media/diploma/diploma.pdf")
-        return FileResponse(open(f"media/diploma/diploma.pdf", "rb"), content_type="application/pdf")
+        pdf.cell(0, 15, txt = _("achieving %(perc)s percent") % {"perc" : perc}, ln = 1, align = 'C')
+        pdf.cell(0, 15, txt = _("by getting %(result)s out of %(max_score)s points") % 
+        {"result" : best_result.current_score, "max_score" : course.question_amount}, ln = 1, align = 'C')
+        pdf.cell(0, 50, txt = _("Congratualtions, we wish further successes in studies"), ln = 1, align = 'C')
+        pdf.output("media/diploma/diploma.pdf")
+        return FileResponse(open("media/diploma/diploma.pdf", "rb"), content_type="application/pdf")
     
 # part about results starts here
 class StudentResultView(LoginRequiredMixin, View):

@@ -1,5 +1,6 @@
 {% autoescape off %}
-Typ użytkownika: {{side}}
-Ocena: {{points}}
-Opinia: {{feedback}}
+{% load i18n %}
+{% trans "User type:" %} {{side}}
+{% trans "Evaluation:" %} {{points}}
+{% trans "Opinion:" %} {{feedback}}
 {% endautoescape %}

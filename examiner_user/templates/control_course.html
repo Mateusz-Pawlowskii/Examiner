@@ -1,5 +1,7 @@
 {% extends "examiner_base.html" %}
 
+{% load i18n %}
+
 {% block head %}
 {% load static %}
 <!-- autocomplete function was provided by courtesy of W3Schools. I didn't write it myself. -->
@@ -13,79 +15,79 @@
   {{ m }}
 </div>
 {% endfor %}
-<h4>Edytuj kurs <b>{{object.name}}</b></h4>
+<h4>{% trans "Edit course" %} <b>{{object.name}}</b></h4>
 <div class="form-group">
   <form method="POST">
     {% csrf_token %}
-    <label for="name">Nazwa kursu:</label>
+    <label for="name">{% trans "Course name" %}:</label>
     {{course_form.name}}
     <br>
-    <label for="category">Kategoria kursu:</label>
+    <label for="category">{% trans "Course category" %}:</label>
     {{course_form.category}}
     <br>
-    <label for="attempt_amount">Ilość podejść:</label>
+    <label for="attempt_amount">{% trans "Attempt amount" %}:</label>
     <br>
     {{course_form.attempt_amount}}
     <br>
-    <label for="time"> Czas trwania testu:</label>
+    <label for="time"> {% "Exam duration" %}:</label>
     <br>
     {{course_form.time}}
     <br><br>
-    <label for="multiple_answer_questions">Typ pytań:</label>
+    <label for="multiple_answer_questions">{% trans "Question type" %}:</label>
     <br>
     {% if object.multiple_answer_questions == True %}
     <input type="radio" id="multiple_answer_questions" checked name="multiple_answer_questions" value="on">
-    Wielokrotnego wyboru
+    {% trans "Multiple choice" %}
     <br>
     <input type="radio" id="multiple_answer_questions" name="multiple_answer_questions" value="off">
-    Jednokrotnego wyboru
+    {% trans "Single choice" %}
     {% else %}
     <input type="radio" id="multiple_answer_questions" name="multiple_answer_questions" value="on">
-    Wielokrotnego wyboru
+    {% trans "Multiple choice" %}
     <br>
     <input type="radio" id="multiple_answer_questions" checked name="multiple_answer_questions" value="off">
-    Jednokrotnego wyboru
+    {% trans "Single choice" %}
     {% endif %}
     <br><br>
-    <label for="question_amount">Ilość pytań podawana studentowi:</label>
+    <label for="question_amount">{% trans "Amount of questions given to student" %}:</label>
     <br>
     {{course_form.question_amount}}
     <br>
-    <label for="passing_score">Ilość poprawnie udzielonych odpowiedzi wymaganych do zaliczenia testu:</label>
+    <label for="passing_score">{% trans "Amount of correct answers required to pass the exam" %}:</label>
     <br>
     {{course_form.passing_score}}<br>
     <div id="perc_score"></div>
-    <label for="test_ready">Test gotowy</label>
+    <label for="test_ready">{% trans "Exam ready" %}</label>
     {{course_form.test_ready}}
     <br>
-    <button class="btn btn-success mt-2 myButton" type="submit" id="submit">Zapisz zmiany</button>
+    <button class="btn btn-success mt-2 myButton" type="submit" id="submit">{% trans "Save changes" %}</button>
   </form>
 </div>
 <a href="{% url 'examiner_user:detail-course' pk=object.pk slug=object.name|slugify %}">
   <button class="btn btn-success mt-1 mb-5 myButton">
-    Wróć
+    {% trans "Back" %}
   </button>
 </a>
 <hr>
-<button type="button" class="btn btn-secondary dropdown-toggle tog myButton" id="lesson_nav">Lekcje</button>
+<button type="button" class="btn btn-secondary dropdown-toggle tog myButton" id="lesson_nav">{% trans "Lessons" %}</button>
 <div class="no-display">
-  <h4>Dodaj nową lekcje</h4>
-  <p>(załącz lekcje jako plik pdf)</p>
+  <h4>{% trans "Add new lesson" %}</h4>
+  <p>{% trans "(attach learning resource as pdf)" %}</p>
   <div class="form-group">
     <form enctype="multipart/form-data" method="POST" action="{% url 'examiner_user:create-lesson' pk=object.pk slug=object.name|slugify %}">
         {% csrf_token %}
-        <label for="title">Temat lekcji:</label>
+        <label for="title">{% trans "Lesson topic" %}:</label>
         {{ lesson_form.topic }}
         <br>
         {{ lesson_form.material }}
         {{ lesson_form.course.as_hidden }}
         <br>
-        <button class="btn btn-success mt-1 myButton" type="submit" id="submit">Dodaj lekcje</button>
+        <button class="btn btn-success mt-1 myButton" type="submit" id="submit">{% trans "Add lesson" %}</button>
     </form>
   </div>
-  <h4>Lista lekcji załączonych do kursu:</h4>
+  <h4>{% trans "Amount of lessons attached to course" %}:</h4>
   {% if not lesson_list %}
-  Brak lekcji
+  {% trans "No lessons" %}
   {% else %}
   <table class="table">
     <tbody>
@@ -100,7 +102,7 @@
             {% csrf_token %}
             <button type="button" class="btn btn-danger" id="submit" data-toggle="modal" data-target="#deleteModal{{forloop.counter}}">
               <div class="small">
-                Usuń lekcje
+                {% trans "Remove lesson" %}
               </div>
             </button>
         </td>
@@ -109,17 +111,17 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Usunięcie lekcji</h4>
+              <h4 class="modal-title">{% trans "Lesson deletion" %}</h4>
               <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-              Czy na pewno chcesz skasować lekcje {{lesson.topic}}? Tej decyzji nie da się cofnąć.
+              {% trans "Are you sure you want to delete lesson" %} {{lesson.topic}}? {% trans "This choice can't be reverted." %}"
             </div>
             <div class="modal-footer">
               <form method="POST" action="{% url 'examiner_user:detail-lesson' pk=lesson.pk slug=lesson.topic|slugify %}">
                 {% csrf_token %}
-              <button class="btn btn-danger" type="submit" id="submit">Usuń lekcje</button>
-              <button type="button" class="btn btn-info" data-dismiss="modal">Cofnij</button>
+              <button class="btn btn-danger" type="submit" id="submit">{% trans "Delete lesson" %}</button>
+              <button type="button" class="btn btn-info" data-dismiss="modal">{% trans "Cancel" %}</button>
             </form>
             </div>
       
@@ -132,23 +134,23 @@
   {% endif %}
 </div>
 <hr>
-<button typle="button" class="btn btn-secondary dropdown-toggle tog myButton" id="student_nav">Grupy Studenckie</button>
+<button typle="button" class="btn btn-secondary dropdown-toggle tog myButton" id="student_nav">{% trans "Student Groups" %}</button>
 <div class="no-display" id="no-display student">
-  <h4>Dodaj nową grupe studencką</h4> 
+  <h4>{% trans "Add new student group" %}</h4> 
   <div class="form-group" id="form-group student">
     <form autocomplete="off" method="POST" action="{% url 'examiner_user:attach-course-text' pk=object.pk slug=object.name|slugify %}" id="group_form">
       {% csrf_token %}
       <div class="autocomplete" style="width:300px;">
-        <label for="group_id">(wpisz nazwe grupy która ma zostać przypisana do kursu)</label>
+        <label for="group_id">{% trans "(enter name of group that will be assigned to the course)" %}</label>
         {{ group_form.group }}
       </div>
       <div style="width:300px;">
-        <label for="term_id">Data do której studenci z grupy mają ukończyć kurs:</label>
+        <label for="term_id">{% trans "Course deadline" %}:</label>
         {{ group_form.term }}
       </div>
       {{ group_form.course.as_hidden }}
       <br>
-      <button class="btn btn-success mt-3 myButton" type="submit" id="submit_student">Przypisz</button>
+      <button class="btn btn-success mt-3 myButton" type="submit" id="submit_student">{% trans "Assign" %}</button>
     </form>
   </div>
   <script>let groups=[];</script>
@@ -156,7 +158,7 @@
   <script>groups.push("{{group.name}}");</script>
   {% endfor %}
   <br>
-  <h4>Grupy przypisane do kursu <b>{{object.name}}</b></h4>
+  <h4>{% trans "Groups assigned to course" %} <b>{{object.name}}</b></h4>
   <table class="table">
     <tbody>
       {% for group in object.studentgroup_set.all %}
@@ -169,12 +171,12 @@
         </td>
         <td width="10%">
             <button class="btn btn-success small" type="button" data-toggle="modal" data-target="#changeModal{{forloop.counter}}">
-              Zmień date
+              {% trans "Change deadline" %}
             </button>
         </td>
         <td width="10%">
           <a href="{% url 'platform_admin:group-report' course=object.pk group=group.pk slug=course.name|slugify %}">
-            <button class = "btn btn-success small">Raport</button>
+            <button class = "btn btn-success small">{% trans "Report" %}</button>
           </a>
         </td>
         <td class="borderless" style="border:none;">
@@ -183,7 +185,7 @@
             <input type="hidden" value="{{group.pk}}" name="group">
             <button type="submit" class="btn btn-danger ml-2" id="{{group.username}}_delete">
               <div class="small">
-                Usuń
+                {% trans "Remove" %}
               </div>
             </button>
           </form>
@@ -193,20 +195,20 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Zmień termin ukończenia kursu</h4>
+              <h4 class="modal-title">{% trans "Change deadline" %}</h4>
               <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-              Zmiana terminu ukończenia kursu <b>{{course.name}}</b>
+              {% trans "Deadline change" %} <b>{{course.name}}</b>
               <br>
-              Można zastosować rózne formaty zapisu np.RRRR-MM-DD
+              {% trans "Many date formats are valid, for example: YYYY-MM-DD" %}
               <form method="POST" action="{% url 'examiner_user:course-change-term' pk=group.pk course=object.pk %}">
                 {% csrf_token %}
                 {{term_form.time}}
               </div>
             <div class="modal-footer">
-              <button class="btn btn-success" type="submit" id="submit">Zmień</button>
-              <button type="button" class="btn btn-info" data-dismiss="modal">Anuluj</button>
+              <button class="btn btn-success" type="submit" id="submit">{% trans "Change" %}</button>
+              <button type="button" class="btn btn-info" data-dismiss="modal">{% trans "Cancel" %}</button>
             </form>
             </div>
       
@@ -220,13 +222,13 @@
 <hr> 
 <a href="{% url 'examiner_user:create-question' pk=object.pk slug=object.name|slugify %}">
   <button class="btn btn-success myButton" id="add_question">
-    Dodaj Pytanie
+    {% trans "Add question" %}
   </button>
 </a>
 <br>
 <a href="{% url 'examiner_user:search-question' pk=object.pk slug=object.name|slugify %}">
   <button class="btn btn-success mt-1 mb-5 myButton" id="view_questions">
-    Zobacz pytania
+    {% trans "View questions" %}
   </button>
 </a>
 <script>

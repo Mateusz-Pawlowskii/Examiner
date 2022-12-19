@@ -1,5 +1,7 @@
 {% extends "examiner_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 {% for m in messages %}
 <div class="alert alert-warning" role="alert">
@@ -14,8 +16,8 @@
         {{ form.material }}
         {{ form.course.as_hidden }}
         <br>
-        <p>Prosimy o załączanie plików pdf jako lekcji</p>
-        <button class="btn btn-success mt-1 myButton" type="submit" id="submit">Zmień</button>
+        <p>{% trans "Add pdf files as learning resources" %}</p>
+        <button class="btn btn-success mt-1 myButton" type="submit" id="submit">{% trans "Change" %}</button>
     </form>
 </div>
 {% endblock %}

@@ -1,21 +1,23 @@
 {% extends "examiner_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 {% for m in messages %}
 <div class="alert alert-warning" role="alert">
   {{ m }}
 </div>
 {% endfor %}
-<h4>Lista kursów</h4>
+<h4>{% trans "Course list" %}</h4>
 <a href="{% url 'examiner_user:create-course' %}" id="add">
   <button class="btn btn-success mb-2 myButton">
-    Dodaj
+    {% trans "Create new" %}
   </button>
 </a>
-<h4>Szukaj kursów</h4>
+<h4>{% trans "Search for courses" %}</h4>
 <select id="select">
-  <option id="search1">Szukaj po nazwie</option>
-  <option id="search2">Szukaj po kategorii</option>
+  <option id="search1">{% trans "Search by name" %}</option>
+  <option id="search2">{% trans "Search by category" %}</option>
 </select>
   <div id="form1">
     {{ form.as_p }}
@@ -32,12 +34,12 @@
   <thead class="thead-dark">
     <tr id="tr">
       {% load static %}
-      <th scope="col" onclick="sortColumn('name',1)" class="text-center">Nazwa <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
-      <th scope="col" onclick="sortColumn('category',2)" class="text-center">Kategoria <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
-      <th scope="col" onclick="sortColumn('lesson_amount',3)" class="text-center">Ilość lekcji <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
-      <th scope="col" onclick="sortColumn('question_amount',4)" class="text-center">Ilość pytań <img id="img4" src="{% static 'img/sorting_button.png' %}"></th>
-      <th scope="col" onclick="sortColumn('time',5)" class="text-center">Czas trwania testu <img id="img5" src="{% static 'img/sorting_button.png' %}"></th>
-      <th scope="col" onclick="sortColumn('student_amount',6)" class="text-center">Ilośc zapisanych studentów <img id="img6" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('name',1)" class="text-center">{% trans "Name" %} <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('category',2)" class="text-center">{% trans "Category" %} <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('lesson_amount',3)" class="text-center">{% trans "Lesson amount" %} <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('question_amount',4)" class="text-center">{% trans "Question amount" %} <img id="img4" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('time',5)" class="text-center">{% trans "Test duration" %} <img id="img5" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('student_amount',6)" class="text-center">{% trans "Amount of assgined students" %} <img id="img6" src="{% static 'img/sorting_button.png' %}"></th>
     </tr>
   </thead>
   <tbody id="tbody">

@@ -1,7 +1,9 @@
 {% extends "examiner_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
-<h4>Pytania do kursu <b>{{ course.name }}</b></h4>
+<h4>{% trans "Questions for course" %} <b>{{ course.name }}</b></h4>
 <table class="table">
   <tbody>
     {% for question in questions %}
@@ -11,7 +13,7 @@
         <a href="{% url 'examiner_user:edit-question' pk=question.pk slug=course.name|slugify %}" id="{{forloop.counter}}">
           <button class="btn btn-success ml-2">
             <div class="small">
-              Edytuj
+              {% trans "Edit" %}
             </div>
           </button>
         </a>
@@ -23,12 +25,12 @@
 <br>
 <a href="{% url 'examiner_user:create-question' pk=course.pk slug=course.name|slugify %}">
   <button class="btn btn-success mt-5 myButton" id="add_question">
-    Dodaj Pytanie
+    {% trans "Add question" %}
   </button>
 </a>
 <a href="{% url 'examiner_user:edit-course' pk=course.pk slug=course.name|slugify %}">
   <button class="btn btn-success mt-5 myButton" type="submit" id="edit">
-    Wróc do edycji kursu
+    {% trans "Back to course editing" %}
   </button>
 </a>
 {% endblock %}

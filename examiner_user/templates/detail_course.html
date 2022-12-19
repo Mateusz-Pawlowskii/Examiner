@@ -1,64 +1,67 @@
 {% extends "examiner_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
-<h4>Informacje o kursie</h4>
-<p id="name">Nazwa kursu:<b> {{object.name}}</b></p>
+<h4>{% trans "Course information" %}</h4>
+<p id="name">{% trans "Course name" %}:<b> {{object.name}}</b></p>
 {% if object.category != "" %}
-<p id="category">Kategoria:<b> {{object.category}}</b></p>
+<p id="category">{% trans "Category" %}:<b> {{object.category}}</b></p>
 {% endif %}
 
 <table class="table">
   <tbody>
     <tr>
-      <td>Typ pytań:<b>{% if object.multiple_answer_questions == True %}
-          wielokrotnego wyboru
+      <td>{% trans "Question type" %}:<b>{% if object.multiple_answer_questions == True %}
+          {% trans "Multiple choice" %}
         {% elif object.multiple_answer_questions == False %}
-          jednokrotnego wyboru
+          {% trans "Single choice" %}
         {% else %}{% endif %}</b>
       </td>
       <td id="attempt_amount">
-        Ilość podejść: <b>{{object.attempt_amount}}</b>
+        {% trans "Attempt amount" %}: <b>{{object.attempt_amount}}</b>
       </td>
     </tr>
     <tr>
       <td id="time">
-        Czas trwania testu:<b>{% if object.time == 0 %}Nieograniczony{% else %} {{object.time}} minut{% endif %}</b>
+        {% trans "Exam duration" %}:<b>{% if object.time == 0 %}{% trans "Unlimited" %}{% else %}
+           {{object.time}} {% trans "minutes" %}{% endif %}</b>
       </td>
       <td>
-        Całkowita ilość pytań:<b> {{questions|length}}</b>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        Ilość pytań podawana studentowi w czasie testu:<b> {{object.question_amount}}</b>
-      </td>
-      <td>
-        Wymagan ilość poprawnych odpowiedzi:<b>{{object.passing_score}}</b>
+        {% "Total question amount" %}:<b> {{questions|length}}</b>
       </td>
     </tr>
     <tr>
       <td>
-        Ilość lekcji:<b> {{lessons|length}}</b>
+        {% trans "Amount of questions given to student" %}:<b> {{object.question_amount}}</b>
       </td>
       <td>
-        Ilość studentów zapisanych na kurs:<b> {{students|length}}</b>
+        {% trans "Amount of correct answers required to pass the exam" %}:<b>{{object.passing_score}}</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {% trans "Lesson amount" %}:<b> {{lessons|length}}</b>
+      </td>
+      <td>
+        {% tans "Amount of students assigned to course" %}:<b> {{students|length}}</b>
       </td>
     </tr>
   </tbody>
 </table>
 {% if object.test_ready %}
-    <p>Status testu:<b>Test gotowy</b></p>
+    <p>{% trans "Test status" %}:<b>{% trans "Exam ready" %}</b></p>
 {% else %}
-    <p>Status testu:<b>Test niegotowy</b></p>
+    <p>{% trans "Test status" %}:<b>{% trans "Exam not ready" %}</b></p>
 {% endif %}
 <a href="{% url 'examiner_user:edit-course' pk=object.pk slug=object.name|slugify %}">
   <button class="btn btn-success myButton" type="submit" id="edit">
-    Edytuj
+    {% trans "Edit" %}
   </button>
 </a>
 <a href="{% url 'examiner_user:search-course' %}">
   <button class="btn btn-success myButton">
-    Wróć
+    {% trans "Back" %}
   </button>
 </a>
 {% endblock %}

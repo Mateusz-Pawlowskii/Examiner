@@ -1,62 +1,64 @@
 {% extends "examiner_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 {% for m in messages %}
 <div class="alert alert-warning" role="alert">
   {{ m }}
 </div>
 {% endfor %}
-<h4>Stwórz nowe pytanie do kursu <b>{{course.name}}</b></h4>
+<h4>{% trans "Make new question for course" %} <b>{{course.name}}</b></h4>
 <br>
-Aktualna ilość pytań: {{question_amount}}
+{% trans "Current question amount" %}: {{question_amount}}
 <form method="POST" action="">
   {% csrf_token %}
   <p>
-    Treść pytania:
+    {% trans "Question text" %}:
     <br>
     {{ form.text }}
   </p>
   <div id="id_correct_answers">
     <p>
-      <label for="id_answer1">Odpowiedź nr.1:</label>
+      <label for="id_answer1">{% trans "Answer" %} nr.1 :</label>
       <input type="radio" name="correct_answers" value="1" required id="id_correct_answers_1">
       {{ form.answer1 }}
     </p>
     <p>
-      <label for="id_answer2">Odpowiedź nr.2:</label>
+      <label for="id_answer2">{% trans "Answer" %} nr.2:</label>
       <input type="radio" name="correct_answers" value="2" required id="id_correct_answers_2">
       {{ form.answer2 }}
     </p>
     <p>
-      <label for="id_answer3">Odpowiedź nr.3:</label>
+      <label for="id_answer3">{% trans "Answer" %} nr.3:</label>
       <input type="radio" name="correct_answers" value="3" required id="id_correct_answers_3">
       {{ form.answer3 }}
     </p>
     <p>
-      <label for="id_answer4">Odpowiedź nr.4:</label>
+      <label for="id_answer4">{% trans "Answer" %} nr.4:</label>
       <input type="radio" name="correct_answers" value="4" required id="id_correct_answers_4">
       {{ form.answer4 }}
     </p>
     <p>
-      <label for="id_answer5">Odpowiedź nr.5:</label>
+      <label for="id_answer5">{% trans "Answer" %} nr.5:</label>
       <input type="radio" name="correct_answers" value="5" required id="id_correct_answers_5">
       {{ form.answer5 }}
     </p>
     {{ form.course.as_hidden }}
   </div>
-  <button class="btn btn-success myButton" type="submit" id="submit">Dodaj</button>
+  <button class="btn btn-success myButton" type="submit" id="submit">{% trans "Add" %}</button>
 </form>
 <a href="{% url 'examiner_user:search-question' pk=course.pk slug=course.name|slugify %}">
   <button class="btn btn-success mt-1 myButton" id="back">
-    Lista pytań
+    {% trans "Question list" %}
   </button>
 </a>
 <br>
 <p>
-  Intstrukcja:
+  {% trans "Instructions" %}:
   <br>
-  Pytanie musi posiadać od 2 do 5 odpowiedzi. Jeżeli pole tekstowe odpowiadające odpowiedźi zostanie pozostawione puste odpowiedź nie
-   będzie uwzględniona na teście. Należy zaznaczyć która odpowiedź jest prawidłowa poprzez zaznaczenie pola (lub pól w przypadku testów
-   wielokrotnego wyboru) znajdującego się przy polu tekstowym z odpowiedzią.
+  {% blocktranslate %} Question should have 2 to 5 answers. If text field corresponding to the answer is left blank answer will
+  not be included in exam. Correct answer is marked by checking field (or fields in case of multiple answer questions) situated
+  next to text area with answer.{% endblocktranslate %}
 </p>
 {% endblock %}

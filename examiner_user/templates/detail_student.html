@@ -1,5 +1,7 @@
 {% extends "examiner_base.html" %}
 
+{% load i18n %}
+
 {% block head %}
 {% load static %}
 <!-- autocomplete function was provided by courtesy of W3Schools. I didn't write it myself. -->
@@ -13,20 +15,20 @@
   {{ m }}
 </div>
 {% endfor %}
-<h4>Profil studenta <b>{{student.username}}</b></h4>
+<h4>{% trans "Student profile" %} <b>{{student.username}}</b></h4>
 {% if groups|length == 1 %}
-<p>Należy do grupy:
+<p>{% trans "Belongs to group" %}:
 {% elif groups|length == 0 %}
-<p>Student nie został przypisany do żadnej grupy
+<p>{% trans "Student is not assigned to any group" %}
 {% else %}
-<p>Należy do grup:
+<p>{% trans "Belongs to groups" %}:
 {% endif %}
 {% for group in groups %}
 <br><a href="{% url 'examiner_user:examiner-edit-group' pk=group.pk slug=group.name|slugify %}">{{group.name}}</a>
 {% endfor %}
 </p>
-<h4>Przypisz grupe do studenta</h4> 
-<p>(wpisz nazwe grupy do której ma zostać przypisany student)</p>
+<h4>{% trans "Assign group to student" %}</h4> 
+<p>{% trans "(enter name of group to which the student will be assigned)" %}</p>
 <div class="form-group">
   <form autocomplete="off" method="POST">
     {% csrf_token %}
@@ -35,23 +37,23 @@
       </div>
       {{ form.student.as_hidden }}
       <br>
-      <button class="btn btn-success mt-3 myButton" type="submit" id="submit">Przypisz</button>
+      <button class="btn btn-success mt-3 myButton" type="submit" id="submit">{% trans "Assign" %}</button>
   </form>
   <a href="{% url 'examiner_user:students' %}">
     <button class="btn btn-success mt-3 myButton" id="back">
-      Wróć
+      {% trans "Back" %}
     </button>
   </a>
 </div>
-Kursy przypisane do studenta:
+{% trans "Courses assigned to student" %}:
 <br>
 <table class="table">
   <thead class="thead-dark">
     <tr>
       {% load static %}
-      <th scope="col" onclick="sortColumn('name',1)">Nazwa kursu <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('name',1)">{% trans "Course name" %} <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
       <th scope="col" onclick="sortColumn('status',2)">Status <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
-      <th scope="col" onclick="sortColumn('grade',3)">{% if grades %}Ocena{% else %}%{% endif %} <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="sortColumn('grade',3)">{% if grades %}{% trans "Grade" %}{% else %}%{% endif %} <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
     </tr>
   </thead>
   <tbody id="tbody">

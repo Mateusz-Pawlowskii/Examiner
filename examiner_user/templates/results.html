@@ -1,9 +1,11 @@
 {% extends "examiner_base.html" %}
 
+{% load i18n %}
+
 {% block content %}
-<h4>Wyniki</h4>
+<h4>{% trans "Results" %}</h4>
 {{ form.as_p }}
-<h4>Lista Kursów:</h4>
+<h4>{% trans "Course list" %}:</h4>
 <div id="courses">
 </div>
 <script>

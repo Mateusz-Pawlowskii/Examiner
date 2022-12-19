@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import View, TemplateView
 from .forms import CustomAuthenticationForm
+from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User, Group
@@ -10,9 +11,10 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import views as auth_views
+from django.utils.translation import gettext_lazy as _
 
 from .tokens import account_activation_token
-from .forms import PlatformForm, MyUserCreationForm, SetPasswordFormPL
+from .forms import PlatformForm, MyUserCreationForm
 from .models import Platform, Activity
 # Create your views here.
 class HomepageView(TemplateView):
@@ -57,7 +59,7 @@ class RegistraitionView(View):
 
     def send_registraition_mail(self, request, user, mail):
         current_site = get_current_site(request)
-        mail_subject = 'Aktywuj swoje konto na Examinerze'
+        mail_subject = _('Examiner account activation')
         message = render_to_string('activate_email.html', {
             'user': user,
             'domain': current_site.domain,
@@ -80,9 +82,9 @@ class RegistraitionView(View):
             self.add_to_platform_admin_group(user)
             mail = form.cleaned_data.get('email')
             self.send_registraition_mail(request, user, mail)
-            messages.info(request, "Email informacyjny został wysłany, prosimy sprawdzić skrzynkę pocztową")
+            messages.info(request, _("Registration mail was sent. Check your e-mail box"))
         else:
-            messages.error(request, "Niepoprawne dane, możliwe że nazwa użytkownika jest zajęta")
+            messages.error(request, _("Incorrect data, it might be that the username is already teaken"))
         return redirect(reverse_lazy("exam:homepage"))
 
 class ActivateView(View):
@@ -94,7 +96,7 @@ class ActivateView(View):
             login(request, user)
             return redirect(reverse_lazy("exam:home-redirect"))
         else:
-            messages.error(request, "Kod aktywacyjny jest niepoprawny")
+            messages.error(request, _("Activation code is incorrect"))
             return redirect(reverse_lazy("exam:homepage"))
 
 class PlatformCreate(View):
@@ -125,7 +127,7 @@ class ResetDone(auth_views.PasswordResetDoneView):
     template_name = "password_reset_sent.html"
 
 class ResetConfirm(auth_views.PasswordResetConfirmView):
-    form_class = SetPasswordFormPL
+    form_class = SetPasswordForm
     template_name = "password_reset_confirm.html"
     def get_success_url(self):
         return (reverse_lazy("exam:password-reset-complete"))

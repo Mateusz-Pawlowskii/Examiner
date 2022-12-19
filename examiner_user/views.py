@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.http import FileResponse
 from django.http import HttpResponseRedirect
 from operator import attrgetter
+from django.utils.translation import gettext_lazy as _
 
 from .forms import (CourseForm, QuestionForm, QuestionFormMultiple, LessonForm, AttachCourseToGroupForm, AttachStudentTextForm, 
                     LessonRenameForm, LessonEditForm, CourseEditForm, AttachStudentTextForm)
@@ -142,9 +143,9 @@ class CreateCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
             course = courses.last()
             platform.course_set.add(course)
             course.save()
-            messages.info(request, "Kurs został pomyślnie utworzony")
+            messages.info(request, _("Course sucessfully created"))
             return redirect(reverse_lazy("examiner_user:search-course"))
-        messages.error(request, "Nie udało się stworzyć kursu")
+        messages.error(request, _("Course creation failed"))
         return HttpResponseRedirect(self.request.path_info)
 
 class SearchCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -182,7 +183,7 @@ class DetailCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
                    "platform" : platform}
         if course in allowed_courses:
             return render(request, self.template_name, context)
-        messages.error(request, "Nie udało się odnaleźc kursu kursu")
+        messages.error(request, _("Course not found"))
         return redirect(reverse_lazy("examiner_user:search-course"))
 
 class ControlCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -198,7 +199,7 @@ class ControlCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
             term = Term.objects.filter(group=group,course=course).first()
             term_info.append(term)
             if get_timeover(group, course):
-                term_info.append("(Termin upłynął)")
+                term_info.append(_("(Deadline expired)"))
             else:
                 term_info.append(" ")
             terms.append(term_info)
@@ -208,7 +209,7 @@ class ControlCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
         if course not in Course.objects.filter(platform=platform):
-            messages.error(request, "Brak uprawnień")
+            messages.error(request, _("Lack of permission"))
             return redirect(reverse_lazy("examiner_user:search-course"))
         course_form = self.form_class(instance=course)
         lesson_list = Lesson.objects.filter(course=course)
@@ -235,7 +236,7 @@ class ControlCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
             form.save()
             return redirect(reverse_lazy("examiner_user:detail-course", kwargs={"pk":course.pk, "slug":self.kwargs["slug"]}))
         else:
-            messages.error(request, "Informacje dotyczące kursu zostały niepoprawnie wypełnione")
+            messages.error(request, _("Course data was filled incorrectly"))
             return HttpResponseRedirect(self.request.path_info)
 
 # part about questions starts here
@@ -275,7 +276,7 @@ class CreateQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
         if form.is_valid():
             form.save()
         else:
-            messages.error(request, "Poprawna odpowiedź została źle zaznaczona")
+            messages.error(request, _("Correct answer was incorrectly marked"))
         return HttpResponseRedirect(self.request.path_info)
 
 class SearchQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -333,7 +334,7 @@ class EditQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
         if form.is_valid():
             form.save()
         else:
-            messages.error(request, "Poprawna odpowiedź została źle zaznaczona")
+            messages.error(request, _("Correct answer was incorrectly marked"))
         return redirect(reverse_lazy("examiner_user:search-question", 
         kwargs={"pk":course_.pk, "slug":self.kwargs["slug"]}))
 
@@ -369,7 +370,7 @@ class CreateLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
             course_.lesson_amount += 1
             course_.save()
         else:
-            messages.error(request, "Niepoprawny plik")
+            messages.error(request, _("Wrong file"))
         return redirect(reverse_lazy("examiner_user:edit-course", kwargs={"pk":course_.pk, "slug":self.kwargs["slug"]}))
 
 class DetailLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -432,14 +433,14 @@ class EditLessonContent(LoginRequiredMixin, PermissionRequiredMixin, View):
         try:
             file = request.FILES["material"]
         except:
-            messages.error(request, "Należy podać nowy maretiał przy zmianie materiału")
+            messages.error(request, _("New resource should be given during learning resource change"))
             return redirect(reverse_lazy("examiner_user:detail-lesson", kwargs={"pk":self.kwargs["pk"]}))
         if self.allowed_file(file.name):
             if form.is_valid():
                 lesson.material.delete(lesson.material.name)
                 form.save()
         else:
-            messages.error(request, "Niepoprawne rozszerzenie pliku")
+            messages.error(request, _("Wrong file extension"))
         return redirect(reverse_lazy("examiner_user:detail-lesson", kwargs={"pk":self.kwargs["pk"]}))
 
 class EditLessonTopic(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -463,7 +464,7 @@ class EditLessonTopic(LoginRequiredMixin, PermissionRequiredMixin, View):
         if form.is_valid():
                 form.save()
         else:
-            messages.error(request, "Niepoprawna nazwa tematu lekcji")
+            messages.error(request, _("Incorrect lesson topic"))
         return redirect(reverse_lazy("examiner_user:detail-lesson", kwargs={"pk":self.kwargs["pk"]}))
 
 # Result views
@@ -514,7 +515,7 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         context["student_no"] = student_no
         context["pass_no"] = [passed_no, failed_no, not_yet_mark_no]
         context["course_information"] = course_information
-        context["pass_list"] = [ "Zaliczony", "Niezaliczony", "Jeszcze nie ukończony"]
+        context["pass_list"] = [ _("Passed"), _("Failed"), _("Unfinished")]
         context["test_marks"] = test_marks
         context["grades_list"] = grades_list
         return context
@@ -543,9 +544,9 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
                 students.append((student.pk,student.username, get_maximum_result(student, course),
                 course_information["student_amount"]))
                 course_information["student_amount"] += 1
-                if test_mark([course], student)[0] == "Zaliczony":
+                if test_mark([course], student)[0] == _("Passed"):
                     course_information["passed_students"] += 1
-                elif test_mark([course], student)[0] == "Niezaliczony":
+                elif test_mark([course], student)[0] == _("Failed"):
                     course_information["failed_students"] += 1
                 else:
                     course_information["current_students"] += 1
@@ -558,12 +559,12 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
             results = Result.objects.filter(course=course, student=User.objects.get(pk=student[0]))
             if results:
                 result = max(results, key=attrgetter("current_score"))
-                student_no.append(100 * result.current_score/course.question_amount)
+                student_no.append(round(100 * result.current_score/course.question_amount))
                 student_list.append(student[1])
         course_information = get_result_data(course_information, course)
-        passed_no = test_marks.count("Zaliczony")
-        failed_no = test_marks.count("Niezaliczony")
-        not_yet_mark_no = test_marks.count("Jeszcze nie ukończony")
+        passed_no = test_marks.count(_("Passed"))
+        failed_no = test_marks.count(_("Failed"))
+        not_yet_mark_no = test_marks.count(_("Unfinished"))
         # Part for graphs ends here
         context = self.update_context(context, student_list, student_no, passed_no, failed_no,
                                       not_yet_mark_no, course_information, test_marks, grades_list)
@@ -585,9 +586,9 @@ class CourseGroupResults(LoginRequiredMixin, PermissionRequiredMixin, View):
                    "platform" : platform}
         course_information = initialize_course_information(course)
         for student in User.objects.filter(studentgroup=group):
-            if test_mark([course], student)[0] == "Zaliczony":
+            if test_mark([course], student)[0] == _("Passed"):
                 course_information["passed_students"] += 1
-            elif test_mark([course], student)[0] == "Niezaliczony":
+            elif test_mark([course], student)[0] == _("Failed"):
                 course_information["failed_students"] += 1
             else:
                 course_information["current_students"] += 1
@@ -597,10 +598,10 @@ class CourseGroupResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         test_marks = course_mark(course, students, timeover)
         grades_list = course_grades(course, students)
         # Part for graphs starts here
-        passed_no = test_marks.count("Zaliczony")
-        failed_no = test_marks.count("Niezaliczony")
-        not_yet_mark_no = test_marks.count("Jeszcze nie ukończony")
-        context["pass_list"] = [ "Zaliczony", "Niezaliczony", "Jeszcze nie ukończony"]
+        passed_no = test_marks.count(_("Passed"))
+        failed_no = test_marks.count(_("Failed"))
+        not_yet_mark_no = test_marks.count(_("Unfinished"))
+        context["pass_list"] = [ _("Passed"), _("Failed"), _("Unfinished")]
         context["pass_no"] = [passed_no, failed_no, not_yet_mark_no]
         student_list = []
         student_no = []
@@ -609,7 +610,7 @@ class CourseGroupResults(LoginRequiredMixin, PermissionRequiredMixin, View):
             results = Result.objects.filter(course=course, student=student)
             if results:
                 result = max(results, key=attrgetter("current_score"))
-                student_no.append(100 * result.current_score/course.question_amount)
+                student_no.append(round(100 * result.current_score/course.question_amount))
                 student_list.append(student.username)
         # Part for graphs ends here
         context["student_list"] = student_list
@@ -654,14 +655,14 @@ class ExaminerChangeTermCourse(ChangeTerm):
 # does not clean the database after selenium-created views so I needed a seprate view for tearDown
 class Clean_up(View):
     def get(self, request, *args, **kwargs):
-        while Course.objects.filter(name="Niezaliczony").first():
-            Course.objects.filter(name="Niezaliczony").first().delete()
-        while Course.objects.filter(name="Brak czasu").first():
-            Course.objects.filter(name="Brak czasu").first().delete()
-        while Course.objects.filter(name="Testowa nazwa kursu").first():
-            Course.objects.filter(name="Testowa nazwa kursu").first().delete()
-        if Course.objects.filter(name="Edytowana nazwa kursu").first():
-            Course.objects.filter(name="Edytowana nazwa kursu").first().delete()
-        if User.objects.filter(username="testowyStudent").first():
-            User.objects.filter(username="testowyStudent").first().delete()
+        while Course.objects.filter(name="Failed").first():
+            Course.objects.filter(name="Failed").first().delete()
+        while Course.objects.filter(name="Out of time").first():
+            Course.objects.filter(name="Out of time").first().delete()
+        while Course.objects.filter(name="Test course name").first():
+            Course.objects.filter(name="Test course name").first().delete()
+        if Course.objects.filter(name="Edited course name").first():
+            Course.objects.filter(name="Edited course name").first().delete()
+        if User.objects.filter(username="testStudent").first():
+            User.objects.filter(username="testStudent").first().delete()
         return redirect(reverse_lazy("exam:home-redirect"))

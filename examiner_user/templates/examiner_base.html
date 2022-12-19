@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,55 +23,55 @@
           <img class="side_logo" src="/media/logos/{{platform.logo}}"/>
           {% endif %}
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>&nbsp</span>
-          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span id="current_username">Egzaminator: <b>{{request.user.username}}</b></span>
+          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span id="current_username">{% trans "Examiner" %}: <b>{{request.user.username}}</b></span>
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>&nbsp</span>
           {% if nav_var == "homepage" %}
           <a href="{% url 'exam:home-redirect' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true" id="homepage">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Strona Domowa</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Homepage" %}</span>
           </a>
           {% else %}
           <a href="{% url 'exam:home-redirect' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="homepage">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Strona Domowa</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Homepage" %}</span>
           </a>
           {% endif %}
           {% if nav_var == "search_course" %}
           <a href="{% url 'examiner_user:search-course' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true" id="nav_courses">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Kursy</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Courses" %}</span>
           </a>
           {% else %}
           <a href="{% url 'examiner_user:search-course' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="nav_courses">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Kursy</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Courses" %}</span>
           </a>
           {% endif %}
           {% if nav_var == "users" %}
           <a href="{% url 'examiner_user:students' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true" id="users">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Użytkownicy</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Students" %}</span>
           </a>
           {% else %}
           <a href="{% url 'examiner_user:students' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="users">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Użytkownicy</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Students" %}</span>
           </a>
           {% endif %}
           {% if nav_var == "student_group" %}
           <a href="{% url 'examiner_user:student-group' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true" id="users">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Grupy studentów</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Student groups" %}</span>
           </a>
           {% else %}
           <a href="{% url 'examiner_user:student-group' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="users">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Grupy studentów</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Student groups" %}</span>
           </a>
           {% endif %}
           {% if nav_var == "results" %}
           <a href="{% url 'examiner_user:results' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true", id="results">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Wyniki</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Results" %}</span>
           </a>
           {% else %}
           <a href="{% url 'examiner_user:results' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="results">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Wyniki</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Results" %}</span>
           </a>
           {% endif %}
           <a href="{% url 'exam:logout' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true", id="logout">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Wyloguj się</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Logout" %}</span>
           </a>
         </div>
       </div>

@@ -1,0 +1,1736 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-19 15:41+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\Examiner\settings.py:130
+msgid "English"
+msgstr ""
+
+#: .\Examiner\settings.py:131
+msgid "Polish"
+msgstr "Polski"
+
+#: .\exam\forms.py:13 .\exam\templates\homepage.html:51
+#: .\exam\templates\login.html:23 .\exam\templates\registration.html:17
+msgid "Password"
+msgstr "Hasło"
+
+#: .\exam\functions.py:23 .\exam\functions.py:32 .\exam\functions.py:43
+#: .\exam\functions.py:52 .\examiner_user\views.py:518
+#: .\examiner_user\views.py:549 .\examiner_user\views.py:566
+#: .\examiner_user\views.py:591 .\examiner_user\views.py:602
+#: .\examiner_user\views.py:604 .\student\forms.py:10
+msgid "Failed"
+msgstr "Niezaliczony"
+
+#: .\exam\functions.py:26 .\exam\functions.py:34 .\exam\functions.py:46
+#: .\exam\functions.py:54 .\examiner_user\views.py:518
+#: .\examiner_user\views.py:567 .\examiner_user\views.py:603
+#: .\examiner_user\views.py:604 .\student\forms.py:12
+msgid "Unfinished"
+msgstr "Jeszcze nie ukończony"
+
+#: .\exam\functions.py:30 .\exam\functions.py:50
+#: .\examiner_user\templates\course_group_results.html:88
+#: .\examiner_user\templates\course_results.html:125
+#: .\examiner_user\views.py:518 .\examiner_user\views.py:547
+#: .\examiner_user\views.py:565 .\examiner_user\views.py:589
+#: .\examiner_user\views.py:601 .\examiner_user\views.py:604
+#: .\student\forms.py:11
+msgid "Passed"
+msgstr "Zaliczony"
+
+#: .\exam\functions.py:65 .\exam\functions.py:78 .\exam\functions.py:89
+#: .\exam\functions.py:102 .\examiner_user\templates\students.html:44
+#: .\platform_admin\templates\edit_student_group.html:207
+#: .\platform_admin\templates\search_examiner.html:50
+#: .\platform_admin\templates\search_student.html:50
+msgid "None"
+msgstr "Brak"
+
+#: .\exam\templates\activate_email.html:3 .\exam\templates\reset_mail.html:3
+msgid "Hello"
+msgstr "Witaj"
+
+#: .\exam\templates\activate_email.html:4
+msgid "Please, confirm your registration"
+msgstr "Prosimy o potwierdzenie rejestracji"
+
+#: .\exam\templates\create_platform.html:7
+msgid "Name your e-learning platform"
+msgstr "Nazwij swoja platformę e-learningową"
+
+#: .\exam\templates\create_platform.html:12
+msgid "Create platform"
+msgstr "Stwórz platforme"
+
+#: .\exam\templates\homepage.html:26
+#: .\examiner_user\templates\examiner_homepage.html:30
+#: .\platform_admin\templates\platform_homepage.html:30
+#: .\student\templates\student_homepage.html:30
+msgid "About Examiner"
+msgstr "O programie"
+
+#: .\exam\templates\homepage.html:29
+msgid ""
+"Welcome to Examiner. This site allows creation and edition of courses and "
+"uploading course materials.\n"
+"  Main functionality of application is creation of automatically checked "
+"exams (multiple or single choice \n"
+"  questions) assigned to courses. "
+msgstr ""
+"Witamy w aplikacji Examiner, umożliwia ona tworzenie i edycje kursów oraz "
+"zamieszczanie materiałów lekcyjnych.\n"
+"Główną funkcjonalnością aplikacji jest tworzenie automatycznie sprawdzanych "
+"testów (pytania jednokrotnego lub \n"
+"wielokrotnego wyboru) przydzielonych do kursów"
+
+#: .\exam\templates\homepage.html:33
+#: .\examiner_user\templates\examiner_homepage.html:36
+#: .\platform_admin\templates\platform_homepage.html:37
+#: .\student\templates\student_homepage.html:37
+msgid "Application allows creation of new student and examiner accounts"
+msgstr "Aplikacja pozwala na stworzenie kont studentów i egzaminatorów"
+
+#: .\exam\templates\homepage.html:37 .\exam\templates\login.html:26
+#: .\exam\templates\password_reset_complete.html:15
+msgid "Sign in"
+msgstr "Zaloguj się"
+
+#: .\exam\templates\homepage.html:43 .\exam\templates\registration.html:38
+msgid "Register"
+msgstr "Zarejestruj się"
+
+#: .\exam\templates\homepage.html:47
+msgid "Test account credentials"
+msgstr "Dane do konta testowego"
+
+#: .\exam\templates\homepage.html:56
+#: .\examiner_user\templates\examiner_homepage.html:43
+#: .\platform_admin\templates\platform_homepage.html:44
+#: .\student\templates\student_homepage.html:44
+msgid "Contact info:"
+msgstr "Dane kontaktowe:"
+
+#: .\exam\templates\homepage.html:58
+#: .\examiner_user\templates\examiner_homepage.html:45
+#: .\platform_admin\templates\platform_homepage.html:46
+#: .\student\templates\student_homepage.html:46
+msgid "E-mail adress: mm.pawlowski18@gmail.com"
+msgstr "Adres mailowy: mm.pawlowski18@gmail.com"
+
+#: .\exam\templates\homepage.html:60
+#: .\examiner_user\templates\examiner_homepage.html:47
+#: .\platform_admin\templates\platform_homepage.html:48
+#: .\student\templates\student_homepage.html:48
+msgid "Phone number: +48 506 960 518"
+msgstr "Numer telefonu: 506 960 518"
+
+#: .\exam\templates\login.html:8
+msgid "Enter your login credentials below. It's case sensitive"
+msgstr "Prosze podać informacje do logowania. Wielkosc liter ma znaczenie."
+
+#: .\exam\templates\login.html:19 .\examiner_user\templates\students.html:20
+#: .\platform_admin\templates\edit_student_group.html:52
+#: .\platform_admin\templates\search_examiner.html:26
+#: .\platform_admin\templates\search_student.html:26
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+#: .\exam\templates\login.html:29 .\exam\templates\password_reset.html:24
+#: .\exam\templates\registration.html:44
+#: .\examiner_user\templates\control_course.html:68
+#: .\examiner_user\templates\course_group_results.html:37
+#: .\examiner_user\templates\course_results.html:74
+#: .\examiner_user\templates\detail_course.html:64
+#: .\examiner_user\templates\detail_lesson.html:47
+#: .\examiner_user\templates\detail_student.html:44
+#: .\platform_admin\templates\edit_examiner.html:41
+#: .\platform_admin\templates\edit_student.html:61
+#: .\platform_admin\templates\edit_student_group.html:155
+#: .\platform_admin\templates\platform_detail_course.html:84
+#: .\student\templates\student_detail_course.html:39
+#: .\student\templates\student_result_view.html:9
+msgid "Back"
+msgstr "Wróć"
+
+#: .\exam\templates\login.html:34
+msgid "You are platform admin and forgot your password?"
+msgstr "Jesteś administratorem platformy i zapomniałeś hasła?"
+
+#: .\exam\templates\password_reset.html:8
+#: .\exam\templates\password_reset_confirm.html:8
+msgid "Password recovery"
+msgstr "Odzyskiwanie hasła"
+
+#: .\exam\templates\password_reset.html:11
+msgid ""
+"If you own e-learning platform and forgot your password you can change it by "
+"entering email adress\n"
+"    given during registration. Message containing activation link will be "
+"sent to that adress. It will allow you to choose\n"
+"    new password for admin account. If you are student or examiner then you "
+"have to contact your platform admin in order to\n"
+"    get new password."
+msgstr ""
+"Jeśli jesteś właścicielem platformy e-learningowej i zapomniałeś swojego "
+"hasła możesz je zmienić poprzez wpisanieadresu e-mail na którego platforma "
+"została założona. Na podany adres zostanie wysłana wiadomośc zawierająca "
+"linkaktywacyjny. Umożliwia on wybranie nowego hasła dla konta "
+"administracyjnego. Jeśli jesteś studentem lub egzaminatoremkorzystającym z "
+"platformy musisz skontaktować się ze założycielem swojej platformy w celu "
+"nadania nowego hasła."
+
+#: .\exam\templates\password_reset_complete.html:8
+#: .\platform_admin\views.py:126
+msgid "Password sucessfully changed"
+msgstr "Hasło pomyślnie zmienione"
+
+#: .\exam\templates\password_reset_complete.html:11
+msgid "Password have been sucessfully updated and now you can sign in."
+msgstr "Hasło zostało pomyślnie zmienione, można się teraz zalogować."
+
+#: .\exam\templates\password_reset_confirm.html:12
+#: .\platform_admin\templates\edit_examiner.html:16
+#: .\platform_admin\templates\edit_student.html:23
+msgid "New password"
+msgstr "Nowe hasło"
+
+#: .\exam\templates\password_reset_confirm.html:17
+#: .\exam\templates\registration.html:21
+#: .\platform_admin\templates\create_examiner.html:21
+#: .\platform_admin\templates\create_student.html:25
+#: .\platform_admin\templates\edit_examiner.html:25
+#: .\platform_admin\templates\edit_student.html:32
+msgid "Your password can’t be too similar to your other personal information."
+msgstr "Hasło nie może przypominać innych danych osobowych"
+
+#: .\exam\templates\password_reset_confirm.html:18
+#: .\exam\templates\registration.html:22
+#: .\platform_admin\templates\create_examiner.html:22
+#: .\platform_admin\templates\create_student.html:26
+#: .\platform_admin\templates\edit_examiner.html:26
+#: .\platform_admin\templates\edit_student.html:33
+msgid "Your password must contain at least 8 characters."
+msgstr "Twoje hasło musi miec co najmniej 8 liter"
+
+#: .\exam\templates\password_reset_confirm.html:19
+#: .\exam\templates\registration.html:23
+#: .\platform_admin\templates\create_examiner.html:23
+#: .\platform_admin\templates\create_student.html:27
+#: .\platform_admin\templates\edit_examiner.html:27
+#: .\platform_admin\templates\edit_student.html:34
+msgid "Your password can’t be a commonly used password."
+msgstr "Twoje hasło nie może być powszechnie używanym hasłem."
+
+#: .\exam\templates\password_reset_confirm.html:20
+#: .\exam\templates\registration.html:24
+#: .\platform_admin\templates\create_examiner.html:24
+#: .\platform_admin\templates\create_student.html:28
+#: .\platform_admin\templates\edit_examiner.html:28
+#: .\platform_admin\templates\edit_student.html:35
+msgid "Your password can’t be entirely numeric."
+msgstr "Twoje hasło nie może składać się tylko z cyfr."
+
+#: .\exam\templates\password_reset_confirm.html:24
+#: .\exam\templates\registration.html:29
+#: .\platform_admin\templates\create_examiner.html:29
+#: .\platform_admin\templates\create_student.html:33
+#: .\platform_admin\templates\edit_examiner.html:33
+#: .\platform_admin\templates\edit_student.html:40
+msgid "Password confirmation (enter the same password as before)"
+msgstr "Wprowadź to samo hasło ponownie, dla weryfikacji."
+
+#: .\exam\templates\password_reset_confirm.html:27
+#: .\platform_admin\templates\edit_examiner.html:35
+#: .\platform_admin\templates\edit_student.html:42
+msgid "Change password"
+msgstr "Zmień hasło"
+
+#: .\exam\templates\password_reset_sent.html:8
+msgid "Mail was sent"
+msgstr "E-mail został wysłany"
+
+#: .\exam\templates\password_reset_sent.html:11
+msgid ""
+"If given mail adress corresponds to one in our database then we already sent "
+"password confirmation mail.\n"
+"    If you can't find mail check your spam folder or if entered email adress "
+"is correct."
+msgstr ""
+"Jeżeli podany adres mailowy odpowiada temu z naszej bazy danych to mail z "
+"linkiem potwierdzającym zmiane hasła został już wysłany. Jeżeli nie możesz "
+"go znaleźć sprawdź folder ze spamem oraz czy adres mailowy został poprawnie "
+"wpisany."
+
+#: .\exam\templates\registration.html:11
+#: .\platform_admin\templates\create_examiner.html:11
+#: .\platform_admin\templates\create_student.html:16
+#: .\platform_admin\templates\edit_examiner.html:11
+#: .\platform_admin\templates\edit_student.html:18
+msgid ""
+"Username: (Required. 150 characters or less. Only letters, numerals and @/./"
+"+/-/_)"
+msgstr ""
+"Nazwa użytkownika: (Wymagane. 150 znaków lub mniej. Tylko litery, cyfry oraz "
+"@/./+/-/_)"
+
+#: .\exam\templates\registration.html:34
+msgid "Mail adress"
+msgstr "Adres mailowy"
+
+#: .\exam\templates\reset_mail.html:4
+msgid "We recieved password change request for platform admin account"
+msgstr "Otrzymaliśmy prośbe o zmiane hasła dla konta administratora platformy"
+
+#: .\exam\templates\reset_mail.html:5
+msgid "In order to give new password to account use link"
+msgstr "By podać nowe hasło prosze wejść w link"
+
+#: .\exam\views.py:62
+msgid "Examiner account activation"
+msgstr "Aktywacja konta"
+
+#: .\exam\views.py:85
+msgid "Registration mail was sent. Check your e-mail box"
+msgstr "Mail aktywacyjny został wysłany. Sprawdź skrzynkę mailową"
+
+#: .\exam\views.py:87
+msgid "Incorrect data, it might be that the username is already teaken"
+msgstr "Niepoprawne dane, nazwe użytkownika może być zajęta"
+
+#: .\exam\views.py:99
+msgid "Activation code is incorrect"
+msgstr "Kod aktywacyjny jest niepoprawny"
+
+#: .\examiner_user\forms.py:13 .\examiner_user\forms.py:20
+#: .\examiner_user\templates\control_course.html:22
+#: .\examiner_user\templates\course_group_results.html:11
+#: .\examiner_user\templates\course_results.html:11
+#: .\examiner_user\templates\detail_course.html:7
+#: .\examiner_user\templates\detail_student.html:54
+#: .\platform_admin\forms.py:29
+msgid "Course name"
+msgstr "Nazwa kursu"
+
+#: .\examiner_user\forms.py:14 .\examiner_user\forms.py:21
+msgid "Category (optional)"
+msgstr "Kategoria (opcjonalnie)"
+
+#: .\examiner_user\forms.py:27
+#: .\platform_admin\templates\platform_detail_course.html:16
+msgid "Multiple choice questions"
+msgstr "Pytania wielokrotnego wyboru"
+
+#: .\examiner_user\forms.py:40
+msgid "Answer nr.1"
+msgstr "Odpowiedź nr.1"
+
+#: .\examiner_user\forms.py:41
+msgid "Answer nr.2"
+msgstr "Odpowiedź nr.2"
+
+#: .\examiner_user\forms.py:42
+msgid "Answer nr.3"
+msgstr "Odpowiedź nr.3"
+
+#: .\examiner_user\forms.py:43
+msgid "Answer nr.4"
+msgstr "Odpowiedź nr.4"
+
+#: .\examiner_user\forms.py:44
+msgid "Answer nr.5"
+msgstr "Odpowiedź nr.5"
+
+#: .\examiner_user\forms.py:55 .\examiner_user\views.py:279
+#: .\examiner_user\views.py:337
+msgid "Correct answer was incorrectly marked"
+msgstr "Dobra odpowiedź została niepoprwanie zaznaczona"
+
+#: .\examiner_user\forms.py:68 .\platform_admin\forms.py:35
+msgid "Present"
+msgstr "Obecny"
+
+#: .\examiner_user\forms.py:69 .\platform_admin\forms.py:36
+msgid "New"
+msgstr "Nowy"
+
+#: .\examiner_user\forms.py:79 .\platform_admin\forms.py:22
+msgid "Student username"
+msgstr "Nazwa studenta"
+
+#: .\examiner_user\forms.py:83 .\examiner_user\forms.py:93
+#: .\examiner_user\templates\course_group_results.html:15
+#: .\platform_admin\forms.py:19 .\platform_admin\forms.py:26
+#: .\platform_admin\templates\search_student_group.html:30
+msgid "Group name"
+msgstr "Nazwa grupy"
+
+#: .\examiner_user\forms.py:94
+#: .\platform_admin\templates\edit_student_group.html:111
+msgid "Deadline"
+msgstr "Termin ukończenia"
+
+#: .\examiner_user\templates\control_course.html:18
+msgid "Edit course"
+msgstr "Edytuj kurs"
+
+#: .\examiner_user\templates\control_course.html:25
+msgid "Course category"
+msgstr "Kategoria kursu"
+
+#: .\examiner_user\templates\control_course.html:28
+#: .\examiner_user\templates\course_results.html:23
+#: .\examiner_user\templates\detail_course.html:22
+msgid "Attempt amount"
+msgstr "Ilość prób"
+
+#: .\examiner_user\templates\control_course.html:36
+#: .\examiner_user\templates\course_results.html:18
+#: .\examiner_user\templates\detail_course.html:15
+msgid "Question type"
+msgstr "Typ pytań"
+
+#: .\examiner_user\templates\control_course.html:40
+#: .\examiner_user\templates\control_course.html:46
+#: .\examiner_user\templates\course_results.html:19
+#: .\examiner_user\templates\detail_course.html:16
+msgid "Multiple choice"
+msgstr "Wielokrotnego wyboru"
+
+#: .\examiner_user\templates\control_course.html:43
+#: .\examiner_user\templates\control_course.html:49
+#: .\examiner_user\templates\course_results.html:21
+#: .\examiner_user\templates\detail_course.html:18
+msgid "Single choice"
+msgstr "Jednokrotnego wyboru"
+
+#: .\examiner_user\templates\control_course.html:52
+#: .\examiner_user\templates\course_results.html:31
+#: .\examiner_user\templates\detail_course.html:36
+msgid "Amount of questions given to student"
+msgstr "Ilośc pytań dawana studentowi podczas egzaminu"
+
+#: .\examiner_user\templates\control_course.html:56
+#: .\examiner_user\templates\course_results.html:32
+#: .\examiner_user\templates\detail_course.html:39
+msgid "Amount of correct answers required to pass the exam"
+msgstr "Ilosc poprawnych odpowiedzi wymagana do zaliczenia egzaminu"
+
+#: .\examiner_user\templates\control_course.html:60
+#: .\examiner_user\templates\course_results.html:41
+#: .\examiner_user\templates\detail_course.html:53
+#: .\platform_admin\templates\platform_detail_course.html:52
+msgid "Exam ready"
+msgstr "Test gotowy"
+
+#: .\examiner_user\templates\control_course.html:63
+msgid "Save changes"
+msgstr "Zapisz zmiany"
+
+#: .\examiner_user\templates\control_course.html:72
+#: .\student\templates\student_list_lesson.html:6
+msgid "Lessons"
+msgstr "Lekcje"
+
+#: .\examiner_user\templates\control_course.html:74
+msgid "Add new lesson"
+msgstr "Dodaj nową lekcje"
+
+#: .\examiner_user\templates\control_course.html:75
+msgid "(attach learning resource as pdf)"
+msgstr "(załącz materiały szkoleniowe jako pdf)"
+
+#: .\examiner_user\templates\control_course.html:79
+#: .\examiner_user\templates\create_lesson.html:14
+#: .\examiner_user\templates\edit_lesson_topic.html:14
+msgid "Lesson topic"
+msgstr "Temat lekcji"
+
+#: .\examiner_user\templates\control_course.html:85
+msgid "Add lesson"
+msgstr "Dodaj lekcje"
+
+#: .\examiner_user\templates\control_course.html:88
+msgid "Amount of lessons attached to course"
+msgstr "Ilośc lekcji przydzielona do kursu"
+
+#: .\examiner_user\templates\control_course.html:90
+msgid "No lessons"
+msgstr "Brak lekcji"
+
+#: .\examiner_user\templates\control_course.html:105
+msgid "Remove lesson"
+msgstr "Usuń lekcje"
+
+#: .\examiner_user\templates\control_course.html:114
+#: .\examiner_user\templates\detail_lesson.html:29
+msgid "Lesson deletion"
+msgstr "Kasacja lekcji"
+
+#: .\examiner_user\templates\control_course.html:118
+#: .\examiner_user\templates\detail_lesson.html:33
+msgid "Are you sure you want to delete lesson"
+msgstr "Czy jesteś pewien że chcesz skasować lekcje"
+
+#: .\examiner_user\templates\control_course.html:118
+#: .\examiner_user\templates\detail_lesson.html:33
+msgid "This choice can't be reverted."
+msgstr "Tej decyzji nie da się cofnąć"
+
+#: .\examiner_user\templates\control_course.html:123
+#: .\examiner_user\templates\detail_lesson.html:38
+msgid "Delete lesson"
+msgstr "Skasuj lekcje"
+
+#: .\examiner_user\templates\control_course.html:124
+#: .\examiner_user\templates\control_course.html:211
+#: .\examiner_user\templates\detail_lesson.html:39
+#: .\platform_admin\templates\edit_student.html:80
+#: .\platform_admin\templates\edit_student_group.html:140
+#: .\platform_admin\templates\edit_student_group.html:269
+#: .\platform_admin\templates\platform_detail_course.html:74
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: .\examiner_user\templates\control_course.html:137
+msgid "Student Groups"
+msgstr "Grupy Studenckie"
+
+#: .\examiner_user\templates\control_course.html:139
+msgid "Add new student group"
+msgstr "Dodaj nową grupe studencką"
+
+#: .\examiner_user\templates\control_course.html:144
+msgid "(enter name of group that will be assigned to the course)"
+msgstr "(Podaj nazwe grupy która ma zostać przypisana do kursu)"
+
+#: .\examiner_user\templates\control_course.html:148
+#: .\platform_admin\forms.py:30
+#: .\platform_admin\templates\edit_student_group.html:78
+msgid "Course deadline"
+msgstr "Termin kursu"
+
+#: .\examiner_user\templates\control_course.html:153
+#: .\examiner_user\templates\detail_student.html:40
+#: .\platform_admin\templates\edit_student.html:56
+#: .\platform_admin\templates\edit_student_group.html:40
+#: .\platform_admin\templates\edit_student_group.html:84
+msgid "Assign"
+msgstr "Przypisz"
+
+#: .\examiner_user\templates\control_course.html:161
+msgid "Groups assigned to course"
+msgstr "Grupy przypisane do kursu"
+
+#: .\examiner_user\templates\control_course.html:174
+#: .\examiner_user\templates\control_course.html:198
+#: .\platform_admin\templates\edit_student_group.html:238
+#: .\platform_admin\templates\edit_student_group.html:252
+msgid "Change deadline"
+msgstr "Zmień date"
+
+#: .\examiner_user\templates\control_course.html:179
+#: .\examiner_user\templates\course_group_results.html:17
+#: .\examiner_user\templates\course_results.html:68
+msgid "Report"
+msgstr "Raport"
+
+#: .\examiner_user\templates\control_course.html:188
+msgid "Remove"
+msgstr "Usuń"
+
+#: .\examiner_user\templates\control_course.html:202
+#: .\platform_admin\templates\edit_student_group.html:256
+msgid "Deadline change"
+msgstr "Zmień termin"
+
+#: .\examiner_user\templates\control_course.html:204
+#: .\platform_admin\templates\edit_student_group.html:258
+msgid "Many date formats are valid, for example: YYYY-MM-DD"
+msgstr "Można użyć różnych formatów daty np. RRRR-MM-DD"
+
+#: .\examiner_user\templates\control_course.html:210
+#: .\examiner_user\templates\edit_lesson_content.html:20
+#: .\examiner_user\templates\edit_lesson_topic.html:19
+#: .\examiner_user\templates\edit_question.html:68
+#: .\examiner_user\templates\mulitple_edit_question.html:79
+#: .\platform_admin\templates\edit_student_group.html:268
+msgid "Change"
+msgstr "Zmień"
+
+#: .\examiner_user\templates\control_course.html:225
+#: .\examiner_user\templates\search_question.html:28
+msgid "Add question"
+msgstr "Dodaj pytanie"
+
+#: .\examiner_user\templates\control_course.html:231
+msgid "View questions"
+msgstr "Przeglądaj pytania"
+
+#: .\examiner_user\templates\course_group_results.html:10
+msgid "Results information for group"
+msgstr "Informacje o wynikach dla grupy"
+
+#: .\examiner_user\templates\course_group_results.html:13
+#: .\examiner_user\templates\course_results.html:13
+#: .\examiner_user\templates\detail_course.html:9
+#: .\examiner_user\templates\search_course.html:38
+#: .\platform_admin\templates\edit_student_group.html:110
+#: .\student\templates\student_results_general.html:34
+#: .\student\templates\student_search_course.html:40
+msgid "Category"
+msgstr "Kategoria"
+
+#: .\examiner_user\templates\course_group_results.html:19
+#: .\examiner_user\templates\course_results.html:46
+msgid "Statistics"
+msgstr "Statystyka"
+
+#: .\examiner_user\templates\course_group_results.html:20
+msgid "Amount of students from the group that passed the course"
+msgstr "Ilośc studentów przydzielona do kursu która go zaliczyła"
+
+#: .\examiner_user\templates\course_group_results.html:21
+msgid "Amount of students from the group that failed the course"
+msgstr "Ilośc studentów przydzielona do kursu która go nie zaliczyła"
+
+#: .\examiner_user\templates\course_group_results.html:22
+msgid "Amount of students from the group that haven't finished the course yet"
+msgstr "Ilośc studentów przydzielona do kursu która jeszcze go nie ukończyła"
+
+#: .\examiner_user\templates\course_group_results.html:23
+msgid "Amount of passed exam attempts in the group"
+msgstr "Ilosć pomyślnych prób zdanaia egzaminu w tej grupie"
+
+#: .\examiner_user\templates\course_group_results.html:24
+msgid "Amount of failed exam attempts in the group"
+msgstr "Ilość nieudanych prób zdania egzaminu w tej grupie"
+
+#: .\examiner_user\templates\course_group_results.html:34
+msgid "Total amount of students in the group"
+msgstr "Ilośc studentów przydzielona do kursu"
+
+#: .\examiner_user\templates\course_group_results.html:40
+msgid "Student List"
+msgstr "Lista Studentów"
+
+#: .\examiner_user\templates\course_group_results.html:47
+#: .\examiner_user\templates\course_results.html:84
+#: .\examiner_user\templates\detail_student.html:56
+#: .\platform_admin\views.py:419
+#: .\student\templates\student_results_general.html:36
+#: .\student\templates\student_search_course.html:42
+msgid "Grade"
+msgstr "Ocena"
+
+#: .\examiner_user\templates\course_group_results.html:92
+#: .\examiner_user\templates\course_results.html:129 .\student\views.py:248
+msgid "Diploma"
+msgstr "Dyplom"
+
+#: .\examiner_user\templates\course_group_results.html:173
+#: .\examiner_user\templates\course_results.html:210
+#, python-format
+msgid "%% score"
+msgstr "%% wyniku"
+
+#: .\examiner_user\templates\course_results.html:10
+#: .\examiner_user\templates\detail_course.html:6
+#: .\platform_admin\templates\platform_detail_course.html:6
+msgid "Course information"
+msgstr "Informacje o kursie"
+
+#: .\examiner_user\templates\course_results.html:26
+#: .\examiner_user\templates\search_course.html:41
+msgid "Test duration"
+msgstr "Czas trwania testu"
+
+#: .\examiner_user\templates\course_results.html:26
+#: .\examiner_user\templates\detail_course.html:27
+#: .\platform_admin\templates\platform_detail_course.html:27
+msgid "Unlimited"
+msgstr "Nieograniczony"
+
+#: .\examiner_user\templates\course_results.html:27
+#: .\examiner_user\templates\detail_course.html:28
+#: .\platform_admin\templates\platform_detail_course.html:27
+msgid "minutes"
+msgstr "minuty"
+
+#: .\examiner_user\templates\course_results.html:28
+#: .\examiner_user\templates\edit_question.html:12
+#: .\examiner_user\templates\mulitple_create_question.html:13
+#: .\examiner_user\templates\mulitple_edit_question.html:12
+msgid "Total question amount"
+msgstr "Całkowita ilosc pytań:"
+
+#: .\examiner_user\templates\course_results.html:35
+#: .\examiner_user\templates\detail_course.html:44
+#: .\examiner_user\templates\search_course.html:39
+msgid "Lesson amount"
+msgstr "Ilośc lekcji"
+
+#: .\examiner_user\templates\course_results.html:36
+#: .\examiner_user\templates\course_results.html:62
+msgid "Amount of students assigned to course"
+msgstr "Ilośc studentów przydzielona do kursu"
+
+#: .\examiner_user\templates\course_results.html:41
+#: .\examiner_user\templates\course_results.html:43
+#: .\examiner_user\templates\detail_course.html:53
+#: .\examiner_user\templates\detail_course.html:55
+msgid "Test status"
+msgstr "Status testu"
+
+#: .\examiner_user\templates\course_results.html:43
+#: .\examiner_user\templates\detail_course.html:55
+#: .\platform_admin\templates\platform_detail_course.html:54
+msgid "Exam not ready"
+msgstr "Test nie gotowy"
+
+#: .\examiner_user\templates\course_results.html:47
+msgid "Amount of students that finished the course"
+msgstr "Ilośc studentów która ukończyła kurs"
+
+#: .\examiner_user\templates\course_results.html:48
+msgid "Amount of students that failed the course"
+msgstr "Ilośc studentów której nie udało się ukończyć kursu pomyślnie"
+
+#: .\examiner_user\templates\course_results.html:49
+msgid "Amount of students that haven't finished the course yet"
+msgstr "Ilośc studentów którzy nie ukończyli jeszcze kursu"
+
+#: .\examiner_user\templates\course_results.html:50
+msgid "Amount of passed exam attempts"
+msgstr "Ilość pomyślnych prób zaliczenia egzaminu"
+
+#: .\examiner_user\templates\course_results.html:51
+msgid "Amount of failed exam attempts"
+msgstr "Ilośc nieudanych prób zaliczenia egzaminu"
+
+#: .\examiner_user\templates\course_results.html:63
+msgid "Student groups assigned to course"
+msgstr "Grupy studenckie przypisane do kursu"
+
+#: .\examiner_user\templates\course_results.html:77
+msgid "List of all students"
+msgstr "Lista wszystkich uczniów"
+
+#: .\examiner_user\templates\create_course.html:11
+msgid "Create new course"
+msgstr "Stwórz nowy kurs"
+
+#: .\examiner_user\templates\create_course.html:16
+#: .\platform_admin\templates\create_examiner.html:33
+#: .\platform_admin\templates\create_student.html:37
+#: .\platform_admin\templates\create_student_group.html:15
+msgid "Create"
+msgstr "Stwórz"
+
+#: .\examiner_user\templates\create_lesson.html:20
+#: .\examiner_user\templates\edit_lesson_content.html:19
+msgid "Add pdf files as learning resources"
+msgstr "Dodaj plik pdf jako materiał lekcyjny"
+
+#: .\examiner_user\templates\create_lesson.html:21
+#: .\examiner_user\templates\create_question.html:49
+#: .\examiner_user\templates\mulitple_create_question.html:59
+msgid "Add"
+msgstr "Dodaj"
+
+#: .\examiner_user\templates\create_question.html:11
+msgid "Make new question for course"
+msgstr "Stwórz nowe pytanie dla kursu"
+
+#: .\examiner_user\templates\create_question.html:13
+msgid "Current question amount"
+msgstr "Całkowita ilosc pytań"
+
+#: .\examiner_user\templates\create_question.html:17
+#: .\examiner_user\templates\edit_question.html:16
+#: .\examiner_user\templates\mulitple_create_question.html:17
+#: .\examiner_user\templates\mulitple_edit_question.html:16
+msgid "Question text"
+msgstr "Treść pytania"
+
+#: .\examiner_user\templates\create_question.html:23
+#: .\examiner_user\templates\create_question.html:28
+#: .\examiner_user\templates\create_question.html:33
+#: .\examiner_user\templates\create_question.html:38
+#: .\examiner_user\templates\create_question.html:43
+#: .\examiner_user\templates\edit_question.html:22
+#: .\examiner_user\templates\edit_question.html:31
+#: .\examiner_user\templates\edit_question.html:40
+#: .\examiner_user\templates\edit_question.html:49
+#: .\examiner_user\templates\edit_question.html:58
+#: .\examiner_user\templates\mulitple_create_question.html:26
+#: .\examiner_user\templates\mulitple_create_question.html:33
+#: .\examiner_user\templates\mulitple_create_question.html:40
+#: .\examiner_user\templates\mulitple_create_question.html:47
+#: .\examiner_user\templates\mulitple_create_question.html:54
+#: .\examiner_user\templates\mulitple_edit_question.html:29
+#: .\examiner_user\templates\mulitple_edit_question.html:40
+#: .\examiner_user\templates\mulitple_edit_question.html:51
+#: .\examiner_user\templates\mulitple_edit_question.html:62
+#: .\examiner_user\templates\mulitple_edit_question.html:73
+msgid "Answer"
+msgstr "Odpowiedź"
+
+#: .\examiner_user\templates\create_question.html:53
+#: .\examiner_user\templates\edit_question.html:76
+#: .\examiner_user\templates\mulitple_create_question.html:63
+#: .\examiner_user\templates\mulitple_edit_question.html:87
+msgid "Question list"
+msgstr "Lista pytań"
+
+#: .\examiner_user\templates\create_question.html:58
+msgid "Instructions"
+msgstr "Instrukcja"
+
+#: .\examiner_user\templates\create_question.html:60
+#: .\examiner_user\templates\mulitple_create_question.html:70
+#: .\examiner_user\templates\mulitple_edit_question.html:94
+msgid ""
+" Question should have 2 to 5 answers. If text field corresponding to the "
+"answer is left blank answer will\n"
+"  not be included in exam. Correct answer is marked by checking field (or "
+"fields in case of multiple answer questions) situated\n"
+"  next to text area with answer."
+msgstr ""
+"Pytanie musi posiadać od 2 do 5 odpowiedzi. Jeżeli pole tekstowe "
+"odpowiadające odpowiedzi zostanie pozostawione puste odpowiedź niebędzie "
+"uwzględniona na teście. Należy zaznaczyć która odpowiedź jest prawidłowa "
+"poprzez zaznaczenie pola (lub pól w przypadku testówwielokrotnego wyboru) "
+"znajdującego się przy polu tekstowym z odpowiedzią."
+
+#: .\examiner_user\templates\detail_course.html:27
+msgid "Exam duration"
+msgstr "Czas trwania testu:"
+
+#: .\examiner_user\templates\detail_course.html:59
+#: .\examiner_user\templates\search_question.html:16
+msgid "Edit"
+msgstr "Edytuj"
+
+#: .\examiner_user\templates\detail_lesson.html:18
+msgid "Change topic"
+msgstr "Zmień temat"
+
+#: .\examiner_user\templates\detail_lesson.html:20
+msgid "Change learning resource"
+msgstr "Zmień materiał lekcyjny"
+
+#: .\examiner_user\templates\detail_lesson.html:22
+msgid "View lesson"
+msgstr "Zobacz lekcje"
+
+#: .\examiner_user\templates\detail_lesson.html:24
+#: .\examiner_user\templates\edit_question.html:72
+#: .\examiner_user\templates\mulitple_edit_question.html:83
+#: .\platform_admin\templates\edit_student_group.html:215
+#: .\platform_admin\templates\edit_student_group.html:245
+#: .\platform_admin\templates\settings.html:75
+msgid "Delete"
+msgstr "Usuń"
+
+#: .\examiner_user\templates\detail_student.html:18
+msgid "Student profile"
+msgstr "Profil studenta"
+
+#: .\examiner_user\templates\detail_student.html:20
+msgid "Belongs to group"
+msgstr "Należy do grupy"
+
+#: .\examiner_user\templates\detail_student.html:22
+msgid "Student is not assigned to any group"
+msgstr "Student nie należy do żadnej grupy"
+
+#: .\examiner_user\templates\detail_student.html:24
+msgid "Belongs to groups"
+msgstr "Należy do grup"
+
+#: .\examiner_user\templates\detail_student.html:30
+msgid "Assign group to student"
+msgstr "Przydziel grupe do studenta"
+
+#: .\examiner_user\templates\detail_student.html:31
+msgid "(enter name of group to which the student will be assigned)"
+msgstr "(podaj nazwe grupy do której ma zostać dołączony student)"
+
+#: .\examiner_user\templates\detail_student.html:48
+msgid "Courses assigned to student"
+msgstr "Kursy przydzielone do studenta"
+
+#: .\examiner_user\templates\edit_question.html:11
+msgid "Edit question from course"
+msgstr "Edytuj pytanie z kursu"
+
+#: .\examiner_user\templates\edit_question.html:81
+#: .\examiner_user\templates\mulitple_create_question.html:68
+#: .\examiner_user\templates\mulitple_edit_question.html:92
+msgid "Instruction"
+msgstr "Instrukcja"
+
+#: .\examiner_user\templates\examiner_base.html:26
+#: .\platform_admin\templates\edit_examiner.html:6
+msgid "Examiner"
+msgstr "Egzaminator"
+
+#: .\examiner_user\templates\examiner_base.html:30
+#: .\examiner_user\templates\examiner_base.html:34
+#: .\platform_admin\templates\platform_base.html:30
+#: .\platform_admin\templates\platform_base.html:34
+#: .\student\templates\student_base.html:30
+#: .\student\templates\student_base.html:34
+msgid "Homepage"
+msgstr "Strona Domowa"
+
+#: .\examiner_user\templates\examiner_base.html:39
+#: .\examiner_user\templates\examiner_base.html:43
+#: .\platform_admin\templates\edit_student_group.html:64
+#: .\student\templates\student_base.html:39
+#: .\student\templates\student_base.html:43
+#: .\student\templates\student_search_course.html:33
+msgid "Courses"
+msgstr "Kursy"
+
+#: .\examiner_user\templates\examiner_base.html:48
+#: .\examiner_user\templates\examiner_base.html:52
+#: .\platform_admin\templates\edit_student_group.html:25
+#: .\platform_admin\templates\platform_base.html:57
+#: .\platform_admin\templates\platform_base.html:61
+msgid "Students"
+msgstr "Studenci"
+
+#: .\examiner_user\templates\examiner_base.html:57
+#: .\examiner_user\templates\examiner_base.html:61
+#: .\platform_admin\templates\platform_base.html:48
+#: .\platform_admin\templates\platform_base.html:52
+msgid "Student groups"
+msgstr "Grupy studenckie"
+
+#: .\examiner_user\templates\examiner_base.html:66
+#: .\examiner_user\templates\examiner_base.html:70
+#: .\examiner_user\templates\results.html:6
+#: .\student\templates\student_base.html:48
+#: .\student\templates\student_base.html:52
+#: .\student\templates\student_results_general.html:28
+msgid "Results"
+msgstr "Wyniki"
+
+#: .\examiner_user\templates\examiner_base.html:74
+#: .\platform_admin\templates\platform_base.html:74
+#: .\student\templates\student_base.html:56
+msgid "Logout"
+msgstr "Wyloguj się"
+
+#: .\examiner_user\templates\examiner_homepage.html:32
+#: .\platform_admin\templates\platform_homepage.html:33
+#: .\student\templates\student_homepage.html:33
+msgid ""
+"This site allows creation and edition of courses and uploading course "
+"materials.\n"
+"  Main functionality of application is creation of automatically checked "
+"exams (multiple or single choice \n"
+"  questions) assigned to courses. "
+msgstr ""
+"Aplikacja umożliwia tworzenie i edycje kursów oraz zamieszczanie materiałów "
+"lekcyjnych.\n"
+"Główną funkcjonalnością aplikacji jest tworzenie automatycznie sprawdzanych "
+"testów (pytania jednokrotnego lub \n"
+"wielokrotnego wyboru) przydzielonych do kursów"
+
+#: .\examiner_user\templates\examiner_homepage.html:40
+#: .\platform_admin\templates\platform_homepage.html:41
+#: .\student\templates\student_homepage.html:41
+msgid "Share feedback"
+msgstr "Udziel opinii"
+
+#: .\examiner_user\templates\mulitple_create_question.html:11
+msgid "Create new question for course"
+msgstr "Stwórz nowe pytanie do kursu"
+
+#: .\examiner_user\templates\mulitple_edit_question.html:11
+msgid "Edit question for course"
+msgstr "Edytuj pytanie dla kursu"
+
+#: .\examiner_user\templates\results.html:8
+#: .\examiner_user\templates\search_course.html:11
+msgid "Course list"
+msgstr "Lista kursów"
+
+#: .\examiner_user\templates\results_course_student.html:6
+msgid "Results of student"
+msgstr "Wyniki studenta"
+
+#: .\examiner_user\templates\results_course_student.html:6
+msgid "from course"
+msgstr "z kursu"
+
+#: .\examiner_user\templates\results_course_student.html:9
+msgid "Back to student"
+msgstr "Wróć do studenta"
+
+#: .\examiner_user\templates\results_course_student.html:14
+msgid "Back to course"
+msgstr "Wróć do kursu"
+
+#: .\examiner_user\templates\results_course_student.html:20
+#: .\student\templates\student_result_view.html:15
+msgid "Attempt"
+msgstr "Próba"
+
+#: .\examiner_user\templates\results_course_student.html:21
+#: .\student\templates\student_result_view.html:16
+msgid "Score"
+msgstr "Uzyskane punkty"
+
+#: .\examiner_user\templates\results_course_student.html:23
+#: .\student\templates\student_result_view.html:18
+msgid "Result"
+msgstr "Wynik"
+
+#: .\examiner_user\templates\results_course_student.html:32
+#: .\student\templates\student_result_view.html:27
+msgid "Passing"
+msgstr "Zaliczający"
+
+#: .\examiner_user\templates\results_course_student.html:32
+#: .\student\templates\student_result_view.html:28
+msgid "Failing"
+msgstr "Niezaliczający"
+
+#: .\examiner_user\templates\search_course.html:14
+msgid "Create new"
+msgstr "Stwórz nowy"
+
+#: .\examiner_user\templates\search_course.html:17
+msgid "Search for courses"
+msgstr "Szukaj kursów"
+
+#: .\examiner_user\templates\search_course.html:19
+#: .\platform_admin\templates\edit_student_group.html:89 .\student\forms.py:6
+#: .\student\templates\student_results_general.html:9
+#: .\student\templates\student_search_course.html:14
+msgid "Search by name"
+msgstr "Szukaj po nazwie"
+
+#: .\examiner_user\templates\search_course.html:20
+#: .\platform_admin\templates\edit_student_group.html:90
+#: .\student\templates\student_results_general.html:10
+#: .\student\templates\student_search_course.html:15
+msgid "Search by category"
+msgstr "Szukaj po kategorii"
+
+#: .\examiner_user\templates\search_course.html:37
+#: .\platform_admin\templates\edit_student_group.html:109
+#: .\platform_admin\templates\settings.html:62
+#: .\student\templates\student_search_course.html:39
+msgid "Name"
+msgstr "Nazwa"
+
+#: .\examiner_user\templates\search_course.html:40
+msgid "Question amount"
+msgstr "Całkowita ilosc pytań"
+
+#: .\examiner_user\templates\search_course.html:42
+msgid "Amount of assgined students"
+msgstr "Ilośc przydzielonych studentów"
+
+#: .\examiner_user\templates\search_question.html:6
+msgid "Questions for course"
+msgstr "Pytania dla kursu"
+
+#: .\examiner_user\templates\search_question.html:33
+msgid "Back to course editing"
+msgstr "Wróć do edycji kursu"
+
+#: .\examiner_user\templates\students.html:9
+#: .\platform_admin\templates\search_student.html:14
+msgid "Create student"
+msgstr "Stwórz studenta"
+
+#: .\examiner_user\templates\students.html:12
+#: .\platform_admin\templates\edit_student_group.html:43
+#: .\platform_admin\templates\search_examiner.html:18
+#: .\platform_admin\templates\search_student.html:18
+#: .\platform_admin\templates\search_student_group.html:22
+msgid "Search"
+msgstr "Szukaj"
+
+#: .\examiner_user\templates\students.html:21
+#: .\platform_admin\templates\edit_student_group.html:53
+#: .\platform_admin\templates\search_examiner.html:27
+#: .\platform_admin\templates\search_student.html:27
+msgid "Last login"
+msgstr "Ostatni login"
+
+#: .\examiner_user\templates\students.html:22
+#: .\platform_admin\templates\edit_student_group.html:54
+#: .\platform_admin\templates\search_examiner.html:28
+#: .\platform_admin\templates\search_student.html:28
+msgid "Join date"
+msgstr "Data dołaczenia"
+
+#: .\examiner_user\views.py:146
+msgid "Course sucessfully created"
+msgstr "Kurs pomyślnie utworzony"
+
+#: .\examiner_user\views.py:148
+msgid "Course creation failed"
+msgstr "Stworzenie kursu nie powiodło się"
+
+#: .\examiner_user\views.py:186
+msgid "Course not found"
+msgstr "Nie znaleziono kursu"
+
+#: .\examiner_user\views.py:202
+msgid "(Deadline expired)"
+msgstr "(Termin upłynął)"
+
+#: .\examiner_user\views.py:212
+msgid "Lack of permission"
+msgstr "Brak dostepu"
+
+#: .\examiner_user\views.py:239
+msgid "Course data was filled incorrectly"
+msgstr "Dane kursu zostały niepoprawnie wypełnione"
+
+#: .\examiner_user\views.py:373
+msgid "Wrong file"
+msgstr "Niepoprawny plik"
+
+#: .\examiner_user\views.py:436
+msgid "New resource should be given during learning resource change"
+msgstr "Należy podać nowy materiał do zmiany materiału lekcyjnego"
+
+#: .\examiner_user\views.py:443
+msgid "Wrong file extension"
+msgstr "Niepoprawne rozszerzenie pliku"
+
+#: .\examiner_user\views.py:467
+msgid "Incorrect lesson topic"
+msgstr "Niepoprawny temat lekcji"
+
+#: .\platform_admin\forms.py:34
+msgid "Clear"
+msgstr "Wyczyść"
+
+#: .\platform_admin\forms.py:42
+msgid "Platform name"
+msgstr "Nazwa platformy"
+
+#: .\platform_admin\forms.py:59
+msgid "Percentage bar can't be negative"
+msgstr "Pułap procentowy nie może być ujemny"
+
+#: .\platform_admin\forms.py:61
+msgid "Grade can't be given above 100%"
+msgstr "Ocena nie może być przyznana powyżej 100%"
+
+#: .\platform_admin\forms.py:65 .\platform_admin\templates\feedback.html:16
+msgid "How would you score Examiner aplication on a 1 to 5 scale?"
+msgstr "Jak oceniesz aplikacje Examiner w skali od 1 do 5?"
+
+#: .\platform_admin\forms.py:67
+msgid "Feedback"
+msgstr "Uwagi słowne"
+
+#: .\platform_admin\templates\create_examiner.html:6
+msgid "Create new examiner"
+msgstr "Stwórz nowego egzaminatora"
+
+#: .\platform_admin\templates\create_examiner.html:17
+#: .\platform_admin\templates\create_student.html:21
+#: .\platform_admin\templates\edit_examiner.html:21
+#: .\platform_admin\templates\edit_student.html:28
+msgid "Password:"
+msgstr "Hasło:"
+
+#: .\platform_admin\templates\create_student.html:11
+msgid "Create new student"
+msgstr "Stwórz nowego studenta"
+
+#: .\platform_admin\templates\create_student_group.html:11
+msgid "Create new student group:"
+msgstr "Stwórz nową grupe studencką"
+
+#: .\platform_admin\templates\edit_examiner.html:7
+#: .\platform_admin\templates\edit_student.html:14
+msgid "Change username:"
+msgstr "Zmień nazwe użytkownika:"
+
+#: .\platform_admin\templates\edit_examiner.html:13
+#: .\platform_admin\templates\edit_student.html:20
+msgid "Change username"
+msgstr "Zmień nazwe użytkownika"
+
+#: .\platform_admin\templates\edit_examiner.html:45
+#: .\platform_admin\templates\edit_examiner.html:59
+msgid "Delete examiner"
+msgstr "Skasuj egzaminatora"
+
+#: .\platform_admin\templates\edit_examiner.html:50
+msgid "Examiner deletion"
+msgstr "Kasacja egzaminatora"
+
+#: .\platform_admin\templates\edit_examiner.html:54
+#: .\platform_admin\templates\edit_student.html:74
+msgid "Are you sure you want to delete user"
+msgstr "Czy jesteś pewien że chcesz skasować użytkownika"
+
+#: .\platform_admin\templates\edit_examiner.html:54
+#: .\platform_admin\templates\edit_student.html:74
+msgid "You can't revert this choice"
+msgstr "Tej decyzji nie da się cofnąć"
+
+#: .\platform_admin\templates\edit_student.html:47
+msgid "Enter name of group to which student will be assigned"
+msgstr "Podaj nazwe grupy do której ma zostać dołączony student"
+
+#: .\platform_admin\templates\edit_student.html:65
+#: .\platform_admin\templates\edit_student.html:79
+msgid "Delete student"
+msgstr "Skasuj studenta"
+
+#: .\platform_admin\templates\edit_student.html:70
+msgid "Student deletion"
+msgstr "Kasacja studenta"
+
+#: .\platform_admin\templates\edit_student_group.html:18
+msgid "Student group "
+msgstr "Grupa studencka"
+
+#: .\platform_admin\templates\edit_student_group.html:22
+msgid "Change name"
+msgstr "Zmień nazwe"
+
+#: .\platform_admin\templates\edit_student_group.html:27
+msgid "Enter username of user that will be assigned to group"
+msgstr "Podaj nazwe użytkownika który ma zostać przypisany do grupy"
+
+#: .\platform_admin\templates\edit_student_group.html:74
+msgid "Enter name of a course that will be assigned to group"
+msgstr "Podaj nazwe kursu który ma zostać przypisany do grupy"
+
+#: .\platform_admin\templates\edit_student_group.html:87
+msgid "Course search"
+msgstr "Szukaj kursu"
+
+#: .\platform_admin\templates\edit_student_group.html:123
+#: .\platform_admin\templates\edit_student_group.html:139
+msgid "Delete group"
+msgstr "Skasuj grupe"
+
+#: .\platform_admin\templates\edit_student_group.html:128
+msgid "Student group deletion"
+msgstr "Kasacja grupy studenckej"
+
+#: .\platform_admin\templates\edit_student_group.html:132
+msgid "Are you sure you want to delete student group "
+msgstr "Czy jesteś pewien że chcesz usunąc grupe studencką "
+
+#: .\platform_admin\templates\edit_student_group.html:133
+msgid ""
+"This choice can't be reverted, courses and students assigned to this group "
+"will be unassigned\n"
+"        "
+msgstr ""
+"Tej decyzji nie da się cofnać, kursy oraz studenci przypisanie do tej grupy "
+"będą od niej odłączeni"
+
+#: .\platform_admin\templates\feedback.html:7
+msgid "Report suggestion or criticism"
+msgstr "Zgłoś uwagi lub sugestie"
+
+#: .\platform_admin\templates\feedback.html:10
+msgid ""
+"Our goal is continous development and improvment of Examiner app. For this "
+"puropuse we gather opinions, \n"
+"    suggestions and criticisms from site users which are valuable source of "
+"information for us. We are very grateful\n"
+"    that you devote your time and attention to fill evaluation form. It's "
+"completely anonymous.\" "
+msgstr ""
+"Naszym celem jest ciągły rozwój i udoskonalanie aplikacji Examiner.Z tego "
+"powodu zbieramy opinie, \n"
+"    sugestie oraz uwagi od użytkowników strony co stanowi dla nas cenne "
+"źródłoinformacji. Jesteśmy bardzo widzięczni\n"
+"    za poświęcenie czasu i uwagi na wypełnienie formularza ewaluacyjnego."
+"Odbywa się to całkowicie anonimowo."
+
+#: .\platform_admin\templates\feedback.html:20
+msgid "Feedback:"
+msgstr "Uwagi słowne:"
+
+#: .\platform_admin\templates\feedback.html:23
+msgid "Send opinion"
+msgstr "Wyślij opinie"
+
+#: .\platform_admin\templates\feedback_email.html:3
+msgid "User type:"
+msgstr "Typ użytkownika:"
+
+#: .\platform_admin\templates\feedback_email.html:4
+msgid "Evaluation:"
+msgstr "Ocena: "
+
+#: .\platform_admin\templates\feedback_email.html:5
+msgid "Opinion:"
+msgstr "Opinia:"
+
+#: .\platform_admin\templates\platform_base.html:39
+#: .\platform_admin\templates\platform_base.html:43
+msgid "Examiners"
+msgstr "Egzaminatorzy"
+
+#: .\platform_admin\templates\platform_base.html:66
+#: .\platform_admin\templates\platform_base.html:70
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: .\platform_admin\templates\platform_detail_course.html:7
+msgid "Course name:"
+msgstr "Nazwa kursu:"
+
+#: .\platform_admin\templates\platform_detail_course.html:9
+msgid "Category:"
+msgstr "Kategoria:"
+
+#: .\platform_admin\templates\platform_detail_course.html:15
+msgid "Question type:"
+msgstr "Typ pytań:"
+
+#: .\platform_admin\templates\platform_detail_course.html:18
+msgid "Single choice questions"
+msgstr "Pytania jednokrotnego wyboru"
+
+#: .\platform_admin\templates\platform_detail_course.html:22
+msgid "Attempt amount:"
+msgstr "Ilość prób:"
+
+#: .\platform_admin\templates\platform_detail_course.html:27
+msgid "Test duration:"
+msgstr "Czas trwania testu:"
+
+#: .\platform_admin\templates\platform_detail_course.html:30
+msgid "Question amount total:"
+msgstr "Całkowita ilosc pytań:"
+
+#: .\platform_admin\templates\platform_detail_course.html:35
+msgid "Amount of questions given to student during exam:"
+msgstr "Ilośc pytań dawana studentowi podczas egzaminu"
+
+#: .\platform_admin\templates\platform_detail_course.html:38
+msgid "Amount of correct answers required to pass exam:"
+msgstr "Ilosc poprawnych odpowiedzi wymagana do zaliczenia egzaminu"
+
+#: .\platform_admin\templates\platform_detail_course.html:43
+msgid "Lesson amount:"
+msgstr "Ilośc lekcji:"
+
+#: .\platform_admin\templates\platform_detail_course.html:46
+msgid "Amount of students assigned to course:"
+msgstr "Ilośc studentów przydzielona do kursu"
+
+#: .\platform_admin\templates\platform_detail_course.html:52
+#: .\platform_admin\templates\platform_detail_course.html:54
+msgid "Exam status:"
+msgstr "Status testu:"
+
+#: .\platform_admin\templates\platform_detail_course.html:57
+#: .\platform_admin\templates\platform_detail_course.html:73
+msgid "Delete course"
+msgstr "Skasuj kurs"
+
+#: .\platform_admin\templates\platform_detail_course.html:62
+msgid "Course deletion"
+msgstr "Kasowanie kursu"
+
+#: .\platform_admin\templates\platform_detail_course.html:66
+msgid "Are you sure you want to delete course "
+msgstr "Czy jesteś pewien że chcesz skasować kurs"
+
+#: .\platform_admin\templates\platform_detail_course.html:66
+msgid ""
+"\n"
+"        This choice can't be reverted. You won't be able to recover lesson "
+"materials. All data concerning exam\n"
+"        assigned to course (questions, student results) will be lost as well."
+msgstr ""
+"\n"
+"Tej decyzji nie da się cofnac. Nie bedziesz w stanie odzyskać materiałów "
+"lekcyjnych.Wszystkie dane dotyczące testu przypisanego do kursu (pytania, "
+"wyniki studentów) również zostaną utracone"
+
+#: .\platform_admin\templates\search_examiner.html:14
+msgid "Create examiner"
+msgstr "Stwórz egzaminatora"
+
+#: .\platform_admin\templates\search_student_group.html:18
+msgid "Create student group"
+msgstr "Stwórz grupe studencką"
+
+#: .\platform_admin\templates\search_student_group.html:31
+msgid "Student amount"
+msgstr "Ilośc studentów"
+
+#: .\platform_admin\templates\search_student_group.html:32
+msgid "Course amount"
+msgstr "Ilośc kusów"
+
+#: .\platform_admin\templates\settings.html:25
+msgid "Save settings"
+msgstr "Zapisz ustawienia"
+
+#: .\platform_admin\templates\settings.html:28
+msgid "Grades"
+msgstr "Oceny"
+
+#: .\platform_admin\templates\settings.html:30
+msgid ""
+"There's a functionality that awards grades to students after exams.You "
+"should enter displayed grade name and\n"
+"  minimal percentage bar for achieving given grade. Student recieves highest "
+"grade that fulfils percentage bar requirements.\n"
+"  Passing course is independent of the grade as it's determined by passing "
+"amount of correct answers which is set separetely\n"
+"  for each course. The goal of grading system is more precise description of "
+"sucessfully passed exams."
+msgstr ""
+"Istnieje możliwość przyznawania ocen studentom po ukonczeniu egzaminu. "
+"Należy wpisać wyświetlaną nazwe oceny oraz\n"
+"  minimalny pułap procentowy do osiągnięcia danej oceny. Student otrzymuje "
+"najwyższą ocenę która spełnia wymagania procentowe.\n"
+"  Zaliczenie kursu jest niezależne od oceny i jest determinowane przez prób "
+"poprawnych odpowiedzi który jest ustalany oddzielnie\n"
+"  dla każdego kursu. Celem systemu oceniania jest dokładniejszy opis "
+"pomyślnie zdanych testów."
+
+#: .\platform_admin\templates\settings.html:36
+msgid ""
+"There are two default grading systems- school (1,2,3,4,5,6) and academic "
+"(2,3,3.5,4,4.5,5) Which can be set\n"
+"  by pressing apropriate button."
+msgstr ""
+"Istnieją dwa gotowe system oceniania- szkolny (1,2,3,4,5,6) oraz akademicki "
+"(2,3,3.5,4,4.5,5) Które mogą być ustalone\n"
+"  poprzez wcisniecie odpowiedniego przycisku"
+
+#: .\platform_admin\templates\settings.html:41
+msgid "School system"
+msgstr "System szkolny"
+
+#: .\platform_admin\templates\settings.html:45
+msgid "Academic system"
+msgstr "System akademicki"
+
+#: .\platform_admin\templates\settings.html:49
+msgid "Grade name:"
+msgstr "Nazwa oceny:"
+
+#: .\platform_admin\templates\settings.html:51
+msgid "Required percentage bar:"
+msgstr "Wymagany pułap procentowy:"
+
+#: .\platform_admin\templates\settings.html:55
+msgid "Add grade"
+msgstr "Dodaj ocenę"
+
+#: .\platform_admin\templates\settings.html:57
+msgid "Currently used grades:"
+msgstr "Obecnie używane oceny"
+
+#: .\platform_admin\templates\settings.html:63
+msgid "Bar"
+msgstr "Pułap"
+
+#: .\platform_admin\views.py:47
+msgid "Opinion"
+msgstr "Opinia"
+
+#: .\platform_admin\views.py:55
+msgid "Thank you for sharing your opinion"
+msgstr "Dziękujemy za podzielenie się swoją opinią"
+
+#: .\platform_admin\views.py:94 .\platform_admin\views.py:180
+msgid "Incorrect data"
+msgstr "Niepoprawne dane"
+
+#: .\platform_admin\views.py:129
+msgid ""
+"Incorrect data. Passwords do not match or doesen't fulfill the requirements"
+msgstr "Niepoprawne dane. Hasła nie są identyczne lub nie spełniają wymogów"
+
+#: .\platform_admin\views.py:138
+msgid "User deleted"
+msgstr "Użytkownik skasowany"
+
+#: .\platform_admin\views.py:249
+msgid "Group creation failed"
+msgstr "Stworzenie grupy nie powiodło się"
+
+#: .\platform_admin\views.py:273
+msgid "(Term expired)"
+msgstr "(Termin upłynął)"
+
+#: .\platform_admin\views.py:300
+msgid "Group edit failed"
+msgstr "Edycja grupy nie powiodła się"
+
+#: .\platform_admin\views.py:321
+msgid "Course deleted"
+msgstr "Kurs skasowany"
+
+#: .\platform_admin\views.py:330
+msgid "Group deleted"
+msgstr "Grupa skasowana"
+
+#: .\platform_admin\views.py:413
+#, python-format
+msgid "Group %(group)s results from %(course)s course"
+msgstr "Wyniki grupy %(group)s z kursu %(course)s"
+
+#: .\platform_admin\views.py:416
+msgid "Student name"
+msgstr "Nazwa studenta"
+
+#: .\platform_admin\views.py:417
+msgid "Status"
+msgstr "Status"
+
+#: .\platform_admin\views.py:453
+msgid "Settings saved"
+msgstr "Ustawienia"
+
+#: .\platform_admin\views.py:455
+msgid "Incorrect logo"
+msgstr "Niepoprawne logo"
+
+#: .\platform_admin\views.py:467
+msgid "New grade sucessfully added"
+msgstr "Nowa ocena pomyślnie dodana"
+
+#: .\platform_admin\views.py:469
+msgid "Incorrect grade data"
+msgstr "Niepoprawne dane oceny"
+
+#: .\platform_admin\views.py:474
+msgid "Grade deleted"
+msgstr "Ocena skasowana"
+
+#: .\platform_admin\views.py:512
+msgid "School grading system sucessfully implemented"
+msgstr "Szkolny system oceniania został pomyslnie wprowadzony"
+
+#: .\platform_admin\views.py:516
+msgid "Academic grading system sucessfully implemented"
+msgstr "Akademicki system oceniania został pomyslnie wprowadzony"
+
+#: .\platform_admin\views.py:518
+msgid "Default grade implementation error"
+msgstr "Wystąpił błąd przy wprowadzaniu domyślnego systemu oceniania"
+
+#: .\student\templates\student_attempt_exam.html:16
+msgid "You already attempted this test"
+msgstr "Przykro nam ale podjąłeś już próbę pisania tego testu"
+
+#: .\student\templates\student_attempt_exam.html:22
+msgid "All"
+msgstr "Przykro nam ale wszystkie"
+
+#: .\student\templates\student_attempt_exam.html:22
+msgid "test attempts have been used up"
+msgstr "próby pisania testu zostały wykorzystane"
+
+#: .\student\templates\student_attempt_exam.html:32
+msgid "You have"
+msgstr "Pozostało ci"
+
+#: .\student\templates\student_attempt_exam.html:32
+#: .\student\templates\student_test_finished.html:23
+msgid "out of"
+msgstr "z"
+
+#: .\student\templates\student_attempt_exam.html:32
+msgid "remaining attempts"
+msgstr "podejść"
+
+#: .\student\templates\student_attempt_exam.html:38
+msgid "This test is"
+msgstr "Jest to test"
+
+#: .\student\templates\student_attempt_exam.html:38
+msgid "multiple"
+msgstr "wielokrotnego"
+
+#: .\student\templates\student_attempt_exam.html:38
+msgid "single"
+msgstr "jednokrotnego"
+
+#: .\student\templates\student_attempt_exam.html:39
+msgid "choice test"
+msgstr "wyboru"
+
+#: .\student\templates\student_attempt_exam.html:41
+msgid "Test is composed of"
+msgstr "Test składa się z"
+
+#: .\student\templates\student_attempt_exam.html:41
+msgid "questions, in order to pass you have to give"
+msgstr "pytań, by zaliczyć należy udzielić"
+
+#: .\student\templates\student_attempt_exam.html:42
+msgid "prawidłowych odpowiedzi"
+msgstr "correct answers"
+
+#: .\student\templates\student_attempt_exam.html:44
+msgid "For completing the exam you have"
+msgstr "Na ukończenie egzaminu masz"
+
+#: .\student\templates\student_attempt_exam.html:49
+msgid "Are you sure you want to attempt the exam?"
+msgstr "Czy jesteś pewien że chcesz podjąc się egzaminu?"
+
+#: .\student\templates\student_attempt_exam.html:56
+msgid "Yes"
+msgstr "Tak"
+
+#: .\student\templates\student_attempt_exam.html:63
+msgid "No"
+msgstr "Nie"
+
+#: .\student\templates\student_detail_course.html:7
+msgid "Course should be finished before"
+msgstr "Kurs powinien zostać ukończony przed"
+
+#: .\student\templates\student_detail_course.html:11
+msgid "View lessons"
+msgstr "Przeglądaj lekcje"
+
+#: .\student\templates\student_detail_course.html:18
+msgid "Attempt exam"
+msgstr "Podejdź do egzaminu"
+
+#: .\student\templates\student_detail_course.html:25
+msgid "Deadline expired"
+msgstr "Termin upłynął"
+
+#: .\student\templates\student_detail_course.html:32
+msgid "View diploma"
+msgstr "Pobierz dyplom"
+
+#: .\student\templates\student_multiple_question.html:8
+#: .\student\templates\student_question.html:8
+msgid "Time remaining"
+msgstr "Pozostały czas"
+
+#: .\student\templates\student_multiple_question.html:15
+#: .\student\templates\student_question.html:15
+msgid "Question nr."
+msgstr "Pytanie"
+
+#: .\student\templates\student_multiple_question.html:53
+#: .\student\templates\student_question.html:37
+msgid "Send answer"
+msgstr "Wyślij odpowiedź"
+
+#: .\student\templates\student_multiple_question.html:57
+#: .\student\templates\student_question.html:41
+msgid "Finish exam"
+msgstr "Zakończ test"
+
+#: .\student\templates\student_result_view.html:6
+msgid "Test results from course"
+msgstr "Wyniki testów z kursu"
+
+#: .\student\templates\student_results_general.html:6
+msgid "Your results"
+msgstr "Twoje wyniki"
+
+#: .\student\templates\student_results_general.html:11
+#: .\student\templates\student_search_course.html:16
+msgid "Search by status"
+msgstr "Szukaj po statusie"
+
+#: .\student\templates\student_results_general.html:33
+msgid "Course"
+msgstr "Kurs"
+
+#: .\student\templates\student_search_course.html:11
+msgid "Your courses"
+msgstr "Twoje kursy"
+
+#: .\student\templates\student_test_finished.html:8
+msgid "Test summary"
+msgstr "Podsumowanie testu"
+
+#: .\student\templates\student_test_finished.html:16
+msgid "Time to finish exam have passed"
+msgstr "Czas na wykonanie testu upłynął"
+
+#: .\student\templates\student_test_finished.html:22
+msgid "You recieved percentage score of"
+msgstr "Otrzymany wynik:"
+
+#: .\student\templates\student_test_finished.html:23
+msgid "You recieved"
+msgstr "Zostało uzyskane"
+
+#: .\student\templates\student_test_finished.html:23
+msgid "points"
+msgstr "punktów"
+
+#: .\student\templates\student_test_finished.html:29
+msgid "Congratulations on passing exam"
+msgstr "Gratulujemy pomyślnego zdania egzaminu"
+
+#: .\student\templates\student_test_finished.html:35
+msgid "Unfortunately you failed to pass the exam"
+msgstr "Niestety nie udało się zdać testu"
+
+#: .\student\views.py:131
+msgid "Course isn't ready"
+msgstr "Kurs nie jest gotowy"
+
+#: .\student\views.py:251
+msgid "finished course"
+msgstr "ukończył kurs"
+
+#: .\student\views.py:253
+msgid "with passing result"
+msgstr "z wynikiem pozytywnym"
+
+#: .\student\views.py:255
+#, python-format
+msgid "achieving %(perc)s percent"
+msgstr "osiągając %(perc)s procent"
+
+#: .\student\views.py:256
+#, python-format
+msgid "by getting %(result)s out of %(max_score)s points"
+msgstr "przez uzyskanie %(result)s na %(max_score)s punktów"
+
+#: .\student\views.py:258
+msgid "Congratualtions, we wish further successes in studies"
+msgstr "Gratulujemy i życzymy dlaszych sukcesów w nauce"
+
+#~ msgid "Users"
+#~ msgstr "Użytkownicy"

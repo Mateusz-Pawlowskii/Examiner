@@ -1,5 +1,6 @@
 import datetime
 from django.utils.timezone import make_aware
+from django.utils.translation import gettext_lazy as _
 
 from .models import Result, StudentGroup, Course, Term, Grade
 
@@ -17,32 +18,40 @@ def test_mark(courses, student):
     for course in courses:
         group = StudentGroup.objects.filter(students=student, courses=course).first()
         timeover = get_timeover(group, course)
-        results = Result.objects.filter(course=course, student=student)
-        test_marked = False
-        for result in results:
-            if result.passed == True and test_marked == False:
-                out.append("Zaliczony")
-                test_marked = True
-        if test_marked == False and len(results) >= course.attempt_amount or timeover:
-            out.append("Niezaliczony")
-        elif test_marked == False:
-            out.append("Jeszcze nie ukończony")
+        results = sorted(Result.objects.filter(course=course, student=student), key = lambda result:result.current_score)
+        if len(results) == 0 and timeover:
+            out.append(_("Failed"))
+            continue
+        elif len(results) == 0:
+            out.append(_("Unfinished"))
+            continue
+        result = results[-1]
+        if result.passed == True:
+            out.append(_("Passed"))
+        elif len(results) >= course.attempt_amount or timeover:
+            out.append(_("Failed"))
+        else:
+            out.append(_("Unfinished"))
     return out
 
 def course_mark(course, students, timeover):
     """Returns list of stings representing status corresponding to each student for a given course"""
     out = []
     for student in students:
-        results = Result.objects.filter(course=course, student=student)
-        test_marked = False
-        for result in results:
-            if result.passed == True and test_marked == False:
-                out.append("Zaliczony")
-                test_marked = True
-        if test_marked == False and len(results) >= course.attempt_amount or timeover:
-            out.append("Niezaliczony")
-        elif test_marked == False:
-            out.append("Jeszcze nie ukończony")
+        results = sorted(Result.objects.filter(course=course, student=student), key = lambda result:result.current_score)
+        if len(results) == 0 and timeover:
+            out.append(_("Failed"))
+            continue
+        elif len(results) == 0:
+            out.append(_("Unfinished"))
+            continue
+        result = results[-1]
+        if result.passed == True:
+            out.append(_("Passed"))
+        elif len(results) >= course.attempt_amount or timeover:
+            out.append(_("Failed"))
+        else:
+            out.append(_("Unfinished"))
     return out
 
 def student_grades(courses, student):
@@ -53,7 +62,7 @@ def student_grades(courses, student):
         course_marked = False
         results = sorted(Result.objects.filter(course=course, student=student), key = lambda result:result.current_score)
         if len(results) == 0:
-            out.append("brak")
+            out.append(_("None"))
             continue
         result = results[-1]
         score = (result.current_score*100)/course.question_amount
@@ -66,7 +75,7 @@ def student_grades(courses, student):
                 course_marked = True
                 break
         if not course_marked:
-            out.append("brak")
+            out.append(_("None"))
     return out
 
 def course_grades(course, students):
@@ -77,7 +86,7 @@ def course_grades(course, students):
         student_marked = False
         results = sorted(Result.objects.filter(course=course, student=student), key = lambda result:result.current_score)
         if len(results) == 0:
-            out.append("brak")
+            out.append(_("None"))
             continue
         result = results[-1]
         score = (result.current_score*100)/course.question_amount
@@ -90,7 +99,7 @@ def course_grades(course, students):
                 student_marked = True
                 break
         if not student_marked:
-            out.append("brak")
+            out.append(_("None"))
     return out
         
 def get_courses_for_student(student):

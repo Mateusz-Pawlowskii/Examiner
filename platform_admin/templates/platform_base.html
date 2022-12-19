@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,51 +27,51 @@
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>&nbsp</span>
           {% if nav_var == "homepage" %}
           <a href="{% url 'exam:home-redirect' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Strona Domowa</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Homepage" %}</span>
           </a>
           {% else %}
           <a href="{% url 'exam:home-redirect' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Strona Domowa</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Homepage" %}</span>
           </a>
           {% endif %}
           {% if nav_var == "examiners" %}
           <a href="{% url 'platform_admin:examiner-search' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true" id="nav_courses">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Egzaminatorzy</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Examiners" %}</span>
           </a>
           {% else %}
           <a href="{% url 'platform_admin:examiner-search' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="nav_courses">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Egzaminatorzy</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Examiners" %}</span>
           </a>
           {% endif %}
           {% if nav_var == "student_group" %}
           <a href="{% url 'platform_admin:student-group-search' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true" id="nav_results">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Grupy studentów</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Student groups" %}</span>
           </a>
           {% else %}
           <a href="{% url 'platform_admin:student-group-search' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="nav_results">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Grupy studentów</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Student groups" %}</span>
           </a>
           {% endif %}
           {% if nav_var == "students" %}
           <a href="{% url 'platform_admin:student-search' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true" id="nav_results">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Studenci</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Students" %}</span>
           </a>
           {% else %}
           <a href="{% url 'platform_admin:student-search' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="nav_results">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Studenci</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Students" %}</span>
           </a>
           {% endif %}
           {% if nav_var == "settings" %}
           <a href="{% url 'platform_admin:settings' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true" id="nav_results">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Ustawienia</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Settings" %}</span>
           </a>
           {% else %}
           <a href="{% url 'platform_admin:settings' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="nav_results">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Ustawienia</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Settings" %}</span>
           </a>
           {% endif %}
           <a href="{% url 'exam:logout' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="logout">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Wyloguj się</span>
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Logout" %}</span>
           </a>
         </div>
       </div>

@@ -1,5 +1,7 @@
 {% extends base %}
 
+{% load i18n %}
+
 {% block content %}
 {% for m in messages %}
 <div class="alert alert-warning" role="alert">
@@ -13,11 +15,11 @@
   {% else %}
   <a href="{% url 'examiner_user:examiner-create-group' %}" class="btn btn-success my-2 my-lg-0 myButton">
   {% endif %}
-    Dodaj grupe studencką
+    {% trans "Create student group" %}
   </a>
 </p>
 <br><br>
-<h4>Szukaj</h4>
+<h4>{% trans "Search" %}</h4>
 <div id="form1">
   {{ form.as_p }}
 </div>
@@ -25,9 +27,9 @@
   <thead class="thead-dark">
     <tr id="first_row">
       {% load static %}
-      <th id="th1" scope="col" onclick="sortColumn('name',1)">Nazwa grupy <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
-      <th id="th2" scope="col" onclick="sortColumn('login',2)">Ilość studentów <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
-      <th id="th3" scope="col" onclick="sortColumn('join',3)">Ilość kursów <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
+      <th id="th1" scope="col" onclick="sortColumn('name',1)">{% trans "Group name" %} <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th id="th2" scope="col" onclick="sortColumn('login',2)">{% trans "Student amount" %} <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
+      <th id="th3" scope="col" onclick="sortColumn('join',3)">{% trans "Course amount" %} <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
     </tr>
   </thead>
   <tbody id="tbody">

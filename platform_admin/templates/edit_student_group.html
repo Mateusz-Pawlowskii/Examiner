@@ -1,5 +1,7 @@
 {% extends base %}
 
+{% load i18n %}
+
 {% block head %}
 {% load static %}
 <!-- autocomplete function was provided by courtesy of W3Schools. I didn't write it myself. -->
@@ -13,16 +15,16 @@
   {{ m }}
 </div>
 {% endfor %}
-<h4>Grupa studencka <b>{{group.name}}</b></h4>
+<h4>{% trans "Student group " %}<b>{{group.name}}</b></h4>
 <form method="POST">
     {% csrf_token %}
     {{form.as_p}}
-    <button class="btn btn-success myButton" type="submit" id="submit">Zmień nazwę</button>
+    <button class="btn btn-success myButton" type="submit" id="submit">{% trans "Change name" %}</button>
 </form>
 <hr>
-<button type="button" class="btn btn-secondary dropdown-toggle tog mt-1 myButton" id="lesson_nav">Studenci</button>
+<button type="button" class="btn btn-secondary dropdown-toggle tog mt-1 myButton" id="lesson_nav">{% trans "Students" %}</button>
 <div class="no-display">
-<p>Prosze wpisać nazwe studenta który ma zostać przypisany do grupy <b>{{group.name}}</b></p>
+<p>{% trans "Enter username of user that will be assigned to group" %}<b>{{group.name}}</b></p>
 <div class="form-group">
   {% if side == "platform" %}
     <form autocomplete="off" method="POST" action="{% url 'platform_admin:attach-student' pk=group.pk %}">
@@ -35,10 +37,10 @@
         </div>
         {{ student_form.group.as_hidden }}
         <br>
-        <button class="btn btn-success mt-3 myButton" type="submit" id="submit">Przypisz</button>
+        <button class="btn btn-success mt-3 myButton" type="submit" id="submit">{% trans "Assign" %}</button>
     </form>
 </div>
-<h4>Szukaj</h4>
+<h4>{% trans "Search" %}</h4>
 <div>
   <input id="id_name" class="form-control">
 </div>
@@ -47,9 +49,9 @@
   <thead class="thead-dark">
     <tr id="first_row">
       {% load static %}
-      <th id="th1" scope="col" onclick="sortColumn('name',1)">Nazwa użytkownika <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
-      <th id="th2" scope="col" onclick="sortColumn('login',2)">Ostatni login <img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
-      <th id="th3" scope="col" onclick="sortColumn('join',3)">Data dołączenia <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
+      <th id="th1" scope="col" onclick="sortColumn('name',1)">{% trans "Username" %} <img id="img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th id="th2" scope="col" onclick="sortColumn('login',2)">{% trans "Last login" %}<img id="img2" src="{% static 'img/sorting_button.png' %}"></th>
+      <th id="th3" scope="col" onclick="sortColumn('join',3)">{% trans "Join date" %} <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -59,7 +61,7 @@
 </table>
 </div>
 <hr>
-<button type="button" class="btn btn-secondary dropdown-toggle tog mt-1 myButton" id="lesson_nav">Kursy</button>
+<button type="button" class="btn btn-secondary dropdown-toggle tog mt-1 myButton" id="lesson_nav">{% trans "Courses" %}</button>
 <div class="no-display">
 <div class="form-group">
   {% if side == "platform" %}
@@ -69,23 +71,23 @@
   {% endif %}
         {% csrf_token %}
         <div class="autocomplete" style="width:300px;">
-          <label for="course_id">Prosze wpisać nazwe kursu który ma zostać przypisany do grupy <b>{{group.name}}</b>:</label>
+          <label for="course_id">{% trans "Enter name of a course that will be assigned to group" %} <b>{{group.name}}</b>:</label>
             {{ course_form.course }}
           </div>
           <br>
-          <label for="term_id">Data do której studenci z grupy mają ukończyć kurs:</label>
+          <label for="term_id">{% trans "Course deadline" %}</label>
           <div style="width:300px;">
             {{ course_form.term }}
           </div>
             {{ course_form.group.as_hidden }}
         <br>
-        <button class="btn btn-success mt-3 myButton" type="submit" id="submit">Przypisz</button>
+        <button class="btn btn-success mt-3 myButton" type="submit" id="submit">{% trans "Assign" %}</button>
     </form>
 </div>
-<h4>Szukaj kursów</h4>
+<h4>{% trans "Course search" %}</h4>
 <select id="select">
-  <option id="course_search1" selected="selected">Szukaj po nazwie</option>
-  <option id="course_search2">Szukaj po kategorii</option>
+  <option id="course_search1" selected="selected">{% trans "Search by name" %}</option>
+  <option id="course_search2">{% trans "Search by category" %}</option>
 </select>
 <br>
   <div id="course_form1">
@@ -104,9 +106,9 @@
   <thead class="thead-dark">
     <tr id="first_course_row">
       {% load static %}
-      <th scope="col" onclick="courseSortColumn('name',1)" class="text-center">Nazwa <img id="course_img1" src="{% static 'img/sorting_button.png' %}"></th>
-      <th scope="col" onclick="courseSortColumn('category',2)" class="text-center">Kategoria <img id="course_img2" src="{% static 'img/sorting_button.png' %}"></th>
-      <th scope="col" onclick="courseSortColumn('term',3)" class="text-center">Termin ukończenia <img id="course_img3" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="courseSortColumn('name',1)" class="text-center">{% trans "Name" %} <img id="course_img1" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="courseSortColumn('category',2)" class="text-center">{% trans "Category" %} <img id="course_img2" src="{% static 'img/sorting_button.png' %}"></th>
+      <th scope="col" onclick="courseSortColumn('term',3)" class="text-center">{% trans "Deadline" %} <img id="course_img3" src="{% static 'img/sorting_button.png' %}"></th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -118,23 +120,24 @@
 <hr>
 <br>
 {% if side == "platform" %}
-<button class="btn btn-danger mt-1 myButton" type="button" data-toggle="modal" data-target="#deleteModal">Usuń grupe</button>
+<button class="btn btn-danger mt-1 myButton" type="button" data-toggle="modal" data-target="#deleteModal">{% trans "Delete group" %}</button>
 <div class="modal fade" id="deleteModal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Usunięcie grupy studenckiej</h4>
+        <h4 class="modal-title">{% trans "Student group deletion" %}</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        Czy na pewno chcesz skasować grupe studencką {{group.name}}? Tej decyzji nie da się cofnąć, a kursy i uczniowie przypisani
-        do grupy zostaną od niej odłączeni.
+        {% blocktranslate %}Are you sure you want to delete student group {% endblocktranslate %}{{ group.name }}?
+        {% blocktranslate %}This choice can't be reverted, courses and students assigned to this group will be unassigned
+        {% endblocktranslate %}
       </div>
       <div class="modal-footer">
         <form method="POST" action="{% url 'platform_admin:delete-group' pk=group.pk %}">
           {% csrf_token %}
-        <button class="btn btn-danger" type="submit" id="submit">Usuń grupe</button>
-        <button type="button" class="btn btn-info" data-dismiss="modal">Cofnij</button>
+        <button class="btn btn-danger" type="submit" id="submit">{% trans "Delete group" %}</button>
+        <button type="button" class="btn btn-info" data-dismiss="modal">{% trans "Cancel" %}</button>
       </form>
       </div>
 
@@ -149,7 +152,7 @@
 <a href="{% url 'examiner_user:student-group' %}">
 {% endif %}
   <button class="btn btn-success mt-1 myButton" id="back">
-    Wróć
+    {% trans "Back" %}
   </button>
 </a>
 <script>
@@ -196,21 +199,20 @@ var acc = document.getElementsByClassName("tog");
     tableBody.innerHTML = dataHtml;
   };
   </script>
-  <script src="{% static 'js/month_translation.js' %}"></script>
   {% for student in group_students %}
   <script>
     objectList.push({"name" : `{% if side == "platform" %}<a href="{% url 'platform_admin:edit-student' pk=student.pk slug=student.username|slugify %}">
       {{student.username}}</a>{% else %}<a href="{% url 'examiner_user:detail-student' pk=student.pk %}">
       {{student.username}}</a>{% endif %}`, 
-      "login" : month_conv("{% if student.last_login == None %} Brak {% else %}{{student.last_login}}{% endif %}"),
-      "join" : month_conv("{{student.date_joined}}"), "sort_join" : new Date("{{student.date_joined.isoformat}}"),
+      "login" : "{% if student.last_login == None %} {% trans 'None' %} {% else %}{{student.last_login}}{% endif %}",
+      "join" : "{{student.date_joined}}", "sort_join" : new Date("{{student.date_joined.isoformat}}"),
       "sort_name" : "{{student.username}}", "sort_login" :
       new Date("{% if student.last_login == None %} 08 October 2001 11:32 UTC {% else %}{{student.last_login.isoformat}}{% endif %}"),
       "delete" : `{% if side == "platform" %}<form method="POST" action="{% url 'platform_admin:unattach-student' pk=group.pk %}">
       {% else %}<form method="POST" action="{% url 'examiner_user:examiner-unattach-student' pk=group.pk %}">{% endif %}
                   {% csrf_token %}
                   <input type="hidden" value="{{student.pk}}" name="student">
-                  <button type="submit" class="btn btn-danger ml-2 myButton" id="{{student.username}}_delete">Usuń</button></form>`
+                  <button type="submit" class="btn btn-danger ml-2 myButton" id="{{student.username}}_delete">{% trans 'Delete' %}</button></form>`
         })
   </script>
   {% endfor %}
@@ -231,29 +233,29 @@ var acc = document.getElementsByClassName("tog");
     courseObjectList.push({"name" : `{% if side == "platform" %}<a href="{% url 'platform_admin:platform-detail-course' pk=course.pk group=group.pk %}">
     {{course.name}}</a>{% else %}<a href="{% url 'examiner_user:detail-course' pk=course.pk slug=course.name|slugify %}">
     {{course.name}}</a>{% endif %}`, "category" : "{{course.category}}",
-    "term" : month_conv(`{% for term in terms %}{% if term.0.course == course %}{{term.0.time}} {{term.1}}&nbsp&nbsp&nbsp
+    "term" : `{% for term in terms %}{% if term.0.course == course %}{{term.0.time}} {{term.1}}&nbsp&nbsp&nbsp
     <button class="btn btn-success mt-1" type="button" data-toggle="modal" data-target="#changeModal{{forloop.counter}}">
-      Zmień date</button>{% endif %}{% endfor %}`),
+      {% trans 'Change deadline' %}</button>{% endif %}{% endfor %}`,
      "sort_name" : "{{course.name}}", "sort_category" : "{{course.category}}",
      "sort_term" : new Date(`{% for term in terms %}{% if term.0.course == course %}{{term.0.time.isoformat}}{% endif %}{% endfor %}`),
       "delete" : `{% if side == "platform" %}<form method="POST" action="{% url 'platform_admin:unattach-course' pk=group.pk %}">
       {% else %}<form method="POST" action="{% url 'examiner_user:examiner-unattach-course' pk=group.pk %}">{% endif %}
                   {% csrf_token %}
                   <input type="hidden" value="{{course.pk}}" name="course">
-                  <button type="submit" class="btn btn-danger ml-2 myButton" id="{{course.name}}_delete">Usuń</button></form>`
+                  <button type="submit" class="btn btn-danger ml-2 myButton" id="{{course.name}}_delete">{% trans 'Delete' %}</button></form>`
         })
   </script>
   <div class="modal fade" id="changeModal{{forloop.counter}}">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Zmień termin ukończenia kursu</h4>
+          <h4 class="modal-title">{% trans "Change deadline" %}</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          Zmiana terminu ukończenia kursu <b>{{course.name}}</b>
+          {% trans "Deadline change" %} <b>{{course.name}}</b>
           <br>
-          Można zastosować rózne formaty zapisu np.RRRR-MM-DD
+          {% trans "Many date formats are valid, for example: YYYY-MM-DD" %}
           {% if side == "platform" %}
           <form method="POST" action="{% url 'platform_admin:change-term' pk=group.pk course=course.pk %}">
           {% else %}
@@ -263,8 +265,8 @@ var acc = document.getElementsByClassName("tog");
             {{term_form.time}}
           </div>
         <div class="modal-footer">
-          <button class="btn btn-success" type="submit" id="submit">Zmień</button>
-          <button type="button" class="btn btn-info" data-dismiss="modal">Anuluj</button>
+          <button class="btn btn-success" type="submit" id="submit">{% trans "Change" %}</button>
+          <button type="button" class="btn btn-info" data-dismiss="modal">{% trans "Cancel" %}</button>
         </form>
         </div>
   
