@@ -13,7 +13,7 @@
 {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
 {% for language in languages %}
 <a href="/{{language.code}}/">
-  <button class ="btn btn-success mb-1 myButton">
+  <button class ="btn btn-success mb-4 myButton">
     {{language.name_local|title}}
   </button>
 </a>
@@ -39,7 +39,7 @@
 </h4>
 <br>
 <a href = "{% url 'examiner_user:examiner-feedback' %}">
-  <button class="btn btn-success myButton">{% trans "Share feedback" %}</button>
+  <button class="btn btn-success myButton mb-4">{% trans "Share feedback" %}</button>
 </a>
 <br>
 {% trans "Contact info:" %}

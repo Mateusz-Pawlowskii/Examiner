@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.http import FileResponse
 from django.http import HttpResponseRedirect
 from operator import attrgetter
+from django.template.defaultfilters import slugify
 from django.utils.translation import gettext_lazy as _
 
 from .forms import (CourseForm, QuestionForm, QuestionFormMultiple, LessonForm, AttachCourseToGroupForm, AttachStudentTextForm, 
@@ -434,14 +435,15 @@ class EditLessonContent(LoginRequiredMixin, PermissionRequiredMixin, View):
             file = request.FILES["material"]
         except:
             messages.error(request, _("New resource should be given during learning resource change"))
-            return redirect(reverse_lazy("examiner_user:detail-lesson", kwargs={"pk":self.kwargs["pk"]}))
+            return redirect(reverse_lazy("examiner_user:detail-lesson",
+                    kwargs={"pk":lesson.pk,"slug":slugify(lesson.topic)}))
         if self.allowed_file(file.name):
             if form.is_valid():
-                lesson.material.delete(lesson.material.name)
                 form.save()
         else:
             messages.error(request, _("Wrong file extension"))
-        return redirect(reverse_lazy("examiner_user:detail-lesson", kwargs={"pk":self.kwargs["pk"]}))
+        return redirect(reverse_lazy("examiner_user:detail-lesson",
+                kwargs={"pk":lesson.pk,"slug":slugify(lesson.topic)}))
 
 class EditLessonTopic(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_lesson")
@@ -465,7 +467,7 @@ class EditLessonTopic(LoginRequiredMixin, PermissionRequiredMixin, View):
                 form.save()
         else:
             messages.error(request, _("Incorrect lesson topic"))
-        return redirect(reverse_lazy("examiner_user:detail-lesson", kwargs={"pk":self.kwargs["pk"]}))
+        return redirect(reverse_lazy("examiner_user:detail-lesson", kwargs={"pk":self.kwargs["pk"],"slug":slugify(lesson.topic)}))
 
 # Result views
 class GenralResultView(LoginRequiredMixin, PermissionRequiredMixin, View):

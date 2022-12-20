@@ -29,7 +29,7 @@
     <br>
     {{course_form.attempt_amount}}
     <br>
-    <label for="time"> {% "Exam duration" %}:</label>
+    <label for="time"> {% trans "Exam duration" %}:</label>
     <br>
     {{course_form.time}}
     <br><br>
@@ -175,7 +175,7 @@
             </button>
         </td>
         <td width="10%">
-          <a href="{% url 'platform_admin:group-report' course=object.pk group=group.pk slug=course.name|slugify %}">
+          <a href="{% url 'platform_admin:group-report' course=object.pk group=group.pk slug=object.name|slugify %}">
             <button class = "btn btn-success small">{% trans "Report" %}</button>
           </a>
         </td>

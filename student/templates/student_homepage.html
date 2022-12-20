@@ -13,7 +13,7 @@
 {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
 {% for language in languages %}
 <a href="/{{language.code}}/">
-  <button class ="btn btn-success mb-1 myButton">
+  <button class ="btn btn-success mb-4 myButton">
     {{language.name_local|title}}
   </button>
 </a>

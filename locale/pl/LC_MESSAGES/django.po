@@ -1518,7 +1518,7 @@ msgstr "Status"
 
 #: .\platform_admin\views.py:453
 msgid "Settings saved"
-msgstr "Ustawienia"
+msgstr "Ustawienia zapisane"
 
 #: .\platform_admin\views.py:455
 msgid "Incorrect logo"
