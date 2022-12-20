@@ -4,7 +4,7 @@
 
 {% block content %}
 <h4><b>{{course.name}}</b></h4>
-<p>{% trans "Course should be finished before" %}: <b id="date"></b></p>
+<p>{% trans "Course should be finished before" %}: <b id="date">{{term.0}}</b></p>
 <br>
 <a href="{% url 'student:student-list-lesson' pk=course.pk slug=course.name|slugify %}">
   <button class="btn btn-success mt-1 myButton" id="view-lesson">

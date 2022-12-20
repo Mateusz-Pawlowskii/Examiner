@@ -26,6 +26,9 @@ class PlatformHomepage(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
+        if platform.inactive:
+            platform.inactive = False
+            platform.save()
         context = {"nav_var" : "homepage",
                    "platform" : platform}
         return render(request, self.template_name, context)

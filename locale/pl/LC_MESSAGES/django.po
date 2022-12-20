@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-19 15:41+0100\n"
+"POT-Creation-Date: 2022-12-20 14:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,51 +18,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\Examiner\settings.py:130
+#: .\Examiner\settings.py:131
 msgid "English"
 msgstr ""
 
-#: .\Examiner\settings.py:131
+#: .\Examiner\settings.py:132
 msgid "Polish"
 msgstr "Polski"
 
-#: .\exam\forms.py:13 .\exam\templates\homepage.html:51
+#: .\exam\forms.py:13 .\exam\templates\homepage.html:53
 #: .\exam\templates\login.html:23 .\exam\templates\registration.html:17
 msgid "Password"
 msgstr "Hasło"
 
-#: .\exam\functions.py:23 .\exam\functions.py:32 .\exam\functions.py:43
-#: .\exam\functions.py:52 .\examiner_user\views.py:518
-#: .\examiner_user\views.py:549 .\examiner_user\views.py:566
-#: .\examiner_user\views.py:591 .\examiner_user\views.py:602
-#: .\examiner_user\views.py:604 .\student\forms.py:10
+#: .\exam\functions.py:25 .\exam\functions.py:34 .\exam\functions.py:45
+#: .\exam\functions.py:54 .\examiner_user\views.py:520
+#: .\examiner_user\views.py:551 .\examiner_user\views.py:568
+#: .\examiner_user\views.py:593 .\examiner_user\views.py:604
+#: .\examiner_user\views.py:606 .\student\forms.py:10
 msgid "Failed"
 msgstr "Niezaliczony"
 
-#: .\exam\functions.py:26 .\exam\functions.py:34 .\exam\functions.py:46
-#: .\exam\functions.py:54 .\examiner_user\views.py:518
-#: .\examiner_user\views.py:567 .\examiner_user\views.py:603
-#: .\examiner_user\views.py:604 .\student\forms.py:12
+#: .\exam\functions.py:28 .\exam\functions.py:36 .\exam\functions.py:48
+#: .\exam\functions.py:56 .\examiner_user\views.py:520
+#: .\examiner_user\views.py:569 .\examiner_user\views.py:605
+#: .\examiner_user\views.py:606 .\student\forms.py:12
 msgid "Unfinished"
 msgstr "Jeszcze nie ukończony"
 
-#: .\exam\functions.py:30 .\exam\functions.py:50
+#: .\exam\functions.py:32 .\exam\functions.py:52
 #: .\examiner_user\templates\course_group_results.html:88
 #: .\examiner_user\templates\course_results.html:125
-#: .\examiner_user\views.py:518 .\examiner_user\views.py:547
-#: .\examiner_user\views.py:565 .\examiner_user\views.py:589
-#: .\examiner_user\views.py:601 .\examiner_user\views.py:604
+#: .\examiner_user\views.py:520 .\examiner_user\views.py:549
+#: .\examiner_user\views.py:567 .\examiner_user\views.py:591
+#: .\examiner_user\views.py:603 .\examiner_user\views.py:606
 #: .\student\forms.py:11
 msgid "Passed"
 msgstr "Zaliczony"
 
-#: .\exam\functions.py:65 .\exam\functions.py:78 .\exam\functions.py:89
-#: .\exam\functions.py:102 .\examiner_user\templates\students.html:44
+#: .\exam\functions.py:67 .\exam\functions.py:80 .\exam\functions.py:91
+#: .\exam\functions.py:104 .\examiner_user\templates\students.html:44
 #: .\platform_admin\templates\edit_student_group.html:207
 #: .\platform_admin\templates\search_examiner.html:50
 #: .\platform_admin\templates\search_student.html:50
 msgid "None"
 msgstr "Brak"
+
+#: .\exam\functions.py:142
+msgid "Your platform is marked as inactive"
+msgstr "Twoja platforma została oznaczona jako nieaktywna"
 
 #: .\exam\templates\activate_email.html:3 .\exam\templates\reset_mail.html:3
 msgid "Hello"
@@ -80,14 +84,21 @@ msgstr "Nazwij swoja platformę e-learningową"
 msgid "Create platform"
 msgstr "Stwórz platforme"
 
-#: .\exam\templates\homepage.html:26
-#: .\examiner_user\templates\examiner_homepage.html:30
-#: .\platform_admin\templates\platform_homepage.html:30
-#: .\student\templates\student_homepage.html:30
+#: .\exam\templates\homepage.html:22 .\exam\templates\privacy_policy.html:6
+#: .\examiner_user\templates\examiner_homepage.html:22
+#: .\platform_admin\templates\platform_homepage.html:22
+#: .\student\templates\student_homepage.html:22
+msgid "Privacy policy"
+msgstr "Polityka prywatności"
+
+#: .\exam\templates\homepage.html:28
+#: .\examiner_user\templates\examiner_homepage.html:32
+#: .\platform_admin\templates\platform_homepage.html:32
+#: .\student\templates\student_homepage.html:32
 msgid "About Examiner"
 msgstr "O programie"
 
-#: .\exam\templates\homepage.html:29
+#: .\exam\templates\homepage.html:31
 msgid ""
 "Welcome to Examiner. This site allows creation and edition of courses and "
 "uploading course materials.\n"
@@ -101,46 +112,64 @@ msgstr ""
 "testów (pytania jednokrotnego lub \n"
 "wielokrotnego wyboru) przydzielonych do kursów"
 
-#: .\exam\templates\homepage.html:33
-#: .\examiner_user\templates\examiner_homepage.html:36
-#: .\platform_admin\templates\platform_homepage.html:37
-#: .\student\templates\student_homepage.html:37
+#: .\exam\templates\homepage.html:35
+#: .\examiner_user\templates\examiner_homepage.html:38
+#: .\platform_admin\templates\platform_homepage.html:39
+#: .\student\templates\student_homepage.html:39
 msgid "Application allows creation of new student and examiner accounts"
 msgstr "Aplikacja pozwala na stworzenie kont studentów i egzaminatorów"
 
-#: .\exam\templates\homepage.html:37 .\exam\templates\login.html:26
+#: .\exam\templates\homepage.html:39 .\exam\templates\login.html:26
 #: .\exam\templates\password_reset_complete.html:15
 msgid "Sign in"
 msgstr "Zaloguj się"
 
-#: .\exam\templates\homepage.html:43 .\exam\templates\registration.html:38
+#: .\exam\templates\homepage.html:45 .\exam\templates\registration.html:45
 msgid "Register"
 msgstr "Zarejestruj się"
 
-#: .\exam\templates\homepage.html:47
+#: .\exam\templates\homepage.html:49
 msgid "Test account credentials"
 msgstr "Dane do konta testowego"
-
-#: .\exam\templates\homepage.html:56
-#: .\examiner_user\templates\examiner_homepage.html:43
-#: .\platform_admin\templates\platform_homepage.html:44
-#: .\student\templates\student_homepage.html:44
-msgid "Contact info:"
-msgstr "Dane kontaktowe:"
 
 #: .\exam\templates\homepage.html:58
 #: .\examiner_user\templates\examiner_homepage.html:45
 #: .\platform_admin\templates\platform_homepage.html:46
 #: .\student\templates\student_homepage.html:46
-msgid "E-mail adress: mm.pawlowski18@gmail.com"
-msgstr "Adres mailowy: mm.pawlowski18@gmail.com"
+msgid "Contact info:"
+msgstr "Dane kontaktowe:"
 
 #: .\exam\templates\homepage.html:60
 #: .\examiner_user\templates\examiner_homepage.html:47
 #: .\platform_admin\templates\platform_homepage.html:48
 #: .\student\templates\student_homepage.html:48
+msgid "E-mail adress: mm.pawlowski18@gmail.com"
+msgstr "Adres mailowy: mm.pawlowski18@gmail.com"
+
+#: .\exam\templates\homepage.html:62
+#: .\examiner_user\templates\examiner_homepage.html:49
+#: .\platform_admin\templates\platform_homepage.html:50
+#: .\student\templates\student_homepage.html:50
 msgid "Phone number: +48 506 960 518"
 msgstr "Numer telefonu: 506 960 518"
+
+#: .\exam\templates\inactivity_warning.html:3
+msgid "Dear"
+msgstr "Drogi"
+
+#: .\exam\templates\inactivity_warning.html:3
+msgid " ,your platform"
+msgstr " ,twoja platforma"
+
+#: .\exam\templates\inactivity_warning.html:4
+msgid ""
+"on Examiner app was marked as inactive becouse you haven't loged into your "
+"platform admin\n"
+"account in the last 11 months. Your e-learning platform, together with all "
+"courses, lessons and user accounts will\n"
+"be deleted in 1 month if you are not going to log in to your platform admin "
+"account by"
+msgstr ""
 
 #: .\exam\templates\login.html:8
 msgid "Enter your login credentials below. It's case sensitive"
@@ -154,7 +183,7 @@ msgid "Username"
 msgstr "Nazwa użytkownika"
 
 #: .\exam\templates\login.html:29 .\exam\templates\password_reset.html:24
-#: .\exam\templates\registration.html:44
+#: .\exam\templates\registration.html:51
 #: .\examiner_user\templates\control_course.html:68
 #: .\examiner_user\templates\course_group_results.html:37
 #: .\examiner_user\templates\course_results.html:74
@@ -198,7 +227,7 @@ msgstr ""
 "nadania nowego hasła."
 
 #: .\exam\templates\password_reset_complete.html:8
-#: .\platform_admin\views.py:126
+#: .\platform_admin\views.py:129
 msgid "Password sucessfully changed"
 msgstr "Hasło pomyślnie zmienione"
 
@@ -295,6 +324,10 @@ msgstr ""
 msgid "Mail adress"
 msgstr "Adres mailowy"
 
+#: .\exam\templates\registration.html:41
+msgid "I agree with privacy policy"
+msgstr "Zgadzam się z warunkami polityki prywatności"
+
 #: .\exam\templates\reset_mail.html:4
 msgid "We recieved password change request for platform admin account"
 msgstr "Otrzymaliśmy prośbe o zmiane hasła dla konta administratora platformy"
@@ -358,8 +391,8 @@ msgstr "Odpowiedź nr.4"
 msgid "Answer nr.5"
 msgstr "Odpowiedź nr.5"
 
-#: .\examiner_user\forms.py:55 .\examiner_user\views.py:279
-#: .\examiner_user\views.py:337
+#: .\examiner_user\forms.py:55 .\examiner_user\views.py:280
+#: .\examiner_user\views.py:338
 msgid "Correct answer was incorrectly marked"
 msgstr "Dobra odpowiedź została niepoprwanie zaznaczona"
 
@@ -400,6 +433,11 @@ msgstr "Kategoria kursu"
 #: .\examiner_user\templates\detail_course.html:22
 msgid "Attempt amount"
 msgstr "Ilość prób"
+
+#: .\examiner_user\templates\control_course.html:32
+#: .\examiner_user\templates\detail_course.html:27
+msgid "Exam duration"
+msgstr "Czas trwania testu:"
 
 #: .\examiner_user\templates\control_course.html:36
 #: .\examiner_user\templates\course_results.html:18
@@ -634,14 +672,14 @@ msgstr "Lista Studentów"
 #: .\examiner_user\templates\course_group_results.html:47
 #: .\examiner_user\templates\course_results.html:84
 #: .\examiner_user\templates\detail_student.html:56
-#: .\platform_admin\views.py:419
+#: .\platform_admin\views.py:422
 #: .\student\templates\student_results_general.html:36
 #: .\student\templates\student_search_course.html:42
 msgid "Grade"
 msgstr "Ocena"
 
 #: .\examiner_user\templates\course_group_results.html:92
-#: .\examiner_user\templates\course_results.html:129 .\student\views.py:248
+#: .\examiner_user\templates\course_results.html:129 .\student\views.py:249
 msgid "Diploma"
 msgstr "Dyplom"
 
@@ -671,10 +709,12 @@ msgstr "Nieograniczony"
 #: .\examiner_user\templates\course_results.html:27
 #: .\examiner_user\templates\detail_course.html:28
 #: .\platform_admin\templates\platform_detail_course.html:27
+#: .\student\templates\student_attempt_exam.html:44
 msgid "minutes"
 msgstr "minuty"
 
 #: .\examiner_user\templates\course_results.html:28
+#: .\examiner_user\templates\detail_course.html:31
 #: .\examiner_user\templates\edit_question.html:12
 #: .\examiner_user\templates\mulitple_create_question.html:13
 #: .\examiner_user\templates\mulitple_edit_question.html:12
@@ -689,6 +729,7 @@ msgstr "Ilośc lekcji"
 
 #: .\examiner_user\templates\course_results.html:36
 #: .\examiner_user\templates\course_results.html:62
+#: .\examiner_user\templates\detail_course.html:47
 msgid "Amount of students assigned to course"
 msgstr "Ilośc studentów przydzielona do kursu"
 
@@ -820,10 +861,6 @@ msgstr ""
 "poprzez zaznaczenie pola (lub pól w przypadku testówwielokrotnego wyboru) "
 "znajdującego się przy polu tekstowym z odpowiedzią."
 
-#: .\examiner_user\templates\detail_course.html:27
-msgid "Exam duration"
-msgstr "Czas trwania testu:"
-
 #: .\examiner_user\templates\detail_course.html:59
 #: .\examiner_user\templates\search_question.html:16
 msgid "Edit"
@@ -941,9 +978,9 @@ msgstr "Wyniki"
 msgid "Logout"
 msgstr "Wyloguj się"
 
-#: .\examiner_user\templates\examiner_homepage.html:32
-#: .\platform_admin\templates\platform_homepage.html:33
-#: .\student\templates\student_homepage.html:33
+#: .\examiner_user\templates\examiner_homepage.html:34
+#: .\platform_admin\templates\platform_homepage.html:35
+#: .\student\templates\student_homepage.html:35
 msgid ""
 "This site allows creation and edition of courses and uploading course "
 "materials.\n"
@@ -957,9 +994,9 @@ msgstr ""
 "testów (pytania jednokrotnego lub \n"
 "wielokrotnego wyboru) przydzielonych do kursów"
 
-#: .\examiner_user\templates\examiner_homepage.html:40
-#: .\platform_admin\templates\platform_homepage.html:41
-#: .\student\templates\student_homepage.html:41
+#: .\examiner_user\templates\examiner_homepage.html:42
+#: .\platform_admin\templates\platform_homepage.html:43
+#: .\student\templates\student_homepage.html:43
 msgid "Share feedback"
 msgstr "Udziel opinii"
 
@@ -1089,43 +1126,43 @@ msgstr "Ostatni login"
 msgid "Join date"
 msgstr "Data dołaczenia"
 
-#: .\examiner_user\views.py:146
+#: .\examiner_user\views.py:147
 msgid "Course sucessfully created"
 msgstr "Kurs pomyślnie utworzony"
 
-#: .\examiner_user\views.py:148
+#: .\examiner_user\views.py:149
 msgid "Course creation failed"
 msgstr "Stworzenie kursu nie powiodło się"
 
-#: .\examiner_user\views.py:186
+#: .\examiner_user\views.py:187
 msgid "Course not found"
 msgstr "Nie znaleziono kursu"
 
-#: .\examiner_user\views.py:202
+#: .\examiner_user\views.py:203
 msgid "(Deadline expired)"
 msgstr "(Termin upłynął)"
 
-#: .\examiner_user\views.py:212
+#: .\examiner_user\views.py:213
 msgid "Lack of permission"
 msgstr "Brak dostepu"
 
-#: .\examiner_user\views.py:239
+#: .\examiner_user\views.py:240
 msgid "Course data was filled incorrectly"
 msgstr "Dane kursu zostały niepoprawnie wypełnione"
 
-#: .\examiner_user\views.py:373
+#: .\examiner_user\views.py:374
 msgid "Wrong file"
 msgstr "Niepoprawny plik"
 
-#: .\examiner_user\views.py:436
+#: .\examiner_user\views.py:437
 msgid "New resource should be given during learning resource change"
 msgstr "Należy podać nowy materiał do zmiany materiału lekcyjnego"
 
-#: .\examiner_user\views.py:443
+#: .\examiner_user\views.py:444
 msgid "Wrong file extension"
 msgstr "Niepoprawne rozszerzenie pliku"
 
-#: .\examiner_user\views.py:467
+#: .\examiner_user\views.py:469
 msgid "Incorrect lesson topic"
 msgstr "Niepoprawny temat lekcji"
 
@@ -1462,89 +1499,89 @@ msgstr "Obecnie używane oceny"
 msgid "Bar"
 msgstr "Pułap"
 
-#: .\platform_admin\views.py:47
+#: .\platform_admin\views.py:50
 msgid "Opinion"
 msgstr "Opinia"
 
-#: .\platform_admin\views.py:55
+#: .\platform_admin\views.py:58
 msgid "Thank you for sharing your opinion"
 msgstr "Dziękujemy za podzielenie się swoją opinią"
 
-#: .\platform_admin\views.py:94 .\platform_admin\views.py:180
+#: .\platform_admin\views.py:97 .\platform_admin\views.py:183
 msgid "Incorrect data"
 msgstr "Niepoprawne dane"
 
-#: .\platform_admin\views.py:129
+#: .\platform_admin\views.py:132
 msgid ""
 "Incorrect data. Passwords do not match or doesen't fulfill the requirements"
 msgstr "Niepoprawne dane. Hasła nie są identyczne lub nie spełniają wymogów"
 
-#: .\platform_admin\views.py:138
+#: .\platform_admin\views.py:141
 msgid "User deleted"
 msgstr "Użytkownik skasowany"
 
-#: .\platform_admin\views.py:249
+#: .\platform_admin\views.py:252
 msgid "Group creation failed"
 msgstr "Stworzenie grupy nie powiodło się"
 
-#: .\platform_admin\views.py:273
+#: .\platform_admin\views.py:276
 msgid "(Term expired)"
 msgstr "(Termin upłynął)"
 
-#: .\platform_admin\views.py:300
+#: .\platform_admin\views.py:303
 msgid "Group edit failed"
 msgstr "Edycja grupy nie powiodła się"
 
-#: .\platform_admin\views.py:321
+#: .\platform_admin\views.py:324
 msgid "Course deleted"
 msgstr "Kurs skasowany"
 
-#: .\platform_admin\views.py:330
+#: .\platform_admin\views.py:333
 msgid "Group deleted"
 msgstr "Grupa skasowana"
 
-#: .\platform_admin\views.py:413
+#: .\platform_admin\views.py:416
 #, python-format
 msgid "Group %(group)s results from %(course)s course"
 msgstr "Wyniki grupy %(group)s z kursu %(course)s"
 
-#: .\platform_admin\views.py:416
+#: .\platform_admin\views.py:419
 msgid "Student name"
 msgstr "Nazwa studenta"
 
-#: .\platform_admin\views.py:417
+#: .\platform_admin\views.py:420
 msgid "Status"
 msgstr "Status"
 
-#: .\platform_admin\views.py:453
+#: .\platform_admin\views.py:456
 msgid "Settings saved"
 msgstr "Ustawienia zapisane"
 
-#: .\platform_admin\views.py:455
+#: .\platform_admin\views.py:458
 msgid "Incorrect logo"
 msgstr "Niepoprawne logo"
 
-#: .\platform_admin\views.py:467
+#: .\platform_admin\views.py:470
 msgid "New grade sucessfully added"
 msgstr "Nowa ocena pomyślnie dodana"
 
-#: .\platform_admin\views.py:469
+#: .\platform_admin\views.py:472
 msgid "Incorrect grade data"
 msgstr "Niepoprawne dane oceny"
 
-#: .\platform_admin\views.py:474
+#: .\platform_admin\views.py:477
 msgid "Grade deleted"
 msgstr "Ocena skasowana"
 
-#: .\platform_admin\views.py:512
+#: .\platform_admin\views.py:515
 msgid "School grading system sucessfully implemented"
 msgstr "Szkolny system oceniania został pomyslnie wprowadzony"
 
-#: .\platform_admin\views.py:516
+#: .\platform_admin\views.py:519
 msgid "Academic grading system sucessfully implemented"
 msgstr "Akademicki system oceniania został pomyslnie wprowadzony"
 
-#: .\platform_admin\views.py:518
+#: .\platform_admin\views.py:521
 msgid "Default grade implementation error"
 msgstr "Wystąpił błąd przy wprowadzaniu domyślnego systemu oceniania"
 
@@ -1706,29 +1743,29 @@ msgstr "Gratulujemy pomyślnego zdania egzaminu"
 msgid "Unfortunately you failed to pass the exam"
 msgstr "Niestety nie udało się zdać testu"
 
-#: .\student\views.py:131
+#: .\student\views.py:132
 msgid "Course isn't ready"
 msgstr "Kurs nie jest gotowy"
 
-#: .\student\views.py:251
+#: .\student\views.py:252
 msgid "finished course"
 msgstr "ukończył kurs"
 
-#: .\student\views.py:253
+#: .\student\views.py:254
 msgid "with passing result"
 msgstr "z wynikiem pozytywnym"
 
-#: .\student\views.py:255
+#: .\student\views.py:256
 #, python-format
 msgid "achieving %(perc)s percent"
 msgstr "osiągając %(perc)s procent"
 
-#: .\student\views.py:256
+#: .\student\views.py:257
 #, python-format
 msgid "by getting %(result)s out of %(max_score)s points"
 msgstr "przez uzyskanie %(result)s na %(max_score)s punktów"
 
-#: .\student\views.py:258
+#: .\student\views.py:259
 msgid "Congratualtions, we wish further successes in studies"
 msgstr "Gratulujemy i życzymy dlaszych sukcesów w nauce"
 

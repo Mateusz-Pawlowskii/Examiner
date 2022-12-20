@@ -1,13 +1,15 @@
-import datetime
-from django.utils.timezone import make_aware
 from django.utils.translation import gettext_lazy as _
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from dateutil.relativedelta import relativedelta
+from django.utils.timezone import now as timezone_now
 
 from .models import Result, StudentGroup, Course, Term, Grade
 
 def get_timeover(group, course):
     """Tells if given group have run out of time to finish given course"""
     term = Term.objects.filter(group=group, course=course).first()
-    if term.time < make_aware(datetime.datetime.now()):
+    if term.time < timezone_now():
         return True
     else:
         return False
@@ -135,3 +137,14 @@ def get_grade_data(platform):
         if len(grades) == 0:
             return False
         return True
+
+def send_warning_mail(admin, platform):
+        mail_subject = _("Your platform is marked as inactive")
+        date = timezone_now() + relativedelta(months=1)
+        message = render_to_string('inactivity_warning.html', {
+            'user': admin,
+            'platform': platform,
+            'date' : date
+        })
+        email = EmailMessage(mail_subject, message, to=[admin.email])
+        email.send()

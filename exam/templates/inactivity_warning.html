@@ -1,0 +1,8 @@
+{% autoescape off %}
+{% load i18n %}
+{% trans "Dear" %} {{user.username}}{% trans " ,your platform" %}{{platform.name}}
+{% blocktranslate %}on Examiner app was marked as inactive becouse you haven't loged into your platform admin
+account in the last 11 months. Your e-learning platform, together with all courses, lessons and user accounts will
+be deleted in 1 month if you are not going to log in to your platform admin account by{% endblocktranslate %} {{date}}.
+
+{% endautoescape %}

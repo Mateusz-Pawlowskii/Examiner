@@ -14,6 +14,7 @@ class Platform(models.Model):
     name = models.CharField(max_length = 3000)
     users = models.ManyToManyField(User)
     logo = models.ImageField(storage=logo_fs, blank=True, null=True)
+    inactive = models.BooleanField(default = False)
 
 class Course(models.Model):
     students = models.ManyToManyField(User)

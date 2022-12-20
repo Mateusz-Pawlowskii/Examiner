@@ -9,6 +9,7 @@ import datetime
 from django.contrib import messages
 from fpdf import FPDF
 from django.utils.translation import gettext_lazy as _
+from django.utils.timezone import now as timezone_now
 
 from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Term
 from exam.functions import get_courses_for_student, get_categories, get_timeover, get_grade_data, student_grades
@@ -142,7 +143,7 @@ class StudentPassExam(LoginRequiredMixin, View):
         result = Result(course = course,
                         student = request.user)
         result.set_order(question_order)
-        result.end_time = datetime.datetime.now() + datetime.timedelta(minutes=course.time)
+        result.end_time = timezone_now() + datetime.timedelta(minutes=course.time)
         result.save()
         return redirect(reverse_lazy("student:student-question", kwargs={"pk":result.pk}))
 
@@ -153,7 +154,7 @@ class StudentQuestion(LoginRequiredMixin, View):
         """It gives information about finish time to page"""
         end_time = result.end_time.strftime("%m/%d/%Y, %H:%M:%S")
         context["end_time"] = end_time
-        context["now"] = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+        context["now"] = timezone_now().strftime("%m/%d/%Y, %H:%M:%S")
         return context
 
     def evaluate_answer(self, request, course, question):
