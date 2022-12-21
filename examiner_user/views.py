@@ -84,7 +84,10 @@ class DetailStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        group = get_object_or_404(StudentGroup, name=request.POST["group"], platform=platform)
+        try:
+            group = StudentGroup.objects.get(name=request.POST["group"], platform=platform)
+        except:
+            messages.error(request, _("Student group not found"))
         student = get_object_or_404(User, pk=self.kwargs["pk"])
         group.students.add(student)
         group.save()
@@ -99,7 +102,10 @@ class AttachCourseText(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        group = get_object_or_404(StudentGroup, name=request.POST["group"], platform=platform)
+        try:
+            group = StudentGroup.objects.get(name=request.POST["group"], platform=platform)
+        except:
+            messages.error(request, _("Student group not found"))
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
         group.courses.add(course)
         group.save()

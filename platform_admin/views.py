@@ -344,8 +344,12 @@ class AttachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     redirect_to = "platform_admin:edit-student-group"
 
     def post(self, request, *args, **kwargs):
-        student = get_object_or_404(User, username=request.POST["student"])
         group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
+        try:
+            student = User.objects.get(username=request.POST["student"])
+        except:
+            messages.error(request, _("Student not found"))
+            return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
         group.students.add(student)
         group.save()
         return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
@@ -367,9 +371,13 @@ class AttachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     redirect_to = "platform_admin:edit-student-group"
 
     def post(self, request, *args, **kwargs):
-        platform = Platform.objects.get(users=request.user)
-        course = get_object_or_404(Course, name=request.POST["course"], platform=platform)
         group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
+        platform = Platform.objects.get(users=request.user)
+        try:
+            course = Course.objects.get(name=request.POST["course"], platform=platform)
+        except:
+            messages.error(request, _("Course not found"))
+            return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
         group.courses.add(course)
         group.save()
         term = Term(time=make_aware(datetime.strptime(request.POST["term"],"%Y-%m-%d")), group=group, course=course)
