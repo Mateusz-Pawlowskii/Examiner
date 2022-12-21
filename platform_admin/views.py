@@ -94,7 +94,7 @@ class CreateExaminer(LoginRequiredMixin, PermissionRequiredMixin, View):
             platform.users.add(user)
             user.save()
         else:
-            messages.error(request, _("Incorrect data"))
+            messages.error(request, _("Name taken"))
         return redirect(reverse_lazy("platform_admin:examiner-search"))
 
 class EditExaminer(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -180,7 +180,7 @@ class PlatformCreateStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
             platform.users.add(user)
             user.save()
         else:
-            messages.error(request, _("Incorrect data"))
+            messages.error(request, _("Name taken"))
         return redirect(reverse_lazy(self.redirect))
 
 class EditStudent(LoginRequiredMixin, PermissionRequiredMixin, View):

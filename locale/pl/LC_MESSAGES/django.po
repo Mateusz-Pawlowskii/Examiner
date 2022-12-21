@@ -257,7 +257,7 @@ msgstr "Hasło nie może przypominać innych danych osobowych"
 #: .\platform_admin\templates\edit_examiner.html:26
 #: .\platform_admin\templates\edit_student.html:33
 msgid "Your password must contain at least 8 characters."
-msgstr "Twoje hasło musi miec co najmniej 8 liter"
+msgstr "Twoje hasło musi mieć co najmniej 8 liter"
 
 #: .\exam\templates\password_reset_confirm.html:19
 #: .\exam\templates\registration.html:23
