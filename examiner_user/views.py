@@ -99,11 +99,7 @@ class AttachCourseText(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        try:
-            group = get_object_or_404(StudentGroup, name=request.POST["group"], platform=platform)
-        except:
-            messages.error(request, _("Student group not found"))
-            return redirect(reverse_lazy("examiner_user:edit-course", kwargs={"pk":self.kwargs["pk"],"slug":self.kwargs["slug"]}))
+        group = get_object_or_404(StudentGroup, name=request.POST["group"], platform=platform)
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
         group.courses.add(course)
         group.save()

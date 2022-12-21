@@ -344,10 +344,7 @@ class AttachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     redirect_to = "platform_admin:edit-student-group"
 
     def post(self, request, *args, **kwargs):
-        try:
-            student = get_object_or_404(User, username=request.POST["student"])
-        except:
-            messages.error(request, _("student not found"))
+        student = get_object_or_404(User, username=request.POST["student"])
         group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
         group.students.add(student)
         group.save()
@@ -371,11 +368,7 @@ class AttachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        try:
-            course = get_object_or_404(Course, name=request.POST["course"], platform=platform)
-        except:
-            messages.error(request, _("Course not found"))
-            return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
+        course = get_object_or_404(Course, name=request.POST["course"], platform=platform)
         group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
         group.courses.add(course)
         group.save()
