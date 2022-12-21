@@ -43,16 +43,15 @@
         {% trans "Lesson amount:" %}<b> {{lessons|length}}</b>
       </td>
       <td>
-        {% trans "Amount of students assigned to course:" %}<b> {{students|length}}</b>
+        {% if object.test_ready %}
+          <p>{% trans "Exam status:" %}<b>{% trans "Exam ready" %}</b></p>
+        {% else %}
+          <p>{% trans "Exam status:" %}<b>{% trans "Exam not ready" %}</b></p>
+        {% endif %}
       </td>
     </tr>
   </tbody>
 </table>
-{% if object.test_ready %}
-    <p>{% trans "Exam status:" %}<b>{% trans "Exam ready" %}</b></p>
-{% else %}
-    <p>{% trans "Exam status:" %}<b>{% trans "Exam not ready" %}</b></p>
-{% endif %}
 <br>
 <button class="btn btn-danger mt-1 myButton" type="button" data-toggle="modal" data-target="#deleteModal">{% trans "Delete course" %}</button>
 <div class="modal fade" id="deleteModal">

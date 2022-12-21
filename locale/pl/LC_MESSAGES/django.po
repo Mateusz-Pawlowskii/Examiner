@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-21 19:50+0100\n"
+"POT-Creation-Date: 2022-12-21 20:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,26 +32,26 @@ msgid "Password"
 msgstr "Hasło"
 
 #: .\exam\functions.py:25 .\exam\functions.py:34 .\exam\functions.py:45
-#: .\exam\functions.py:54 .\examiner_user\views.py:528
-#: .\examiner_user\views.py:559 .\examiner_user\views.py:576
-#: .\examiner_user\views.py:601 .\examiner_user\views.py:612
-#: .\examiner_user\views.py:614 .\student\forms.py:10
+#: .\exam\functions.py:54 .\examiner_user\views.py:527
+#: .\examiner_user\views.py:558 .\examiner_user\views.py:575
+#: .\examiner_user\views.py:600 .\examiner_user\views.py:611
+#: .\examiner_user\views.py:613 .\student\forms.py:10
 msgid "Failed"
 msgstr "Niezaliczony"
 
 #: .\exam\functions.py:28 .\exam\functions.py:36 .\exam\functions.py:48
-#: .\exam\functions.py:56 .\examiner_user\views.py:528
-#: .\examiner_user\views.py:577 .\examiner_user\views.py:613
-#: .\examiner_user\views.py:614 .\student\forms.py:12
+#: .\exam\functions.py:56 .\examiner_user\views.py:527
+#: .\examiner_user\views.py:576 .\examiner_user\views.py:612
+#: .\examiner_user\views.py:613 .\student\forms.py:12
 msgid "Unfinished"
 msgstr "Jeszcze nie ukończony"
 
 #: .\exam\functions.py:32 .\exam\functions.py:52
 #: .\examiner_user\templates\course_group_results.html:88
 #: .\examiner_user\templates\course_results.html:125
-#: .\examiner_user\views.py:528 .\examiner_user\views.py:557
-#: .\examiner_user\views.py:575 .\examiner_user\views.py:599
-#: .\examiner_user\views.py:611 .\examiner_user\views.py:614
+#: .\examiner_user\views.py:527 .\examiner_user\views.py:556
+#: .\examiner_user\views.py:574 .\examiner_user\views.py:598
+#: .\examiner_user\views.py:610 .\examiner_user\views.py:613
 #: .\student\forms.py:11
 msgid "Passed"
 msgstr "Zaliczony"
@@ -187,13 +187,13 @@ msgstr "Nazwa użytkownika"
 #: .\examiner_user\templates\control_course.html:68
 #: .\examiner_user\templates\course_group_results.html:37
 #: .\examiner_user\templates\course_results.html:74
-#: .\examiner_user\templates\detail_course.html:64
+#: .\examiner_user\templates\detail_course.html:63
 #: .\examiner_user\templates\detail_lesson.html:47
 #: .\examiner_user\templates\detail_student.html:44
 #: .\platform_admin\templates\edit_examiner.html:41
 #: .\platform_admin\templates\edit_student.html:61
 #: .\platform_admin\templates\edit_student_group.html:155
-#: .\platform_admin\templates\platform_detail_course.html:84
+#: .\platform_admin\templates\platform_detail_course.html:83
 #: .\student\templates\student_detail_course.html:39
 #: .\student\templates\student_result_view.html:9
 msgid "Back"
@@ -391,8 +391,8 @@ msgstr "Odpowiedź nr.4"
 msgid "Answer nr.5"
 msgstr "Odpowiedź nr.5"
 
-#: .\examiner_user\forms.py:55 .\examiner_user\views.py:288
-#: .\examiner_user\views.py:346
+#: .\examiner_user\forms.py:55 .\examiner_user\views.py:287
+#: .\examiner_user\views.py:345
 msgid "Correct answer was incorrectly marked"
 msgstr "Dobra odpowiedź została niepoprwanie zaznaczona"
 
@@ -473,8 +473,8 @@ msgstr "Ilosc poprawnych odpowiedzi wymagana do zaliczenia egzaminu"
 
 #: .\examiner_user\templates\control_course.html:60
 #: .\examiner_user\templates\course_results.html:41
-#: .\examiner_user\templates\detail_course.html:53
-#: .\platform_admin\templates\platform_detail_course.html:52
+#: .\examiner_user\templates\detail_course.html:48
+#: .\platform_admin\templates\platform_detail_course.html:47
 msgid "Exam ready"
 msgstr "Test gotowy"
 
@@ -543,7 +543,7 @@ msgstr "Skasuj lekcje"
 #: .\platform_admin\templates\edit_student.html:80
 #: .\platform_admin\templates\edit_student_group.html:140
 #: .\platform_admin\templates\edit_student_group.html:269
-#: .\platform_admin\templates\platform_detail_course.html:74
+#: .\platform_admin\templates\platform_detail_course.html:73
 msgid "Cancel"
 msgstr "Anuluj"
 
@@ -672,7 +672,7 @@ msgstr "Lista Studentów"
 #: .\examiner_user\templates\course_group_results.html:47
 #: .\examiner_user\templates\course_results.html:84
 #: .\examiner_user\templates\detail_student.html:56
-#: .\platform_admin\views.py:442
+#: .\platform_admin\views.py:441
 #: .\student\templates\student_results_general.html:36
 #: .\student\templates\student_search_course.html:42
 msgid "Grade"
@@ -729,20 +729,19 @@ msgstr "Ilośc lekcji"
 
 #: .\examiner_user\templates\course_results.html:36
 #: .\examiner_user\templates\course_results.html:62
-#: .\examiner_user\templates\detail_course.html:47
 msgid "Amount of students assigned to course"
 msgstr "Ilośc studentów przydzielona do kursu"
 
 #: .\examiner_user\templates\course_results.html:41
 #: .\examiner_user\templates\course_results.html:43
-#: .\examiner_user\templates\detail_course.html:53
-#: .\examiner_user\templates\detail_course.html:55
+#: .\examiner_user\templates\detail_course.html:48
+#: .\examiner_user\templates\detail_course.html:50
 msgid "Test status"
 msgstr "Status testu"
 
 #: .\examiner_user\templates\course_results.html:43
-#: .\examiner_user\templates\detail_course.html:55
-#: .\platform_admin\templates\platform_detail_course.html:54
+#: .\examiner_user\templates\detail_course.html:50
+#: .\platform_admin\templates\platform_detail_course.html:49
 msgid "Exam not ready"
 msgstr "Test nie gotowy"
 
@@ -855,19 +854,19 @@ msgid ""
 "fields in case of multiple answer questions) situated\n"
 "  next to text area with answer."
 msgstr ""
-" Pytanie powinno mieć od 2 do 5 odpowiedzi. Jeżeli pole tekstowe odpowiadające "
-"odpowiedzi jest pozostawione puste odpowiedź nie \n"
-"będzie uwzględniona w egzaminie. Poprawne odpowiedzi są oznaczane poprzez zaznaczenie "
-"pola (lub pól w sytuacji pytania wielokrotnego wyboru) umieszczone\n"
-" przy polu tekstowym z odpowiedzią"
+" Pytanie powinno mieć od 2 do 5 odpowiedzi. Jeżeli pole tekstowe "
+"odpowiadające odpowiedzi jest pozostawione puste odpowiedź nie \n"
+"będzie uwzględniona w egzaminie. Poprawne odpowiedzi są oznaczane poprzez "
+"zaznaczenie pola (lub pól w sytuacji pytania wielokrotnego wyboru) "
+"umieszczone\n"
+" przy polu tekstowym z odpowiedziąPytanie musi posiadać od 2 do 5 "
+"odpowiedzi. Jeżeli pole tekstowe odpowiadające odpowiedzi zostanie "
+"pozostawione puste odpowiedź niebędzie uwzględniona na teście. Należy "
+"zaznaczyć która odpowiedź jest prawidłowa poprzez zaznaczenie pola (lub pól "
+"w przypadku testówwielokrotnego wyboru) znajdującego się przy polu tekstowym "
+"z odpowiedzią."
 
-"Pytanie musi posiadać od 2 do 5 odpowiedzi. Jeżeli pole tekstowe "
-"odpowiadające odpowiedzi zostanie pozostawione puste odpowiedź niebędzie "
-"uwzględniona na teście. Należy zaznaczyć która odpowiedź jest prawidłowa "
-"poprzez zaznaczenie pola (lub pól w przypadku testówwielokrotnego wyboru) "
-"znajdującego się przy polu tekstowym z odpowiedzią."
-
-#: .\examiner_user\templates\detail_course.html:59
+#: .\examiner_user\templates\detail_course.html:58
 #: .\examiner_user\templates\search_question.html:16
 msgid "Edit"
 msgstr "Edytuj"
@@ -1166,35 +1165,35 @@ msgstr "Kurs pomyślnie utworzony"
 msgid "Course creation failed"
 msgstr "Stworzenie kursu nie powiodło się"
 
-#: .\examiner_user\views.py:195 .\platform_admin\views.py:382
+#: .\examiner_user\views.py:194 .\platform_admin\views.py:381
 msgid "Course not found"
 msgstr "Nie znaleziono kursu"
 
-#: .\examiner_user\views.py:211
+#: .\examiner_user\views.py:210
 msgid "(Deadline expired)"
 msgstr "(Termin upłynął)"
 
-#: .\examiner_user\views.py:221
+#: .\examiner_user\views.py:220
 msgid "Lack of permission"
 msgstr "Brak dostepu"
 
-#: .\examiner_user\views.py:248
+#: .\examiner_user\views.py:247
 msgid "Course data was filled incorrectly"
 msgstr "Dane kursu zostały niepoprawnie wypełnione"
 
-#: .\examiner_user\views.py:382
+#: .\examiner_user\views.py:381
 msgid "Wrong file"
 msgstr "Niepoprawny plik"
 
-#: .\examiner_user\views.py:445
+#: .\examiner_user\views.py:444
 msgid "New resource should be given during learning resource change"
 msgstr "Należy podać nowy materiał do zmiany materiału lekcyjnego"
 
-#: .\examiner_user\views.py:452
+#: .\examiner_user\views.py:451
 msgid "Wrong file extension"
 msgstr "Niepoprawne rozszerzenie pliku"
 
-#: .\examiner_user\views.py:477
+#: .\examiner_user\views.py:476
 msgid "Incorrect lesson topic"
 msgstr "Niepoprawny temat lekcji"
 
@@ -1415,29 +1414,25 @@ msgstr "Ilosc poprawnych odpowiedzi wymagana do zaliczenia egzaminu:"
 msgid "Lesson amount:"
 msgstr "Ilośc lekcji:"
 
-#: .\platform_admin\templates\platform_detail_course.html:46
-msgid "Amount of students assigned to course:"
-msgstr "Ilośc studentów przydzielona do kursu:"
-
-#: .\platform_admin\templates\platform_detail_course.html:52
-#: .\platform_admin\templates\platform_detail_course.html:54
+#: .\platform_admin\templates\platform_detail_course.html:47
+#: .\platform_admin\templates\platform_detail_course.html:49
 msgid "Exam status:"
 msgstr "Status testu:"
 
-#: .\platform_admin\templates\platform_detail_course.html:57
-#: .\platform_admin\templates\platform_detail_course.html:73
+#: .\platform_admin\templates\platform_detail_course.html:56
+#: .\platform_admin\templates\platform_detail_course.html:72
 msgid "Delete course"
 msgstr "Skasuj kurs"
 
-#: .\platform_admin\templates\platform_detail_course.html:62
+#: .\platform_admin\templates\platform_detail_course.html:61
 msgid "Course deletion"
 msgstr "Kasowanie kursu"
 
-#: .\platform_admin\templates\platform_detail_course.html:66
+#: .\platform_admin\templates\platform_detail_course.html:65
 msgid "Are you sure you want to delete course "
 msgstr "Czy jesteś pewien że chcesz skasować kurs"
 
-#: .\platform_admin\templates\platform_detail_course.html:66
+#: .\platform_admin\templates\platform_detail_course.html:65
 msgid ""
 "\n"
 "        This choice can't be reverted. You won't be able to recover lesson "
@@ -1565,60 +1560,60 @@ msgstr "(Termin upłynął)"
 msgid "Group edit failed"
 msgstr "Edycja grupy nie powiodła się"
 
-#: .\platform_admin\views.py:333
+#: .\platform_admin\views.py:332
 msgid "Course deleted"
 msgstr "Kurs skasowany"
 
-#: .\platform_admin\views.py:342
+#: .\platform_admin\views.py:341
 msgid "Group deleted"
 msgstr "Grupa skasowana"
 
-#: .\platform_admin\views.py:354
+#: .\platform_admin\views.py:353
 msgid "Student not found"
 msgstr "Nie znaleziono studenta"
 
-#: .\platform_admin\views.py:436
+#: .\platform_admin\views.py:435
 #, python-format
 msgid "Group %(group)s results from %(course)s course"
 msgstr "Wyniki grupy %(group)s z kursu %(course)s"
 
-#: .\platform_admin\views.py:439
+#: .\platform_admin\views.py:438
 msgid "Student name"
 msgstr "Nazwa studenta"
 
-#: .\platform_admin\views.py:440
+#: .\platform_admin\views.py:439
 msgid "Status"
 msgstr "Status"
 
-#: .\platform_admin\views.py:476
+#: .\platform_admin\views.py:475
 msgid "Settings saved"
 msgstr "Ustawienia zapisane"
 
-#: .\platform_admin\views.py:478
+#: .\platform_admin\views.py:477
 msgid "Incorrect logo"
 msgstr "Niepoprawne logo"
 
-#: .\platform_admin\views.py:490
+#: .\platform_admin\views.py:489
 msgid "New grade sucessfully added"
 msgstr "Nowa ocena pomyślnie dodana"
 
-#: .\platform_admin\views.py:492
+#: .\platform_admin\views.py:491
 msgid "Incorrect grade data"
 msgstr "Niepoprawne dane oceny"
 
-#: .\platform_admin\views.py:497
+#: .\platform_admin\views.py:496
 msgid "Grade deleted"
 msgstr "Ocena skasowana"
 
-#: .\platform_admin\views.py:535
+#: .\platform_admin\views.py:534
 msgid "School grading system sucessfully implemented"
 msgstr "Szkolny system oceniania został pomyslnie wprowadzony"
 
-#: .\platform_admin\views.py:539
+#: .\platform_admin\views.py:538
 msgid "Academic grading system sucessfully implemented"
 msgstr "Akademicki system oceniania został pomyslnie wprowadzony"
 
-#: .\platform_admin\views.py:541
+#: .\platform_admin\views.py:540
 msgid "Default grade implementation error"
 msgstr "Wystąpił błąd przy wprowadzaniu domyślnego systemu oceniania"
 

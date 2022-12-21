@@ -44,16 +44,15 @@
         {% trans "Lesson amount" %}:<b> {{lessons|length}}</b>
       </td>
       <td>
-        {% trans "Amount of students assigned to course" %}:<b> {{students|length}}</b>
+        {% if object.test_ready %}
+          <p>{% trans "Test status" %}:<b>{% trans "Exam ready" %}</b></p>
+        {% else %}
+          <p>{% trans "Test status" %}:<b>{% trans "Exam not ready" %}</b></p>
+        {% endif %}
       </td>
     </tr>
   </tbody>
 </table>
-{% if object.test_ready %}
-    <p>{% trans "Test status" %}:<b>{% trans "Exam ready" %}</b></p>
-{% else %}
-    <p>{% trans "Test status" %}:<b>{% trans "Exam not ready" %}</b></p>
-{% endif %}
 <a href="{% url 'examiner_user:edit-course' pk=object.pk slug=object.name|slugify %}">
   <button class="btn btn-success myButton" type="submit" id="edit">
     {% trans "Edit" %}

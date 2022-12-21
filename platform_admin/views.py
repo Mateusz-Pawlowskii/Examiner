@@ -322,7 +322,6 @@ class PlatformDetailCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
                    "questions" : Question.objects.filter(course=course),
                    "group" : StudentGroup.objects.get(pk=self.kwargs["group"]),
                    "lessons" : Lesson.objects.filter(course=course),
-                   "students" : User.objects.filter(course=course),
                    "platform" : Platform.objects.get(users=request.user)}
         return render(request, self.template_name, context)
 

@@ -188,7 +188,6 @@ class DetailCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         context = {"object" : course,
                    "questions" : Question.objects.filter(course=course),
                    "lessons" : Lesson.objects.filter(course=course),
-                   "students" : User.objects.filter(course=course),
                    "platform" : platform}
         if course in allowed_courses:
             return render(request, self.template_name, context)
