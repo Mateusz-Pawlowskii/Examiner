@@ -201,8 +201,9 @@ class EditStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         student = get_object_or_404(User, pk=self.kwargs["pk"])
-        group = get_object_or_404(StudentGroup, name=request.POST["group"])
+        group = get_object_or_404(StudentGroup, name=request.POST["group"], platform=platform)
         group.students.add(student)
         group.save()
         return redirect(reverse_lazy("platform_admin:student-search"))
@@ -241,10 +242,15 @@ class CreateStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         form = self.form_class(request.POST)
+        groups = StudentGroup.objects.filter(platform=platform)
+        for group in groups:
+            if request.POST["name"] == group.name:
+                messages.error(request, _("Name taken"))
+                return redirect(reverse_lazy(self.redirect_to))
         if form.is_valid():
             form.save()
-            platform = Platform.objects.get(users=request.user)
             student_group = StudentGroup.objects.all().last()
             platform.studentgroup_set.add(student_group)
             platform.save()
@@ -349,7 +355,8 @@ class UnattachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     redirect_to = "platform_admin:edit-student-group"
     
     def post(self, request, *args, **kwargs):
-        group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
+        platform = Platform.objects.get(users=request.user)
+        group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"], platform=platform)
         student = get_object_or_404(User, pk=request.POST["student"])
         group.students.remove(student)
         group.save()
@@ -360,7 +367,8 @@ class AttachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     redirect_to = "platform_admin:edit-student-group"
 
     def post(self, request, *args, **kwargs):
-        course = get_object_or_404(Course, name=request.POST["course"])
+        platform = Platform.objects.get(users=request.user)
+        course = get_object_or_404(Course, name=request.POST["course"], platform=platform)
         group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
         group.courses.add(course)
         group.save()
@@ -372,7 +380,8 @@ class UnattachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_course")
 
     def post(self, request, *args, **kwargs):
-        group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
+        platform = Platform.objects.get(users=request.user)
+        group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"], platform=platform)
         course = get_object_or_404(Course, pk=request.POST["course"])
         term = Term.objects.filter(course=course, group=group)
         term.delete()

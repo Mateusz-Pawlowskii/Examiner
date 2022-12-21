@@ -83,7 +83,8 @@ class DetailStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        group = get_object_or_404(StudentGroup, name=request.POST["group"])
+        platform = Platform.objects.get(users=request.user)
+        group = get_object_or_404(StudentGroup, name=request.POST["group"], platform=platform)
         student = get_object_or_404(User, pk=self.kwargs["pk"])
         group.students.add(student)
         group.save()
@@ -97,7 +98,8 @@ class AttachCourseText(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.change_user")
 
     def post(self, request, *args, **kwargs):
-        group = get_object_or_404(StudentGroup, name=request.POST["group"])
+        platform = Platform.objects.get(users=request.user)
+        group = get_object_or_404(StudentGroup, name=request.POST["group"], platform=platform)
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
         group.courses.add(course)
         group.save()
@@ -657,14 +659,15 @@ class ExaminerChangeTermCourse(ChangeTerm):
 # does not clean the database after selenium-created views so I needed a seprate view for tearDown
 class Clean_up(View):
     def get(self, request, *args, **kwargs):
-        while Course.objects.filter(name="Failed").first():
-            Course.objects.filter(name="Failed").first().delete()
-        while Course.objects.filter(name="Out of time").first():
-            Course.objects.filter(name="Out of time").first().delete()
-        while Course.objects.filter(name="Test course name").first():
-            Course.objects.filter(name="Test course name").first().delete()
-        if Course.objects.filter(name="Edited course name").first():
-            Course.objects.filter(name="Edited course name").first().delete()
+        platform = Platform.objects.get(users=request.user)
+        while Course.objects.filter(name="Failed", platform=platform).first():
+            Course.objects.filter(name="Failed", platform=platform).first().delete()
+        while Course.objects.filter(name="Out of time", platform=platform).first():
+            Course.objects.filter(name="Out of time", platform=platform).first().delete()
+        while Course.objects.filter(name="Test course name", platform=platform).first():
+            Course.objects.filter(name="Test course name", platform=platform).first().delete()
+        if Course.objects.filter(name="Edited course name", platform=platform).first():
+            Course.objects.filter(name="Edited course name", platform=platform).first().delete()
         if User.objects.filter(username="testStudent").first():
             User.objects.filter(username="testStudent").first().delete()
         return redirect(reverse_lazy("exam:home-redirect"))

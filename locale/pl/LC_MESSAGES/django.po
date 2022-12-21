@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-21 17:27+0100\n"
+"POT-Creation-Date: 2022-12-21 18:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,26 +32,26 @@ msgid "Password"
 msgstr "Hasło"
 
 #: .\exam\functions.py:25 .\exam\functions.py:34 .\exam\functions.py:45
-#: .\exam\functions.py:54 .\examiner_user\views.py:520
-#: .\examiner_user\views.py:551 .\examiner_user\views.py:568
-#: .\examiner_user\views.py:593 .\examiner_user\views.py:604
-#: .\examiner_user\views.py:606 .\student\forms.py:10
+#: .\exam\functions.py:54 .\examiner_user\views.py:522
+#: .\examiner_user\views.py:553 .\examiner_user\views.py:570
+#: .\examiner_user\views.py:595 .\examiner_user\views.py:606
+#: .\examiner_user\views.py:608 .\student\forms.py:10
 msgid "Failed"
 msgstr "Niezaliczony"
 
 #: .\exam\functions.py:28 .\exam\functions.py:36 .\exam\functions.py:48
-#: .\exam\functions.py:56 .\examiner_user\views.py:520
-#: .\examiner_user\views.py:569 .\examiner_user\views.py:605
-#: .\examiner_user\views.py:606 .\student\forms.py:12
+#: .\exam\functions.py:56 .\examiner_user\views.py:522
+#: .\examiner_user\views.py:571 .\examiner_user\views.py:607
+#: .\examiner_user\views.py:608 .\student\forms.py:12
 msgid "Unfinished"
 msgstr "Jeszcze nie ukończony"
 
 #: .\exam\functions.py:32 .\exam\functions.py:52
 #: .\examiner_user\templates\course_group_results.html:88
 #: .\examiner_user\templates\course_results.html:125
-#: .\examiner_user\views.py:520 .\examiner_user\views.py:549
-#: .\examiner_user\views.py:567 .\examiner_user\views.py:591
-#: .\examiner_user\views.py:603 .\examiner_user\views.py:606
+#: .\examiner_user\views.py:522 .\examiner_user\views.py:551
+#: .\examiner_user\views.py:569 .\examiner_user\views.py:593
+#: .\examiner_user\views.py:605 .\examiner_user\views.py:608
 #: .\student\forms.py:11
 msgid "Passed"
 msgstr "Zaliczony"
@@ -317,8 +317,8 @@ msgid ""
 "Username: (Required. 150 characters or less. No spaces, only letters, "
 "numerals and @/./+/-/_)"
 msgstr ""
-"Nazwa użytkownika: (Wymagane. 150 znaków lub mniej. Bez spacji, tylko litery, cyfry oraz "
-"@/./+/-/_)"
+"Nazwa użytkownika: (Wymagane. 150 znaków lub mniej. Bez spacji, tylko "
+"litery, cyfry oraz @/./+/-/_)"
 
 #: .\exam\templates\registration.html:34
 msgid "Mail adress"
@@ -391,8 +391,8 @@ msgstr "Odpowiedź nr.4"
 msgid "Answer nr.5"
 msgstr "Odpowiedź nr.5"
 
-#: .\examiner_user\forms.py:55 .\examiner_user\views.py:280
-#: .\examiner_user\views.py:338
+#: .\examiner_user\forms.py:55 .\examiner_user\views.py:282
+#: .\examiner_user\views.py:340
 msgid "Correct answer was incorrectly marked"
 msgstr "Dobra odpowiedź została niepoprwanie zaznaczona"
 
@@ -672,7 +672,7 @@ msgstr "Lista Studentów"
 #: .\examiner_user\templates\course_group_results.html:47
 #: .\examiner_user\templates\course_results.html:84
 #: .\examiner_user\templates\detail_student.html:56
-#: .\platform_admin\views.py:422
+#: .\platform_admin\views.py:431
 #: .\student\templates\student_results_general.html:36
 #: .\student\templates\student_search_course.html:42
 msgid "Grade"
@@ -1126,43 +1126,43 @@ msgstr "Ostatni login"
 msgid "Join date"
 msgstr "Data dołaczenia"
 
-#: .\examiner_user\views.py:147
+#: .\examiner_user\views.py:149
 msgid "Course sucessfully created"
 msgstr "Kurs pomyślnie utworzony"
 
-#: .\examiner_user\views.py:149
+#: .\examiner_user\views.py:151
 msgid "Course creation failed"
 msgstr "Stworzenie kursu nie powiodło się"
 
-#: .\examiner_user\views.py:187
+#: .\examiner_user\views.py:189
 msgid "Course not found"
 msgstr "Nie znaleziono kursu"
 
-#: .\examiner_user\views.py:203
+#: .\examiner_user\views.py:205
 msgid "(Deadline expired)"
 msgstr "(Termin upłynął)"
 
-#: .\examiner_user\views.py:213
+#: .\examiner_user\views.py:215
 msgid "Lack of permission"
 msgstr "Brak dostepu"
 
-#: .\examiner_user\views.py:240
+#: .\examiner_user\views.py:242
 msgid "Course data was filled incorrectly"
 msgstr "Dane kursu zostały niepoprawnie wypełnione"
 
-#: .\examiner_user\views.py:374
+#: .\examiner_user\views.py:376
 msgid "Wrong file"
 msgstr "Niepoprawny plik"
 
-#: .\examiner_user\views.py:437
+#: .\examiner_user\views.py:439
 msgid "New resource should be given during learning resource change"
 msgstr "Należy podać nowy materiał do zmiany materiału lekcyjnego"
 
-#: .\examiner_user\views.py:444
+#: .\examiner_user\views.py:446
 msgid "Wrong file extension"
 msgstr "Niepoprawne rozszerzenie pliku"
 
-#: .\examiner_user\views.py:469
+#: .\examiner_user\views.py:471
 msgid "Incorrect lesson topic"
 msgstr "Niepoprawny temat lekcji"
 
@@ -1508,8 +1508,9 @@ msgid "Thank you for sharing your opinion"
 msgstr "Dziękujemy za podzielenie się swoją opinią"
 
 #: .\platform_admin\views.py:97 .\platform_admin\views.py:183
+#: .\platform_admin\views.py:250
 msgid "Name taken"
-msgstr ""
+msgstr "Nazwa zajęta"
 
 #: .\platform_admin\views.py:132
 msgid ""
@@ -1520,68 +1521,68 @@ msgstr "Niepoprawne dane. Hasła nie są identyczne lub nie spełniają wymogów
 msgid "User deleted"
 msgstr "Użytkownik skasowany"
 
-#: .\platform_admin\views.py:252
+#: .\platform_admin\views.py:258
 msgid "Group creation failed"
 msgstr "Stworzenie grupy nie powiodło się"
 
-#: .\platform_admin\views.py:276
+#: .\platform_admin\views.py:282
 msgid "(Term expired)"
 msgstr "(Termin upłynął)"
 
-#: .\platform_admin\views.py:303
+#: .\platform_admin\views.py:309
 msgid "Group edit failed"
 msgstr "Edycja grupy nie powiodła się"
 
-#: .\platform_admin\views.py:324
+#: .\platform_admin\views.py:330
 msgid "Course deleted"
 msgstr "Kurs skasowany"
 
-#: .\platform_admin\views.py:333
+#: .\platform_admin\views.py:339
 msgid "Group deleted"
 msgstr "Grupa skasowana"
 
-#: .\platform_admin\views.py:416
+#: .\platform_admin\views.py:425
 #, python-format
 msgid "Group %(group)s results from %(course)s course"
 msgstr "Wyniki grupy %(group)s z kursu %(course)s"
 
-#: .\platform_admin\views.py:419
+#: .\platform_admin\views.py:428
 msgid "Student name"
 msgstr "Nazwa studenta"
 
-#: .\platform_admin\views.py:420
+#: .\platform_admin\views.py:429
 msgid "Status"
 msgstr "Status"
 
-#: .\platform_admin\views.py:456
+#: .\platform_admin\views.py:465
 msgid "Settings saved"
 msgstr "Ustawienia zapisane"
 
-#: .\platform_admin\views.py:458
+#: .\platform_admin\views.py:467
 msgid "Incorrect logo"
 msgstr "Niepoprawne logo"
 
-#: .\platform_admin\views.py:470
+#: .\platform_admin\views.py:479
 msgid "New grade sucessfully added"
 msgstr "Nowa ocena pomyślnie dodana"
 
-#: .\platform_admin\views.py:472
+#: .\platform_admin\views.py:481
 msgid "Incorrect grade data"
 msgstr "Niepoprawne dane oceny"
 
-#: .\platform_admin\views.py:477
+#: .\platform_admin\views.py:486
 msgid "Grade deleted"
 msgstr "Ocena skasowana"
 
-#: .\platform_admin\views.py:515
+#: .\platform_admin\views.py:524
 msgid "School grading system sucessfully implemented"
 msgstr "Szkolny system oceniania został pomyslnie wprowadzony"
 
-#: .\platform_admin\views.py:519
+#: .\platform_admin\views.py:528
 msgid "Academic grading system sucessfully implemented"
 msgstr "Akademicki system oceniania został pomyslnie wprowadzony"
 
-#: .\platform_admin\views.py:521
+#: .\platform_admin\views.py:530
 msgid "Default grade implementation error"
 msgstr "Wystąpił błąd przy wprowadzaniu domyślnego systemu oceniania"
 
