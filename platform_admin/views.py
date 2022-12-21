@@ -322,7 +322,7 @@ class PlatformDetailCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
         course.delete()
         messages.info(request, _("Course deleted"))
-        return redirect(reverse_lazy("platform_admin:edit-student-group", kwargs={"pk" : group}))
+        return redirect(reverse_lazy("platform_admin:edit-student-group",kwargs={"pk":group,"slug":slugify(group.name)}))
 
 class DeleteGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.delete_studentgroup")
@@ -339,10 +339,10 @@ class AttachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         student = get_object_or_404(User, username=request.POST["student"])
-        student_group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
-        student_group.students.add(student)
-        student_group.save()
-        return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"]}))
+        group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
+        group.students.add(student)
+        group.save()
+        return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
 
 class UnattachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.change_user")
@@ -353,7 +353,7 @@ class UnattachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
         student = get_object_or_404(User, pk=request.POST["student"])
         group.students.remove(student)
         group.save()
-        return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"]}))
+        return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
 
 class AttachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_course")
@@ -361,12 +361,12 @@ class AttachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         course = get_object_or_404(Course, name=request.POST["course"])
-        student_group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
-        student_group.courses.add(course)
-        student_group.save()
-        term = Term(time=make_aware(datetime.strptime(request.POST["term"],"%Y-%m-%d")), group=student_group, course=course)
+        group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
+        group.courses.add(course)
+        group.save()
+        term = Term(time=make_aware(datetime.strptime(request.POST["term"],"%Y-%m-%d")), group=group, course=course)
         term.save()
-        return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"]}))
+        return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
 
 class UnattachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_course")
@@ -378,7 +378,7 @@ class UnattachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         term.delete()
         group.courses.remove(course)
         group.save()
-        return redirect(reverse_lazy("platform_admin:edit-student-group", kwargs={"pk":self.kwargs["pk"]}))
+        return redirect(reverse_lazy("platform_admin:edit-student-group", kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
 
 class ChangeTerm(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_course")
