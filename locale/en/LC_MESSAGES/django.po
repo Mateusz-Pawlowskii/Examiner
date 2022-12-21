@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-21 19:26+0100\n"
+"POT-Creation-Date: 2022-12-21 19:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -654,7 +654,7 @@ msgstr ""
 #: .\examiner_user\templates\course_group_results.html:47
 #: .\examiner_user\templates\course_results.html:84
 #: .\examiner_user\templates\detail_student.html:56
-#: .\platform_admin\views.py:439
+#: .\platform_admin\views.py:442
 #: .\student\templates\student_results_general.html:36
 #: .\student\templates\student_search_course.html:42
 msgid "Grade"
@@ -902,6 +902,15 @@ msgstr ""
 msgid "Instruction"
 msgstr ""
 
+#: .\examiner_user\templates\edit_question.html:83
+msgid ""
+"Question should have 2 to 5 answers. If text field corresponding to the "
+"answer is left blank answer will\n"
+"    not be included in exam. Correct answer is marked by checking field (or "
+"fields in case of multiple answer questions) situated\n"
+"    next to text area with answer."
+msgstr ""
+
 #: .\examiner_user\templates\examiner_base.html:26
 #: .\platform_admin\templates\edit_examiner.html:6
 msgid "Examiner"
@@ -1099,6 +1108,7 @@ msgid "Join date"
 msgstr ""
 
 #: .\examiner_user\views.py:90 .\examiner_user\views.py:108
+#: .\platform_admin\views.py:209
 msgid "Student group not found"
 msgstr ""
 
@@ -1110,7 +1120,7 @@ msgstr ""
 msgid "Course creation failed"
 msgstr ""
 
-#: .\examiner_user\views.py:195 .\platform_admin\views.py:379
+#: .\examiner_user\views.py:195 .\platform_admin\views.py:382
 msgid "Course not found"
 msgstr ""
 
@@ -1461,7 +1471,7 @@ msgid "Thank you for sharing your opinion"
 msgstr ""
 
 #: .\platform_admin\views.py:97 .\platform_admin\views.py:183
-#: .\platform_admin\views.py:250
+#: .\platform_admin\views.py:253
 msgid "Name taken"
 msgstr ""
 
@@ -1474,72 +1484,72 @@ msgstr ""
 msgid "User deleted"
 msgstr ""
 
-#: .\platform_admin\views.py:258
+#: .\platform_admin\views.py:261
 msgid "Group creation failed"
 msgstr ""
 
-#: .\platform_admin\views.py:282
+#: .\platform_admin\views.py:285
 msgid "(Term expired)"
 msgstr ""
 
-#: .\platform_admin\views.py:309
+#: .\platform_admin\views.py:312
 msgid "Group edit failed"
 msgstr ""
 
-#: .\platform_admin\views.py:330
+#: .\platform_admin\views.py:333
 msgid "Course deleted"
 msgstr ""
 
-#: .\platform_admin\views.py:339
+#: .\platform_admin\views.py:342
 msgid "Group deleted"
 msgstr ""
 
-#: .\platform_admin\views.py:351
+#: .\platform_admin\views.py:354
 msgid "Student not found"
 msgstr ""
 
-#: .\platform_admin\views.py:433
+#: .\platform_admin\views.py:436
 #, python-format
 msgid "Group %(group)s results from %(course)s course"
 msgstr ""
 
-#: .\platform_admin\views.py:436
+#: .\platform_admin\views.py:439
 msgid "Student name"
 msgstr ""
 
-#: .\platform_admin\views.py:437
+#: .\platform_admin\views.py:440
 msgid "Status"
 msgstr ""
 
-#: .\platform_admin\views.py:473
+#: .\platform_admin\views.py:476
 msgid "Settings saved"
 msgstr ""
 
-#: .\platform_admin\views.py:475
+#: .\platform_admin\views.py:478
 msgid "Incorrect logo"
 msgstr ""
 
-#: .\platform_admin\views.py:487
+#: .\platform_admin\views.py:490
 msgid "New grade sucessfully added"
 msgstr ""
 
-#: .\platform_admin\views.py:489
+#: .\platform_admin\views.py:492
 msgid "Incorrect grade data"
 msgstr ""
 
-#: .\platform_admin\views.py:494
+#: .\platform_admin\views.py:497
 msgid "Grade deleted"
 msgstr ""
 
-#: .\platform_admin\views.py:532
+#: .\platform_admin\views.py:535
 msgid "School grading system sucessfully implemented"
 msgstr ""
 
-#: .\platform_admin\views.py:536
+#: .\platform_admin\views.py:539
 msgid "Academic grading system sucessfully implemented"
 msgstr ""
 
-#: .\platform_admin\views.py:538
+#: .\platform_admin\views.py:541
 msgid "Default grade implementation error"
 msgstr ""
 
