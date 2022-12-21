@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-20 17:32+0100\n"
+"POT-Creation-Date: 2022-12-21 17:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -298,8 +298,8 @@ msgstr ""
 #: .\platform_admin\templates\edit_examiner.html:11
 #: .\platform_admin\templates\edit_student.html:18
 msgid ""
-"Username: (Required. 150 characters or less. Only letters, numerals and @/./"
-"+/-/_)"
+"Username: (Required. 150 characters or less. No spaces, only letters, "
+"numerals and @/./+/-/_)"
 msgstr ""
 
 #: .\exam\templates\registration.html:34
@@ -661,7 +661,7 @@ msgid "Grade"
 msgstr ""
 
 #: .\examiner_user\templates\course_group_results.html:92
-#: .\examiner_user\templates\course_results.html:129 .\student\views.py:249
+#: .\examiner_user\templates\course_results.html:129 .\student\views.py:250
 msgid "Diploma"
 msgstr ""
 
@@ -1457,7 +1457,7 @@ msgid "Thank you for sharing your opinion"
 msgstr ""
 
 #: .\platform_admin\views.py:97 .\platform_admin\views.py:183
-msgid "Incorrect data"
+msgid "Name taken"
 msgstr ""
 
 #: .\platform_admin\views.py:132
@@ -1696,24 +1696,24 @@ msgstr ""
 msgid "Course isn't ready"
 msgstr ""
 
-#: .\student\views.py:252
+#: .\student\views.py:253
 msgid "finished course"
 msgstr ""
 
-#: .\student\views.py:254
+#: .\student\views.py:255
 msgid "with passing result"
-msgstr ""
-
-#: .\student\views.py:256
-#, python-format
-msgid "achieving %(perc)s percent"
 msgstr ""
 
 #: .\student\views.py:257
 #, python-format
+msgid "achieving %(perc)s percent"
+msgstr ""
+
+#: .\student\views.py:258
+#, python-format
 msgid "by getting %(result)s out of %(max_score)s points"
 msgstr ""
 
-#: .\student\views.py:259
+#: .\student\views.py:260
 msgid "Congratualtions, we wish further successes in studies"
 msgstr ""

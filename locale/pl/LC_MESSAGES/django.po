@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-20 17:32+0100\n"
+"POT-Creation-Date: 2022-12-21 17:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -314,10 +314,10 @@ msgstr ""
 #: .\platform_admin\templates\edit_examiner.html:11
 #: .\platform_admin\templates\edit_student.html:18
 msgid ""
-"Username: (Required. 150 characters or less. Only letters, numerals and @/./"
-"+/-/_)"
+"Username: (Required. 150 characters or less. No spaces, only letters, "
+"numerals and @/./+/-/_)"
 msgstr ""
-"Nazwa użytkownika: (Wymagane. 150 znaków lub mniej. Tylko litery, cyfry oraz "
+"Nazwa użytkownika: (Wymagane. 150 znaków lub mniej. Bez spacji, tylko litery, cyfry oraz "
 "@/./+/-/_)"
 
 #: .\exam\templates\registration.html:34
@@ -679,7 +679,7 @@ msgid "Grade"
 msgstr "Ocena"
 
 #: .\examiner_user\templates\course_group_results.html:92
-#: .\examiner_user\templates\course_results.html:129 .\student\views.py:249
+#: .\examiner_user\templates\course_results.html:129 .\student\views.py:250
 msgid "Diploma"
 msgstr "Dyplom"
 
@@ -1508,8 +1508,8 @@ msgid "Thank you for sharing your opinion"
 msgstr "Dziękujemy za podzielenie się swoją opinią"
 
 #: .\platform_admin\views.py:97 .\platform_admin\views.py:183
-msgid "Incorrect data"
-msgstr "Niepoprawne dane"
+msgid "Name taken"
+msgstr ""
 
 #: .\platform_admin\views.py:132
 msgid ""
@@ -1747,27 +1747,30 @@ msgstr "Niestety nie udało się zdać testu"
 msgid "Course isn't ready"
 msgstr "Kurs nie jest gotowy"
 
-#: .\student\views.py:252
+#: .\student\views.py:253
 msgid "finished course"
 msgstr "ukończył kurs"
 
-#: .\student\views.py:254
+#: .\student\views.py:255
 msgid "with passing result"
 msgstr "z wynikiem pozytywnym"
 
-#: .\student\views.py:256
+#: .\student\views.py:257
 #, python-format
 msgid "achieving %(perc)s percent"
 msgstr "osiągając %(perc)s procent"
 
-#: .\student\views.py:257
+#: .\student\views.py:258
 #, python-format
 msgid "by getting %(result)s out of %(max_score)s points"
 msgstr "przez uzyskanie %(result)s na %(max_score)s punktów"
 
-#: .\student\views.py:259
+#: .\student\views.py:260
 msgid "Congratualtions, we wish further successes in studies"
 msgstr "Gratulujemy i życzymy dlaszych sukcesów w nauce"
+
+#~ msgid "Incorrect data"
+#~ msgstr "Niepoprawne dane"
 
 #~ msgid "Users"
 #~ msgstr "Użytkownicy"

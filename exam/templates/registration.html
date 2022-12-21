@@ -8,7 +8,7 @@
   <form method="POST" id="user_form">
     {% csrf_token %}
     <p>
-      <label for="id_username">{% trans "Username: (Required. 150 characters or less. Only letters, numerals and @/./+/-/_)" %}</label>
+      <label for="id_username">{% trans "Username: (Required. 150 characters or less. No spaces, only letters, numerals and @/./+/-/_)" %}</label>
       <input type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" class="form-control"
             autofocus required id="id_username">
       <span class="helptext"></span>
