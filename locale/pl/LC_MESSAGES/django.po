@@ -437,7 +437,7 @@ msgstr "Ilość prób"
 #: .\examiner_user\templates\control_course.html:32
 #: .\examiner_user\templates\detail_course.html:27
 msgid "Exam duration"
-msgstr "Czas trwania testu:"
+msgstr "Czas trwania testu"
 
 #: .\examiner_user\templates\control_course.html:36
 #: .\examiner_user\templates\course_results.html:18
@@ -719,7 +719,7 @@ msgstr "minuty"
 #: .\examiner_user\templates\mulitple_create_question.html:13
 #: .\examiner_user\templates\mulitple_edit_question.html:12
 msgid "Total question amount"
-msgstr "Całkowita ilosc pytań:"
+msgstr "Całkowita ilosc pytań"
 
 #: .\examiner_user\templates\course_results.html:35
 #: .\examiner_user\templates\detail_course.html:44
@@ -1211,7 +1211,7 @@ msgstr "Stwórz nowego studenta"
 
 #: .\platform_admin\templates\create_student_group.html:11
 msgid "Create new student group:"
-msgstr "Stwórz nową grupe studencką"
+msgstr "Stwórz nową grupe studencką:"
 
 #: .\platform_admin\templates\edit_examiner.html:7
 #: .\platform_admin\templates\edit_student.html:14
@@ -1331,7 +1331,7 @@ msgstr "Typ użytkownika:"
 
 #: .\platform_admin\templates\feedback_email.html:4
 msgid "Evaluation:"
-msgstr "Ocena: "
+msgstr "Ocena:"
 
 #: .\platform_admin\templates\feedback_email.html:5
 msgid "Opinion:"
@@ -1377,11 +1377,11 @@ msgstr "Całkowita ilosc pytań:"
 
 #: .\platform_admin\templates\platform_detail_course.html:35
 msgid "Amount of questions given to student during exam:"
-msgstr "Ilośc pytań dawana studentowi podczas egzaminu"
+msgstr "Ilośc pytań dawana studentowi podczas egzaminu:"
 
 #: .\platform_admin\templates\platform_detail_course.html:38
 msgid "Amount of correct answers required to pass exam:"
-msgstr "Ilosc poprawnych odpowiedzi wymagana do zaliczenia egzaminu"
+msgstr "Ilosc poprawnych odpowiedzi wymagana do zaliczenia egzaminu:"
 
 #: .\platform_admin\templates\platform_detail_course.html:43
 msgid "Lesson amount:"
@@ -1389,7 +1389,7 @@ msgstr "Ilośc lekcji:"
 
 #: .\platform_admin\templates\platform_detail_course.html:46
 msgid "Amount of students assigned to course:"
-msgstr "Ilośc studentów przydzielona do kursu"
+msgstr "Ilośc studentów przydzielona do kursu:"
 
 #: .\platform_admin\templates\platform_detail_course.html:52
 #: .\platform_admin\templates\platform_detail_course.html:54
@@ -1497,7 +1497,7 @@ msgstr "Dodaj ocenę"
 
 #: .\platform_admin\templates\settings.html:57
 msgid "Currently used grades:"
-msgstr "Obecnie używane oceny"
+msgstr "Obecnie używane oceny:"
 
 #: .\platform_admin\templates\settings.html:63
 msgid "Bar"
@@ -1734,7 +1734,7 @@ msgstr "Czas na wykonanie testu upłynął"
 
 #: .\student\templates\student_test_finished.html:22
 msgid "You recieved percentage score of"
-msgstr "Otrzymany wynik:"
+msgstr "Otrzymany wynik"
 
 #: .\student\templates\student_test_finished.html:23
 msgid "You recieved"
