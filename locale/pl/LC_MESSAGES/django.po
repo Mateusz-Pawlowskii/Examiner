@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-21 18:31+0100\n"
+"POT-Creation-Date: 2022-12-21 19:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,26 +32,26 @@ msgid "Password"
 msgstr "Hasło"
 
 #: .\exam\functions.py:25 .\exam\functions.py:34 .\exam\functions.py:45
-#: .\exam\functions.py:54 .\examiner_user\views.py:522
-#: .\examiner_user\views.py:553 .\examiner_user\views.py:570
-#: .\examiner_user\views.py:595 .\examiner_user\views.py:606
-#: .\examiner_user\views.py:608 .\student\forms.py:10
+#: .\exam\functions.py:54 .\examiner_user\views.py:528
+#: .\examiner_user\views.py:559 .\examiner_user\views.py:576
+#: .\examiner_user\views.py:601 .\examiner_user\views.py:612
+#: .\examiner_user\views.py:614 .\student\forms.py:10
 msgid "Failed"
 msgstr "Niezaliczony"
 
 #: .\exam\functions.py:28 .\exam\functions.py:36 .\exam\functions.py:48
-#: .\exam\functions.py:56 .\examiner_user\views.py:522
-#: .\examiner_user\views.py:571 .\examiner_user\views.py:607
-#: .\examiner_user\views.py:608 .\student\forms.py:12
+#: .\exam\functions.py:56 .\examiner_user\views.py:528
+#: .\examiner_user\views.py:577 .\examiner_user\views.py:613
+#: .\examiner_user\views.py:614 .\student\forms.py:12
 msgid "Unfinished"
 msgstr "Jeszcze nie ukończony"
 
 #: .\exam\functions.py:32 .\exam\functions.py:52
 #: .\examiner_user\templates\course_group_results.html:88
 #: .\examiner_user\templates\course_results.html:125
-#: .\examiner_user\views.py:522 .\examiner_user\views.py:551
-#: .\examiner_user\views.py:569 .\examiner_user\views.py:593
-#: .\examiner_user\views.py:605 .\examiner_user\views.py:608
+#: .\examiner_user\views.py:528 .\examiner_user\views.py:557
+#: .\examiner_user\views.py:575 .\examiner_user\views.py:599
+#: .\examiner_user\views.py:611 .\examiner_user\views.py:614
 #: .\student\forms.py:11
 msgid "Passed"
 msgstr "Zaliczony"
@@ -391,8 +391,8 @@ msgstr "Odpowiedź nr.4"
 msgid "Answer nr.5"
 msgstr "Odpowiedź nr.5"
 
-#: .\examiner_user\forms.py:55 .\examiner_user\views.py:282
-#: .\examiner_user\views.py:340
+#: .\examiner_user\forms.py:55 .\examiner_user\views.py:288
+#: .\examiner_user\views.py:346
 msgid "Correct answer was incorrectly marked"
 msgstr "Dobra odpowiedź została niepoprwanie zaznaczona"
 
@@ -672,7 +672,7 @@ msgstr "Lista Studentów"
 #: .\examiner_user\templates\course_group_results.html:47
 #: .\examiner_user\templates\course_results.html:84
 #: .\examiner_user\templates\detail_student.html:56
-#: .\platform_admin\views.py:431
+#: .\platform_admin\views.py:439
 #: .\student\templates\student_results_general.html:36
 #: .\student\templates\student_search_course.html:42
 msgid "Grade"
@@ -1126,43 +1126,47 @@ msgstr "Ostatni login"
 msgid "Join date"
 msgstr "Data dołaczenia"
 
-#: .\examiner_user\views.py:149
+#: .\examiner_user\views.py:90 .\examiner_user\views.py:108
+msgid "Student group not found"
+msgstr "Nie znaleziono grupy studenckiej"
+
+#: .\examiner_user\views.py:155
 msgid "Course sucessfully created"
 msgstr "Kurs pomyślnie utworzony"
 
-#: .\examiner_user\views.py:151
+#: .\examiner_user\views.py:157
 msgid "Course creation failed"
 msgstr "Stworzenie kursu nie powiodło się"
 
-#: .\examiner_user\views.py:189
+#: .\examiner_user\views.py:195 .\platform_admin\views.py:379
 msgid "Course not found"
 msgstr "Nie znaleziono kursu"
 
-#: .\examiner_user\views.py:205
+#: .\examiner_user\views.py:211
 msgid "(Deadline expired)"
 msgstr "(Termin upłynął)"
 
-#: .\examiner_user\views.py:215
+#: .\examiner_user\views.py:221
 msgid "Lack of permission"
 msgstr "Brak dostepu"
 
-#: .\examiner_user\views.py:242
+#: .\examiner_user\views.py:248
 msgid "Course data was filled incorrectly"
 msgstr "Dane kursu zostały niepoprawnie wypełnione"
 
-#: .\examiner_user\views.py:376
+#: .\examiner_user\views.py:382
 msgid "Wrong file"
 msgstr "Niepoprawny plik"
 
-#: .\examiner_user\views.py:439
+#: .\examiner_user\views.py:445
 msgid "New resource should be given during learning resource change"
 msgstr "Należy podać nowy materiał do zmiany materiału lekcyjnego"
 
-#: .\examiner_user\views.py:446
+#: .\examiner_user\views.py:452
 msgid "Wrong file extension"
 msgstr "Niepoprawne rozszerzenie pliku"
 
-#: .\examiner_user\views.py:471
+#: .\examiner_user\views.py:477
 msgid "Incorrect lesson topic"
 msgstr "Niepoprawny temat lekcji"
 
@@ -1541,48 +1545,52 @@ msgstr "Kurs skasowany"
 msgid "Group deleted"
 msgstr "Grupa skasowana"
 
-#: .\platform_admin\views.py:425
+#: .\platform_admin\views.py:351
+msgid "Student not found"
+msgstr "Nie znaleziono studenta"
+
+#: .\platform_admin\views.py:433
 #, python-format
 msgid "Group %(group)s results from %(course)s course"
 msgstr "Wyniki grupy %(group)s z kursu %(course)s"
 
-#: .\platform_admin\views.py:428
+#: .\platform_admin\views.py:436
 msgid "Student name"
 msgstr "Nazwa studenta"
 
-#: .\platform_admin\views.py:429
+#: .\platform_admin\views.py:437
 msgid "Status"
 msgstr "Status"
 
-#: .\platform_admin\views.py:465
+#: .\platform_admin\views.py:473
 msgid "Settings saved"
 msgstr "Ustawienia zapisane"
 
-#: .\platform_admin\views.py:467
+#: .\platform_admin\views.py:475
 msgid "Incorrect logo"
 msgstr "Niepoprawne logo"
 
-#: .\platform_admin\views.py:479
+#: .\platform_admin\views.py:487
 msgid "New grade sucessfully added"
 msgstr "Nowa ocena pomyślnie dodana"
 
-#: .\platform_admin\views.py:481
+#: .\platform_admin\views.py:489
 msgid "Incorrect grade data"
 msgstr "Niepoprawne dane oceny"
 
-#: .\platform_admin\views.py:486
+#: .\platform_admin\views.py:494
 msgid "Grade deleted"
 msgstr "Ocena skasowana"
 
-#: .\platform_admin\views.py:524
+#: .\platform_admin\views.py:532
 msgid "School grading system sucessfully implemented"
 msgstr "Szkolny system oceniania został pomyslnie wprowadzony"
 
-#: .\platform_admin\views.py:528
+#: .\platform_admin\views.py:536
 msgid "Academic grading system sucessfully implemented"
 msgstr "Akademicki system oceniania został pomyslnie wprowadzony"
 
-#: .\platform_admin\views.py:530
+#: .\platform_admin\views.py:538
 msgid "Default grade implementation error"
 msgstr "Wystąpił błąd przy wprowadzaniu domyślnego systemu oceniania"
 

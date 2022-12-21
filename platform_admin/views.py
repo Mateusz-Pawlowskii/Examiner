@@ -203,7 +203,10 @@ class EditStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         student = get_object_or_404(User, pk=self.kwargs["pk"])
-        group = get_object_or_404(StudentGroup, name=request.POST["group"], platform=platform)
+        try:
+            group = StudentGroup.objects.get(name=request.POST["group"], platform=platform)
+        except:
+            messages.error(request, _("Student group not found"))
         group.students.add(student)
         group.save()
         return redirect(reverse_lazy("platform_admin:student-search"))
