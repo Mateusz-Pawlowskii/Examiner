@@ -79,7 +79,7 @@
   </div>
 </div>
 <br>
-<a href="{% url 'platform_admin:edit-student-group' pk=group.pk %}">
+<a href="{% url 'platform_admin:edit-student-group' pk=group.pk slug=group.name|slugify %}">
   <button class="btn btn-success mt-1 myButton">
     {% trans "Back" %}
   </button>
