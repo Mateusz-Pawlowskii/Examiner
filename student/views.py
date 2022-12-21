@@ -241,10 +241,11 @@ class TestDiploma(LoginRequiredMixin, View):
         pdf.add_font('DejaVu', '', 'static/font/ttf/DejaVuSerif.ttf', uni=True)
         pdf.set_font('DejaVu', '', 50)
         pdf.image("static/img/diploma.png",0,0,210,297)
-        if len(platform.logo) == 0:
-            pdf.image("static/img/logo_dip.png",60,20,100,25)
-        else:
+        print("platform logo is ->", platform.logo)
+        if platform.logo:
             pdf.image(f"media/logos/{platform.logo}",65,20,80,40)
+        else:
+            pdf.image("static/img/logo_dip.png",60,20,100,25)
         pdf.cell(0, 50, txt = "", ln = 1, align = 'C')
         pdf.cell(0, 30, txt = _("Diploma"), ln = 1, align = 'C')
         pdf.set_font('DejaVu', '', 17)

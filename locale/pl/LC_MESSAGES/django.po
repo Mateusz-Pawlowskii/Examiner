@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-20 14:42+0100\n"
+"POT-Creation-Date: 2022-12-20 17:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1635,8 +1635,8 @@ msgid "questions, in order to pass you have to give"
 msgstr "pytań, by zaliczyć należy udzielić"
 
 #: .\student\templates\student_attempt_exam.html:42
-msgid "prawidłowych odpowiedzi"
-msgstr "correct answers"
+msgid "correct answers"
+msgstr "poprawnych odpowiedzi"
 
 #: .\student\templates\student_attempt_exam.html:44
 msgid "For completing the exam you have"
