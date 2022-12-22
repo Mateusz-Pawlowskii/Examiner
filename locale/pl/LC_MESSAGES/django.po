@@ -1024,7 +1024,7 @@ msgstr ""
 #: .\platform_admin\templates\platform_homepage.html:43
 #: .\student\templates\student_homepage.html:43
 msgid "Share feedback"
-msgstr "Udziel opinii"
+msgstr "Zostaw opinie"
 
 #: .\examiner_user\templates\mulitple_create_question.html:11
 msgid "Create new question for course"
