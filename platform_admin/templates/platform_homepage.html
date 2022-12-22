@@ -13,12 +13,12 @@
 {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
 {% for language in languages %}
 <a href="/{{language.code}}/">
-  <button class ="btn btn-success mb-4 myButton">
+  <button class ="btn btn-success mb-4">
     {{language.name_local|title}}
   </button>
 </a>
 {% endfor %}
-<button class="btn btn-success mb-4 myButton" type="button" data-toggle="modal" data-target="#privacy_policy">
+<button class="btn btn-success mb-4" type="button" data-toggle="modal" data-target="#privacy_policy">
   {% trans 'Privacy policy' %}</button>
 <br>
 {% if platform.logo|length == 0 %}
