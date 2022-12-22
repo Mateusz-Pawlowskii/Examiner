@@ -164,7 +164,9 @@
       {% for group in object.studentgroup_set.all %}
       <tr>
         <td class="borderless" style="border:none;" id="{{group.name}}_table">
+          <a href="{% url 'examiner_user:examiner-edit-group' pk=group.pk slug=group.name|slugify %}">
             {{group.name}}
+          </a>
         </td>
         <td width="21%">
           <div id="term_{{forloop.counter}}"></div>
