@@ -29,14 +29,10 @@
 <br>
 <h1 class="text-center">{{platform.name}}</h1>
 <br>
-<h2 class="text-center">{% trans "About Examiner" %}</h2>
+<h2 class="text-center">{% trans "Welcome" %}</h2>
 <br>
 <h4 class="text-center">
-  {% blocktranslate %}This site allows creation and edition of courses and uploading course materials.
-  Main functionality of application is creation of automatically checked exams (multiple or single choice 
-  questions) assigned to courses. {% endblocktranslate %}
-  <br>
-  {% trans "Application allows creation of new student and examiner accounts" %}
+  {% trans "You have sucessfuly logged into e-learning platform where you can find courses that were assigned to you." %}
 </h4>
 <br>
 <a href = "{% url 'student:student-feedback' %}">

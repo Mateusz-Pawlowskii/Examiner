@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-22 09:54+0100\n"
+"POT-Creation-Date: 2022-12-22 18:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,7 +94,6 @@ msgstr ""
 #: .\exam\templates\homepage.html:28
 #: .\examiner_user\templates\examiner_homepage.html:32
 #: .\platform_admin\templates\platform_homepage.html:32
-#: .\student\templates\student_homepage.html:32
 msgid "About Examiner"
 msgstr ""
 
@@ -110,7 +109,6 @@ msgstr ""
 #: .\exam\templates\homepage.html:35
 #: .\examiner_user\templates\examiner_homepage.html:38
 #: .\platform_admin\templates\platform_homepage.html:39
-#: .\student\templates\student_homepage.html:39
 msgid "Application allows creation of new student and examiner accounts"
 msgstr ""
 
@@ -130,21 +128,21 @@ msgstr ""
 #: .\exam\templates\homepage.html:58
 #: .\examiner_user\templates\examiner_homepage.html:45
 #: .\platform_admin\templates\platform_homepage.html:46
-#: .\student\templates\student_homepage.html:46
+#: .\student\templates\student_homepage.html:42
 msgid "Contact info:"
 msgstr ""
 
 #: .\exam\templates\homepage.html:60
 #: .\examiner_user\templates\examiner_homepage.html:47
 #: .\platform_admin\templates\platform_homepage.html:48
-#: .\student\templates\student_homepage.html:48
+#: .\student\templates\student_homepage.html:44
 msgid "E-mail adress: mm.pawlowski18@gmail.com"
 msgstr ""
 
 #: .\exam\templates\homepage.html:62
 #: .\examiner_user\templates\examiner_homepage.html:49
 #: .\platform_admin\templates\platform_homepage.html:50
-#: .\student\templates\student_homepage.html:50
+#: .\student\templates\student_homepage.html:46
 msgid "Phone number: +48 506 960 518"
 msgstr ""
 
@@ -520,7 +518,7 @@ msgid "Delete lesson"
 msgstr ""
 
 #: .\examiner_user\templates\control_course.html:124
-#: .\examiner_user\templates\control_course.html:211
+#: .\examiner_user\templates\control_course.html:213
 #: .\examiner_user\templates\detail_lesson.html:39
 #: .\platform_admin\templates\edit_student.html:80
 #: .\platform_admin\templates\edit_student_group.html:140
@@ -559,34 +557,34 @@ msgstr ""
 msgid "Groups assigned to course"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:174
-#: .\examiner_user\templates\control_course.html:198
+#: .\examiner_user\templates\control_course.html:176
+#: .\examiner_user\templates\control_course.html:200
 #: .\platform_admin\templates\edit_student_group.html:238
 #: .\platform_admin\templates\edit_student_group.html:252
 msgid "Change deadline"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:179
+#: .\examiner_user\templates\control_course.html:181
 #: .\examiner_user\templates\course_group_results.html:17
 #: .\examiner_user\templates\course_results.html:68
 msgid "Report"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:188
+#: .\examiner_user\templates\control_course.html:190
 msgid "Remove"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:202
+#: .\examiner_user\templates\control_course.html:204
 #: .\platform_admin\templates\edit_student_group.html:256
 msgid "Deadline change"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:204
+#: .\examiner_user\templates\control_course.html:206
 #: .\platform_admin\templates\edit_student_group.html:258
 msgid "Many date formats are valid, for example: YYYY-MM-DD"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:210
+#: .\examiner_user\templates\control_course.html:212
 #: .\examiner_user\templates\edit_lesson_content.html:20
 #: .\examiner_user\templates\edit_lesson_topic.html:19
 #: .\examiner_user\templates\edit_question.html:68
@@ -595,12 +593,12 @@ msgstr ""
 msgid "Change"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:225
+#: .\examiner_user\templates\control_course.html:227
 #: .\examiner_user\templates\search_question.html:28
 msgid "Add question"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:231
+#: .\examiner_user\templates\control_course.html:233
 msgid "View questions"
 msgstr ""
 
@@ -661,7 +659,7 @@ msgid "Grade"
 msgstr ""
 
 #: .\examiner_user\templates\course_group_results.html:92
-#: .\examiner_user\templates\course_results.html:129 .\student\views.py:250
+#: .\examiner_user\templates\course_results.html:129 .\student\views.py:251
 msgid "Diploma"
 msgstr ""
 
@@ -965,7 +963,6 @@ msgstr ""
 
 #: .\examiner_user\templates\examiner_homepage.html:34
 #: .\platform_admin\templates\platform_homepage.html:35
-#: .\student\templates\student_homepage.html:35
 msgid ""
 "This site allows creation and edition of courses and uploading course "
 "materials.\n"
@@ -976,7 +973,7 @@ msgstr ""
 
 #: .\examiner_user\templates\examiner_homepage.html:42
 #: .\platform_admin\templates\platform_homepage.html:43
-#: .\student\templates\student_homepage.html:43
+#: .\student\templates\student_homepage.html:39
 msgid "Share feedback"
 msgstr ""
 
@@ -1637,6 +1634,16 @@ msgstr ""
 msgid "View diploma"
 msgstr ""
 
+#: .\student\templates\student_homepage.html:32
+msgid "Welcome"
+msgstr ""
+
+#: .\student\templates\student_homepage.html:35
+msgid ""
+"You have sucessfuly logged into e-learning platform where you can find "
+"courses that were assigned to you."
+msgstr ""
+
 #: .\student\templates\student_multiple_question.html:8
 #: .\student\templates\student_question.html:8
 msgid "Time remaining"
@@ -1706,28 +1713,28 @@ msgstr ""
 msgid "Unfortunately you failed to pass the exam"
 msgstr ""
 
-#: .\student\views.py:132
+#: .\student\views.py:133
 msgid "Course isn't ready"
 msgstr ""
 
-#: .\student\views.py:253
+#: .\student\views.py:254
 msgid "finished course"
 msgstr ""
 
-#: .\student\views.py:255
+#: .\student\views.py:256
 msgid "with passing result"
-msgstr ""
-
-#: .\student\views.py:257
-#, python-format
-msgid "achieving %(perc)s percent"
 msgstr ""
 
 #: .\student\views.py:258
 #, python-format
+msgid "achieving %(perc)s percent"
+msgstr ""
+
+#: .\student\views.py:259
+#, python-format
 msgid "by getting %(result)s out of %(max_score)s points"
 msgstr ""
 
-#: .\student\views.py:260
+#: .\student\views.py:261
 msgid "Congratualtions, we wish further successes in studies"
 msgstr ""
