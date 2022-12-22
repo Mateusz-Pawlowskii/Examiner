@@ -10,6 +10,7 @@ from django.contrib import messages
 from fpdf import FPDF
 from django.utils.translation import gettext_lazy as _
 from django.utils.timezone import now as timezone_now
+from django.utils.text import slugify
 
 from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Term
 from exam.functions import get_courses_for_student, get_categories, get_timeover, get_grade_data, student_grades
@@ -130,7 +131,7 @@ class StudentPassExam(LoginRequiredMixin, View):
         # no questions to display
         if stated_question_amount > raw_question_amount or stated_question_amount == 0 or course.test_ready == False:
             messages.error(request, _("Course isn't ready"))
-            return redirect(reverse_lazy("student:student-attempt-exam", kwargs={"pk":course.pk}))
+            return redirect(reverse_lazy("student:student-attempt-exam", kwargs={"pk":course.pk, "slug" : slugify(course.name)}))
         student_results = Result.objects.filter(student = request.user, course=course)
         for result in student_results:
             if result.finished is False:
