@@ -235,11 +235,10 @@
     autocomplete(document.getElementById("id_group"), groups);
 </script>
 <script src="{% static 'js/course_edit.js' %}"></script>
-<script src="{% static 'js/month_translation.js' %}"></script>
 {% for term in terms %}
   {% if term.0.course == object %}
     <script>
-      document.getElementById("term_{{forloop.counter}}").innerHTML = month_conv("{{term.0.time}}" + "{{term.1}}&nbsp&nbsp&nbsp")
+      document.getElementById("term_{{forloop.counter}}").innerHTML = ("{{term.0.time}}" + "{{term.1}}&nbsp&nbsp&nbsp")
     </script>
   {% endif %}
 {% endfor %}
