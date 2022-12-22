@@ -41,7 +41,11 @@
             {% trans "Test is composed of" %} {{course.question_amount}} {% trans "questions, in order to pass you have to give" %}
             {{course.passing_score}} {% trans "correct answers" %}.
             <br>
-            {% trans "For completing the exam you have" %} {{course.time}} {% trans "minutes" %}.
+            {% if course.time != 0 %}
+                {% trans "For completing the exam you have" %} {{course.time}} {% trans "minutes" %}.
+            {% else %}
+                {% trans "There is no time limit for this exam" %}
+            {% endif %}
         </p>
     </div>
     <div class="text-center">

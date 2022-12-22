@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-21 20:05+0100\n"
+"POT-Creation-Date: 2022-12-22 09:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,26 +32,26 @@ msgid "Password"
 msgstr ""
 
 #: .\exam\functions.py:25 .\exam\functions.py:34 .\exam\functions.py:45
-#: .\exam\functions.py:54 .\examiner_user\views.py:527
-#: .\examiner_user\views.py:558 .\examiner_user\views.py:575
-#: .\examiner_user\views.py:600 .\examiner_user\views.py:611
-#: .\examiner_user\views.py:613 .\student\forms.py:10
+#: .\exam\functions.py:54 .\examiner_user\views.py:528
+#: .\examiner_user\views.py:559 .\examiner_user\views.py:576
+#: .\examiner_user\views.py:601 .\examiner_user\views.py:612
+#: .\examiner_user\views.py:614 .\student\forms.py:10
 msgid "Failed"
 msgstr ""
 
 #: .\exam\functions.py:28 .\exam\functions.py:36 .\exam\functions.py:48
-#: .\exam\functions.py:56 .\examiner_user\views.py:527
-#: .\examiner_user\views.py:576 .\examiner_user\views.py:612
-#: .\examiner_user\views.py:613 .\student\forms.py:12
+#: .\exam\functions.py:56 .\examiner_user\views.py:528
+#: .\examiner_user\views.py:577 .\examiner_user\views.py:613
+#: .\examiner_user\views.py:614 .\student\forms.py:12
 msgid "Unfinished"
 msgstr ""
 
 #: .\exam\functions.py:32 .\exam\functions.py:52
 #: .\examiner_user\templates\course_group_results.html:88
 #: .\examiner_user\templates\course_results.html:125
-#: .\examiner_user\views.py:527 .\examiner_user\views.py:556
-#: .\examiner_user\views.py:574 .\examiner_user\views.py:598
-#: .\examiner_user\views.py:610 .\examiner_user\views.py:613
+#: .\examiner_user\views.py:528 .\examiner_user\views.py:557
+#: .\examiner_user\views.py:575 .\examiner_user\views.py:599
+#: .\examiner_user\views.py:611 .\examiner_user\views.py:614
 #: .\student\forms.py:11
 msgid "Passed"
 msgstr ""
@@ -373,8 +373,8 @@ msgstr ""
 msgid "Answer nr.5"
 msgstr ""
 
-#: .\examiner_user\forms.py:55 .\examiner_user\views.py:287
-#: .\examiner_user\views.py:345
+#: .\examiner_user\forms.py:55 .\examiner_user\views.py:288
+#: .\examiner_user\views.py:346
 msgid "Correct answer was incorrectly marked"
 msgstr ""
 
@@ -691,7 +691,7 @@ msgstr ""
 #: .\examiner_user\templates\course_results.html:27
 #: .\examiner_user\templates\detail_course.html:28
 #: .\platform_admin\templates\platform_detail_course.html:27
-#: .\student\templates\student_attempt_exam.html:44
+#: .\student\templates\student_attempt_exam.html:45
 msgid "minutes"
 msgstr ""
 
@@ -1067,10 +1067,6 @@ msgstr ""
 msgid "Question amount"
 msgstr ""
 
-#: .\examiner_user\templates\search_course.html:42
-msgid "Amount of assgined students"
-msgstr ""
-
 #: .\examiner_user\templates\search_question.html:6
 msgid "Questions for course"
 msgstr ""
@@ -1111,43 +1107,43 @@ msgstr ""
 msgid "Student group not found"
 msgstr ""
 
-#: .\examiner_user\views.py:155
+#: .\examiner_user\views.py:156
 msgid "Course sucessfully created"
 msgstr ""
 
-#: .\examiner_user\views.py:157
+#: .\examiner_user\views.py:158
 msgid "Course creation failed"
 msgstr ""
 
-#: .\examiner_user\views.py:194 .\platform_admin\views.py:381
+#: .\examiner_user\views.py:195 .\platform_admin\views.py:381
 msgid "Course not found"
 msgstr ""
 
-#: .\examiner_user\views.py:210
+#: .\examiner_user\views.py:211
 msgid "(Deadline expired)"
 msgstr ""
 
-#: .\examiner_user\views.py:220
+#: .\examiner_user\views.py:221
 msgid "Lack of permission"
 msgstr ""
 
-#: .\examiner_user\views.py:247
+#: .\examiner_user\views.py:248
 msgid "Course data was filled incorrectly"
 msgstr ""
 
-#: .\examiner_user\views.py:381
+#: .\examiner_user\views.py:382
 msgid "Wrong file"
 msgstr ""
 
-#: .\examiner_user\views.py:444
+#: .\examiner_user\views.py:445
 msgid "New resource should be given during learning resource change"
 msgstr ""
 
-#: .\examiner_user\views.py:451
+#: .\examiner_user\views.py:452
 msgid "Wrong file extension"
 msgstr ""
 
-#: .\examiner_user\views.py:476
+#: .\examiner_user\views.py:477
 msgid "Incorrect lesson topic"
 msgstr ""
 
@@ -1601,19 +1597,23 @@ msgstr ""
 msgid "correct answers"
 msgstr ""
 
-#: .\student\templates\student_attempt_exam.html:44
+#: .\student\templates\student_attempt_exam.html:45
 msgid "For completing the exam you have"
 msgstr ""
 
-#: .\student\templates\student_attempt_exam.html:49
+#: .\student\templates\student_attempt_exam.html:47
+msgid "There is no time limit for this exam"
+msgstr ""
+
+#: .\student\templates\student_attempt_exam.html:53
 msgid "Are you sure you want to attempt the exam?"
 msgstr ""
 
-#: .\student\templates\student_attempt_exam.html:56
+#: .\student\templates\student_attempt_exam.html:60
 msgid "Yes"
 msgstr ""
 
-#: .\student\templates\student_attempt_exam.html:63
+#: .\student\templates\student_attempt_exam.html:67
 msgid "No"
 msgstr ""
 
