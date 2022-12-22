@@ -39,7 +39,6 @@
       <th scope="col" onclick="sortColumn('lesson_amount',3)" class="text-center">{% trans "Lesson amount" %} <img id="img3" src="{% static 'img/sorting_button.png' %}"></th>
       <th scope="col" onclick="sortColumn('question_amount',4)" class="text-center">{% trans "Question amount" %} <img id="img4" src="{% static 'img/sorting_button.png' %}"></th>
       <th scope="col" onclick="sortColumn('time',5)" class="text-center">{% trans "Test duration" %} <img id="img5" src="{% static 'img/sorting_button.png' %}"></th>
-      <th scope="col" onclick="sortColumn('student_amount',6)" class="text-center">{% trans "Amount of assgined students" %} <img id="img6" src="{% static 'img/sorting_button.png' %}"></th>
     </tr>
   </thead>
   <tbody id="tbody">
@@ -47,7 +46,7 @@
   </tbody>
 </table>
 <script>
-  let columnNum = 7;
+  let columnNum = 6;
   let objectList = [];
   function loadTableData(objectList) {
   const tableBody = document.getElementById("tbody");
@@ -57,8 +56,7 @@
       <td id="category_${object.sort_name}">${object.category}</td>
       <td id="lesson_amount_${object.sort_name}" class="text-center">${object.lesson_amount}</td>
       <td id="question_amount_${object.sort_name}" class="text-center">${object.question_amount}</td>
-      <td id="time_${object.sort_name}" class="text-center">${object.time}</td>
-      <td id="student_amount_${object.sort_name}" class="text-center">${object.student_amount}</td></tr>`
+      <td id="time_${object.sort_name}" class="text-center">${object.time}</td>`
   };
   tableBody.innerHTML = dataHtml;
 };
@@ -68,7 +66,7 @@
   objectList.push({
     "name" : "<a href='{% url 'examiner_user:detail-course' pk=course.pk slug=course.name|slugify %}''>{{course.name}}</a>", 
     "time" : Number("{{course.time}}"), "question_amount" : Number("{{course.question_amount}}"), "sort_name" : "{{course.name}}",
-    "lesson_amount" : Number("{{course.lesson_amount}}"), "student_amount" : Number("{{course.student_amount}}"),
+    "lesson_amount" : Number("{{course.lesson_amount}}"),
     "category" : "{{course.category}}", "sort_category" : "{{course.category}}"})
 </script>
 {% endfor %}

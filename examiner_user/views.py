@@ -109,6 +109,7 @@ class AttachCourseText(LoginRequiredMixin, PermissionRequiredMixin, View):
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
         group.courses.add(course)
         group.save()
+        Term(course=course, group=group, time=request.POST["term"]).save()
         return redirect(reverse_lazy("examiner_user:edit-course", kwargs={"pk":self.kwargs["pk"],"slug":self.kwargs["slug"]}))
 
 class UnattachGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -200,7 +201,7 @@ class ControlCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     form_class = CourseEditForm
 
     def get_term_data(self, course):
-        course_groups = course.studentgroup_set.all()
+        course_groups = StudentGroup.objects.filter(courses=course)
         terms = []
         for group in course_groups:
             term_info = []
