@@ -21,6 +21,7 @@
       <th width="15%" scope="col" class="text-center">{% trans "Score" %}</th>
       <th width="13%" scope="col">%</th>
       <th scope="col">{% trans "Result" %}</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -30,7 +31,40 @@
       <td class="text-center">{{result.current_score}}</td>
       <td>{{perc}}</td>
       <td>{% if result.passed %} {% trans "Passing" %} {% else %} {% trans "Failing" %} {% endif %}</td>
+      <td>
+        <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#deleteModal{{forloop.counter}}">
+          {% trans "Delete result" %}
+        </button>
+      </td>
     </tr>
+    <div class="modal fade" id="deleteModal{{forloop.counter}}">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">{% trans "Result deletion" %}</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            {% blocktranslate %} Are you sure you want to delete this result? You can't revert this choice. You should make sure 
+            that administrator of your platform approves of result deletion. Doing this will remove one exam attempt from student history.
+            If deleted result was positive student will no longer count as a person who completed the course. If student failed becouse
+            they run out of attempts they will once again be able to attempt exam and pass. This feature should be always used with extreme
+            coution, it was introduced in order to allow specyfic students to re-try failed courses or to do courses once more if they
+            acess them due to being in a seprate group than the one in which they failed the course. When in doubt, ask your platform
+            administrator.{% endblocktranslate %}
+          </div>
+          <div class="modal-footer">
+            <form method="POST">
+              {% csrf_token %}
+              <input type="hidden" value="{{result.pk}}" name="result">
+              <button class="btn btn-danger" type="submit" id="submit">{% trans "Delete result" %}</button>
+            <button type="button" class="btn btn-info" data-dismiss="modal">{% trans "Cancel" %}</button>
+          </form>
+          </div>
+    
+        </div>
+      </div>
+    </div>
     {% endfor %}
   </tbody>
 </table>

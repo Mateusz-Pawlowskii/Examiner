@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-22 18:24+0100\n"
+"POT-Creation-Date: 2022-12-23 13:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,26 +32,26 @@ msgid "Password"
 msgstr "Hasło"
 
 #: .\exam\functions.py:25 .\exam\functions.py:34 .\exam\functions.py:45
-#: .\exam\functions.py:54 .\examiner_user\views.py:528
-#: .\examiner_user\views.py:559 .\examiner_user\views.py:576
-#: .\examiner_user\views.py:601 .\examiner_user\views.py:612
-#: .\examiner_user\views.py:614 .\student\forms.py:10
+#: .\exam\functions.py:54 .\examiner_user\views.py:533
+#: .\examiner_user\views.py:564 .\examiner_user\views.py:581
+#: .\examiner_user\views.py:606 .\examiner_user\views.py:617
+#: .\examiner_user\views.py:619 .\student\forms.py:10
 msgid "Failed"
 msgstr "Niezaliczony"
 
 #: .\exam\functions.py:28 .\exam\functions.py:36 .\exam\functions.py:48
-#: .\exam\functions.py:56 .\examiner_user\views.py:528
-#: .\examiner_user\views.py:577 .\examiner_user\views.py:613
-#: .\examiner_user\views.py:614 .\student\forms.py:12
+#: .\exam\functions.py:56 .\examiner_user\views.py:533
+#: .\examiner_user\views.py:582 .\examiner_user\views.py:618
+#: .\examiner_user\views.py:619 .\student\forms.py:12
 msgid "Unfinished"
 msgstr "Jeszcze nie ukończony"
 
 #: .\exam\functions.py:32 .\exam\functions.py:52
 #: .\examiner_user\templates\course_group_results.html:88
 #: .\examiner_user\templates\course_results.html:125
-#: .\examiner_user\views.py:528 .\examiner_user\views.py:557
-#: .\examiner_user\views.py:575 .\examiner_user\views.py:599
-#: .\examiner_user\views.py:611 .\examiner_user\views.py:614
+#: .\examiner_user\views.py:533 .\examiner_user\views.py:562
+#: .\examiner_user\views.py:580 .\examiner_user\views.py:604
+#: .\examiner_user\views.py:616 .\examiner_user\views.py:619
 #: .\student\forms.py:11
 msgid "Passed"
 msgstr "Zaliczony"
@@ -538,6 +538,7 @@ msgstr "Skasuj lekcje"
 #: .\examiner_user\templates\control_course.html:124
 #: .\examiner_user\templates\control_course.html:213
 #: .\examiner_user\templates\detail_lesson.html:39
+#: .\examiner_user\templates\results_course_student.html:61
 #: .\platform_admin\templates\edit_student.html:80
 #: .\platform_admin\templates\edit_student_group.html:140
 #: .\platform_admin\templates\edit_student_group.html:269
@@ -929,13 +930,6 @@ msgid "Instruction"
 msgstr "Instrukcja"
 
 #: .\examiner_user\templates\edit_question.html:83
-#, fuzzy
-#| msgid ""
-#| " Question should have 2 to 5 answers. If text field corresponding to the "
-#| "answer is left blank answer will\n"
-#| "  not be included in exam. Correct answer is marked by checking field (or "
-#| "fields in case of multiple answer questions) situated\n"
-#| "  next to text area with answer."
 msgid ""
 "Question should have 2 to 5 answers. If text field corresponding to the "
 "answer is left blank answer will\n"
@@ -1067,15 +1061,54 @@ msgstr "Uzyskane punkty"
 msgid "Result"
 msgstr "Wynik"
 
-#: .\examiner_user\templates\results_course_student.html:32
+#: .\examiner_user\templates\results_course_student.html:33
 #: .\student\templates\student_result_view.html:27
 msgid "Passing"
 msgstr "Zaliczający"
 
-#: .\examiner_user\templates\results_course_student.html:32
+#: .\examiner_user\templates\results_course_student.html:33
 #: .\student\templates\student_result_view.html:28
 msgid "Failing"
 msgstr "Niezaliczający"
+
+#: .\examiner_user\templates\results_course_student.html:36
+#: .\examiner_user\templates\results_course_student.html:60
+msgid "Delete result"
+msgstr "Skasuj wynik"
+
+#: .\examiner_user\templates\results_course_student.html:44
+msgid "Result deletion"
+msgstr "Kasacja wyniku"
+
+#: .\examiner_user\templates\results_course_student.html:48
+msgid ""
+" Are you sure you want to delete this result? You can't revert this choice. "
+"You should make sure \n"
+"            that administrator of your platform approves of result deletion. "
+"Doing this will remove one exam attempt from student history.\n"
+"            If deleted result was positive student will no longer count as a "
+"person who completed the course. If student failed becouse\n"
+"            they run out of attempts they will once again be able to attempt "
+"exam and pass. This feature should be always used with extreme\n"
+"            coution, it was introduced in order to allow specyfic students "
+"to re-try failed courses or to do courses once more if they\n"
+"            acess them due to being in a seprate group than the one in which "
+"they failed the course. When in doubt, ask your platform\n"
+"            administrator."
+msgstr ""
+"Czy jesteś pewien że chcesz skasować ten wynik? Tej decyzji nie da się "
+"cofnąć. Powinienieś się upewnić że \n"
+"   administrator twojej platformy zezwala na usuwanie wyników.Wykonanie tej "
+"akcji usunie jedno podejście z historii studenta.\n"
+"   Jeżeli usunięty wynik był pozytywny student nie będzie liczony jako osoba "
+"która ukończyła kurs. Jeżeli studentowi nie udało się zaliczyć ponieważ\n"
+"   skończyła się im ilość prób, będą wtedy mogli podejść ponownie do "
+"egzaminu i zdać. Ta funkcjonalność powinna być zawsze używana ze szczególną\n"
+"   uwagą, została wprowadzona by pozwolić wybranym studentom na ponowne "
+"zaliczenie niezaliczonych kursów lub przechodzić kurs ponownie jeżeli\n"
+"   uzyskali do niego dostep poprzez przynależność do odrębnej grupy niż ta w "
+"której niezaliczyli kursu. Jeśli masz wątpliwości spytaj się administratora "
+"swojej platformy."
 
 #: .\examiner_user\templates\search_course.html:14
 msgid "Create new"
@@ -1712,7 +1745,8 @@ msgid ""
 "You have sucessfuly logged into e-learning platform where you can find "
 "courses that were assigned to you."
 msgstr ""
-"Zalogowałeś się do platformy e-learningowej na której znajdziesz przypisane tobie szkolenia."
+"Zalogowałeś się do platformy e-learningowej na której znajdziesz przypisane "
+"tobie szkolenia."
 
 #: .\student\templates\student_multiple_question.html:8
 #: .\student\templates\student_question.html:8

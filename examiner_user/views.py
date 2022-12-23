@@ -12,7 +12,7 @@ from django.utils.translation import gettext_lazy as _
 
 from .forms import (CourseForm, QuestionForm, QuestionFormMultiple, LessonForm, AttachCourseToGroupForm, AttachStudentTextForm, 
                     LessonRenameForm, LessonEditForm, CourseEditForm, AttachStudentTextForm)
-from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Term, Grade
+from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Term
 from student.forms import StudentSearchCourseForm
 from platform_admin.views import (PlatformCreateStudent, StudentGroupSearch, CreateStudentGroup, EditStudentGroup, AttachCourse, 
                                   AttachStudent, UnattachStudent, ChangeTerm, FeedbackView)
@@ -510,6 +510,11 @@ class ExaminerResultView(LoginRequiredMixin, PermissionRequiredMixin, View):
                    "platform" : platform}
         return render(request, self.template_name, context)
 
+    def post(self, request, *args, **kwargs):
+        result = Result.objects.get(pk=request.POST["result"])
+        result.delete()
+        return HttpResponseRedirect(self.request.path_info)
+        
 class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "course_results.html"
     permission_required = ("auth.view_user")
