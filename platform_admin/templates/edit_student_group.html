@@ -24,7 +24,7 @@
 <hr>
 <button type="button" class="btn btn-secondary dropdown-toggle tog mt-1 myButton" id="lesson_nav">{% trans "Students" %}</button>
 <div class="no-display">
-<p>{% trans "Enter username of user that will be assigned to group" %}<b>{{group.name}}</b></p>
+<p>{% trans "Enter username of user that will be assigned to group" %} <b>{{group.name}}</b></p>
 <div class="form-group">
   {% if side == "platform" %}
     <form autocomplete="off" method="POST" action="{% url 'platform_admin:attach-student' pk=group.pk %}">
