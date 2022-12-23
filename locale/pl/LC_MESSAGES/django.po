@@ -109,7 +109,7 @@ msgstr ""
 "zamieszczanie materiałów lekcyjnych.\n"
 "Główną funkcjonalnością aplikacji jest tworzenie automatycznie sprawdzanych "
 "testów (pytania jednokrotnego lub \n"
-"wielokrotnego wyboru) przydzielonych do kursów"
+"wielokrotnego wyboru) przydzielonych do kursów. "
 
 #: .\exam\templates\homepage.html:35
 #: .\examiner_user\templates\examiner_homepage.html:38
@@ -168,6 +168,11 @@ msgid ""
 "be deleted in 1 month if you are not going to log in to your platform admin "
 "account by"
 msgstr ""
+"Zostałeś oznaczony jako nieaktywny w aplikacji Examiner ponieważ nie zalogowałeś "
+"się na swoje konto administratora platform\n"
+"w przeciągu ostatnich 11 miesięcy. Twoja platforma e-learningowa, razem ze wszystkimi "
+"kurami, lekcjami oraz kontami użytkowników zostanie skasowana\n"
+"po miesiącu jeżeli nie zalogujesz się na swoje konto administratora platformy by"
 
 #: .\exam\templates\login.html:8
 msgid "Enter your login credentials below. It's case sensitive"
@@ -1310,7 +1315,7 @@ msgstr "Kasacja studenta"
 
 #: .\platform_admin\templates\edit_student_group.html:18
 msgid "Student group "
-msgstr "Grupa studencka"
+msgstr "Grupa studencka "
 
 #: .\platform_admin\templates\edit_student_group.html:22
 msgid "Change name"
@@ -1456,7 +1461,7 @@ msgstr "Kasowanie kursu"
 
 #: .\platform_admin\templates\platform_detail_course.html:65
 msgid "Are you sure you want to delete course "
-msgstr "Czy jesteś pewien że chcesz skasować kurs"
+msgstr "Czy jesteś pewien że chcesz skasować kurs "
 
 #: .\platform_admin\templates\platform_detail_course.html:65
 msgid ""
