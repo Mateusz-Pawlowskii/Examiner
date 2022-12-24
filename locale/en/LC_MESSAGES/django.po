@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-23 13:12+0100\n"
+"POT-Creation-Date: 2022-12-23 18:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -288,6 +288,219 @@ msgid ""
 "password confirmation mail.\n"
 "    If you can't find mail check your spam folder or if entered email adress "
 "is correct."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:10
+msgid "PRIVACY POLICY OF EXAMINER-MP.HEROKUAPP.COM SITE"
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:11
+msgid ""
+"1. Protection of users personal data is high priority for this sites owner. "
+"Every effort is made to make sure that users personal data is kept safe."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:12
+msgid ""
+"2. User is defined as a natural person, legal person or organizational unit, "
+"without legal personality, which was granted legal capacity through act, "
+"uses web services offered by this website."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:13
+msgid ""
+"3. This document explains rules and extent of users personal data "
+"processing, their rights and duties of data administrator, and information "
+"about cookie files."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:14
+msgid "I. PERSONAL DATA ADMINISTRATOR"
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:15
+msgid ""
+"Mateusz Pawłowski e-mail adress: mm.pawlowski18@gmail.com is personal data "
+"administrator (hereinafter reffered to as "
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:16
+msgid "II. POURPOSE OF PROCESSING PERSONAL DATA"
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:17
+msgid ""
+"1. Owner processed personal data for the pourpose of the aplication "
+"functioning fully."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:18
+msgid "2. That data is needed for registration on the website."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:19
+msgid "III. TYPE OF PERSONAL DATA"
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:20
+msgid ""
+"1. Owner processes personal data in form of e-mail adress, which is "
+"requested when somebody tries to register now e-learning platform."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:21
+msgid "IV. LEGAL BASIS FOR PERSONAL DATA PROCESSING"
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:22
+msgid ""
+"1. Personal data is processe according to Regulations of the European "
+"Parliament and of the Council(UE) 2016/679 of 27 April 2016 on the "
+"protection of natural persons with regard to the processing of personal data "
+"and on the free movement of such data, and repealing Directive 95/46/EC "
+"(General Data Protection Regulation), hereinafter reffered to as „GDPR”."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:23
+msgid ""
+"2. Owner processes personal data only after prior permission, expressed "
+"during registration on the website."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:24
+msgid ""
+"3. Expression of agreement for processing personal data is completely "
+"voluntary, however refusal prevents from registration on Examiner website."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:25
+msgid "V. USER RIGHTS"
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:26
+msgid ""
+"1. User may request information about data processing from administrator."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:27
+msgid "2. User may request correction to their personal data."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:28
+msgid ""
+"3. User may revoke the agreement to personal data processing at any time. "
+"Revoking doesen't affect already taken actions. It will prevent the use of "
+"password change or inactivity notifications."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:29
+msgid ""
+"4. User may at any time request to remove their personal data, with "
+"consequences identical to the ones in the point above."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:30
+msgid ""
+"5. User may always, without explicit reason protest the use of their "
+"personal data."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:31
+msgid ""
+"6. User may request transfer of their personal data to a different entity. "
+"For this pourpose they should send request to owner, specyfing which entity "
+"(name, adress) should recive users personal data. When the wish is going to "
+"be confirmed, owner will pass, in electronic form, to the specyfied entity, "
+"user personal data. Request confirmation is needed due to saftery of users "
+"personal data and ensuring that request comes from authorized individual."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:32
+msgid ""
+"7. Owner informs user about undertaken actions, by the end of one month "
+"period since requests mentioned above were recieved."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:33
+msgid "VI. COOKIE FILES"
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:34
+msgid ""
+"1. Website is using cookie files or similar measures (hereinafter jointly "
+"reffered to as ”cookies”) to gather information about user acess and "
+"preferences."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:35
+msgid ""
+"2. Cookie files are pieces of information, which contain referential code, "
+"they are deposited by website on users device with pouropse of maintaining, "
+"sometimes tracking information about used device. Usually they are not "
+"sufficient to identity user."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:36
+msgid ""
+"3. Some of the cookie files, used by the website and only used during "
+"browser session and are deleted when browser is closed. Other are used to "
+"remember user so that they can be recognized on return.In that case they are "
+"saved for longer periods of time."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:37
+msgid ""
+"4. Cookie files used on the site are browser-length cookies and others used "
+"by web framework „Django”."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:38
+msgid ""
+"5. All cookie files used by the website, are compliant with European Union "
+"law."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:39
+msgid ""
+"6. Majority of mobile browser users automatically accept cookie files. If "
+"user doesen't change default browser settings cookie files will be stored in "
+"device memory."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:40
+msgid ""
+"7. User may change browser settings regarding cookie files or change browser "
+"to enable display of proper notification every time cookie files are "
+"downloaded. In order to change acceptace settings, it is necessery to change "
+"browser settings."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:41
+msgid "8. Blocking or deleting cookie files may prevent full acess to website."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:42
+msgid "9. Cookie files are used to manage session, that is:"
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:43
+msgid ""
+"  a. Creation of logging sessions that keep track of user being logged in, "
+"and their requests would be served in safe and consistent way."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:44
+msgid "  b. Recognition of user that have already visited website."
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:45
+msgid "  c. Recognizing if user is registered on the website"
+msgstr ""
+
+#: .\exam\templates\privacy_policy.html:46
+msgid ""
+"  d. Registering device data, IP adress and information about used browser "
+"in order to manage and solve problems."
 msgstr ""
 
 #: .\exam\templates\registration.html:11

@@ -35,7 +35,7 @@
         {% trans "Amount of questions given to student during exam:" %}<b> {{object.question_amount}}</b>
       </td>
       <td>
-        {% trans "Amount of correct answers required to pass exam:" %}<b>{{object.passing_score}}</b>
+        {% trans "Amount of correct answers required to pass exam:" %}<b> {{object.passing_score}}</b>
       </td>
     </tr>
     <tr>
@@ -44,9 +44,9 @@
       </td>
       <td>
         {% if object.test_ready %}
-          <p>{% trans "Exam status:" %}<b>{% trans "Exam ready" %}</b></p>
+          <p>{% trans "Exam status:" %}<b> {% trans "Exam ready" %}</b></p>
         {% else %}
-          <p>{% trans "Exam status:" %}<b>{% trans "Exam not ready" %}</b></p>
+          <p>{% trans "Exam status:" %}<b> {% trans "Exam not ready" %}</b></p>
         {% endif %}
       </td>
     </tr>

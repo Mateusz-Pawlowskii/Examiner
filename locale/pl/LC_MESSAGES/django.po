@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-23 13:12+0100\n"
+"POT-Creation-Date: 2022-12-23 18:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -168,11 +168,12 @@ msgid ""
 "be deleted in 1 month if you are not going to log in to your platform admin "
 "account by"
 msgstr ""
-"Zostałeś oznaczony jako nieaktywny w aplikacji Examiner ponieważ nie zalogowałeś "
-"się na swoje konto administratora platform\n"
-"w przeciągu ostatnich 11 miesięcy. Twoja platforma e-learningowa, razem ze wszystkimi "
-"kurami, lekcjami oraz kontami użytkowników zostanie skasowana\n"
-"po miesiącu jeżeli nie zalogujesz się na swoje konto administratora platformy by"
+"Zostałeś oznaczony jako nieaktywny w aplikacji Examiner ponieważ nie "
+"zalogowałeś się na swoje konto administratora platform\n"
+"w przeciągu ostatnich 11 miesięcy. Twoja platforma e-learningowa, razem ze "
+"wszystkimi kurami, lekcjami oraz kontami użytkowników zostanie skasowana\n"
+"po miesiącu jeżeli nie zalogujesz się na swoje konto administratora "
+"platformy by"
 
 #: .\exam\templates\login.html:8
 msgid "Enter your login credentials below. It's case sensitive"
@@ -310,6 +311,275 @@ msgstr ""
 "linkiem potwierdzającym zmiane hasła został już wysłany. Jeżeli nie możesz "
 "go znaleźć sprawdź folder ze spamem oraz czy adres mailowy został poprawnie "
 "wpisany."
+
+#: .\exam\templates\privacy_policy.html:10
+msgid "PRIVACY POLICY OF EXAMINER-MP.HEROKUAPP.COM SITE"
+msgstr "POLITYKA PRYWATNOŚCI STRONY INTERNETOWEJ EXAMINER-MP.HEROKUAPP.COM"
+
+#: .\exam\templates\privacy_policy.html:11
+msgid ""
+"1. Protection of users personal data is high priority for this sites owner. "
+"Every effort is made to make sure that users personal data is kept safe."
+msgstr ""
+"1. Dla właściciela niniejszej strony internetowej, ochrona danych osobowych "
+"użytkowników jest sprawą wysokiej wagi.Dokłada on starań, aby Użytkownicy "
+"czuli się bezpiecznie podając swoje dane osobowe w trakcie korzystania ze "
+"strony."
+
+#: .\exam\templates\privacy_policy.html:12
+msgid ""
+"2. User is defined as a natural person, legal person or organizational unit, "
+"without legal personality, which was granted legal capacity through act, "
+"uses web services offered by this website."
+msgstr ""
+"2. Użytkownik to osoba fizyczna, osoba prawna albo jednostka organizacyjna, "
+"nieposiadająca osobowości prawnej, której ustawa przyznaje zdolność prawną, "
+"używająca usług sieciowych dostępnych w ramach strony internetowej."
+
+#: .\exam\templates\privacy_policy.html:13
+msgid ""
+"3. This document explains rules and extent of users personal data "
+"processing, their rights and duties of data administrator, and information "
+"about cookie files."
+msgstr ""
+"3. Dokument ten wyjaśnia zasady i zakres przetwarzania danych osobowych "
+"użytkownika, jego prawa oraz obowiązki administratora tych danych, a także "
+"informacje o plikach cookies."
+
+#: .\exam\templates\privacy_policy.html:14
+msgid "I. PERSONAL DATA ADMINISTRATOR"
+msgstr "I. ADMINISTRATOR DANYCH OSOBOWYCH"
+
+#: .\exam\templates\privacy_policy.html:15
+msgid ""
+"Mateusz Pawłowski e-mail adress: mm.pawlowski18@gmail.com is personal data "
+"administrator (hereinafter reffered to as "
+msgstr ""
+"Administratorem danych osobowych jest Mateusz Pawłowski adres e-mail: mm."
+"pawlowski18@gmail.com (zwany dalej: „Właściciel”)"
+
+#: .\exam\templates\privacy_policy.html:16
+msgid "II. POURPOSE OF PROCESSING PERSONAL DATA"
+msgstr "II. CEL PRZETWARZANIA DANYCH OSOBOWYCH"
+
+#: .\exam\templates\privacy_policy.html:17
+msgid ""
+"1. Owner processed personal data for the pourpose of the aplication "
+"functioning fully."
+msgstr ""
+"1. Właściciel przetwarza dane osobowe użytkownika w celu funkcjonowania aplikacji."
+
+#: .\exam\templates\privacy_policy.html:18
+msgid "2. That data is needed for registration on the website."
+msgstr "2. Dane te są potrzebne do zarejestrowania się na stronie internetowej."
+
+#: .\exam\templates\privacy_policy.html:19
+msgid "III. TYPE OF PERSONAL DATA"
+msgstr "III. RODZAJ DANYCH"
+
+#: .\exam\templates\privacy_policy.html:20
+msgid ""
+"1. Owner processes personal data in form of e-mail adress, which is "
+"requested when somebody tries to register now e-learning platform."
+msgstr ""
+"1. Właściciel przetwarza dane osobowe w postaci adresu e-mail, którego podanie jest "
+"niezbędne do zarejestrowania się jako administratora nowej platformy e-learningowej."
+
+#: .\exam\templates\privacy_policy.html:21
+msgid "IV. LEGAL BASIS FOR PERSONAL DATA PROCESSING"
+msgstr "IV. PODSTAWA PRAWNA PRZETWARZANIA DANYCH OSOBOWYCH"
+
+#: .\exam\templates\privacy_policy.html:22
+msgid ""
+"1. Personal data is processe according to Regulations of the European "
+"Parliament and of the Council(UE) 2016/679 of 27 April 2016 on the "
+"protection of natural persons with regard to the processing of personal data "
+"and on the free movement of such data, and repealing Directive 95/46/EC "
+"(General Data Protection Regulation), hereinafter reffered to as „GDPR”."
+msgstr ""
+"1. Dane osobowe są przetwarzane zgodnie z przepisami Rozporządzenia Parlamentu Europejskiego i Rady (UE) "
+"2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem "
+"danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy "
+"95/46/WE (ogólne rozporządzenie o ochronie danych), OJ L 119, 4.5.2016, p. 1-88, dalej zwane „rozporządzenie RODO”"
+
+#: .\exam\templates\privacy_policy.html:23
+msgid ""
+"2. Owner processes personal data only after prior permission, expressed "
+"during registration on the website."
+msgstr ""
+"2. Właściciel przetwarza dane osobowe wyłącznie po uprzednim uzyskaniu zgody użytkownika, "
+"wyrażonej w momencie dokonania rejestracji na stronie internetowej."
+
+#: .\exam\templates\privacy_policy.html:24
+msgid ""
+"3. Expression of agreement for processing personal data is completely "
+"voluntary, however refusal prevents from registration on Examiner website."
+msgstr ""
+"3. Wyrażenie zgody na przetwarzanie danych osobowych jest całkowicie dobrowolne, "
+"jednakże brak jej udzielenie odbiera możliwość rejestracji na stronie internetowej Examiner."
+
+#: .\exam\templates\privacy_policy.html:25
+msgid "V. USER RIGHTS"
+msgstr "V. PRAWA PRZYSŁUGUJĄCE UŻYTKOWNIKOWI"
+
+#: .\exam\templates\privacy_policy.html:26
+msgid ""
+"1. User may request information about data processing from administrator."
+msgstr "1. Użytkownik może zażądać od właściciela informacji o zakresie przetwarzania danych osobowych."
+
+#: .\exam\templates\privacy_policy.html:27
+msgid "2. User may request correction to their personal data."
+msgstr "2. Użytkownik może zażądać poprawienie swoich danych osobowych."
+
+#: .\exam\templates\privacy_policy.html:28
+msgid ""
+"3. User may revoke the agreement to personal data processing at any time. "
+"Revoking doesen't affect already taken actions. It will prevent the use of "
+"password change or inactivity notifications."
+msgstr ""
+"3. Użytkownik może zawsze wycofać zgodę na przetwarzanie jego danych, bez podania przyczyny. "
+"Wycofanie zgody nie wpłynie na czynności już dokonane. I uniemożliwi korzystanie "
+"z funkcji zmiany hasła konta oraz otrzymywania informacji o skasowaniu"
+" konta razem z platformą z powodu braku aktywności."
+
+#: .\exam\templates\privacy_policy.html:29
+msgid ""
+"4. User may at any time request to remove their personal data, with "
+"consequences identical to the ones in the point above."
+msgstr ""
+"4. Użytkownik może też w każdej chwili zażądać, bez podania przyczyny by właściciel usunął jego dane, "
+"z konsekwencjami identycznymi z punktem powyższym."
+
+#: .\exam\templates\privacy_policy.html:30
+msgid ""
+"5. User may always, without explicit reason protest the use of their "
+"personal data."
+msgstr ""
+"5. Użytkownik może zawsze, bez podania przyczyny wyrazić sprzeciw przeciwko przetwarzaniu danych osobowych."
+
+#: .\exam\templates\privacy_policy.html:31
+msgid ""
+"6. User may request transfer of their personal data to a different entity. "
+"For this pourpose they should send request to owner, specyfing which entity "
+"(name, adress) should recive users personal data. When the wish is going to "
+"be confirmed, owner will pass, in electronic form, to the specyfied entity, "
+"user personal data. Request confirmation is needed due to saftery of users "
+"personal data and ensuring that request comes from authorized individual."
+msgstr ""
+"6. Użytkownik może żądać by właściciel przekazał innemu podmiotowi przetwarzane dane osobowe użytkownika. "
+"Powinien w tym celu napisać prośbę do właściciela, wskazując jakiemu podmiotowi (nazwa, adres) "
+"należy przekazać dane osobowe użytkownika. Po potwierdzeniu przez użytkownika "
+"swojego życzenia, właściciel przekaże, w formie elektronicznej, wskazanemu podmiotowi, "
+"dane osobowe użytkownika. Potwierdzenie żądania jest niezbędne z racji bezpieczeństwa "
+"danych osobowych użytkownika i uzyskanie pewności, że żądanie pochodzi od uprawnionej osoby."
+
+#: .\exam\templates\privacy_policy.html:32
+msgid ""
+"7. Owner informs user about undertaken actions, by the end of one month "
+"period since requests mentioned above were recieved."
+msgstr ""
+"7. Właściciel informuje użytkownika o wykonanych działaniach, przed upływem jednego miesiąca od "
+"otrzymania żądania wymienionego w poprzednich punktach."
+
+#: .\exam\templates\privacy_policy.html:33
+msgid "VI. COOKIE FILES"
+msgstr "VI. PLIKI COOKIES"
+
+#: .\exam\templates\privacy_policy.html:34
+msgid ""
+"1. Website is using cookie files or similar measures (hereinafter jointly "
+"reffered to as ”cookies”) to gather information about user acess and "
+"preferences."
+msgstr ""
+"1. Strona używa plików cookies (ciasteczka) lub podobna technologię (dalej łącznie nazywane:”cookies”) "
+"do zbierania informacji o dostępie użytkownika do strony oraz jego preferencjach."
+
+#: .\exam\templates\privacy_policy.html:35
+msgid ""
+"2. Cookie files are pieces of information, which contain referential code, "
+"they are deposited by website on users device with pouropse of maintaining, "
+"sometimes tracking information about used device. Usually they are not "
+"sufficient to identity user."
+msgstr ""
+"2. Pliki cookies to fragmenty informacji, które zwierają kod referencyjny, są one przesyłane przez "
+"stronę na urządzenie użytkownika w celu przechowywania, czasem śledzenie informacji "
+"o używanym urządzeniu. Zazwyczaj nie pozwalają na zidentyfikowanie osoby użytkownika."
+
+#: .\exam\templates\privacy_policy.html:36
+msgid ""
+"3. Some of the cookie files, used by the website and only used during "
+"browser session and are deleted when browser is closed. Other are used to "
+"remember user so that they can be recognized on return.In that case they are "
+"saved for longer periods of time."
+msgstr ""
+"3. Niektóre z plików cookies, używanych przez stronę są dostępne tylko w czasie trwania sesji "
+"i są usuwane po zamknięciu przeglądarki. Inne służą do zapamiętywania użytkownika, "
+"który po powrocie na stronę internetową jest rozpoznawany. Wówczas są zachowywane na dłuższy czas."
+
+#: .\exam\templates\privacy_policy.html:37
+msgid ""
+"4. Cookie files used on the site are browser-length cookies and others used "
+"by web framework „Django”."
+msgstr "4. Pliki cookies używane na stronie to pliki pamięci podręcznej przeglądarki i inne używane przez framework webowy „Django”."
+
+#: .\exam\templates\privacy_policy.html:38
+msgid ""
+"5. All cookie files used by the website, are compliant with European Union "
+"law."
+msgstr "5. Wszystkie pliki cookies, używane przez stronę internetową, są zgodne z obowiązującym prawem Unii Europejskiej."
+
+#: .\exam\templates\privacy_policy.html:39
+msgid ""
+"6. Majority of mobile browser users automatically accept cookie files. If "
+"user doesen't change default browser settings cookie files will be stored in "
+"device memory."
+msgstr ""
+"6. Większość użytkowników przeglądarek mobilnych automatycznie akceptuje pliki cookies. "
+"Jeśli użytkownik nie zmieni ustawień przeglądarki, pliki cookies zostaną zapisane w pamięci urządzenia."
+
+#: .\exam\templates\privacy_policy.html:40
+msgid ""
+"7. User may change browser settings regarding cookie files or change browser "
+"to enable display of proper notification every time cookie files are "
+"downloaded. In order to change acceptace settings, it is necessery to change "
+"browser settings."
+msgstr ""
+"7. Użytkownik może zmienić preferencje dotyczące akceptacji plików cookies albo zmienić przeglądarkę "
+"aby umożliwić każdorazowe wywoływanie stosownego powiadomienia gdy cookies są pobierane. "
+"Aby zmienić ustawienia akceptacji, należy dostosować ustawienia przeglądarki."
+
+#: .\exam\templates\privacy_policy.html:41
+msgid "8. Blocking or deleting cookie files may prevent full acess to website."
+msgstr "8. Blokowanie lub usuwanie plików cookies może uniemożliwić pełne korzystanie ze strony internetowej."
+
+#: .\exam\templates\privacy_policy.html:42
+msgid "9. Cookie files are used to manage session, that is:"
+msgstr "9. Pliki cookies są wykorzystywane do zarządzania sesją, czyli:"
+
+#: .\exam\templates\privacy_policy.html:43
+msgid ""
+"  a. Creation of logging sessions that keep track of user being logged in, "
+"and their requests would be served in safe and consistent way."
+msgstr ""
+"  a. Tworzenia sesji logowania do użytkownika aby strona pamiętała że	użytkownik jest zalogowany, "
+"a jego żądania były wykonywane w sposób spójny i bezpieczny."
+
+#: .\exam\templates\privacy_policy.html:44
+msgid "  b. Recognition of user that have already visited website."
+msgstr "  b. Rozpoznawanie użytkownika, który już odwiedził stronę internetową."
+
+#: .\exam\templates\privacy_policy.html:45
+msgid "  c. Recognizing if user is registered on the website"
+msgstr "  c. Rozpoznawania czy użytkownik jest zarejestrowany na stronie."
+
+#: .\exam\templates\privacy_policy.html:46
+msgid ""
+"  d. Registering device data, IP adress and information about used browser "
+"in order to manage and solve problems."
+msgstr ""
+"  d. Rejestrowanie informacji z urządzenia, adres IP, informacje o używanej przeglądarce "
+"w celu administrowania i rozwiązywania problemów."
+
 
 #: .\exam\templates\registration.html:11
 #: .\platform_admin\templates\create_examiner.html:11
