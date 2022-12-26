@@ -58,15 +58,19 @@ class DetailStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     form_class = AttachStudentTextForm
 
     def get_course_data(self, groups, student):
+        courses = []
         test_marks = []
         course_data = []
         grades_list = []
         for group in groups:
-            courses = Course.objects.filter(studentgroup=group)
+            group_courses = Course.objects.filter(studentgroup=group)
+            for group_course in group_courses:
+                if group_course not in courses:
+                    courses.append(group_course)
+        for course in courses:
+            course_data.append([course.pk, course.name])
             test_marks.extend(test_mark(courses, student))
             grades_list.extend(student_grades(courses, student))
-            for course in courses:
-                course_data.append([course.pk, course.name])
         return (course_data, test_marks, grades_list)
 
     def get(self, request, *args, **kwargs):
@@ -548,8 +552,16 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
         groups = StudentGroup.objects.filter(courses=course, platform=platform)
+        terms = []
+        for group in groups:
+            terms.append(Term.objects.filter(group=group.pk).first().time)
+        # expression below sorts groups so that the ones with further deadline are processed first
+        # it makes it so that one student connected to one course through two groups with
+        # different deadlines would work correctly
+        sorted_groups = list(map(lambda pair:pair[0],(sorted(list(map(lambda x, y:(x,y), groups, terms)),
+                        key = lambda pair:pair[1], reverse = True))))
         context = {"course" : course,
-                   "groups" : groups,
+                   "groups" : sorted_groups,
                    "grades" : get_grade_data(platform),
                    "platform" : platform
                    }
@@ -557,14 +569,19 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         context["lessons"] = Lesson.objects.filter(course=course)
         course_information = initialize_course_information(course)
         students = []
+        unique_students = []
         test_marks = []
         grades_list = []
-        for group in groups:
+        for group in sorted_groups:
+            not_repeating_students = []
             group_students = User.objects.filter(studentgroup=group, platform=platform)
-            timeover = get_timeover(group, course)
-            test_marks.extend(course_mark(course, group_students, timeover))
-            grades_list.extend(course_grades(course, group_students))
             for student in group_students:
+                if student not in unique_students:
+                    not_repeating_students.append(student)
+            timeover = get_timeover(group, course)
+            test_marks.extend(course_mark(course, not_repeating_students, timeover))
+            grades_list.extend(course_grades(course, not_repeating_students))
+            for student in not_repeating_students:
                 students.append((student.pk,student.username, get_maximum_result(student, course),
                 course_information["student_amount"]))
                 course_information["student_amount"] += 1
@@ -574,6 +591,7 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
                     course_information["failed_students"] += 1
                 else:
                     course_information["current_students"] += 1
+            unique_students.extend(not_repeating_students)
         context["students"] = self.remove_repeating_students(students)
         # Part for graphs starts here
         students = sorted(context["students"], key = lambda student: student[2], reverse=True)

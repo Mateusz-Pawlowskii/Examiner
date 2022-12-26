@@ -114,12 +114,12 @@ def get_courses_for_student(student):
     groups = StudentGroup.objects.filter(students=student)
     for group in groups:
         group_courses = Course.objects.filter(studentgroup=group)
-        test_marks.extend(test_mark(group_courses, student))
         for course in group_courses:
-            courses.append(course)
-            index += 1
-            course_info += [(course.pk, course.name, course.category,index)]
-    courses = set(courses)
+            if course not in courses:
+                courses.append(course)
+                index += 1
+                course_info += [(course.pk, course.name, course.category,index)]
+    test_marks.extend(test_mark(courses, student))
     return (course_info, test_marks, courses)
 
 def get_categories(courses):

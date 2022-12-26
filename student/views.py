@@ -64,9 +64,16 @@ class StudentDetailCourse(LoginRequiredMixin, View):
 
     def get_term(self, request, course):
         user = request.user
-        group = StudentGroup.objects.filter(students=user, courses=course).first()
-        term = Term.objects.filter(group=group, course=course).first()
-        return (term.time, get_timeover(group, course))
+        terms = []
+        groups = StudentGroup.objects.filter(students=user, courses=course)
+        for group in groups:
+            terms.append(Term.objects.filter(group=group, course=course).first())
+        term = sorted(terms, key = lambda term:term.time)[-1]
+        if term.time < timezone_now():
+            timeover = True
+        else:
+            timeover = False
+        return (term.time, timeover)
 
     def check_passed(self, request, course):
         """this code checks if the student passed in order to display them diploma link"""
