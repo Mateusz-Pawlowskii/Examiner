@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-23 18:13+0100\n"
+"POT-Creation-Date: 2022-12-26 10:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -321,7 +321,7 @@ msgstr ""
 #: .\exam\templates\privacy_policy.html:15
 msgid ""
 "Mateusz Pawłowski e-mail adress: mm.pawlowski18@gmail.com is personal data "
-"administrator (hereinafter reffered to as "
+"administrator (hereinafter reffered to as „Owner”)."
 msgstr ""
 
 #: .\exam\templates\privacy_policy.html:16
@@ -707,7 +707,9 @@ msgid "No lessons"
 msgstr ""
 
 #: .\examiner_user\templates\control_course.html:105
-msgid "Remove lesson"
+#: .\examiner_user\templates\control_course.html:123
+#: .\examiner_user\templates\detail_lesson.html:38
+msgid "Delete lesson"
 msgstr ""
 
 #: .\examiner_user\templates\control_course.html:114
@@ -723,11 +725,6 @@ msgstr ""
 #: .\examiner_user\templates\control_course.html:118
 #: .\examiner_user\templates\detail_lesson.html:33
 msgid "This choice can't be reverted."
-msgstr ""
-
-#: .\examiner_user\templates\control_course.html:123
-#: .\examiner_user\templates\detail_lesson.html:38
-msgid "Delete lesson"
 msgstr ""
 
 #: .\examiner_user\templates\control_course.html:124
@@ -785,6 +782,8 @@ msgid "Report"
 msgstr ""
 
 #: .\examiner_user\templates\control_course.html:190
+#: .\platform_admin\templates\edit_student_group.html:215
+#: .\platform_admin\templates\edit_student_group.html:245
 msgid "Remove"
 msgstr ""
 
@@ -1069,8 +1068,6 @@ msgstr ""
 #: .\examiner_user\templates\detail_lesson.html:24
 #: .\examiner_user\templates\edit_question.html:72
 #: .\examiner_user\templates\mulitple_edit_question.html:83
-#: .\platform_admin\templates\edit_student_group.html:215
-#: .\platform_admin\templates\edit_student_group.html:245
 #: .\platform_admin\templates\settings.html:75
 msgid "Delete"
 msgstr ""

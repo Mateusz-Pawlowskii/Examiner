@@ -212,7 +212,7 @@ var acc = document.getElementsByClassName("tog");
       {% else %}<form method="POST" action="{% url 'examiner_user:examiner-unattach-student' pk=group.pk %}">{% endif %}
                   {% csrf_token %}
                   <input type="hidden" value="{{student.pk}}" name="student">
-                  <button type="submit" class="btn btn-danger ml-2 myButton" id="{{student.username}}_delete">{% trans 'Delete' %}</button></form>`
+                  <button type="submit" class="btn btn-danger ml-2 myButton" id="{{student.username}}_delete">{% trans 'Remove' %}</button></form>`
         })
   </script>
   {% endfor %}
@@ -242,7 +242,7 @@ var acc = document.getElementsByClassName("tog");
       {% else %}<form method="POST" action="{% url 'examiner_user:examiner-unattach-course' pk=group.pk %}">{% endif %}
                   {% csrf_token %}
                   <input type="hidden" value="{{course.pk}}" name="course">
-                  <button type="submit" class="btn btn-danger ml-2 myButton" id="{{course.name}}_delete">{% trans 'Delete' %}</button></form>`
+                  <button type="submit" class="btn btn-danger ml-2 myButton" id="{{course.name}}_delete">{% trans 'Remove' %}</button></form>`
         })
   </script>
   <div class="modal fade" id="changeModal{{forloop.counter}}">
