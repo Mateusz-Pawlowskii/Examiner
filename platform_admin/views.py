@@ -108,14 +108,15 @@ class EditExaminer(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        examiner = get_object_or_404(User, pk=self.kwargs["pk"])
+        examiner = get_object_or_404(User, pk=self.kwargs["pk"], platform=platform)
         context = {"examiner" : examiner,
                    "form" : self.form_class(instance=examiner),
                    "platform" : platform}
         return render(request, self.template_name, context)
     
     def post(self, request, *args, **kwargs):
-        examiner = get_object_or_404(User, pk=self.kwargs["pk"])
+        platform = Platform.objects.get(users=request.user)
+        examiner = get_object_or_404(User, pk=self.kwargs["pk"], platform=platform)
         form = self.form_class(request.POST, instance=examiner)
         if form.is_valid():
             form.save()
@@ -126,7 +127,8 @@ class ChangePassword(LoginRequiredMixin, PermissionRequiredMixin, View):
     form_class = SetPasswordForm
 
     def post(self, request, *args, **kwargs):
-        user = get_object_or_404(User, pk=self.kwargs["pk"])
+        platform = Platform.objects.get(users=request.user)
+        user = get_object_or_404(User, pk=self.kwargs["pk"], platform=platform)
         form = self.form_class(data=request.POST, user=user)
         if form.is_valid():
             form.save()
@@ -140,7 +142,8 @@ class DeleteUser(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.delete_user")
 
     def post(self, request, *args, **kwargs):
-        user = get_object_or_404(User, pk=self.kwargs["pk"])
+        platform = Platform.objects.get(users=request.user)
+        user = get_object_or_404(User, pk=self.kwargs["pk"], platform=platform)
         user.delete()
         messages.info(request, _("User deleted"))
         return redirect(reverse_lazy("platform_admin:examiner-search"))
@@ -196,7 +199,7 @@ class EditStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         all_groups = StudentGroup.objects.filter(platform=platform)
-        student = get_object_or_404(User, pk=self.kwargs["pk"])
+        student = get_object_or_404(User, pk=self.kwargs["pk"], platform=platform)
         context = {"student" : student,
                    "form" : self.form_class_1(instance=student),
                    "attach_form" : self.form_class_2(),
@@ -206,7 +209,7 @@ class EditStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        student = get_object_or_404(User, pk=self.kwargs["pk"])
+        student = get_object_or_404(User, pk=self.kwargs["pk"], platform=platform)
         try:
             group = StudentGroup.objects.get(name=request.POST["group"], platform=platform)
         except:
@@ -273,11 +276,11 @@ class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
     side = "platform"
 
     def get(self, request, *args, **kwargs):
-        student_group = StudentGroup.objects.get(pk=self.kwargs["pk"])
+        platform = Platform.objects.get(users=request.user)
+        student_group = StudentGroup.objects.get(pk=self.kwargs["pk"], platform=platform)
         form = StudentGroupForm(auto_id="group_%s",instance=student_group)
         student_form = AttachStudentForm(initial={"group" : student_group})
         course_form = AttachCourseForm(initial={"group" : student_group})
-        platform = Platform.objects.get(users=request.user)
         group_courses = Course.objects.filter(studentgroup=student_group)
         categories = get_categories(group_courses)
         terms = []
@@ -286,7 +289,7 @@ class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
             term = Term.objects.filter(group=student_group,course=course).first()
             term_info.append(term)
             if get_timeover(student_group, course):
-                term_info.append(_("(Term expired)"))
+                term_info.append(_("(Deadline expired)"))
             else:
                 term_info.append(" ")
             terms.append(term_info)
@@ -308,7 +311,8 @@ class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        student_group = StudentGroup.objects.get(pk=self.kwargs["pk"])
+        platform = Platform.objects.get(users=request.user)
+        student_group = StudentGroup.objects.get(pk=self.kwargs["pk"], platform=platform)
         form = StudentGroupForm(request.POST, instance=student_group)
         if form.is_valid():
             form.save()
@@ -321,17 +325,19 @@ class PlatformDetailCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.delete_course")
 
     def get(self, request, *args, **kwargs):
-        course = get_object_or_404(Course, pk=self.kwargs["pk"])
+        platform = Platform.objects.get(users=request.user)
+        course = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
         context = {"object" : course,
                    "questions" : Question.objects.filter(course=course),
-                   "group" : StudentGroup.objects.get(pk=self.kwargs["group"]),
+                   "group" : StudentGroup.objects.get(pk=self.kwargs["group"], platform=platform),
                    "lessons" : Lesson.objects.filter(course=course),
                    "platform" : Platform.objects.get(users=request.user)}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         group = self.kwargs["group"]
-        course = get_object_or_404(Course, pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
         course.delete()
         messages.info(request, _("Course deleted"))
         return redirect(reverse_lazy("platform_admin:edit-student-group",kwargs={"pk":group,"slug":slugify(group.name)}))
@@ -340,7 +346,8 @@ class DeleteGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.delete_studentgroup")
 
     def post(self, request, *args, **kwargs):
-        student_group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
+        platform = Platform.objects.get(users=request.user)
+        student_group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"], platform=platform)
         student_group.delete()
         messages.info(request, _("Group deleted"))
         return redirect(reverse_lazy("platform_admin:student-group-search"))
@@ -350,9 +357,10 @@ class AttachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     redirect_to = "platform_admin:edit-student-group"
 
     def post(self, request, *args, **kwargs):
-        group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
+        platform = Platform.objects.get(users=request.user)
+        group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"], platform=platform)
         try:
-            student = User.objects.get(username=request.POST["student"])
+            student = User.objects.get(username=request.POST["student"], platform=platform)
         except:
             messages.error(request, _("Student not found"))
             return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
@@ -367,7 +375,7 @@ class UnattachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"], platform=platform)
-        student = get_object_or_404(User, pk=request.POST["student"])
+        student = get_object_or_404(User, pk=request.POST["student"], platform=platform)
         group.students.remove(student)
         group.save()
         return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
@@ -377,8 +385,8 @@ class AttachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     redirect_to = "platform_admin:edit-student-group"
 
     def post(self, request, *args, **kwargs):
-        group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
         platform = Platform.objects.get(users=request.user)
+        group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"], platform=platform)
         try:
             course = Course.objects.get(name=request.POST["course"], platform=platform)
         except:
@@ -396,7 +404,7 @@ class UnattachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"], platform=platform)
-        course = get_object_or_404(Course, pk=request.POST["course"])
+        course = get_object_or_404(Course, pk=request.POST["course"], platform=platform)
         term = Term.objects.filter(course=course, group=group)
         term.delete()
         group.courses.remove(course)
@@ -409,8 +417,9 @@ class ChangeTerm(LoginRequiredMixin, PermissionRequiredMixin, View):
     redirect_arg = "pk"
 
     def post(self, request, *args, **kwargs):
-        course = Course.objects.get(pk=self.kwargs["course"])
-        group = StudentGroup.objects.get(pk=self.kwargs["pk"])
+        platform = Platform.objects.get(users=request.user)
+        course = Course.objects.get(pk=self.kwargs["course"], platform=platform)
+        group = StudentGroup.objects.get(pk=self.kwargs["pk"], platform=platform)
         term = Term.objects.filter(course=course,group=group).first()
         time = request.POST["time"]
         term.time = time
@@ -425,9 +434,9 @@ class GroupReport(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        group = get_object_or_404(StudentGroup, pk=self.kwargs["group"])
+        group = get_object_or_404(StudentGroup, pk=self.kwargs["group"], platform=platform)
         students = sorted(User.objects.filter(studentgroup=group), key= lambda student:student.username)
-        course = get_object_or_404(Course, pk=self.kwargs["course"])
+        course = get_object_or_404(Course, pk=self.kwargs["course"], platform=platform)
         timeover = get_timeover(group, course)
         test_marks = course_mark(course, students, timeover)
         grades_list = course_grades(course, students)

@@ -71,7 +71,7 @@ class DetailStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        student = get_object_or_404(User, pk=self.kwargs["pk"])
+        student = get_object_or_404(User, pk=self.kwargs["pk"], platform=platform)
         groups = StudentGroup.objects.filter(students=student)
         course_data = self.get_course_data(groups, student)
         all_groups = StudentGroup.objects.filter(platform=platform)
@@ -92,7 +92,7 @@ class DetailStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
             group = StudentGroup.objects.get(name=request.POST["group"], platform=platform)
         except:
             messages.error(request, _("Student group not found"))
-        student = get_object_or_404(User, pk=self.kwargs["pk"])
+        student = get_object_or_404(User, pk=self.kwargs["pk"], platform=platform)
         group.students.add(student)
         group.save()
         return redirect(reverse_lazy("examiner_user:detail-student", kwargs={"pk":self.kwargs["pk"]}))
@@ -110,7 +110,7 @@ class AttachCourseText(LoginRequiredMixin, PermissionRequiredMixin, View):
             group = StudentGroup.objects.get(name=request.POST["group"], platform=platform)
         except:
             messages.error(request, _("Student group not found"))
-        course = get_object_or_404(Course, pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
         group.courses.add(course)
         group.save()
         Term(course=course, group=group, time=request.POST["term"]).save()
@@ -120,8 +120,9 @@ class UnattachGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_course")
     
     def post(self, request, *args, **kwargs):
-        course = get_object_or_404(Course, pk=self.kwargs["pk"])
-        group = get_object_or_404(StudentGroup, pk=request.POST["group"])
+        platform = Platform.objects.get(users=request.user)
+        course = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
+        group = get_object_or_404(StudentGroup, pk=request.POST["group"], platform=platform)
         group.courses.remove(course)
         group.save()
         return redirect(reverse_lazy("examiner_user:edit-course", kwargs={"pk":self.kwargs["pk"], "slug":self.kwargs["slug"]}))
@@ -130,8 +131,9 @@ class UnattachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_course")
 
     def post(self, request, *args, **kwargs):
-        course = get_object_or_404(Course, pk=request.POST["course"])
-        group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"])
+        platform = Platform.objects.get(users=request.user)
+        course = get_object_or_404(Course, pk=request.POST["course"], platform=platform)
+        group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"], platform=platform)
         group.courses.remove(course)
         group.save()
         return redirect(reverse_lazy("examiner_user:examiner-edit-group", kwargs={"pk":self.kwargs["pk"]}))
@@ -188,7 +190,7 @@ class DetailCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        course = get_object_or_404(Course, pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
         allowed_courses = Course.objects.filter(platform=platform)
         context = {"object" : course,
                    "questions" : Question.objects.filter(course=course),
@@ -220,7 +222,7 @@ class ControlCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        course = get_object_or_404(Course, pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
         if course not in Course.objects.filter(platform=platform):
             messages.error(request, _("Lack of permission"))
             return redirect(reverse_lazy("examiner_user:search-course"))
@@ -239,7 +241,8 @@ class ControlCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        course = get_object_or_404(Course, pk=self.kwargs["pk"])
+        platform = Platform.objects.get(users=request.user)
+        course = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
         if request.POST["multiple_answer_questions"] == "on":
             course.multiple_answer_questions = True
         else:
@@ -262,7 +265,7 @@ class CreateQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         pk = self.kwargs["pk"]
-        course_=get_object_or_404(Course, pk=pk)
+        course_=get_object_or_404(Course, pk=pk, platform=platform)
         form = self.form_class(initial={"course":course_})
         question_amount = len(Question.objects.filter(course=course_))
         context = {"form" : form,
@@ -275,8 +278,9 @@ class CreateQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
         return render(request, self.template_name, context)
     
     def post(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
         pk = self.kwargs["pk"]
-        course_=get_object_or_404(Course, pk=pk)
+        course_=get_object_or_404(Course, pk=pk, platform=platform)
         form = self.form_class(request.POST)
         if course_.multiple_answer_questions is True:
             data = request.POST.copy()
@@ -299,7 +303,7 @@ class SearchQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         course_pk = self.kwargs["pk"]
-        course_ = get_object_or_404(Course, pk=course_pk)
+        course_ = get_object_or_404(Course, pk=course_pk, platform=platform)
         questions = Question.objects.filter(course=course_)
         context = {"questions" : questions,
                    "course" : course_,
@@ -368,7 +372,7 @@ class CreateLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        course_ = get_object_or_404(Course, pk=self.kwargs["pk"])
+        course_ = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
         form = self.form_class(initial={"course":course_})
         context = {"form" : form,
                    "course" : course_,
@@ -376,7 +380,8 @@ class CreateLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
         return render(request, self.template_name, context)
     
     def post(self, request, *args, **kwargs):
-        course_ = get_object_or_404(Course, pk=self.kwargs["pk"])
+        platform = Platform.objects.get(users=request.user)
+        course_ = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
         form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
             form.save()
@@ -502,8 +507,8 @@ class ExaminerResultView(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        course = get_object_or_404(Course, pk=self.kwargs["course"])
-        student = get_object_or_404(User, pk=self.kwargs["student"])
+        course = get_object_or_404(Course, pk=self.kwargs["course"], platform=platform)
+        student = get_object_or_404(User, pk=self.kwargs["student"], platform=platform)
         results = Result.objects.filter(course=course, student=student)
         perc = []
         for result in results:
@@ -541,7 +546,7 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        course = get_object_or_404(Course, pk=self.kwargs["pk"])
+        course = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
         groups = StudentGroup.objects.filter(courses=course, platform=platform)
         context = {"course" : course,
                    "groups" : groups,
@@ -595,8 +600,8 @@ class CourseGroupResults(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        course = get_object_or_404(Course, pk=self.kwargs["course"])
-        group = get_object_or_404(StudentGroup, pk=self.kwargs["group"])
+        course = get_object_or_404(Course, pk=self.kwargs["course"], platform=platform)
+        group = get_object_or_404(StudentGroup, pk=self.kwargs["group"], platform=platform)
         students = User.objects.filter(studentgroup=group)
         context = {"course" : course,
                    "students" : students,
