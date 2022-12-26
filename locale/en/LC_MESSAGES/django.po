@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-26 10:40+0100\n"
+"POT-Creation-Date: 2022-12-26 11:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -872,7 +872,7 @@ msgid "Grade"
 msgstr ""
 
 #: .\examiner_user\templates\course_group_results.html:92
-#: .\examiner_user\templates\course_results.html:129 .\student\views.py:251
+#: .\examiner_user\templates\course_results.html:129 .\student\views.py:256
 msgid "Diploma"
 msgstr ""
 
@@ -1168,7 +1168,7 @@ msgstr ""
 
 #: .\examiner_user\templates\examiner_base.html:74
 #: .\platform_admin\templates\platform_base.html:74
-#: .\student\templates\student_base.html:56
+#: .\student\templates\student_base.html:59
 msgid "Logout"
 msgstr ""
 
@@ -1851,6 +1851,10 @@ msgstr ""
 msgid "No"
 msgstr ""
 
+#: .\student\templates\student_base.html:56
+msgid "Help"
+msgstr ""
+
 #: .\student\templates\student_detail_course.html:7
 msgid "Course should be finished before"
 msgstr ""
@@ -1950,28 +1954,28 @@ msgstr ""
 msgid "Unfortunately you failed to pass the exam"
 msgstr ""
 
-#: .\student\views.py:133
+#: .\student\views.py:138
 msgid "Course isn't ready"
 msgstr ""
 
-#: .\student\views.py:254
+#: .\student\views.py:259
 msgid "finished course"
 msgstr ""
 
-#: .\student\views.py:256
+#: .\student\views.py:261
 msgid "with passing result"
 msgstr ""
 
-#: .\student\views.py:258
+#: .\student\views.py:263
 #, python-format
 msgid "achieving %(perc)s percent"
 msgstr ""
 
-#: .\student\views.py:259
+#: .\student\views.py:264
 #, python-format
 msgid "by getting %(result)s out of %(max_score)s points"
 msgstr ""
 
-#: .\student\views.py:261
+#: .\student\views.py:266
 msgid "Congratualtions, we wish further successes in studies"
 msgstr ""

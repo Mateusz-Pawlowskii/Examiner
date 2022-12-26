@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-26 10:43+0100\n"
+"POT-Creation-Date: 2022-12-26 11:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -977,7 +977,7 @@ msgid "Grade"
 msgstr "Ocena"
 
 #: .\examiner_user\templates\course_group_results.html:92
-#: .\examiner_user\templates\course_results.html:129 .\student\views.py:251
+#: .\examiner_user\templates\course_results.html:129 .\student\views.py:256
 msgid "Diploma"
 msgstr "Dyplom"
 
@@ -1289,7 +1289,7 @@ msgstr "Wyniki"
 
 #: .\examiner_user\templates\examiner_base.html:74
 #: .\platform_admin\templates\platform_base.html:74
-#: .\student\templates\student_base.html:56
+#: .\student\templates\student_base.html:59
 msgid "Logout"
 msgstr "Wyloguj się"
 
@@ -2013,6 +2013,10 @@ msgstr "Tak"
 msgid "No"
 msgstr "Nie"
 
+#: .\student\templates\student_base.html:56
+msgid "Help"
+msgstr "Pomoc"
+
 #: .\student\templates\student_detail_course.html:7
 msgid "Course should be finished before"
 msgstr "Kurs powinien zostać ukończony przed"
@@ -2114,29 +2118,29 @@ msgstr "Gratulujemy pomyślnego zdania egzaminu"
 msgid "Unfortunately you failed to pass the exam"
 msgstr "Niestety nie udało się zdać testu"
 
-#: .\student\views.py:133
+#: .\student\views.py:138
 msgid "Course isn't ready"
 msgstr "Kurs nie jest gotowy"
 
-#: .\student\views.py:254
+#: .\student\views.py:259
 msgid "finished course"
 msgstr "ukończył kurs"
 
-#: .\student\views.py:256
+#: .\student\views.py:261
 msgid "with passing result"
 msgstr "z wynikiem pozytywnym"
 
-#: .\student\views.py:258
+#: .\student\views.py:263
 #, python-format
 msgid "achieving %(perc)s percent"
 msgstr "osiągając %(perc)s procent"
 
-#: .\student\views.py:259
+#: .\student\views.py:264
 #, python-format
 msgid "by getting %(result)s out of %(max_score)s points"
 msgstr "przez uzyskanie %(result)s na %(max_score)s punktów"
 
-#: .\student\views.py:261
+#: .\student\views.py:266
 msgid "Congratualtions, we wish further successes in studies"
 msgstr "Gratulujemy i życzymy dlaszych sukcesów w nauce"
 

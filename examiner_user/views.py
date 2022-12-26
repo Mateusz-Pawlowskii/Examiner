@@ -34,6 +34,10 @@ class ExaminerFeedback(FeedbackView):
     side = "examiner"
     base = "examiner_base.html"
 
+class ExaminerHelp(View):
+    def get(self, request, *args, **kwargs):
+        return FileResponse(open(f"static/help/examiner_{request.LANGUAGE_CODE}.pdf", "rb"), content_type="application/pdf")
+
 # part about users starts here
 class StudentView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "students.html"

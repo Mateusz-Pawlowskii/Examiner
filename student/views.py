@@ -31,6 +31,11 @@ class StudentFeedback(FeedbackView):
     side = "student"
     base = "student_base.html"
 
+class StudentHelp(View):
+    def get(self, request, *args, **kwargs):
+        return FileResponse(open(f"static/help/student_{request.LANGUAGE_CODE}.pdf", "rb"), content_type="application/pdf")
+
+# Course views start here
 class StudentSearchCourse(LoginRequiredMixin, View):
     template_name = "student_search_course.html"
     form_class_1 = StudentSearchCourseForm

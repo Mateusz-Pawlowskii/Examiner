@@ -58,6 +58,10 @@ class FeedbackView(View):
         messages.info(request, _("Thank you for sharing your opinion"))
         return redirect(reverse_lazy("exam:home-redirect"))
 
+class PlatformHelp(View):
+    def get(self, request, *args, **kwargs):
+        return FileResponse(open(f"static/help/platform_{request.LANGUAGE_CODE}.pdf", "rb"), content_type="application/pdf")
+
 # Examiner managment views
 class ExaminerSearch(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "search_examiner.html"
