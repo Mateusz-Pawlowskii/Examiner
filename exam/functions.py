@@ -4,12 +4,12 @@ from django.core.mail import EmailMessage
 from dateutil.relativedelta import relativedelta
 from django.utils.timezone import now as timezone_now
 
-from .models import Result, StudentGroup, Course, Term, Grade
+from .models import Result, StudentGroup, Course, Deadline, Grade
 
 def get_timeover(group, course):
     """Tells if given group have run out of time to finish given course"""
-    term = Term.objects.filter(group=group, course=course).first()
-    if term.time < timezone_now():
+    deadline = Deadline.objects.filter(group=group, course=course).first()
+    if deadline.time < timezone_now():
         return True
     else:
         return False

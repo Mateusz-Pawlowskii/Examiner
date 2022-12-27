@@ -23,13 +23,13 @@
       <td>{% trans "Attempt amount" %}: <b>{{course.attempt_amount}}</b></td>
     </tr>
     <tr>
-      <td>{% trans "Test duration" %}:<b>{% if course.time == 0 %}{% trans "Unlimited" %}{% else %}
+      <td>{% trans "Test duration" %}: <b>{% if course.time == 0 %}{% trans "Unlimited" %}{% else %}
          {{course.time}} {% trans "minutes" %}{% endif %}</b></td>
       <td>{% trans "Total question amount" %}:<b> {{questions|length}}</b></td>
     </tr>
     <tr>
       <td>{% trans "Amount of questions given to student" %}:<b> {{course.question_amount}}</b></td>
-      <td>{% trans "Amount of correct answers required to pass the exam" %}:<b>{{course.passing_score}}</b></td>
+      <td>{% trans "Amount of correct answers required to pass the exam" %}: <b>{{course.passing_score}}</b></td>
     </tr>
     <tr>
       <td>{% trans "Lesson amount" %}:<b> {{lessons|length}}</b></td>

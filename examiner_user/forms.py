@@ -9,14 +9,14 @@ from exam.models import Course, Question, Lesson
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ["name","category"]
+        fields = ["name","category", "platform"]
     name = forms.CharField(label=_("Course name"), widget=forms.TextInput(attrs={"class":"form-control"}))
     category = forms.CharField(required=False, label=_("Category (optional)"), widget=forms.TextInput(attrs={"class":"form-control"}))
 
 class CourseEditForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ["name", "category", "time","question_amount", "attempt_amount", "test_ready", "passing_score"]
+        fields = ["name", "category", "time","question_amount", "attempt_amount", "test_ready", "passing_score", "platform"]
     name = forms.CharField(label=_("Course name"), widget=forms.TextInput(attrs={"class":"form-control"}))
     category = forms.CharField(required=False, label=_("Category (optional)"), widget=forms.TextInput(attrs={"class":"form-control"}))
 
@@ -25,11 +25,6 @@ class RadioForm(forms.ModelForm):
         model = Course
         fields = ["multiple_answer_questions"]
     multiple_answer_questions = forms.BooleanField(required=False, label=_("Multiple choice questions"))
-
-class TimeForm(forms.ModelForm):
-    class Meta:
-        model = Course
-        fields = ["time"]
 
 class QuestionForm(forms.ModelForm):
     class Meta:
@@ -91,4 +86,4 @@ class LessonRenameForm(forms.ModelForm):
 class AttachCourseToGroupForm(forms.Form):
     course = forms.ModelChoiceField(queryset=Course.objects.all())
     group =  forms.CharField(label=_("Group name"), widget=forms.TextInput(attrs={"class":"form-control"}))
-    term = forms.DateTimeField(label=_("Deadline"), widget=forms.TextInput(attrs={"class":"form-control"}))
+    deadline = forms.DateTimeField(label=_("Deadline"), widget=forms.TextInput(attrs={"class":"form-control"}))

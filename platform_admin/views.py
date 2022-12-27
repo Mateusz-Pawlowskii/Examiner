@@ -15,11 +15,11 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
 
-from exam.models import Platform, StudentGroup, Course, Question, Lesson, Term, Grade
+from exam.models import Platform, StudentGroup, Course, Question, Lesson, Deadline, Grade
 from student.forms import StudentSearchCourseForm
 from exam.functions import get_categories, get_timeover, course_mark, course_grades, get_grade_data
 from .forms import (UserNameChangeForm, StudentGroupForm, AttachStudentForm, AttachCourseForm, ReverseAttachStudentForm, 
-                   EditPlatformForm, ChangeTermForm, GradeForm, FeedbackForm)
+                   EditPlatformForm, ChangeDeadlineForm, GradeForm, FeedbackForm)
 # Create your views here.
 class PlatformHomepage(LoginRequiredMixin, View):
     template_name = "platform_homepage.html"
@@ -71,7 +71,7 @@ class ExaminerSearch(LoginRequiredMixin, PermissionRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         context = {"nav_var" : "examiners",
-                   "object_list" : User.objects.filter(groups=1, platform=platform),
+                   "object_list" : User.objects.filter(groups=2, platform=platform),
                    "form" : self.form_class(),
                    "platform" : platform}
         return render(request, self.template_name, context)
@@ -157,7 +157,7 @@ class StudentSearch(LoginRequiredMixin, PermissionRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         context = {"nav_var" : "students",
-                   "object_list" : User.objects.filter(groups=2, platform=platform),
+                   "object_list" : User.objects.filter(groups=1, platform=platform),
                    "form" : self.form_class(),
                    "platform" : platform}
         return render(request, self.template_name, context)
@@ -245,7 +245,7 @@ class CreateStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        form = self.form_class()
+        form = self.form_class({"platform" : platform})
         context = {"form" : form,
                    "base" : self.base,
                    "platform" : platform}
@@ -261,9 +261,6 @@ class CreateStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
                 return redirect(reverse_lazy(self.redirect_to))
         if form.is_valid():
             form.save()
-            student_group = StudentGroup.objects.all().last()
-            platform.studentgroup_set.add(student_group)
-            platform.save()
         else:
             messages.error(request, _("Group creation failed"))
         return redirect(reverse_lazy(self.redirect_to))
@@ -283,30 +280,30 @@ class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
         course_form = AttachCourseForm(initial={"group" : student_group})
         group_courses = Course.objects.filter(studentgroup=student_group)
         categories = get_categories(group_courses)
-        terms = []
+        deadlines = []
         for course in group_courses:
-            term_info = []
-            term = Term.objects.filter(group=student_group,course=course).first()
-            term_info.append(term)
+            deadline_info = []
+            deadline = Deadline.objects.filter(group=student_group,course=course).first()
+            deadline_info.append(deadline)
             if get_timeover(student_group, course):
-                term_info.append(_("(Deadline expired)"))
+                deadline_info.append(_("(Deadline expired)"))
             else:
-                term_info.append(" ")
-            terms.append(term_info)
+                deadline_info.append(" ")
+            deadlines.append(deadline_info)
 
         context = {"group" : student_group,
                    "form" : form,
                    "student_form" : student_form,
-                   "all_students" : User.objects.filter(platform=platform, groups=2),
-                   "group_students" : User.objects.filter(studentgroup=student_group, groups=2),
+                   "all_students" : User.objects.filter(platform=platform, groups=1),
+                   "group_students" : User.objects.filter(studentgroup=student_group, groups=1),
                    "course_form" : course_form,
                    "all_courses" : Course.objects.filter(platform=platform),
                    "group_courses" : group_courses,
                    "categories" : categories,
                    "base" : self.base,
                    "side" : self.side,
-                   "terms" : terms,
-                   "term_form" : ChangeTermForm(),
+                   "deadlines" : deadlines,
+                   "deadline_form" : ChangeDeadlineForm(),
                    "platform" : platform}
         return render(request, self.template_name, context)
 
@@ -394,8 +391,8 @@ class AttachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
             return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
         group.courses.add(course)
         group.save()
-        term = Term(time=make_aware(datetime.strptime(request.POST["term"],"%Y-%m-%d")), group=group, course=course)
-        term.save()
+        deadline = Deadline(time=make_aware(datetime.strptime(request.POST["deadline"],"%Y-%m-%d")), group=group, course=course)
+        deadline.save()
         return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
 
 class UnattachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -405,13 +402,13 @@ class UnattachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         platform = Platform.objects.get(users=request.user)
         group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"], platform=platform)
         course = get_object_or_404(Course, pk=request.POST["course"], platform=platform)
-        term = Term.objects.filter(course=course, group=group)
-        term.delete()
+        deadline = Deadline.objects.filter(course=course, group=group)
+        deadline.delete()
         group.courses.remove(course)
         group.save()
         return redirect(reverse_lazy("platform_admin:edit-student-group", kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
 
-class ChangeTerm(LoginRequiredMixin, PermissionRequiredMixin, View):
+class ChangeDeadline(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_course")
     redirect_to = "platform_admin:edit-student-group"
     redirect_arg = "pk"
@@ -420,10 +417,10 @@ class ChangeTerm(LoginRequiredMixin, PermissionRequiredMixin, View):
         platform = Platform.objects.get(users=request.user)
         course = Course.objects.get(pk=self.kwargs["course"], platform=platform)
         group = StudentGroup.objects.get(pk=self.kwargs["pk"], platform=platform)
-        term = Term.objects.filter(course=course,group=group).first()
+        deadline = Deadline.objects.filter(course=course,group=group).first()
         time = request.POST["time"]
-        term.time = time
-        term.save()
+        deadline.time = time
+        deadline.save()
         return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs[self.redirect_arg],"slug" : slugify(group.name)}))
 
 class GroupReport(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -490,24 +487,28 @@ class SettingsView(LoginRequiredMixin, PermissionRequiredMixin, View):
             messages.info(request, _("Incorrect logo"))
         return HttpResponseRedirect(self.request.path_info)
 
-class ChangeGradeView(LoginRequiredMixin, PermissionRequiredMixin, View):
+class CreateGradeView(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.add_grade")
     form_class = GradeForm
 
     def post(self, request, *args, **kwargs):
-        if self.kwargs["change"] == "add":
-            form = self.form_class(request.POST)
-            if form.is_valid():
-                form.save()
-                messages.info(request, _("New grade sucessfully added"))
-                return redirect(reverse_lazy("platform_admin:settings"))
-            messages.error(request, _("Incorrect grade data"))
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.info(request, _("New grade sucessfully added"))
             return redirect(reverse_lazy("platform_admin:settings"))
-        elif self.kwargs["change"] == "delete":
-            grade = get_object_or_404(Grade, pk=self.kwargs["pk"])
-            grade.delete()
-            messages.info(request, _("Grade deleted"))
-            return redirect(reverse_lazy("platform_admin:settings"))
+        messages.error(request, _("Incorrect grade data"))
+        return redirect(reverse_lazy("platform_admin:settings"))
+
+class DeleteGradeView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = ("exam.add_grade")
+    form_class = GradeForm
+
+    def post(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
+        grade = get_object_or_404(Grade, pk=self.kwargs["pk"], platform=platform)
+        grade.delete()
+        messages.info(request, _("Grade deleted"))
         return redirect(reverse_lazy("platform_admin:settings"))
 
 class DefaultGrades(LoginRequiredMixin, PermissionRequiredMixin, View):

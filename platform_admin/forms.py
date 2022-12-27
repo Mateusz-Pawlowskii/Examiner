@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserChangeForm
 from django.forms.widgets import ClearableFileInput
 from django.core.exceptions import ValidationError
 
-from exam.models import StudentGroup, Platform, Term, Grade
+from exam.models import StudentGroup, Platform, Deadline, Grade
 class UserNameChangeForm(UserChangeForm):
     class Meta:
         model = User
@@ -15,7 +15,7 @@ class UserNameChangeForm(UserChangeForm):
 class StudentGroupForm(forms.ModelForm):
     class Meta:
         model = StudentGroup
-        fields = ["name"]
+        fields = ["name", "platform"]
     name = forms.CharField(label=_("Group name"), widget=forms.TextInput(attrs={"class":"form-control"}))
 
 class AttachStudentForm(forms.Form):
@@ -27,7 +27,7 @@ class ReverseAttachStudentForm(forms.Form):
 
 class AttachCourseForm(forms.Form):
     course = forms.CharField(label=_("Course name"), widget=forms.TextInput(attrs={"class":"form-control"}))
-    term = forms.DateTimeField(label=_("Course deadline"), widget=forms.TextInput(attrs={"class":"form-control"}))
+    deadline = forms.DateTimeField(label=_("Course deadline"), widget=forms.TextInput(attrs={"class":"form-control"}))
     group = forms.ModelChoiceField(queryset=StudentGroup.objects.all())
 
 class ClearableFileInputPL(ClearableFileInput):
@@ -42,9 +42,9 @@ class EditPlatformForm(forms.ModelForm):
     name = forms.CharField(label=_("Platform name"), widget=forms.Textarea(attrs={'name':'text', 'rows':4, 'cols':170}))
     logo = forms.ImageField(required=False, widget=ClearableFileInputPL)
 
-class ChangeTermForm(forms.ModelForm):
+class ChangeDeadlineForm(forms.ModelForm):
     class Meta:
-        model = Term
+        model = Deadline
         fields = ["time"]
 
 class GradeForm(forms.ModelForm):

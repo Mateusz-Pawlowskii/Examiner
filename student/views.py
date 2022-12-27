@@ -12,7 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.timezone import now as timezone_now
 from django.utils.text import slugify
 
-from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Term
+from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Deadline
 from exam.functions import get_courses_for_student, get_categories, get_timeover, get_grade_data, student_grades
 from platform_admin.views import FeedbackView
 from .forms import StudentSearchCourseForm, StudentSearchStatusForm
@@ -62,18 +62,18 @@ class StudentSearchCourse(LoginRequiredMixin, View):
 class StudentDetailCourse(LoginRequiredMixin, View):
     template_name = "student_detail_course.html"
 
-    def get_term(self, request, course):
+    def get_deadline(self, request, course):
         user = request.user
-        terms = []
+        deadlines = []
         groups = StudentGroup.objects.filter(students=user, courses=course)
         for group in groups:
-            terms.append(Term.objects.filter(group=group, course=course).first())
-        term = sorted(terms, key = lambda term:term.time)[-1]
-        if term.time < timezone_now():
+            deadlines.append(Deadline.objects.filter(group=group, course=course).first())
+        deadline = sorted(deadlines, key = lambda deadline:deadline.time)[-1]
+        if deadline.time < timezone_now():
             timeover = True
         else:
             timeover = False
-        return (term.time, timeover)
+        return (deadline.time, timeover)
 
     def check_passed(self, request, course):
         """this code checks if the student passed in order to display them diploma link"""
@@ -87,10 +87,10 @@ class StudentDetailCourse(LoginRequiredMixin, View):
     def get(self, request, **kwargs):
         platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["pk"])
-        term = self.get_term(request, course)
+        deadline = self.get_deadline(request, course)
         context = {"course":course,
                    "student": request.user,
-                   "term" : term,
+                   "deadline" : deadline,
                    "platform" : platform}
         context["passed"] = self.check_passed(request, course)
         return render(request, self.template_name, context)

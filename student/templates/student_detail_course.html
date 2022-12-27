@@ -4,14 +4,14 @@
 
 {% block content %}
 <h4><b>{{course.name}}</b></h4>
-<p>{% trans "Course should be finished before" %}: <b id="date">{{term.0}}</b></p>
+<p>{% trans "Course should be finished before" %}: <b id="date">{{deadline.0}}</b></p>
 <br>
 <a href="{% url 'student:student-list-lesson' pk=course.pk slug=course.name|slugify %}">
   <button class="btn btn-success mt-1 myButton" id="view-lesson">
     {% trans "View lessons" %}
   </button>
 </a>
-{% if course.test_ready and not passed and not term.1 %}
+{% if course.test_ready and not passed and not deadline.1 %}
 <br>
 <a href="{% url 'student:student-attempt-exam' pk=course.pk slug=course.name|slugify %}" id="exam">
   <button class="btn btn-success mt-1 myButton" id="exam">
@@ -19,7 +19,7 @@
   </button>
 </a>
 {% endif %}
-{% if term.1 and not passed %}
+{% if deadline.1 and not passed %}
 <br>
 <button class="btn btn-danger mt-1 myButton" id="exam">
   {% trans "Deadline expired" %}

@@ -44,7 +44,7 @@
   {% csrf_token %}
   <button class="btn btn-success mt-1 myButton" type="submit" id="submit">{% trans "Academic system" %}</button>
 </form>
-<form method="POST" action="{% url 'platform_admin:change-grade' change='add' pk=0 %}">
+<form method="POST" action="{% url 'platform_admin:create-grade' %}">
   {% csrf_token %}
   <label> {% trans "Grade name:" %}</label><br>
   {{grade_form.name}}
@@ -70,7 +70,7 @@
         <td>{{grade.name}}</td>
         <td>{{grade.bar}}%</td>
         <td>
-          <form method="POST" action="{% url 'platform_admin:change-grade' change='delete' pk=grade.pk %}">
+          <form method="POST" action="{% url 'platform_admin:delete-grade' pk=grade.pk %}">
             {% csrf_token %}
             <button class="btn btn-danger myButton" type="submit" id="submit">{% trans "Delete" %}</button>
           </form>

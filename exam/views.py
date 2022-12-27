@@ -111,8 +111,7 @@ class PlatformCreate(View):
     def post(self, request, *args, **kwargs):
         form = self.form(request.POST)
         if form.is_valid():
-            form.save()
-            platform = Platform.objects.all().last()
+            platform = form.save()
             platform.users.add(request.user)
             platform.save()
             return redirect(reverse_lazy("platform_admin:homepage"))

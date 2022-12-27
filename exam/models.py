@@ -3,6 +3,7 @@ from django.db import models
 from django.dispatch import receiver
 import os
 import json
+import uuid
 from django.core.files.storage import FileSystemStorage
 
 
@@ -11,12 +12,14 @@ lesson_fs = FileSystemStorage(location='media/lessons', base_url="/media/lessons
 
 # Create your models here.
 class Platform(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length = 3000)
     users = models.ManyToManyField(User)
     logo = models.ImageField(storage=logo_fs, blank=True, null=True)
     inactive = models.BooleanField(default = False)
 
 class Course(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     students = models.ManyToManyField(User)
     name = models.CharField(max_length = 100)
     multiple_answer_questions = models.BooleanField(default=False)
@@ -27,15 +30,17 @@ class Course(models.Model):
     test_ready = models.BooleanField(default=False)
     passing_score = models.PositiveSmallIntegerField(default=0)
     category = models.CharField(max_length=100, default="")
-    platform = models.ForeignKey(Platform, on_delete = models.CASCADE, blank=True, null=True)
+    platform = models.ForeignKey(Platform, on_delete = models.CASCADE)
 
 class StudentGroup(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length = 100)
-    platform = models.ForeignKey(Platform, on_delete = models.CASCADE, blank=True, null=True)
+    platform = models.ForeignKey(Platform, on_delete = models.CASCADE)
     students = models.ManyToManyField(User)
     courses = models.ManyToManyField(Course)
 
 class Lesson(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     course = models.ForeignKey(Course, on_delete = models.CASCADE)
     topic = models.CharField(max_length=100)
     material = models.FileField(storage=lesson_fs)
@@ -45,11 +50,13 @@ class Lesson(models.Model):
         super().delete(*args,**kwargs)
 
 class Grade(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length = 100)
     bar = models.PositiveSmallIntegerField()
     platform = models.ForeignKey(Platform, on_delete = models.CASCADE)
 
 class Result(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     course = models.ForeignKey(Course, on_delete = models.CASCADE)
     student = models.ForeignKey(User, on_delete = models.CASCADE)
     finished = models.BooleanField(default = False)
@@ -67,6 +74,7 @@ class Result(models.Model):
         return json.loads(self.question_order)
 
 class Question(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     text = models.CharField(max_length = 1000)
     answer1 = models.CharField(max_length = 200)
     answer2 = models.CharField(max_length = 200)
@@ -76,7 +84,8 @@ class Question(models.Model):
     correct_answers = models.CharField(max_length = 50)
     course = models.ForeignKey(Course, on_delete = models.CASCADE, blank = True, null = True)
 
-class Term(models.Model):
+class Deadline(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     course = models.ForeignKey(Course, on_delete = models.CASCADE)
     group = models.ForeignKey(StudentGroup, on_delete = models.CASCADE)
     time = models.DateTimeField(null=True)

@@ -12,11 +12,11 @@ from django.utils.translation import gettext_lazy as _
 
 from .forms import (CourseForm, QuestionForm, QuestionFormMultiple, LessonForm, AttachCourseToGroupForm, AttachStudentTextForm, 
                     LessonRenameForm, LessonEditForm, CourseEditForm, AttachStudentTextForm)
-from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Term
+from exam.models import Course, Lesson, Question, Result, Platform, StudentGroup, Deadline
 from student.forms import StudentSearchCourseForm
 from platform_admin.views import (PlatformCreateStudent, StudentGroupSearch, CreateStudentGroup, EditStudentGroup, AttachCourse, 
-                                  AttachStudent, UnattachStudent, ChangeTerm, FeedbackView)
-from platform_admin.forms import ChangeTermForm
+                                  AttachStudent, UnattachStudent, ChangeDeadline, FeedbackView)
+from platform_admin.forms import ChangeDeadlineForm
 from exam.functions import test_mark, course_mark, get_timeover, student_grades, course_grades, get_grade_data
 from .functions import get_maximum_result, initialize_course_information, get_result_data
 # Create your views here.
@@ -47,7 +47,7 @@ class StudentView(LoginRequiredMixin, PermissionRequiredMixin, View):
     def get(self, request):
         platform = Platform.objects.get(users=request.user)
         context = {"nav_var" : "users",
-                   "object_list" : User.objects.filter(groups=2, platform=platform),
+                   "object_list" : User.objects.filter(groups=1, platform=platform),
                    "form" : self.form_class(),
                    "platform" : platform}
         return render(request, self.template_name, context)
@@ -117,7 +117,7 @@ class AttachCourseText(LoginRequiredMixin, PermissionRequiredMixin, View):
         course = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
         group.courses.add(course)
         group.save()
-        Term(course=course, group=group, time=request.POST["term"]).save()
+        Deadline(course=course, group=group, time=request.POST["deadline"]).save()
         return redirect(reverse_lazy("examiner_user:edit-course", kwargs={"pk":self.kwargs["pk"],"slug":self.kwargs["slug"]}))
 
 class UnattachGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -150,7 +150,7 @@ class CreateCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        context = {"form" : self.form_class(),
+        context = {"form" : self.form_class({"platform" : platform}),
                    "platform" : platform}
         return render(request, self.template_name, context)
 
@@ -158,11 +158,6 @@ class CreateCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
-            platform = Platform.objects.get(users=request.user)
-            courses = Course.objects.all()
-            course = courses.last()
-            platform.course_set.add(course)
-            course.save()
             messages.info(request, _("Course sucessfully created"))
             return redirect(reverse_lazy("examiner_user:search-course"))
         messages.error(request, _("Course creation failed"))
@@ -210,19 +205,19 @@ class ControlCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name="control_course.html"
     form_class = CourseEditForm
 
-    def get_term_data(self, course):
+    def get_deadline_data(self, course):
         course_groups = StudentGroup.objects.filter(courses=course)
-        terms = []
+        deadlines = []
         for group in course_groups:
-            term_info = []
-            term = Term.objects.filter(group=group,course=course).first()
-            term_info.append(term)
+            deadline_info = []
+            deadline = Deadline.objects.filter(group=group,course=course).first()
+            deadline_info.append(deadline)
             if get_timeover(group, course):
-                term_info.append(_("(Deadline expired)"))
+                deadline_info.append(_("(Deadline expired)"))
             else:
-                term_info.append(" ")
-            terms.append(term_info)
-        return terms
+                deadline_info.append(" ")
+            deadlines.append(deadline_info)
+        return deadlines
 
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
@@ -238,8 +233,8 @@ class ControlCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
                    "lesson_list" : lesson_list,
                    "group_form" : AttachCourseToGroupForm(initial={"course" : course}),
                    "student_groups" : StudentGroup.objects.filter(platform=platform),
-                   "terms" : self.get_term_data(course),
-                   "term_form" : ChangeTermForm(),
+                   "deadlines" : self.get_deadline_data(course),
+                   "deadline_form" : ChangeDeadlineForm(),
                    "platform" : platform
                    }
         return render(request, self.template_name, context)
@@ -552,13 +547,13 @@ class CourseResults(LoginRequiredMixin, PermissionRequiredMixin, View):
         platform = Platform.objects.get(users=request.user)
         course = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
         groups = StudentGroup.objects.filter(courses=course, platform=platform)
-        terms = []
+        deadlines = []
         for group in groups:
-            terms.append(Term.objects.filter(group=group.pk).first().time)
+            deadlines.append(Deadline.objects.filter(group=group.pk).first().time)
         # expression below sorts groups so that the ones with further deadline are processed first
         # it makes it so that one student connected to one course through two groups with
         # different deadlines would work correctly
-        sorted_groups = list(map(lambda pair:pair[0],(sorted(list(map(lambda x, y:(x,y), groups, terms)),
+        sorted_groups = list(map(lambda pair:pair[0],(sorted(list(map(lambda x, y:(x,y), groups, deadlines)),
                         key = lambda pair:pair[1], reverse = True))))
         context = {"course" : course,
                    "groups" : sorted_groups,
@@ -685,10 +680,10 @@ class ExaminerAttachStudent(AttachStudent):
 class ExaminerUnattachStudent(UnattachStudent):
     redirect_to = "examiner_user:examiner-edit-group"
 
-class ExaminerChangeTerm(ChangeTerm):
+class ExaminerChangeDeadline(ChangeDeadline):
     redirect_to = "examiner_user:examiner-edit-group"
 
-class ExaminerChangeTermCourse(ChangeTerm):
+class ExaminerChangeDeadlineCourse(ChangeDeadline):
     redirect_to = "examiner_user:edit-course"
     redirect_arg = "course"
 

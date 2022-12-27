@@ -11,7 +11,9 @@
 <h4>{% trans "Create new student group:" %}</h4>
 <form method="POST">
     {% csrf_token %}
-    {{form.as_p}}
+    {{form.name}}
+    {{form.platform.as_hidden}}
+    <br>
     <button class="btn btn-success myButton" type="submit" id="submit">{% trans "Create" %}</button>
 </form>
 {% endblock %}

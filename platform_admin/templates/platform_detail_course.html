@@ -24,7 +24,7 @@
     </tr>
     <tr>
       <td id="time">
-        {% trans "Test duration:" %}<b>{% if object.time == 0 %}{% trans "Unlimited" %}{% else %} {{object.time}} {% trans "minutes" %}{% endif %}</b>
+        {% trans "Test duration:" %} <b>{% if object.time == 0 %}{% trans "Unlimited" %}{% else %}{{object.time}} {% trans "minutes" %}{% endif %}</b>
       </td>
       <td>
         {% trans "Question amount total:" %}<b> {{questions|length}}</b>

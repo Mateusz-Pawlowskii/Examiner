@@ -59,6 +59,7 @@
     <div id="perc_score"></div>
     <label for="test_ready">{% trans "Exam ready" %}</label>
     {{course_form.test_ready}}
+    {{course_form.platform.as_hidden}}
     <br>
     <button class="btn btn-success mt-2 myButton" type="submit" id="submit">{% trans "Save changes" %}</button>
   </form>
@@ -145,8 +146,8 @@
         {{ group_form.group }}
       </div>
       <div style="width:300px;">
-        <label for="term_id">{% trans "Course deadline" %}:</label>
-        {{ group_form.term }}
+        <label for="deadline_id">{% trans "Course deadline" %}:</label>
+        {{ group_form.deadline }}
       </div>
       {{ group_form.course.as_hidden }}
       <br>
@@ -169,7 +170,7 @@
           </a>
         </td>
         <td width="21%">
-          <div id="term_{{forloop.counter}}"></div>
+          <div id="deadline_{{forloop.counter}}"></div>
         </td>
         <td width="10%">
             <button class="btn btn-success small" type="button" data-toggle="modal" data-target="#changeModal{{forloop.counter}}">
@@ -204,9 +205,9 @@
               {% trans "Deadline change" %} <b>{{course.name}}</b>
               <br>
               {% trans "Many date formats are valid, for example: YYYY-MM-DD" %}
-              <form method="POST" action="{% url 'examiner_user:course-change-term' pk=group.pk course=object.pk %}">
+              <form method="POST" action="{% url 'examiner_user:course-change-deadline' pk=group.pk course=object.pk %}">
                 {% csrf_token %}
-                {{term_form.time}}
+                {{deadline_form.time}}
               </div>
             <div class="modal-footer">
               <button class="btn btn-success" type="submit" id="submit">{% trans "Change" %}</button>
@@ -237,10 +238,10 @@
     autocomplete(document.getElementById("id_group"), groups);
 </script>
 <script src="{% static 'js/course_edit.js' %}"></script>
-{% for term in terms %}
-  {% if term.0.course == object %}
+{% for deadline in deadlines %}
+  {% if deadline.0.course == object %}
     <script>
-      document.getElementById("term_{{forloop.counter}}").innerHTML = ("{{term.0.time}}" + "{{term.1}}&nbsp&nbsp&nbsp")
+      document.getElementById("deadline_{{forloop.counter}}").innerHTML = ("{{deadline.0.time}}" + "{{deadline.1}}&nbsp&nbsp&nbsp")
     </script>
   {% endif %}
 {% endfor %}
