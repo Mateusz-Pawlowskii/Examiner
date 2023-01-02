@@ -17,7 +17,7 @@
         {% csrf_token %}
         <label for="id_username">{% trans "Username: (Required. 150 characters or less. No spaces, only letters, numerals and @/./+/-/_)" %}</label>
         {{form.as_p}}
-        <button class="btn btn-success mt-1 myButton" type="submit" id="submit">{% trans "Change username" %}</button>
+        <button class="btn btn-success mt-1 myButton" type="submit" id="submit_name">{% trans "Change username" %}</button>
     </form>
 </div>
 <h5>{% trans "New password" %}</h5>
@@ -39,7 +39,7 @@
     <p>
       <label for="id_new_password2">{% trans "Password confirmation (enter the same password as before)" %}</label>
       <input type="password" name="new_password2" autocomplete="new-password" required id="id_new_password2" class="form-control">
-      <button class="btn btn-success mt-1 myButton" type="submit" id="submit">{% trans "Change password" %}</button>
+      <button class="btn btn-success mt-1 myButton" type="submit" id="submit_password">{% trans "Change password" %}</button>
     </p>
   </form>
 </div>
@@ -53,7 +53,7 @@
       </div>
       {{ attach_form.student.as_hidden }}
       <br>
-      <button class="btn btn-success mt-3" type="submit" id="submit">{% trans "Assign" %}</button>
+      <button class="btn btn-success mt-3" type="submit" id="submit_group">{% trans "Assign" %}</button>
   </form>
 </div>
 <a href="{% url 'platform_admin:student-search' %}">

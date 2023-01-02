@@ -64,7 +64,7 @@
 {% for course in object_list %}
 <script>
   objectList.push({
-    "name" : "<a href='{% url 'examiner_user:detail-course' pk=course.pk slug=course.name|slugify %}''>{{course.name}}</a>", 
+    "name" : "<a id='link_{{course.name}}' href='{% url 'examiner_user:detail-course' pk=course.pk slug=course.name|slugify %}''>{{course.name}}</a>", 
     "time" : Number("{{course.time}}"), "question_amount" : Number("{{course.question_amount}}"), "sort_name" : "{{course.name}}",
     "lesson_amount" : Number("{{course.lesson_amount}}"),
     "category" : "{{course.category}}", "sort_category" : "{{course.category}}"})

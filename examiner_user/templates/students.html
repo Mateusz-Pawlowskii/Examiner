@@ -40,7 +40,7 @@
 </script>
 {% for student in object_list %}
 <script>
-  objectList.push({"name" : "<a href='{% url 'examiner_user:detail-student' pk=student.pk %}''>{{student.username}}</a>", 
+  objectList.push({"name" : "<a id='link_{{student.username}}' href='{% url 'examiner_user:detail-student' pk=student.pk %}''>{{student.username}}</a>", 
     "login" : "{% if student.last_login == None %} {% trans 'None' %} {% else %}{{student.last_login}}{% endif %}",
     "join" : "{{student.date_joined}}", "sort_join" : new Date("{{student.date_joined.isoformat}}"),
     "sort_name" : "{{student.username}}",

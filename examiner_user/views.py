@@ -699,8 +699,8 @@ class Clean_up(View):
             Course.objects.filter(name="Out of time", platform=platform).first().delete()
         while Course.objects.filter(name="Test course name", platform=platform).first():
             Course.objects.filter(name="Test course name", platform=platform).first().delete()
-        if Course.objects.filter(name="Edited course name", platform=platform).first():
+        while Course.objects.filter(name="Edited course name", platform=platform).first():
             Course.objects.filter(name="Edited course name", platform=platform).first().delete()
-        if User.objects.filter(username="testStudent").first():
-            User.objects.filter(username="testStudent").first().delete()
+        while StudentGroup.objects.filter(name="Test_Group").first():
+            StudentGroup.objects.filter(name="Test_Group").first().delete()
         return redirect(reverse_lazy("exam:home-redirect"))

@@ -3,7 +3,7 @@ from django.urls import path
 from .views import (PlatformHomepage, ExaminerSearch, CreateExaminer, EditExaminer, ChangePassword, DeleteUser, StudentSearch,
                     PlatformCreateStudent, EditStudent, StudentGroupSearch, EditStudentGroup, CreateStudentGroup, AttachStudent,
                     UnattachStudent, AttachCourse, UnattachCourse, SettingsView, DeleteGroup, PlatformDetailCourse, ChangeDeadline,
-                    CreateGradeView, DeleteGradeView, DefaultGrades, GroupReport, FeedbackView, PlatformHelp)
+                    CreateGradeView, DeleteGradeView, DefaultGrades, GroupReport, FeedbackView, PlatformHelp, Clean_up)
 
 app_name="platform_admin"
 urlpatterns = [
@@ -32,5 +32,6 @@ urlpatterns = [
     path("settings/grade/default/<str:grading_sys>", DefaultGrades.as_view(), name="default-grades"),
     path("student-group/raport/<uuid:group>/<uuid:course>/<slug:slug>", GroupReport.as_view(), name="group-report"),
     path("feedback", FeedbackView.as_view(), name="platform-feedback"),
-    path("help", PlatformHelp.as_view(), name="platform-help")
+    path("help", PlatformHelp.as_view(), name="platform-help"),
+    path("test", Clean_up.as_view(), name="test")
 ]

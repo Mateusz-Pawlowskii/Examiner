@@ -44,33 +44,33 @@
           </a>
           {% endif %}
           {% if nav_var == "users" %}
-          <a href="{% url 'examiner_user:students' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true" id="users">
+          <a href="{% url 'examiner_user:students' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true" id="nav_users">
             <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Students" %}</span>
           </a>
           {% else %}
-          <a href="{% url 'examiner_user:students' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="users">
+          <a href="{% url 'examiner_user:students' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="nav_users">
             <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Students" %}</span>
           </a>
           {% endif %}
           {% if nav_var == "student_group" %}
-          <a href="{% url 'examiner_user:student-group' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true" id="users">
+          <a href="{% url 'examiner_user:student-group' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true" id="nav_groups">
             <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Student groups" %}</span>
           </a>
           {% else %}
-          <a href="{% url 'examiner_user:student-group' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="users">
+          <a href="{% url 'examiner_user:student-group' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="nav_groups">
             <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Student groups" %}</span>
           </a>
           {% endif %}
           {% if nav_var == "results" %}
-          <a href="{% url 'examiner_user:results' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true", id="results">
+          <a href="{% url 'examiner_user:results' %}" class="list-group-item-success list-group-item-action py-2 ripple active" aria-current="true", id="nav_results">
             <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Results" %}</span>
           </a>
           {% else %}
-          <a href="{% url 'examiner_user:results' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="results">
+          <a href="{% url 'examiner_user:results' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="nav_results">
             <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Results" %}</span>
           </a>
           {% endif %}
-          <a href="{% url 'examiner_user:examiner-help' %}" target="_blank" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="logout">
+          <a href="{% url 'examiner_user:examiner-help' %}" target="_blank" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true" id="help">
             <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>{% trans "Help" %}</span>
           </a>
           <a href="{% url 'exam:logout' %}" class="list-group-item-success list-group-item-action py-2 ripple" aria-current="true", id="logout">

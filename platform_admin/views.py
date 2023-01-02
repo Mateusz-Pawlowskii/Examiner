@@ -470,7 +470,7 @@ class SettingsView(LoginRequiredMixin, PermissionRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         grades = sorted(Grade.objects.filter(platform=platform), key = lambda grade:grade.bar, reverse=True)
-        context = {"form" : self.form_class(instance=platform),
+        context = {"form" : self.form_class(instance=platform, auto_id="platform_"),
                    "platform" : platform,
                    "grade_form" : GradeForm(initial={"platform":platform}),
                    "grades" : grades,
@@ -553,3 +553,21 @@ class DefaultGrades(LoginRequiredMixin, PermissionRequiredMixin, View):
         else:
             messages.error(request, _("Default grade implementation error"))
         return redirect(reverse_lazy("platform_admin:settings"))
+
+# Test views
+# Selenium cleans up the database on its own only when models are created with objectModel.create() methods and
+# does not clean the database after selenium-created views so I needed a seprate view for tearDown
+class Clean_up(View):
+    def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
+        while Course.objects.filter(name="Failed", platform=platform).first():
+            Course.objects.filter(name="Failed", platform=platform).first().delete()
+        while Course.objects.filter(name="Out of time", platform=platform).first():
+            Course.objects.filter(name="Out of time", platform=platform).first().delete()
+        while Course.objects.filter(name="Test course name", platform=platform).first():
+            Course.objects.filter(name="Test course name", platform=platform).first().delete()
+        while Course.objects.filter(name="Edited course name", platform=platform).first():
+            Course.objects.filter(name="Edited course name", platform=platform).first().delete()
+        while StudentGroup.objects.filter(name="Test_Group").first():
+            StudentGroup.objects.filter(name="Test_Group").first().delete()
+        return redirect(reverse_lazy("exam:home-redirect"))

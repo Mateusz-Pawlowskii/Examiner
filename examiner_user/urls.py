@@ -5,7 +5,7 @@ from .views import (ExaminerHomepage, CreateStudent, CreateCourse, SearchCourse,
                     UnattachGroup, AttachCourseText, EditLessonTopic, StudentView, DetailStudent, ExaminerResultView,
                     GenralResultView, CourseResults, CourseGroupResults, StudentGroupView, ExaminerCreateGroup, ExaminerEditGroup,
                     UnattachCourse, ExaminerAttachCourse, ExaminerAttachStudent, ExaminerUnattachStudent, ExaminerChangeDeadline,
-                    ExaminerChangeDeadlineCourse, ExaminerHelp, Clean_up, ExaminerFeedback)
+                    ExaminerChangeDeadlineCourse, ExaminerHelp, ExaminerFeedback, Clean_up)
 
 app_name="examiner_user"
 urlpatterns = [

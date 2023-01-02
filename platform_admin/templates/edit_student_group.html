@@ -24,7 +24,7 @@
     <button class="btn btn-success myButton" type="submit" id="submit">{% trans "Change name" %}</button>
 </form>
 <hr>
-<button type="button" class="btn btn-secondary dropdown-toggle tog mt-1 myButton" id="lesson_nav">{% trans "Students" %}</button>
+<button type="button" class="btn btn-secondary dropdown-toggle tog mt-1 myButton" id="student_nav">{% trans "Students" %}</button>
 <div class="no-display">
 <p>{% trans "Enter username of user that will be assigned to group" %} <b>{{group.name}}</b></p>
 <div class="form-group">
@@ -39,7 +39,7 @@
         </div>
         {{ student_form.group.as_hidden }}
         <br>
-        <button class="btn btn-success mt-3 myButton" type="submit" id="submit">{% trans "Assign" %}</button>
+        <button class="btn btn-success mt-3 myButton" type="submit" id="submit_student">{% trans "Assign" %}</button>
     </form>
 </div>
 <h4>{% trans "Search" %}</h4>
@@ -63,7 +63,7 @@
 </table>
 </div>
 <hr>
-<button type="button" class="btn btn-secondary dropdown-toggle tog mt-1 myButton" id="lesson_nav">{% trans "Courses" %}</button>
+<button type="button" class="btn btn-secondary dropdown-toggle tog mt-1 myButton" id="course_nav">{% trans "Courses" %}</button>
 <div class="no-display">
 <div class="form-group">
   {% if side == "platform" %}

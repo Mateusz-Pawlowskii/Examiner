@@ -22,7 +22,7 @@
     <br>
     {{form.logo}}
     <br>
-    <button class="btn btn-success mt-3 myButton" type="submit" id="submit">{% trans "Save settings" %}</button>
+    <button class="btn btn-success mt-3 myButton" type="submit" id="submit_settings">{% trans "Save settings" %}</button>
 </form>
 <hr>
 <h3>{% trans "Grades" %}</h3>
@@ -38,7 +38,7 @@
 </p>
 <form method="POST" action="{% url 'platform_admin:default-grades' grading_sys='school' %}">
   {% csrf_token %}
-  <button class="btn btn-success myButton" type="submit" id="submit">{% trans "School system" %}</button>
+  <button class="btn btn-success myButton" type="submit" id="default_school">{% trans "School system" %}</button>
 </form>
 <form method="POST" action="{% url 'platform_admin:default-grades' grading_sys='academic' %}">
   {% csrf_token %}
@@ -52,7 +52,7 @@
   {{grade_form.bar}}%
   {{grade_form.platform.as_hidden}}
   <br>
-  <button class="btn btn-success mt-3 myButton" type="submit" id="submit">{% trans "Add grade" %}</button>
+  <button class="btn btn-success mt-3 myButton" type="submit" id="submit_grade">{% trans "Add grade" %}</button>
 </form>
 <p>{% trans "Currently used grades:" %}</p>
 <table class="table">
@@ -67,12 +67,12 @@
   <tbody id="tbody">
     {% for grade in grades %}
       <tr>
-        <td>{{grade.name}}</td>
-        <td>{{grade.bar}}%</td>
+        <td id="name_{{grade.name}}">{{grade.name}}</td>
+        <td id="bar_{{grade.name}}">{{grade.bar}}%</td>
         <td>
           <form method="POST" action="{% url 'platform_admin:delete-grade' pk=grade.pk %}">
             {% csrf_token %}
-            <button class="btn btn-danger myButton" type="submit" id="submit">{% trans "Delete" %}</button>
+            <button class="btn btn-danger myButton" type="submit" id="del_{{grade.name}}">{% trans "Delete" %}</button>
           </form>
         </td>
       </tr>

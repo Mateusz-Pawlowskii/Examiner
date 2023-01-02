@@ -9,9 +9,9 @@ import time
 # Create your tests here.
 
 # settings for testing
-home_adress = "http://127.0.0.1:8000/"
-test_login_examiner = "Test"
-test_login = "Test_student"
+home_adress = "http://127.0.0.1:8000"
+test_login_examiner = "Test_Examiner"
+test_login = "Test_Student"
 # both test accounts are assumed to use same password
 test_password = "JBfP64Zbk3mKBYAt"
 geko_driver_directory = ""
@@ -45,10 +45,12 @@ class TestStudent(LiveServerTestCase):
     def setUpClass(self):
         super().setUpClass()
         self.browser = webdriver.Firefox(geko_driver_directory)
+        self.browser.maximize_window()
         self.browser.get(home_adress)
-        self.create_test(self, "Testowa nazwa kursu")
-        self.create_test(self, "Niezaliczony")
-        self.create_test(self, "Brak czasu")
+        self.create_group(self)
+        self.create_test(self, "Test course name")
+        self.create_test(self, "Failed")
+        self.create_test(self, "Out of time")
         self.login_student(self)
 
     @classmethod
@@ -65,12 +67,27 @@ class TestStudent(LiveServerTestCase):
         type_id(self.browser, "username", test_login)
         type_id(self.browser, "password", test_password)
         click_id(self.browser, "submit")
+        click_id(self.browser, "English")
 
     def login_examiner(self):
         click_id(self.browser, "login")
         type_id(self.browser, "username", test_login_examiner)
         type_id(self.browser, "password", test_password)
         click_id(self.browser, "submit")
+        click_id(self.browser, "English")
+
+    def create_group(self):
+        self.login_examiner(self)
+        click_id(self.browser, "nav_groups")
+        click_id(self.browser, "create_group")
+        type_id(self.browser, "id_name", "Test_Group")
+        click_id(self.browser, "submit")
+        click_id(self.browser, "link_Test_Group")
+        click_id(self.browser, "student_nav")
+        type_id(self.browser, "id_student", test_login)
+        student_submit = self.browser.find_element(By.ID, "submit_student")
+        self.browser.execute_script("arguments[0].click();", student_submit)
+        click_id(self.browser, "logout")
 
     def create_test(self, name):
         self.login_examiner(self)
@@ -90,14 +107,15 @@ class TestStudent(LiveServerTestCase):
         click_id(self.browser, "submit")
         click_id(self.browser, "edit")
         click_id(self.browser, "student_nav")
-        type_id(self.browser, "id_student", test_login)
+        type_id(self.browser, "id_group", "Test_Group")
+        type_id(self.browser, "id_deadline", "2030-11-11")
         # I need to use execute_script becouse otherwise exception is rised due to button being obscured by div
         student_submit = self.browser.find_element(By.ID, "submit_student")
         self.browser.execute_script("arguments[0].click();", student_submit)
         click_id(self.browser, "add_question")
-        type_id(self.browser, "id_text", "Testowa treść pytania")
-        type_id(self.browser, "id_answer1", "Pierwsza testowa odpowiedź")
-        type_id(self.browser, "id_answer2", "Druga testowa odpowiedź")
+        type_id(self.browser, "id_text", "Test question text")
+        type_id(self.browser, "id_answer1", "First test answer")
+        type_id(self.browser, "id_answer2", "Secound test answer")
         click_id(self.browser, "id_correct_answers_1")
         click_id(self.browser, "submit")
         click_id(self.browser, "logout")
@@ -106,21 +124,21 @@ class TestStudent(LiveServerTestCase):
         click_id(self.browser, "nav_courses")
         click_id(self.browser, "add")
         type_id(self.browser, "id_name", name)
-        type_id(self.browser, "id_category", "Testowa kategoria")
+        type_id(self.browser, "id_category", "Test category")
         click_id(self.browser, "submit")
     
     def test_logging_in(self):
         # user checks if their username is properly shown
-        self.assertEquals(self.browser.find_element(By.ID, "current_username").text, test_login)
+        self.assertEquals(self.browser.find_element(By.ID, "current_username").text, f"Student: {test_login}")
     
     def test_exam(self):
         # user checks if course that they were assigned to shows up
         click_id(self.browser, "nav_courses")
-        self.assertIsNotNone(self.browser.find_element(By.ID, "name_stu_Testowa nazwa kursu"))
+        self.assertIsNotNone(self.browser.find_element(By.ID, "name_stu_Test course name"))
         # for some reason standard click didn't work
-        self.browser.find_element(By.XPATH, '/html/body/div/table/tbody/tr[@id="Testowa nazwa kursu"]/td[1]/a').click()
+        self.browser.find_element(By.XPATH, '/html/body/div/table/tbody/tr[@id="Test course name"]/td[1]/a').click()
         click_id(self.browser, "exam")
-        self.assertEquals(self.browser.find_element(By.ID, "course_name").text, "Testowa nazwa kursu")
+        self.assertEquals(self.browser.find_element(By.ID, "course_name").text, "Test course name")
         # user finishes exam sucessfully
         click_id(self.browser, "submit")
         click_id(self.browser, "id_correct_answers_1")
@@ -133,7 +151,7 @@ class TestStudent(LiveServerTestCase):
             (self.browser.find_element(By.ID, "timeout"))
         # user finishes exam unsucessfully
         click_id(self.browser, "nav_courses")
-        self.browser.find_element(By.XPATH, '/html/body/div/table/tbody/tr[@id="Niezaliczony"]/td[1]/a').click()
+        self.browser.find_element(By.XPATH, '/html/body/div/table/tbody/tr[@id="Failed"]/td[1]/a').click()
         click_id(self.browser, "exam")
         click_id(self.browser, "submit")
         click_id(self.browser, "id_correct_answers_2")
@@ -146,7 +164,7 @@ class TestStudent(LiveServerTestCase):
             (self.browser.find_element(By.ID, "timeout"))
         # user runs out of time
         click_id(self.browser, "nav_courses")
-        self.browser.find_element(By.XPATH, '/html/body/div/table/tbody/tr[@id="Brak czasu"]/td[1]/a').click()
+        self.browser.find_element(By.XPATH, '/html/body/div/table/tbody/tr[@id="Out of time"]/td[1]/a').click()
         click_id(self.browser, "exam")
         click_id(self.browser, "submit")
         time.sleep(63)
@@ -157,15 +175,15 @@ class TestStudent(LiveServerTestCase):
         click_id(self.browser, "ok")
         # user checks passed result
         click_id(self.browser, "nav_results")
-        self.assertEquals(self.browser.find_element(By.ID, "status_Testowa nazwa kursu").text, "Zaliczony")
-        self.browser.find_element(By.XPATH, f'/html/body/div/table/tbody/tr[@id="Testowa nazwa kursu"]/td[1]/a').click()
-        self.assertEquals(self.browser.find_element(By.ID, "status_Testowa nazwa kursu_1").text, "Zaliczający")
-        self.assertEquals(self.browser.find_element(By.ID, "perc_Testowa nazwa kursu_1").text, "100")
-        self.assertEquals(self.browser.find_element(By.ID, "score_Testowa nazwa kursu_1").text, "1")
+        self.assertEquals(self.browser.find_element(By.ID, "status_Test course name").text, "Passed")
+        self.browser.find_element(By.XPATH, f'/html/body/div/table/tbody/tr[@id="Test course name"]/td[1]/a').click()
+        self.assertEquals(self.browser.find_element(By.ID, "status_Test course name_1").text, "Passing")
+        self.assertEquals(self.browser.find_element(By.ID, "perc_Test course name_1").text, "100")
+        self.assertEquals(self.browser.find_element(By.ID, "score_Test course name_1").text, "1")
         # user checks failed result
         click_id(self.browser, "nav_results")
-        self.assertEquals(self.browser.find_element(By.ID, "status_Niezaliczony").text, "Niezaliczony")
-        self.browser.find_element(By.XPATH, f'/html/body/div/table/tbody/tr[@id="Niezaliczony"]/td[1]/a').click()
-        self.assertEquals(self.browser.find_element(By.ID, "status_Niezaliczony_1").text, "Niezaliczający")
-        self.assertEquals(self.browser.find_element(By.ID, "perc_Niezaliczony_1").text, "0")
-        self.assertEquals(self.browser.find_element(By.ID, "score_Niezaliczony_1").text, "0")
+        self.assertEquals(self.browser.find_element(By.ID, "status_Failed").text, "Failed")
+        self.browser.find_element(By.XPATH, f'/html/body/div/table/tbody/tr[@id="Failed"]/td[1]/a').click()
+        self.assertEquals(self.browser.find_element(By.ID, "status_Failed_1").text, "Failing")
+        self.assertEquals(self.browser.find_element(By.ID, "perc_Failed_1").text, "0")
+        self.assertEquals(self.browser.find_element(By.ID, "score_Failed_1").text, "0")
