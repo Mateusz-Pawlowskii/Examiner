@@ -7,7 +7,7 @@ This aplication was written in Python and javaScript using Django framework.
 3. User guide
 You can fork this repository and upload it to a hosting server.
 For a preview you can visit this Heroku link: https://examiner-mp.herokuapp.com
-Before deployment remember to set enviormental variable - SECRET_KEY.
+Before deployment remember to set enviormental variables - SECRET_KEY, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
 
 4. Credits:
 Mateusz Pawłowski
