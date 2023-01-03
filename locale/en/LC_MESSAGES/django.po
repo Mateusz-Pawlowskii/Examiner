@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-26 13:28+0100\n"
+"POT-Creation-Date: 2023-01-03 16:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,33 +32,33 @@ msgid "Password"
 msgstr ""
 
 #: .\exam\functions.py:25 .\exam\functions.py:34 .\exam\functions.py:45
-#: .\exam\functions.py:54 .\examiner_user\views.py:542
-#: .\examiner_user\views.py:573 .\examiner_user\views.py:590
-#: .\examiner_user\views.py:615 .\examiner_user\views.py:626
-#: .\examiner_user\views.py:628 .\student\forms.py:10
+#: .\exam\functions.py:54 .\examiner_user\views.py:541
+#: .\examiner_user\views.py:585 .\examiner_user\views.py:603
+#: .\examiner_user\views.py:628 .\examiner_user\views.py:639
+#: .\examiner_user\views.py:641 .\student\forms.py:10
 msgid "Failed"
 msgstr ""
 
 #: .\exam\functions.py:28 .\exam\functions.py:36 .\exam\functions.py:48
-#: .\exam\functions.py:56 .\examiner_user\views.py:542
-#: .\examiner_user\views.py:591 .\examiner_user\views.py:627
-#: .\examiner_user\views.py:628 .\student\forms.py:12
+#: .\exam\functions.py:56 .\examiner_user\views.py:541
+#: .\examiner_user\views.py:604 .\examiner_user\views.py:640
+#: .\examiner_user\views.py:641 .\student\forms.py:12
 msgid "Unfinished"
 msgstr ""
 
 #: .\exam\functions.py:32 .\exam\functions.py:52
 #: .\examiner_user\templates\course_group_results.html:88
 #: .\examiner_user\templates\course_results.html:125
-#: .\examiner_user\views.py:542 .\examiner_user\views.py:571
-#: .\examiner_user\views.py:589 .\examiner_user\views.py:613
-#: .\examiner_user\views.py:625 .\examiner_user\views.py:628
+#: .\examiner_user\views.py:541 .\examiner_user\views.py:583
+#: .\examiner_user\views.py:602 .\examiner_user\views.py:626
+#: .\examiner_user\views.py:638 .\examiner_user\views.py:641
 #: .\student\forms.py:11
 msgid "Passed"
 msgstr ""
 
 #: .\exam\functions.py:67 .\exam\functions.py:80 .\exam\functions.py:91
 #: .\exam\functions.py:104 .\examiner_user\templates\students.html:44
-#: .\platform_admin\templates\edit_student_group.html:207
+#: .\platform_admin\templates\edit_student_group.html:209
 #: .\platform_admin\templates\search_examiner.html:50
 #: .\platform_admin\templates\search_student.html:50
 msgid "None"
@@ -169,7 +169,7 @@ msgid "Enter your login credentials below. It's case sensitive"
 msgstr ""
 
 #: .\exam\templates\login.html:19 .\examiner_user\templates\students.html:20
-#: .\platform_admin\templates\edit_student_group.html:52
+#: .\platform_admin\templates\edit_student_group.html:54
 #: .\platform_admin\templates\search_examiner.html:26
 #: .\platform_admin\templates\search_student.html:26
 msgid "Username"
@@ -177,7 +177,7 @@ msgstr ""
 
 #: .\exam\templates\login.html:29 .\exam\templates\password_reset.html:24
 #: .\exam\templates\registration.html:51
-#: .\examiner_user\templates\control_course.html:68
+#: .\examiner_user\templates\control_course.html:69
 #: .\examiner_user\templates\course_group_results.html:37
 #: .\examiner_user\templates\course_results.html:74
 #: .\examiner_user\templates\detail_course.html:63
@@ -185,7 +185,7 @@ msgstr ""
 #: .\examiner_user\templates\detail_student.html:44
 #: .\platform_admin\templates\edit_examiner.html:41
 #: .\platform_admin\templates\edit_student.html:61
-#: .\platform_admin\templates\edit_student_group.html:155
+#: .\platform_admin\templates\edit_student_group.html:157
 #: .\platform_admin\templates\platform_detail_course.html:83
 #: .\student\templates\student_detail_course.html:39
 #: .\student\templates\student_result_view.html:9
@@ -564,52 +564,52 @@ msgstr ""
 msgid "Multiple choice questions"
 msgstr ""
 
-#: .\examiner_user\forms.py:40
+#: .\examiner_user\forms.py:35
 msgid "Answer nr.1"
 msgstr ""
 
-#: .\examiner_user\forms.py:41
+#: .\examiner_user\forms.py:36
 msgid "Answer nr.2"
 msgstr ""
 
-#: .\examiner_user\forms.py:42
+#: .\examiner_user\forms.py:37
 msgid "Answer nr.3"
 msgstr ""
 
-#: .\examiner_user\forms.py:43
+#: .\examiner_user\forms.py:38
 msgid "Answer nr.4"
 msgstr ""
 
-#: .\examiner_user\forms.py:44
+#: .\examiner_user\forms.py:39
 msgid "Answer nr.5"
 msgstr ""
 
-#: .\examiner_user\forms.py:55 .\examiner_user\views.py:296
-#: .\examiner_user\views.py:354
+#: .\examiner_user\forms.py:50 .\examiner_user\views.py:295
+#: .\examiner_user\views.py:353
 msgid "Correct answer was incorrectly marked"
 msgstr ""
 
-#: .\examiner_user\forms.py:68 .\platform_admin\forms.py:35
+#: .\examiner_user\forms.py:63 .\platform_admin\forms.py:35
 msgid "Present"
 msgstr ""
 
-#: .\examiner_user\forms.py:69 .\platform_admin\forms.py:36
+#: .\examiner_user\forms.py:64 .\platform_admin\forms.py:36
 msgid "New"
 msgstr ""
 
-#: .\examiner_user\forms.py:79 .\platform_admin\forms.py:22
+#: .\examiner_user\forms.py:74 .\platform_admin\forms.py:22
 msgid "Student username"
 msgstr ""
 
-#: .\examiner_user\forms.py:83 .\examiner_user\forms.py:93
+#: .\examiner_user\forms.py:78 .\examiner_user\forms.py:88
 #: .\examiner_user\templates\course_group_results.html:15
 #: .\platform_admin\forms.py:19 .\platform_admin\forms.py:26
 #: .\platform_admin\templates\search_student_group.html:30
 msgid "Group name"
 msgstr ""
 
-#: .\examiner_user\forms.py:94
-#: .\platform_admin\templates\edit_student_group.html:111
+#: .\examiner_user\forms.py:89
+#: .\platform_admin\templates\edit_student_group.html:113
 msgid "Deadline"
 msgstr ""
 
@@ -671,147 +671,147 @@ msgstr ""
 msgid "Exam ready"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:63
+#: .\examiner_user\templates\control_course.html:64
 msgid "Save changes"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:72
+#: .\examiner_user\templates\control_course.html:73
 #: .\student\templates\student_list_lesson.html:6
 msgid "Lessons"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:74
+#: .\examiner_user\templates\control_course.html:75
 msgid "Add new lesson"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:75
+#: .\examiner_user\templates\control_course.html:76
 msgid "(attach learning resource as pdf)"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:79
+#: .\examiner_user\templates\control_course.html:80
 #: .\examiner_user\templates\create_lesson.html:14
 #: .\examiner_user\templates\edit_lesson_topic.html:14
 msgid "Lesson topic"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:85
+#: .\examiner_user\templates\control_course.html:86
 msgid "Add lesson"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:88
+#: .\examiner_user\templates\control_course.html:89
 msgid "Amount of lessons attached to course"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:90
+#: .\examiner_user\templates\control_course.html:91
 msgid "No lessons"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:105
-#: .\examiner_user\templates\control_course.html:123
+#: .\examiner_user\templates\control_course.html:106
+#: .\examiner_user\templates\control_course.html:124
 #: .\examiner_user\templates\detail_lesson.html:38
 msgid "Delete lesson"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:114
+#: .\examiner_user\templates\control_course.html:115
 #: .\examiner_user\templates\detail_lesson.html:29
 msgid "Lesson deletion"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:118
+#: .\examiner_user\templates\control_course.html:119
 #: .\examiner_user\templates\detail_lesson.html:33
 msgid "Are you sure you want to delete lesson"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:118
+#: .\examiner_user\templates\control_course.html:119
 #: .\examiner_user\templates\detail_lesson.html:33
 msgid "This choice can't be reverted."
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:124
-#: .\examiner_user\templates\control_course.html:213
+#: .\examiner_user\templates\control_course.html:125
+#: .\examiner_user\templates\control_course.html:214
 #: .\examiner_user\templates\detail_lesson.html:39
 #: .\examiner_user\templates\results_course_student.html:61
 #: .\platform_admin\templates\edit_student.html:80
-#: .\platform_admin\templates\edit_student_group.html:140
-#: .\platform_admin\templates\edit_student_group.html:269
+#: .\platform_admin\templates\edit_student_group.html:142
+#: .\platform_admin\templates\edit_student_group.html:271
 #: .\platform_admin\templates\platform_detail_course.html:73
 msgid "Cancel"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:137
+#: .\examiner_user\templates\control_course.html:138
 msgid "Student Groups"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:139
+#: .\examiner_user\templates\control_course.html:140
 msgid "Add new student group"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:144
+#: .\examiner_user\templates\control_course.html:145
 msgid "(enter name of group that will be assigned to the course)"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:148
+#: .\examiner_user\templates\control_course.html:149
 #: .\platform_admin\forms.py:30
-#: .\platform_admin\templates\edit_student_group.html:78
+#: .\platform_admin\templates\edit_student_group.html:80
 msgid "Course deadline"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:153
+#: .\examiner_user\templates\control_course.html:154
 #: .\examiner_user\templates\detail_student.html:40
 #: .\platform_admin\templates\edit_student.html:56
-#: .\platform_admin\templates\edit_student_group.html:40
-#: .\platform_admin\templates\edit_student_group.html:84
+#: .\platform_admin\templates\edit_student_group.html:42
+#: .\platform_admin\templates\edit_student_group.html:86
 msgid "Assign"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:161
+#: .\examiner_user\templates\control_course.html:162
 msgid "Groups assigned to course"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:176
-#: .\examiner_user\templates\control_course.html:200
-#: .\platform_admin\templates\edit_student_group.html:238
-#: .\platform_admin\templates\edit_student_group.html:252
+#: .\examiner_user\templates\control_course.html:177
+#: .\examiner_user\templates\control_course.html:201
+#: .\platform_admin\templates\edit_student_group.html:240
+#: .\platform_admin\templates\edit_student_group.html:254
 msgid "Change deadline"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:181
+#: .\examiner_user\templates\control_course.html:182
 #: .\examiner_user\templates\course_group_results.html:17
 #: .\examiner_user\templates\course_results.html:68
 msgid "Report"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:190
-#: .\platform_admin\templates\edit_student_group.html:215
-#: .\platform_admin\templates\edit_student_group.html:245
+#: .\examiner_user\templates\control_course.html:191
+#: .\platform_admin\templates\edit_student_group.html:217
+#: .\platform_admin\templates\edit_student_group.html:247
 msgid "Remove"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:204
-#: .\platform_admin\templates\edit_student_group.html:256
+#: .\examiner_user\templates\control_course.html:205
+#: .\platform_admin\templates\edit_student_group.html:258
 msgid "Deadline change"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:206
-#: .\platform_admin\templates\edit_student_group.html:258
+#: .\examiner_user\templates\control_course.html:207
+#: .\platform_admin\templates\edit_student_group.html:260
 msgid "Many date formats are valid, for example: YYYY-MM-DD"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:212
+#: .\examiner_user\templates\control_course.html:213
 #: .\examiner_user\templates\edit_lesson_content.html:20
 #: .\examiner_user\templates\edit_lesson_topic.html:19
 #: .\examiner_user\templates\edit_question.html:68
 #: .\examiner_user\templates\mulitple_edit_question.html:79
-#: .\platform_admin\templates\edit_student_group.html:268
+#: .\platform_admin\templates\edit_student_group.html:270
 msgid "Change"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:227
+#: .\examiner_user\templates\control_course.html:228
 #: .\examiner_user\templates\search_question.html:28
 msgid "Add question"
 msgstr ""
 
-#: .\examiner_user\templates\control_course.html:233
+#: .\examiner_user\templates\control_course.html:234
 msgid "View questions"
 msgstr ""
 
@@ -823,7 +823,7 @@ msgstr ""
 #: .\examiner_user\templates\course_results.html:13
 #: .\examiner_user\templates\detail_course.html:9
 #: .\examiner_user\templates\search_course.html:38
-#: .\platform_admin\templates\edit_student_group.html:110
+#: .\platform_admin\templates\edit_student_group.html:112
 #: .\student\templates\student_results_general.html:34
 #: .\student\templates\student_search_course.html:40
 msgid "Category"
@@ -865,14 +865,14 @@ msgstr ""
 #: .\examiner_user\templates\course_group_results.html:47
 #: .\examiner_user\templates\course_results.html:84
 #: .\examiner_user\templates\detail_student.html:56
-#: .\platform_admin\views.py:454
+#: .\platform_admin\views.py:451
 #: .\student\templates\student_results_general.html:36
 #: .\student\templates\student_search_course.html:42
 msgid "Grade"
 msgstr ""
 
 #: .\examiner_user\templates\course_group_results.html:92
-#: .\examiner_user\templates\course_results.html:129 .\student\views.py:256
+#: .\examiner_user\templates\course_results.html:129 .\student\views.py:263
 msgid "Diploma"
 msgstr ""
 
@@ -970,10 +970,18 @@ msgstr ""
 msgid "Create new course"
 msgstr ""
 
-#: .\examiner_user\templates\create_course.html:16
+#: .\examiner_user\templates\create_course.html:15
+msgid "Enter course name: "
+msgstr ""
+
+#: .\examiner_user\templates\create_course.html:17
+msgid "Enter category (optional):"
+msgstr ""
+
+#: .\examiner_user\templates\create_course.html:21
 #: .\platform_admin\templates\create_examiner.html:33
 #: .\platform_admin\templates\create_student.html:37
-#: .\platform_admin\templates\create_student_group.html:15
+#: .\platform_admin\templates\create_student_group.html:17
 msgid "Create"
 msgstr ""
 
@@ -1135,7 +1143,7 @@ msgstr ""
 
 #: .\examiner_user\templates\examiner_base.html:39
 #: .\examiner_user\templates\examiner_base.html:43
-#: .\platform_admin\templates\edit_student_group.html:64
+#: .\platform_admin\templates\edit_student_group.html:66
 #: .\student\templates\student_base.html:39
 #: .\student\templates\student_base.html:43
 #: .\student\templates\student_search_course.html:33
@@ -1144,7 +1152,7 @@ msgstr ""
 
 #: .\examiner_user\templates\examiner_base.html:48
 #: .\examiner_user\templates\examiner_base.html:52
-#: .\platform_admin\templates\edit_student_group.html:25
+#: .\platform_admin\templates\edit_student_group.html:27
 #: .\platform_admin\templates\platform_base.html:57
 #: .\platform_admin\templates\platform_base.html:61
 msgid "Students"
@@ -1283,21 +1291,21 @@ msgid "Search for courses"
 msgstr ""
 
 #: .\examiner_user\templates\search_course.html:19
-#: .\platform_admin\templates\edit_student_group.html:89 .\student\forms.py:6
+#: .\platform_admin\templates\edit_student_group.html:91 .\student\forms.py:6
 #: .\student\templates\student_results_general.html:9
 #: .\student\templates\student_search_course.html:14
 msgid "Search by name"
 msgstr ""
 
 #: .\examiner_user\templates\search_course.html:20
-#: .\platform_admin\templates\edit_student_group.html:90
+#: .\platform_admin\templates\edit_student_group.html:92
 #: .\student\templates\student_results_general.html:10
 #: .\student\templates\student_search_course.html:15
 msgid "Search by category"
 msgstr ""
 
 #: .\examiner_user\templates\search_course.html:37
-#: .\platform_admin\templates\edit_student_group.html:109
+#: .\platform_admin\templates\edit_student_group.html:111
 #: .\platform_admin\templates\settings.html:62
 #: .\student\templates\student_search_course.html:39
 msgid "Name"
@@ -1321,7 +1329,7 @@ msgid "Create student"
 msgstr ""
 
 #: .\examiner_user\templates\students.html:12
-#: .\platform_admin\templates\edit_student_group.html:43
+#: .\platform_admin\templates\edit_student_group.html:45
 #: .\platform_admin\templates\search_examiner.html:18
 #: .\platform_admin\templates\search_student.html:18
 #: .\platform_admin\templates\search_student_group.html:22
@@ -1329,61 +1337,61 @@ msgid "Search"
 msgstr ""
 
 #: .\examiner_user\templates\students.html:21
-#: .\platform_admin\templates\edit_student_group.html:53
+#: .\platform_admin\templates\edit_student_group.html:55
 #: .\platform_admin\templates\search_examiner.html:27
 #: .\platform_admin\templates\search_student.html:27
 msgid "Last login"
 msgstr ""
 
 #: .\examiner_user\templates\students.html:22
-#: .\platform_admin\templates\edit_student_group.html:54
+#: .\platform_admin\templates\edit_student_group.html:56
 #: .\platform_admin\templates\search_examiner.html:28
 #: .\platform_admin\templates\search_student.html:28
 msgid "Join date"
 msgstr ""
 
-#: .\examiner_user\views.py:94 .\examiner_user\views.py:112
+#: .\examiner_user\views.py:98 .\examiner_user\views.py:116
 #: .\platform_admin\views.py:216
 msgid "Student group not found"
 msgstr ""
 
-#: .\examiner_user\views.py:162
+#: .\examiner_user\views.py:161
 msgid "Course sucessfully created"
 msgstr ""
 
-#: .\examiner_user\views.py:164
+#: .\examiner_user\views.py:163
 msgid "Course creation failed"
 msgstr ""
 
-#: .\examiner_user\views.py:201 .\platform_admin\views.py:393
+#: .\examiner_user\views.py:200 .\platform_admin\views.py:390
 msgid "Course not found"
 msgstr ""
 
-#: .\examiner_user\views.py:217 .\platform_admin\views.py:292
+#: .\examiner_user\views.py:216 .\platform_admin\views.py:289
 msgid "(Deadline expired)"
 msgstr ""
 
-#: .\examiner_user\views.py:227
+#: .\examiner_user\views.py:226
 msgid "Lack of permission"
 msgstr ""
 
-#: .\examiner_user\views.py:255
+#: .\examiner_user\views.py:254
 msgid "Course data was filled incorrectly"
 msgstr ""
 
-#: .\examiner_user\views.py:391
+#: .\examiner_user\views.py:390
 msgid "Wrong file"
 msgstr ""
 
-#: .\examiner_user\views.py:454
+#: .\examiner_user\views.py:453
 msgid "New resource should be given during learning resource change"
 msgstr ""
 
-#: .\examiner_user\views.py:461
+#: .\examiner_user\views.py:460
 msgid "Wrong file extension"
 msgstr ""
 
-#: .\examiner_user\views.py:486
+#: .\examiner_user\views.py:485
 msgid "Incorrect lesson topic"
 msgstr ""
 
@@ -1476,36 +1484,36 @@ msgstr ""
 msgid "Student group "
 msgstr ""
 
-#: .\platform_admin\templates\edit_student_group.html:22
+#: .\platform_admin\templates\edit_student_group.html:24
 msgid "Change name"
 msgstr ""
 
-#: .\platform_admin\templates\edit_student_group.html:27
+#: .\platform_admin\templates\edit_student_group.html:29
 msgid "Enter username of user that will be assigned to group"
 msgstr ""
 
-#: .\platform_admin\templates\edit_student_group.html:74
+#: .\platform_admin\templates\edit_student_group.html:76
 msgid "Enter name of a course that will be assigned to group"
 msgstr ""
 
-#: .\platform_admin\templates\edit_student_group.html:87
+#: .\platform_admin\templates\edit_student_group.html:89
 msgid "Course search"
 msgstr ""
 
-#: .\platform_admin\templates\edit_student_group.html:123
-#: .\platform_admin\templates\edit_student_group.html:139
+#: .\platform_admin\templates\edit_student_group.html:125
+#: .\platform_admin\templates\edit_student_group.html:141
 msgid "Delete group"
 msgstr ""
 
-#: .\platform_admin\templates\edit_student_group.html:128
+#: .\platform_admin\templates\edit_student_group.html:130
 msgid "Student group deletion"
 msgstr ""
 
-#: .\platform_admin\templates\edit_student_group.html:132
+#: .\platform_admin\templates\edit_student_group.html:134
 msgid "Are you sure you want to delete student group "
 msgstr ""
 
-#: .\platform_admin\templates\edit_student_group.html:133
+#: .\platform_admin\templates\edit_student_group.html:135
 msgid ""
 "This choice can't be reverted, courses and students assigned to this group "
 "will be unassigned\n"
@@ -1715,68 +1723,68 @@ msgstr ""
 msgid "User deleted"
 msgstr ""
 
-#: .\platform_admin\views.py:268
+#: .\platform_admin\views.py:265
 msgid "Group creation failed"
 msgstr ""
 
-#: .\platform_admin\views.py:320
+#: .\platform_admin\views.py:317
 msgid "Group edit failed"
 msgstr ""
 
-#: .\platform_admin\views.py:342
+#: .\platform_admin\views.py:339
 msgid "Course deleted"
 msgstr ""
 
-#: .\platform_admin\views.py:352
+#: .\platform_admin\views.py:349
 msgid "Group deleted"
 msgstr ""
 
-#: .\platform_admin\views.py:365
+#: .\platform_admin\views.py:362
 msgid "Student not found"
 msgstr ""
 
-#: .\platform_admin\views.py:448
+#: .\platform_admin\views.py:445
 #, python-format
 msgid "Group %(group)s results from %(course)s course"
 msgstr ""
 
-#: .\platform_admin\views.py:451
+#: .\platform_admin\views.py:448
 msgid "Student name"
 msgstr ""
 
-#: .\platform_admin\views.py:452
+#: .\platform_admin\views.py:449
 msgid "Status"
 msgstr ""
 
-#: .\platform_admin\views.py:488
+#: .\platform_admin\views.py:485
 msgid "Settings saved"
 msgstr ""
 
-#: .\platform_admin\views.py:490
+#: .\platform_admin\views.py:487
 msgid "Incorrect logo"
 msgstr ""
 
-#: .\platform_admin\views.py:502
+#: .\platform_admin\views.py:498
 msgid "New grade sucessfully added"
 msgstr ""
 
-#: .\platform_admin\views.py:504
+#: .\platform_admin\views.py:500
 msgid "Incorrect grade data"
 msgstr ""
 
-#: .\platform_admin\views.py:509
+#: .\platform_admin\views.py:511
 msgid "Grade deleted"
 msgstr ""
 
-#: .\platform_admin\views.py:547
+#: .\platform_admin\views.py:548
 msgid "School grading system sucessfully implemented"
 msgstr ""
 
-#: .\platform_admin\views.py:551
+#: .\platform_admin\views.py:552
 msgid "Academic grading system sucessfully implemented"
 msgstr ""
 
-#: .\platform_admin\views.py:553
+#: .\platform_admin\views.py:554
 msgid "Default grade implementation error"
 msgstr ""
 
@@ -1952,28 +1960,28 @@ msgstr ""
 msgid "Unfortunately you failed to pass the exam"
 msgstr ""
 
-#: .\student\views.py:138
+#: .\student\views.py:145
 msgid "Course isn't ready"
 msgstr ""
 
-#: .\student\views.py:259
+#: .\student\views.py:266
 msgid "finished course"
 msgstr ""
 
-#: .\student\views.py:261
+#: .\student\views.py:268
 msgid "with passing result"
 msgstr ""
 
-#: .\student\views.py:263
+#: .\student\views.py:270
 #, python-format
 msgid "achieving %(perc)s percent"
 msgstr ""
 
-#: .\student\views.py:264
+#: .\student\views.py:271
 #, python-format
 msgid "by getting %(result)s out of %(max_score)s points"
 msgstr ""
 
-#: .\student\views.py:266
+#: .\student\views.py:273
 msgid "Congratualtions, we wish further successes in studies"
 msgstr ""
