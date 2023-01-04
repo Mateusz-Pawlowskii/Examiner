@@ -140,7 +140,7 @@ class UnattachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         group = get_object_or_404(StudentGroup, pk=self.kwargs["pk"], platform=platform)
         group.courses.remove(course)
         group.save()
-        return redirect(reverse_lazy("examiner_user:examiner-edit-group", kwargs={"pk":self.kwargs["pk"]}))
+        return redirect(reverse_lazy("examiner_user:examiner-edit-group", kwargs={"pk":self.kwargs["pk"], "slug":slugify(group.name)}))
 
 # part about courses starts here
 class CreateCourse(LoginRequiredMixin, PermissionRequiredMixin, View):

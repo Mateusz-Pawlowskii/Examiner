@@ -134,11 +134,11 @@ class TestExaminer(LiveServerTestCase):
         # student_nav must be double clicked due to unscrolling aimation
         click_id(self.browser, "nav_groups")
         click_id(self.browser, "link_Test_Group")
-        # time.sleep(1)
         click_id(self.browser, "student_nav")
         self.assertIsNotNone(self.browser.find_element(By.ID, "Test_Student"))
         # user removes student from course
-        click_id(self.browser, "Test_Student_delete")
+        student_remove = self.browser.find_element(By.ID, "Test_Student_delete")
+        self.browser.execute_script("arguments[0].click();", student_remove)
         click_id(self.browser, "student_nav")
         # user checks if there is no student in the course student list
         with self.assertRaises(NoSuchElementException):
