@@ -12,7 +12,7 @@
 <br>
 <script type="text/javascript">
     let material = "{{ lesson.material.name }}"
-    document.write(material.substring(8))
+    document.write(material)
 </script>
 <br>
 <a href="{% url 'examiner_user:edit-lesson-topic' pk=lesson.pk slug=lesson.topic|slugify %}">{% trans "Change topic" %}</a>
