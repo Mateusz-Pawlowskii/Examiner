@@ -19,6 +19,7 @@ from exam.views import RedirectHomepage, RedirectHomepage
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
+from django.views.static import serve
 
 urlpatterns = i18n_patterns(
     path("", RedirectHomepage.as_view(), name="homepage"),
@@ -27,7 +28,8 @@ urlpatterns = i18n_patterns(
     path('student/', include ("student.urls")),
     path('examiner/', include ("examiner_user.urls")),
     path('platform/', include ("platform_admin.urls")),
-    path("accounts/profile/", RedirectHomepage.as_view(), name="login-redirect")
+    path("accounts/profile/", RedirectHomepage.as_view(), name="login-redirect"),
+    path('media/', serve,{'document_root': settings.MEDIA_ROOT})
 )
 
 if settings.DEBUG:
