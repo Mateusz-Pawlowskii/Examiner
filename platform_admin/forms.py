@@ -40,7 +40,7 @@ class EditPlatformForm(forms.ModelForm):
         model = Platform
         fields = ["name","logo"]
     name = forms.CharField(label=_("Platform name"), widget=forms.Textarea(attrs={'name':'text', 'rows':4, 'cols':170}))
-    logo = forms.ImageField(required=False, widget=ClearableFileInputPL)
+    logo = forms.FileField(required=False, widget=ClearableFileInputPL)
 
 class ChangeDeadlineForm(forms.ModelForm):
     class Meta:
