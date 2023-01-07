@@ -27,8 +27,6 @@ urlpatterns = i18n_patterns(
     path('student/', include ("student.urls")),
     path('examiner/', include ("examiner_user.urls")),
     path('platform/', include ("platform_admin.urls")),
-    path("accounts/profile/", RedirectHomepage.as_view(), name="login-redirect")
+    path("accounts/profile/", RedirectHomepage.as_view(), name="login-redirect")+ 
+    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 )
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
