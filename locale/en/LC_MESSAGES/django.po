@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-03 16:57+0100\n"
+"POT-Creation-Date: 2023-01-07 19:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\Examiner\settings.py:131
+#: .\Examiner\settings.py:136
 msgid "English"
 msgstr ""
 
-#: .\Examiner\settings.py:132
+#: .\Examiner\settings.py:137
 msgid "Polish"
 msgstr ""
 
@@ -1076,7 +1076,7 @@ msgstr ""
 #: .\examiner_user\templates\detail_lesson.html:24
 #: .\examiner_user\templates\edit_question.html:72
 #: .\examiner_user\templates\mulitple_edit_question.html:83
-#: .\platform_admin\templates\settings.html:75
+#: .\platform_admin\templates\settings.html:78
 msgid "Delete"
 msgstr ""
 
@@ -1306,7 +1306,7 @@ msgstr ""
 
 #: .\examiner_user\templates\search_course.html:37
 #: .\platform_admin\templates\edit_student_group.html:111
-#: .\platform_admin\templates\settings.html:62
+#: .\platform_admin\templates\settings.html:65
 #: .\student\templates\student_search_course.html:39
 msgid "Name"
 msgstr ""
@@ -1651,10 +1651,16 @@ msgid "Save settings"
 msgstr ""
 
 #: .\platform_admin\templates\settings.html:28
+msgid ""
+"Changing platform logo is impossible in this deployment of Examiner due to "
+"lack of S3. It might change in the future"
+msgstr ""
+
+#: .\platform_admin\templates\settings.html:31
 msgid "Grades"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:30
+#: .\platform_admin\templates\settings.html:33
 msgid ""
 "There's a functionality that awards grades to students after exams.You "
 "should enter displayed grade name and\n"
@@ -1666,38 +1672,38 @@ msgid ""
 "sucessfully passed exams."
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:36
+#: .\platform_admin\templates\settings.html:39
 msgid ""
 "There are two default grading systems- school (1,2,3,4,5,6) and academic "
 "(2,3,3.5,4,4.5,5) Which can be set\n"
 "  by pressing apropriate button."
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:41
+#: .\platform_admin\templates\settings.html:44
 msgid "School system"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:45
+#: .\platform_admin\templates\settings.html:48
 msgid "Academic system"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:49
+#: .\platform_admin\templates\settings.html:52
 msgid "Grade name:"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:51
+#: .\platform_admin\templates\settings.html:54
 msgid "Required percentage bar:"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:55
+#: .\platform_admin\templates\settings.html:58
 msgid "Add grade"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:57
+#: .\platform_admin\templates\settings.html:60
 msgid "Currently used grades:"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:63
+#: .\platform_admin\templates\settings.html:66
 msgid "Bar"
 msgstr ""
 
