@@ -116,3 +116,29 @@ def auto_delete_material_on_change(sender, instance, **kwargs):
     if not old_file == new_file:
         if os.path.isfile(old_file.path):
             os.remove(old_file.path)
+
+@receiver(models.signals.post_delete, sender=Platform)
+def auto_delete_logo_on_delete(sender, instance, **kwargs):
+    """Deletes logo when platform is deleted"""
+    if instance.logo:
+        if os.path.isfile(instance.logo.path):
+            os.remove(instance.logo.path)
+
+@receiver(models.signals.pre_save, sender=Platform)
+def auto_delete_logo_on_change(sender, instance, **kwargs):
+    """Deletes old logo when new one is uploaded"""
+    if not instance.pk:
+        return False
+
+    try:
+        try:
+            old_file = Platform.objects.get(pk=instance.pk).logo
+        except Platform.DoesNotExist:
+            return False
+
+        new_file = instance.logo
+        if not old_file == new_file:
+            if os.path.isfile(old_file.path):
+                os.remove(old_file.path)
+    except:
+        pass
