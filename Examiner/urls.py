@@ -30,5 +30,5 @@ urlpatterns = i18n_patterns(
     path("accounts/profile/", RedirectHomepage.as_view(), name="login-redirect")
 )
 
-if not settings.DEBUG:
+if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
