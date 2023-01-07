@@ -482,9 +482,9 @@ class SettingsView(LoginRequiredMixin, PermissionRequiredMixin, View):
         form = self.form_class(request.POST, request.FILES, instance=platform)
         if form.is_valid():
             form.save()
-            messages.error(request, _("Settings saved"))
+            messages.info(request, _("Settings saved"))
         else:
-            messages.info(request, _("Incorrect logo"))
+            messages.error(request, _("Incorrect logo"))
         return HttpResponseRedirect(self.request.path_info)
 
 class CreateGradeView(LoginRequiredMixin, PermissionRequiredMixin, View):
