@@ -442,7 +442,7 @@ class AttachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
             return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
         max_amount = platform.course_per_group_limit
         if max_amount != 0:
-            if len(group.courses) >= max_amount:
+            if len(Course.objects.filter(studentgroup=group)) >= max_amount:
                 context = {"base" : self.base,
                            "attach" : "course",
                            "max_amount" : max_amount}
