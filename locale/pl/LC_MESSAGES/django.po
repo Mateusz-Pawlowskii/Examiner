@@ -1866,7 +1866,7 @@ msgstr "Ilośc studentów"
 
 #: .\platform_admin\templates\search_student_group.html:32
 msgid "Course amount"
-msgstr "Ilośc kusów"
+msgstr "Ilośc kursów"
 
 #: .\platform_admin\templates\settings.html:27
 msgid "Save settings"
