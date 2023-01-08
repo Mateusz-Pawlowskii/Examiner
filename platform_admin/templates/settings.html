@@ -20,8 +20,10 @@
     {% csrf_token %}
     {{form.name}}
     <br>
+    {% if platform.changable_logo %}
     {{form.logo}}
     <br>
+    {% endif %}
     <button class="btn btn-success mt-3 myButton" type="submit" id="submit_settings">{% trans "Save settings" %}</button>
 </form>
 <p>

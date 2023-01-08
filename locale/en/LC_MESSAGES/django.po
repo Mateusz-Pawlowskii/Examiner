@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-08 11:24+0100\n"
+"POT-Creation-Date: 2023-01-08 12:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,26 +32,26 @@ msgid "Password"
 msgstr ""
 
 #: .\exam\functions.py:25 .\exam\functions.py:34 .\exam\functions.py:45
-#: .\exam\functions.py:54 .\examiner_user\views.py:541
-#: .\examiner_user\views.py:585 .\examiner_user\views.py:603
-#: .\examiner_user\views.py:628 .\examiner_user\views.py:639
-#: .\examiner_user\views.py:641 .\student\forms.py:10
+#: .\exam\functions.py:54 .\examiner_user\views.py:592
+#: .\examiner_user\views.py:636 .\examiner_user\views.py:654
+#: .\examiner_user\views.py:679 .\examiner_user\views.py:690
+#: .\examiner_user\views.py:692 .\student\forms.py:10
 msgid "Failed"
 msgstr ""
 
 #: .\exam\functions.py:28 .\exam\functions.py:36 .\exam\functions.py:48
-#: .\exam\functions.py:56 .\examiner_user\views.py:541
-#: .\examiner_user\views.py:604 .\examiner_user\views.py:640
-#: .\examiner_user\views.py:641 .\student\forms.py:12
+#: .\exam\functions.py:56 .\examiner_user\views.py:592
+#: .\examiner_user\views.py:655 .\examiner_user\views.py:691
+#: .\examiner_user\views.py:692 .\student\forms.py:12
 msgid "Unfinished"
 msgstr ""
 
 #: .\exam\functions.py:32 .\exam\functions.py:52
 #: .\examiner_user\templates\course_group_results.html:88
 #: .\examiner_user\templates\course_results.html:125
-#: .\examiner_user\views.py:541 .\examiner_user\views.py:583
-#: .\examiner_user\views.py:602 .\examiner_user\views.py:626
-#: .\examiner_user\views.py:638 .\examiner_user\views.py:641
+#: .\examiner_user\views.py:592 .\examiner_user\views.py:634
+#: .\examiner_user\views.py:653 .\examiner_user\views.py:677
+#: .\examiner_user\views.py:689 .\examiner_user\views.py:692
 #: .\student\forms.py:11
 msgid "Passed"
 msgstr ""
@@ -584,8 +584,8 @@ msgstr ""
 msgid "Answer nr.5"
 msgstr ""
 
-#: .\examiner_user\forms.py:50 .\examiner_user\views.py:295
-#: .\examiner_user\views.py:353
+#: .\examiner_user\forms.py:50 .\examiner_user\views.py:302
+#: .\examiner_user\views.py:391
 msgid "Correct answer was incorrectly marked"
 msgstr ""
 
@@ -865,7 +865,7 @@ msgstr ""
 #: .\examiner_user\templates\course_group_results.html:47
 #: .\examiner_user\templates\course_results.html:84
 #: .\examiner_user\templates\detail_student.html:56
-#: .\platform_admin\views.py:466
+#: .\platform_admin\views.py:507
 #: .\student\templates\student_results_general.html:36
 #: .\student\templates\student_search_course.html:42
 msgid "Grade"
@@ -1076,7 +1076,7 @@ msgstr ""
 #: .\examiner_user\templates\detail_lesson.html:24
 #: .\examiner_user\templates\edit_question.html:72
 #: .\examiner_user\templates\mulitple_edit_question.html:83
-#: .\platform_admin\templates\settings.html:78
+#: .\platform_admin\templates\settings.html:80
 msgid "Delete"
 msgstr ""
 
@@ -1306,7 +1306,7 @@ msgstr ""
 
 #: .\examiner_user\templates\search_course.html:37
 #: .\platform_admin\templates\edit_student_group.html:111
-#: .\platform_admin\templates\settings.html:65
+#: .\platform_admin\templates\settings.html:67
 #: .\student\templates\student_search_course.html:39
 msgid "Name"
 msgstr ""
@@ -1350,48 +1350,48 @@ msgstr ""
 msgid "Join date"
 msgstr ""
 
-#: .\examiner_user\views.py:98 .\examiner_user\views.py:116
-#: .\platform_admin\views.py:231
+#: .\examiner_user\views.py:98 .\examiner_user\views.py:121
+#: .\platform_admin\views.py:233
 msgid "Student group not found"
 msgstr ""
 
-#: .\examiner_user\views.py:161
+#: .\examiner_user\views.py:166
 msgid "Course sucessfully created"
 msgstr ""
 
-#: .\examiner_user\views.py:163
+#: .\examiner_user\views.py:168
 msgid "Course creation failed"
 msgstr ""
 
-#: .\examiner_user\views.py:200 .\platform_admin\views.py:405
+#: .\examiner_user\views.py:225 .\platform_admin\views.py:439
 msgid "Course not found"
 msgstr ""
 
-#: .\examiner_user\views.py:216 .\platform_admin\views.py:304
+#: .\examiner_user\views.py:241 .\platform_admin\views.py:319
 msgid "(Deadline expired)"
 msgstr ""
 
-#: .\examiner_user\views.py:226
+#: .\examiner_user\views.py:251
 msgid "Lack of permission"
 msgstr ""
 
-#: .\examiner_user\views.py:254
+#: .\examiner_user\views.py:279
 msgid "Course data was filled incorrectly"
 msgstr ""
 
-#: .\examiner_user\views.py:390
+#: .\examiner_user\views.py:417
 msgid "Wrong file"
 msgstr ""
 
-#: .\examiner_user\views.py:453
+#: .\examiner_user\views.py:504
 msgid "New resource should be given during learning resource change"
 msgstr ""
 
-#: .\examiner_user\views.py:460
+#: .\examiner_user\views.py:511
 msgid "Wrong file extension"
 msgstr ""
 
-#: .\examiner_user\views.py:485
+#: .\examiner_user\views.py:536
 msgid "Incorrect lesson topic"
 msgstr ""
 
@@ -1576,16 +1576,44 @@ msgstr ""
 msgid "Limit exceeded!"
 msgstr ""
 
-#: .\platform_admin\templates\limit_exceeded.html:9
+#: .\platform_admin\templates\limit_exceeded.html:10
 msgid "Maximal amount of"
 msgstr ""
 
-#: .\platform_admin\templates\limit_exceeded.html:9
+#: .\platform_admin\templates\limit_exceeded.html:10
 msgid "for your platform is"
 msgstr ""
 
-#: .\platform_admin\templates\limit_exceeded.html:10
+#: .\platform_admin\templates\limit_exceeded.html:11
 msgid "If you want to create more you have to delete old ones."
+msgstr ""
+
+#: .\platform_admin\templates\limit_exceeded.html:13
+msgid ""
+"Maximal amount of students attached to one student group for your platform is"
+msgstr ""
+
+#: .\platform_admin\templates\limit_exceeded.html:14
+#: .\platform_admin\templates\limit_exceeded.html:17
+msgid "If you want to attach more you need to unattach others."
+msgstr ""
+
+#: .\platform_admin\templates\limit_exceeded.html:16
+msgid ""
+"Maximal amount of courses attached to one student group for your platform is"
+msgstr ""
+
+#: .\platform_admin\templates\limit_exceeded.html:19
+msgid "Maximal amount of lessons attached to one course for your platform is"
+msgstr ""
+
+#: .\platform_admin\templates\limit_exceeded.html:20
+#: .\platform_admin\templates\limit_exceeded.html:23
+msgid "If you want to create more you need to delete old ones."
+msgstr ""
+
+#: .\platform_admin\templates\limit_exceeded.html:22
+msgid "Maximal amount of questions in one exam for your platform is"
 msgstr ""
 
 #: .\platform_admin\templates\platform_base.html:39
@@ -1680,21 +1708,21 @@ msgstr ""
 msgid "Course amount"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:25
+#: .\platform_admin\templates\settings.html:27
 msgid "Save settings"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:28
+#: .\platform_admin\templates\settings.html:30
 msgid ""
 "Changing platform logo is impossible in this deployment of Examiner due to "
 "lack of S3. It might change in the future"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:31
+#: .\platform_admin\templates\settings.html:33
 msgid "Grades"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:33
+#: .\platform_admin\templates\settings.html:35
 msgid ""
 "There's a functionality that awards grades to students after exams.You "
 "should enter displayed grade name and\n"
@@ -1706,38 +1734,38 @@ msgid ""
 "sucessfully passed exams."
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:39
+#: .\platform_admin\templates\settings.html:41
 msgid ""
 "There are two default grading systems- school (1,2,3,4,5,6) and academic "
 "(2,3,3.5,4,4.5,5) Which can be set\n"
 "  by pressing apropriate button."
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:44
+#: .\platform_admin\templates\settings.html:46
 msgid "School system"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:48
+#: .\platform_admin\templates\settings.html:50
 msgid "Academic system"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:52
+#: .\platform_admin\templates\settings.html:54
 msgid "Grade name:"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:54
+#: .\platform_admin\templates\settings.html:56
 msgid "Required percentage bar:"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:58
+#: .\platform_admin\templates\settings.html:60
 msgid "Add grade"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:60
+#: .\platform_admin\templates\settings.html:62
 msgid "Currently used grades:"
 msgstr ""
 
-#: .\platform_admin\templates\settings.html:66
+#: .\platform_admin\templates\settings.html:68
 msgid "Bar"
 msgstr ""
 
@@ -1750,7 +1778,7 @@ msgid "Thank you for sharing your opinion"
 msgstr ""
 
 #: .\platform_admin\views.py:103 .\platform_admin\views.py:184
-#: .\platform_admin\views.py:275
+#: .\platform_admin\views.py:269
 msgid "Name taken"
 msgstr ""
 
@@ -1763,72 +1791,76 @@ msgstr ""
 msgid "User deleted"
 msgstr ""
 
-#: .\platform_admin\views.py:200
+#: .\platform_admin\views.py:201
 msgid "students"
 msgstr ""
 
-#: .\platform_admin\views.py:280
+#: .\platform_admin\views.py:274
 msgid "Group creation failed"
 msgstr ""
 
-#: .\platform_admin\views.py:332
+#: .\platform_admin\views.py:291
+msgid "student groups"
+msgstr ""
+
+#: .\platform_admin\views.py:347
 msgid "Group edit failed"
 msgstr ""
 
-#: .\platform_admin\views.py:354
+#: .\platform_admin\views.py:369
 msgid "Course deleted"
 msgstr ""
 
-#: .\platform_admin\views.py:364
+#: .\platform_admin\views.py:379
 msgid "Group deleted"
 msgstr ""
 
-#: .\platform_admin\views.py:377
+#: .\platform_admin\views.py:393
 msgid "Student not found"
 msgstr ""
 
-#: .\platform_admin\views.py:460
+#: .\platform_admin\views.py:501
 #, python-format
 msgid "Group %(group)s results from %(course)s course"
 msgstr ""
 
-#: .\platform_admin\views.py:463
+#: .\platform_admin\views.py:504
 msgid "Student name"
 msgstr ""
 
-#: .\platform_admin\views.py:464
+#: .\platform_admin\views.py:505
 msgid "Status"
 msgstr ""
 
-#: .\platform_admin\views.py:500
+#: .\platform_admin\views.py:541
 msgid "Settings saved"
 msgstr ""
 
-#: .\platform_admin\views.py:502
+#: .\platform_admin\views.py:543
 msgid "Incorrect logo"
 msgstr ""
 
-#: .\platform_admin\views.py:513
+#: .\platform_admin\views.py:554
 msgid "New grade sucessfully added"
 msgstr ""
 
-#: .\platform_admin\views.py:515
+#: .\platform_admin\views.py:556
 msgid "Incorrect grade data"
 msgstr ""
 
-#: .\platform_admin\views.py:526
+#: .\platform_admin\views.py:567
 msgid "Grade deleted"
 msgstr ""
 
-#: .\platform_admin\views.py:563
+#: .\platform_admin\views.py:604
 msgid "School grading system sucessfully implemented"
 msgstr ""
 
-#: .\platform_admin\views.py:567
+#: .\platform_admin\views.py:608
 msgid "Academic grading system sucessfully implemented"
 msgstr ""
 
-#: .\platform_admin\views.py:569
+#: .\platform_admin\views.py:610
 msgid "Default grade implementation error"
 msgstr ""
 

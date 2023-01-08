@@ -108,6 +108,11 @@ class CreateStudent(PlatformCreateStudent):
 class AttachCourseText(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.change_user")
 
+    def attach_course(self, request, group, course):
+        group.courses.add(course)
+        group.save()
+        Deadline(course=course, group=group, time=request.POST["deadline"]).save()
+
     def post(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         try:
@@ -115,9 +120,15 @@ class AttachCourseText(LoginRequiredMixin, PermissionRequiredMixin, View):
         except:
             messages.error(request, _("Student group not found"))
         course = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
-        group.courses.add(course)
-        group.save()
-        Deadline(course=course, group=group, time=request.POST["deadline"]).save()
+        max_amount = platform.course_per_group_limit
+        if max_amount != 0:
+            if len(group.courses) >= max_amount:
+                context = {"base" : self.base,
+                           "attach" : "course",
+                           "max_amount" : max_amount}
+                return render(request, "limit_exceeded.html", context)
+        else:
+            self.attach_course(request, group, course)
         return redirect(reverse_lazy("examiner_user:edit-course", kwargs={"pk":self.kwargs["pk"],"slug":self.kwargs["slug"]}))
 
 class UnattachGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -148,6 +159,14 @@ class CreateCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name="create_course.html"
     form_class = CourseForm
 
+    def create_course(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.info(request, _("Course sucessfully created"))
+            return redirect(reverse_lazy("examiner_user:search-course"))
+        messages.error(request, _("Course creation failed"))
+
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         context = {"form" : self.form_class({"platform" : platform}),
@@ -155,12 +174,18 @@ class CreateCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.info(request, _("Course sucessfully created"))
-            return redirect(reverse_lazy("examiner_user:search-course"))
-        messages.error(request, _("Course creation failed"))
+        platform = Platform.objects.get(users=request.user)
+        max_amount = platform.course_limit
+        if max_amount != 0:
+            if len(Course.objects.filter(platform=platform)) >= max_amount:
+                context = {"base" : "examiner_base.html",
+                           "kind" : "course",
+                           "max_amount" : max_amount}
+                return render(request, "limit_exceeded.html", context)
+            else:
+                self.create_course(request)
+        else:
+            self.create_course(request)
         return HttpResponseRedirect(self.request.path_info)
 
 class SearchCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -260,6 +285,21 @@ class CreateQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
     queryset = Course.objects.all()
     template_name="create_question.html" 
     form_class = QuestionForm
+
+    def create_question(self, request, course_):
+        form = self.form_class(request.POST)
+        if course_.multiple_answer_questions is True:
+            data = request.POST.copy()
+            correct_string = ""
+            for n in range(1,6):
+                if f"che{n}" in request.POST:
+                    correct_string += str(n)
+            data["correct_answers"] = correct_string
+            form = QuestionFormMultiple(data)
+        if form.is_valid():
+            form.save()
+        else:
+            messages.error(request, _("Correct answer was incorrectly marked"))
         
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
@@ -280,19 +320,17 @@ class CreateQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
         platform = Platform.objects.get(users=request.user)
         pk = self.kwargs["pk"]
         course_=get_object_or_404(Course, pk=pk, platform=platform)
-        form = self.form_class(request.POST)
-        if course_.multiple_answer_questions is True:
-            data = request.POST.copy()
-            correct_string = ""
-            for n in range(1,6):
-                if f"che{n}" in request.POST:
-                    correct_string += str(n)
-            data["correct_answers"] = correct_string
-            form = QuestionFormMultiple(data)
-        if form.is_valid():
-            form.save()
+        max_amount = platform.question_per_course_limit
+        if max_amount != 0:
+            if len(Question.objects.filter(course=course_)) >= max_amount:
+                context = {"base" : "examiner_base.html",
+                           "attach" : "question",
+                           "max_amount" : max_amount}
+                return render(request, "limit_exceeded.html", context)
+            else:
+                self.create_question(request, course_)
         else:
-            messages.error(request, _("Correct answer was incorrectly marked"))
+            self.create_question(request, course_)
         return HttpResponseRedirect(self.request.path_info)
 
 class SearchQuestion(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -369,6 +407,15 @@ class CreateLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "create_lesson.html"
     form_class = LessonForm
 
+    def create_lesson(self, request, course_):
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            course_.lesson_amount += 1
+            course_.save()
+        else:
+            messages.error(request, _("Wrong file"))
+
     def get(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         course_ = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
@@ -381,13 +428,17 @@ class CreateLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
         course_ = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
-        form = self.form_class(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            course_.lesson_amount += 1
-            course_.save()
+        max_amount = platform.lesson_per_course_limit
+        if max_amount != 0:
+            if len(Lesson.objects.filter(course=course_)) >= max_amount:
+                context = {"base" : "examiner_base.html",
+                           "attach" : "lesson",
+                           "max_amount" : max_amount}
+                return render(request, "limit_exceeded.html", context)
+            else:
+                self.create_lesson(request, course_)
         else:
-            messages.error(request, _("Wrong file"))
+            self.create_lesson(request, course_)
         return redirect(reverse_lazy("examiner_user:edit-course", kwargs={"pk":course_.pk, "slug":self.kwargs["slug"]}))
 
 class DetailLesson(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -673,9 +724,11 @@ class ExaminerEditGroup(EditStudentGroup):
 
 class ExaminerAttachCourse(AttachCourse):
     redirect_to = "examiner_user:examiner-edit-group"
+    base = "examiner_base.html"
 
 class ExaminerAttachStudent(AttachStudent):
     redirect_to = "examiner_user:examiner-edit-group"
+    base = "examiner_base.html"
 
 class ExaminerUnattachStudent(UnattachStudent):
     redirect_to = "examiner_user:examiner-edit-group"

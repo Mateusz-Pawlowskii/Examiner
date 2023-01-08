@@ -23,6 +23,7 @@ class Platform(models.Model):
     student_per_group_limit = models.PositiveSmallIntegerField(default=0)
     course_per_group_limit = models.PositiveSmallIntegerField(default=0)
     lesson_per_course_limit = models.PositiveSmallIntegerField(default=0)
+    question_per_course_limit = models.PositiveSmallIntegerField(default=0)
     changable_logo = models.BooleanField(default = True)
 
 class Course(models.Model):

@@ -260,15 +260,7 @@ class CreateStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
     redirect_to = "platform_admin:student-group-search"
     base = "platform_base.html"
 
-    def get(self, request, *args, **kwargs):
-        platform = Platform.objects.get(users=request.user)
-        form = self.form_class({"platform" : platform})
-        context = {"form" : form,
-                   "base" : self.base,
-                   "platform" : platform}
-        return render(request, self.template_name, context)
-
-    def post(self, request, *args, **kwargs):
+    def create_group(self, request):
         platform = Platform.objects.get(users=request.user)
         form = self.form_class(request.POST)
         groups = StudentGroup.objects.filter(platform=platform)
@@ -280,6 +272,27 @@ class CreateStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
             form.save()
         else:
             messages.error(request, _("Group creation failed"))
+
+    def get(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
+        form = self.form_class({"platform" : platform})
+        context = {"form" : form,
+                   "base" : self.base,
+                   "platform" : platform}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        platform = Platform.objects.get(users=request.user)
+        max_amount = platform.group_limit
+        if max_amount != 0:
+            group_amount = len(StudentGroup.objects.filter(platform=platform))
+            if group_amount >= max_amount:
+                context = {"base" : self.base,
+                           "kind" : _("student groups"),
+                           "max_amount" : max_amount}
+                return render(request, "limit_exceeded.html", context)
+        else:
+            self.create_group(request)
         return redirect(reverse_lazy(self.redirect_to))
 
 class EditStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -369,6 +382,7 @@ class DeleteGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
 class AttachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("auth.change_user")
     redirect_to = "platform_admin:edit-student-group"
+    base = "platform_base.html"
 
     def post(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
@@ -378,8 +392,19 @@ class AttachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
         except:
             messages.error(request, _("Student not found"))
             return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
-        group.students.add(student)
-        group.save()
+        max_amount = platform.student_per_group_limit
+        if max_amount != 0:
+            if len(group.students) >= max_amount:
+                context = {"base" : self.base,
+                           "attach" : "student",
+                           "max_amount" : max_amount}
+                return render(request, "limit_exceeded.html", context)
+            else:
+                group.students.add(student)
+                group.save()
+        else:
+            group.students.add(student)
+            group.save()
         return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
 
 class UnattachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -397,6 +422,13 @@ class UnattachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
 class AttachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_course")
     redirect_to = "platform_admin:edit-student-group"
+    base = "platform_base.html"
+
+    def attach_course(self, request, course, group):
+        group.courses.add(course)
+        group.save()
+        deadline = Deadline(time=make_aware(datetime.strptime(request.POST["deadline"],"%Y-%m-%d")), group=group, course=course)
+        deadline.save()
 
     def post(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
@@ -406,10 +438,17 @@ class AttachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         except:
             messages.error(request, _("Course not found"))
             return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
-        group.courses.add(course)
-        group.save()
-        deadline = Deadline(time=make_aware(datetime.strptime(request.POST["deadline"],"%Y-%m-%d")), group=group, course=course)
-        deadline.save()
+        max_amount = platform.course_per_group_limit
+        if max_amount != 0:
+            if len(group.courses) >= max_amount:
+                context = {"base" : self.base,
+                           "attach" : "course",
+                           "max_amount" : max_amount}
+                return render(request, "limit_exceeded.html", context)
+            else:
+                self.attach_course(request, course, group)
+        else:
+            self.attach_course(request, course, group)
         return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
 
 class UnattachCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
