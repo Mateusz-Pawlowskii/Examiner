@@ -1504,7 +1504,7 @@ msgstr "Stworzenie kursu nie powiodło się"
 
 #: .\examiner_user\views.py:182
 msgid "course"
-msgstr "kusrów"
+msgstr "kursów"
 
 #: .\examiner_user\views.py:225 .\platform_admin\views.py:441
 msgid "Course not found"
