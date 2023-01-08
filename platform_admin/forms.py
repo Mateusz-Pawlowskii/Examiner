@@ -62,7 +62,11 @@ class GradeForm(forms.ModelForm):
         return data
 
 class FeedbackForm(forms.Form):
-    points = forms.ChoiceField(required=True, label = _("How would you score Examiner aplication on a 1 to 5 scale?"),
+    points = forms.ChoiceField(required=True, label = _("How would you score Examiner aplication overall on a 1 to 5 scale?"),
+        choices=[('1','1'),('2','2'),("3","3"),("4","4"), ("5","5")])
+    ease_of_use = forms.ChoiceField(required=True, label = _("How would you score ease of use of Examiner aplication on a 1 to 5 scale?"),
+        choices=[('1','1'),('2','2'),("3","3"),("4","4"), ("5","5")])
+    looks = forms.ChoiceField(required=True, label = _("How would you score eastetic appeal of this application on a 1 to 5 scale?"),
         choices=[('1','1'),('2','2'),("3","3"),("4","4"), ("5","5")])
     feedback = forms.CharField(required=False, label = _("Feedback"), 
         widget=forms.Textarea(attrs={'name':'text', 'rows':4, 'cols':170}))

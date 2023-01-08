@@ -13,8 +13,13 @@
 </p>
 <form method="POST">
     {% csrf_token %}
-    <label for="id_points">{% trans "How would you score Examiner aplication on a 1 to 5 scale?" %}</label>
+    <label for="id_ease_of_use">{% trans "How would you score ease of use of Examiner aplication on a 1 to 5 scale?" %}</label><br>
+    {{form.ease_of_use}}
     <br>
+    <lebel for="id_looks">{% trans "How would you score eastetic appeal of this application on a 1 to 5 scale?" %}</lebel><br>
+    {{form.looks}}
+    <br>
+    <label for="id_points">{% trans "How would you score Examiner aplication overall on a 1 to 5 scale?" %}</label><br>
     {{form.points}}
     <br>
     <label for="id_feedback">{% trans "Feedback:" %}</label><br>

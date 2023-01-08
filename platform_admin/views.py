@@ -51,6 +51,8 @@ class FeedbackView(View):
         message = render_to_string('feedback_email.html', {
             "side" : self.side,
             "points" : request.POST["points"],
+            "ease_of_use" : request.POST["ease_of_use"],
+            "looks" : request.POST["looks"],
             "feedback" : request.POST["feedback"]
         })
         email = EmailMessage(mail_subject, message, to=["mm.pawlowski18@gmail.com"])
