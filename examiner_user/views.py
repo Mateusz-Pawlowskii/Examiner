@@ -179,7 +179,7 @@ class CreateCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         if max_amount != 0:
             if len(Course.objects.filter(platform=platform)) >= max_amount:
                 context = {"base" : "examiner_base.html",
-                           "kind" : "course",
+                           "kind" : _("course"),
                            "max_amount" : max_amount}
                 return render(request, "limit_exceeded.html", context)
             else:

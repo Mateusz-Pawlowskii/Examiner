@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-08 12:57+0100\n"
+"POT-Creation-Date: 2023-01-08 13:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -865,7 +865,7 @@ msgstr ""
 #: .\examiner_user\templates\course_group_results.html:47
 #: .\examiner_user\templates\course_results.html:84
 #: .\examiner_user\templates\detail_student.html:56
-#: .\platform_admin\views.py:507
+#: .\platform_admin\views.py:509
 #: .\student\templates\student_results_general.html:36
 #: .\student\templates\student_search_course.html:42
 msgid "Grade"
@@ -1363,11 +1363,15 @@ msgstr ""
 msgid "Course creation failed"
 msgstr ""
 
-#: .\examiner_user\views.py:225 .\platform_admin\views.py:439
+#: .\examiner_user\views.py:182
+msgid "course"
+msgstr ""
+
+#: .\examiner_user\views.py:225 .\platform_admin\views.py:441
 msgid "Course not found"
 msgstr ""
 
-#: .\examiner_user\views.py:241 .\platform_admin\views.py:319
+#: .\examiner_user\views.py:241 .\platform_admin\views.py:321
 msgid "(Deadline expired)"
 msgstr ""
 
@@ -1803,64 +1807,64 @@ msgstr ""
 msgid "student groups"
 msgstr ""
 
-#: .\platform_admin\views.py:347
+#: .\platform_admin\views.py:349
 msgid "Group edit failed"
 msgstr ""
 
-#: .\platform_admin\views.py:369
+#: .\platform_admin\views.py:371
 msgid "Course deleted"
 msgstr ""
 
-#: .\platform_admin\views.py:379
+#: .\platform_admin\views.py:381
 msgid "Group deleted"
 msgstr ""
 
-#: .\platform_admin\views.py:393
+#: .\platform_admin\views.py:395
 msgid "Student not found"
 msgstr ""
 
-#: .\platform_admin\views.py:501
+#: .\platform_admin\views.py:503
 #, python-format
 msgid "Group %(group)s results from %(course)s course"
 msgstr ""
 
-#: .\platform_admin\views.py:504
+#: .\platform_admin\views.py:506
 msgid "Student name"
 msgstr ""
 
-#: .\platform_admin\views.py:505
+#: .\platform_admin\views.py:507
 msgid "Status"
 msgstr ""
 
-#: .\platform_admin\views.py:541
+#: .\platform_admin\views.py:543
 msgid "Settings saved"
 msgstr ""
 
-#: .\platform_admin\views.py:543
+#: .\platform_admin\views.py:545
 msgid "Incorrect logo"
 msgstr ""
 
-#: .\platform_admin\views.py:554
+#: .\platform_admin\views.py:556
 msgid "New grade sucessfully added"
 msgstr ""
 
-#: .\platform_admin\views.py:556
+#: .\platform_admin\views.py:558
 msgid "Incorrect grade data"
 msgstr ""
 
-#: .\platform_admin\views.py:567
+#: .\platform_admin\views.py:569
 msgid "Grade deleted"
 msgstr ""
 
-#: .\platform_admin\views.py:604
+#: .\platform_admin\views.py:606
 msgid "School grading system sucessfully implemented"
 msgstr ""
 
-#: .\platform_admin\views.py:608
+#: .\platform_admin\views.py:610
 msgid "Academic grading system sucessfully implemented"
 msgstr ""
 
-#: .\platform_admin\views.py:610
+#: .\platform_admin\views.py:612
 msgid "Default grade implementation error"
 msgstr ""
 
