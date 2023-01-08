@@ -291,6 +291,8 @@ class CreateStudentGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
                            "kind" : _("student groups"),
                            "max_amount" : max_amount}
                 return render(request, "limit_exceeded.html", context)
+            else:
+                self.create_group(request)
         else:
             self.create_group(request)
         return redirect(reverse_lazy(self.redirect_to))
