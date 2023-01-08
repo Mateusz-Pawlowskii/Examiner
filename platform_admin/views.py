@@ -367,7 +367,7 @@ class PlatformDetailCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
         course = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
         course.delete()
         messages.info(request, _("Course deleted"))
-        return redirect(reverse_lazy("platform_admin:edit-student-group",kwargs={"pk":group,"slug":slugify(group.name)}))
+        return redirect(reverse_lazy("platform_admin:edit-student-group",kwargs={"pk":group.pk,"slug":slugify(group.name)}))
 
 class DeleteGroup(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.delete_studentgroup")
