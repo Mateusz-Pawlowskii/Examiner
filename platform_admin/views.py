@@ -363,7 +363,7 @@ class PlatformDetailCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         platform = Platform.objects.get(users=request.user)
-        group = self.kwargs["group"]
+        group = StudentGroup.objects.get(pk = self.kwargs["group"])
         course = get_object_or_404(Course, pk=self.kwargs["pk"], platform=platform)
         course.delete()
         messages.info(request, _("Course deleted"))
