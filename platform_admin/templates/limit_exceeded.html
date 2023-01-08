@@ -9,16 +9,16 @@
     {% if not attach %}
         <p>{% trans "Maximal amount of" %} {{kind}} {% trans "for your platform is" %} {{max_amount}}. 
             {% trans "If you want to create more you have to delete old ones." %}</p>
-    {% elif attach == student %}
+    {% elif attach == "student" %}
         <p>{% trans "Maximal amount of students attached to one student group for your platform is" %} {{max_amount}}. 
             {% trans "If you want to attach more you need to unattach others." %}</p>
-    {% elif attach == course %}
+    {% elif attach == "course" %}
         <p>{% trans "Maximal amount of courses attached to one student group for your platform is" %} {{max_amount}}. 
            {% trans "If you want to attach more you need to unattach others." %}</p>
-    {% elif attach == lesson %}
+    {% elif attach == "lesson" %}
         <p>{% trans "Maximal amount of lessons attached to one course for your platform is" %} {{max_amount}}. 
            {% trans "If you want to create more you need to delete old ones." %}</p>
-    {% elif attach == question %}
+    {% elif attach == "question" %}
         <p>{% trans "Maximal amount of questions in one exam for your platform is" %} {{max_amount}}. 
            {% trans "If you want to create more you need to delete old ones." %}</p>
     {% endif %}
