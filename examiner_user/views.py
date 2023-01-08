@@ -123,7 +123,7 @@ class AttachCourseText(LoginRequiredMixin, PermissionRequiredMixin, View):
         max_amount = platform.course_per_group_limit
         if max_amount != 0:
             if len(Course.objects.filter(studentgroup=group)) >= max_amount:
-                context = {"base" : self.base,
+                context = {"base" : "examiner_base.html",
                            "attach" : "course",
                            "max_amount" : max_amount}
                 return render(request, "limit_exceeded.html", context)
