@@ -396,7 +396,7 @@ class AttachStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
             return redirect(reverse_lazy(self.redirect_to, kwargs={"pk":self.kwargs["pk"],"slug":slugify(group.name)}))
         max_amount = platform.student_per_group_limit
         if max_amount != 0:
-            if len(User.objects.filter(group=group)) >= max_amount:
+            if len(User.objects.filter(studentgroup=group)) >= max_amount:
                 context = {"base" : self.base,
                            "attach" : "student",
                            "max_amount" : max_amount}
