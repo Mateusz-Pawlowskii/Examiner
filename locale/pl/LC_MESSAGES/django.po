@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-08 10:28+0100\n"
+"POT-Creation-Date: 2023-01-08 11:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -970,7 +970,7 @@ msgstr "Lista Studentów"
 #: .\examiner_user\templates\course_group_results.html:47
 #: .\examiner_user\templates\course_results.html:84
 #: .\examiner_user\templates\detail_student.html:56
-#: .\platform_admin\views.py:453
+#: .\platform_admin\views.py:466
 #: .\student\templates\student_results_general.html:36
 #: .\student\templates\student_search_course.html:42
 msgid "Grade"
@@ -1490,7 +1490,7 @@ msgid "Join date"
 msgstr "Data dołaczenia"
 
 #: .\examiner_user\views.py:98 .\examiner_user\views.py:116
-#: .\platform_admin\views.py:218
+#: .\platform_admin\views.py:231
 msgid "Student group not found"
 msgstr "Nie znaleziono grupy studenckiej"
 
@@ -1502,11 +1502,11 @@ msgstr "Kurs pomyślnie utworzony"
 msgid "Course creation failed"
 msgstr "Stworzenie kursu nie powiodło się"
 
-#: .\examiner_user\views.py:200 .\platform_admin\views.py:392
+#: .\examiner_user\views.py:200 .\platform_admin\views.py:405
 msgid "Course not found"
 msgstr "Nie znaleziono kursu"
 
-#: .\examiner_user\views.py:216 .\platform_admin\views.py:291
+#: .\examiner_user\views.py:216 .\platform_admin\views.py:304
 msgid "(Deadline expired)"
 msgstr "(Termin upłynął)"
 
@@ -1719,6 +1719,22 @@ msgstr "Ocena łatwości obsługi:"
 msgid "Opinion:"
 msgstr "Opinia:"
 
+#: .\platform_admin\templates\limit_exceeded.html:8
+msgid "Limit exceeded!"
+msgstr "Limit przekroczony!"
+
+#: .\platform_admin\templates\limit_exceeded.html:9
+msgid "Maximal amount of"
+msgstr "Maksymalna ilość"
+
+#: .\platform_admin\templates\limit_exceeded.html:9
+msgid "for your platform is"
+msgstr "dla twojej platformy to"
+
+#: .\platform_admin\templates\limit_exceeded.html:10
+msgid "If you want to create more you have to delete old ones."
+msgstr "Jeśli chcesz stworzyc więcej musisz dokonać kasacji"
+
 #: .\platform_admin\templates\platform_base.html:39
 #: .\platform_admin\templates\platform_base.html:43
 msgid "Examiners"
@@ -1897,8 +1913,8 @@ msgstr "Opinia"
 msgid "Thank you for sharing your opinion"
 msgstr "Dziękujemy za podzielenie się swoją opinią"
 
-#: .\platform_admin\views.py:103 .\platform_admin\views.py:192
-#: .\platform_admin\views.py:262
+#: .\platform_admin\views.py:103 .\platform_admin\views.py:184
+#: .\platform_admin\views.py:275
 msgid "Name taken"
 msgstr "Nazwa zajęta"
 
@@ -1911,68 +1927,72 @@ msgstr "Niepoprawne dane. Hasła nie są identyczne lub nie spełniają wymogów
 msgid "User deleted"
 msgstr "Użytkownik skasowany"
 
-#: .\platform_admin\views.py:267
+#: .\platform_admin\views.py:200
+msgid "students"
+msgstr "studentów"
+
+#: .\platform_admin\views.py:280
 msgid "Group creation failed"
 msgstr "Stworzenie grupy nie powiodło się"
 
-#: .\platform_admin\views.py:319
+#: .\platform_admin\views.py:332
 msgid "Group edit failed"
 msgstr "Edycja grupy nie powiodła się"
 
-#: .\platform_admin\views.py:341
+#: .\platform_admin\views.py:354
 msgid "Course deleted"
 msgstr "Kurs skasowany"
 
-#: .\platform_admin\views.py:351
+#: .\platform_admin\views.py:364
 msgid "Group deleted"
 msgstr "Grupa skasowana"
 
-#: .\platform_admin\views.py:364
+#: .\platform_admin\views.py:377
 msgid "Student not found"
 msgstr "Nie znaleziono studenta"
 
-#: .\platform_admin\views.py:447
+#: .\platform_admin\views.py:460
 #, python-format
 msgid "Group %(group)s results from %(course)s course"
 msgstr "Wyniki grupy %(group)s z kursu %(course)s"
 
-#: .\platform_admin\views.py:450
+#: .\platform_admin\views.py:463
 msgid "Student name"
 msgstr "Nazwa studenta"
 
-#: .\platform_admin\views.py:451
+#: .\platform_admin\views.py:464
 msgid "Status"
 msgstr "Status"
 
-#: .\platform_admin\views.py:487
+#: .\platform_admin\views.py:500
 msgid "Settings saved"
 msgstr "Ustawienia zapisane"
 
-#: .\platform_admin\views.py:489
+#: .\platform_admin\views.py:502
 msgid "Incorrect logo"
 msgstr "Niepoprawne logo"
 
-#: .\platform_admin\views.py:500
+#: .\platform_admin\views.py:513
 msgid "New grade sucessfully added"
 msgstr "Nowa ocena pomyślnie dodana"
 
-#: .\platform_admin\views.py:502
+#: .\platform_admin\views.py:515
 msgid "Incorrect grade data"
 msgstr "Niepoprawne dane oceny"
 
-#: .\platform_admin\views.py:513
+#: .\platform_admin\views.py:526
 msgid "Grade deleted"
 msgstr "Ocena skasowana"
 
-#: .\platform_admin\views.py:550
+#: .\platform_admin\views.py:563
 msgid "School grading system sucessfully implemented"
 msgstr "Szkolny system oceniania został pomyslnie wprowadzony"
 
-#: .\platform_admin\views.py:554
+#: .\platform_admin\views.py:567
 msgid "Academic grading system sucessfully implemented"
 msgstr "Akademicki system oceniania został pomyslnie wprowadzony"
 
-#: .\platform_admin\views.py:556
+#: .\platform_admin\views.py:569
 msgid "Default grade implementation error"
 msgstr "Wystąpił błąd przy wprowadzaniu domyślnego systemu oceniania"
 

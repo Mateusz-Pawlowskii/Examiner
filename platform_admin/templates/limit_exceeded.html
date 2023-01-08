@@ -1,0 +1,12 @@
+{% extends base %}
+
+{% load i18n %}
+
+{% block content %}
+<br>
+<div class="text-center">
+    <h3>{% trans "Limit exceeded!" %}</h3>
+    <p>{% trans "Maximal amount of" %} {{kind}} {% trans "for your platform is" %} {{max_amount}}. 
+        {% trans "If you want to create more you have to delete old ones." %}</p>
+</div>
+{% endblock %}

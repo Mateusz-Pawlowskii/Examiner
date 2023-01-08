@@ -17,6 +17,13 @@ class Platform(models.Model):
     users = models.ManyToManyField(User)
     logo = models.ImageField(storage=logo_fs, blank=True, null=True)
     inactive = models.BooleanField(default = False)
+    student_limit = models.PositiveSmallIntegerField(default=0)
+    course_limit = models.PositiveSmallIntegerField(default=0)
+    group_limit = models.PositiveSmallIntegerField(default=0)
+    student_per_group_limit = models.PositiveSmallIntegerField(default=0)
+    course_per_group_limit = models.PositiveSmallIntegerField(default=0)
+    lesson_per_course_limit = models.PositiveSmallIntegerField(default=0)
+    changable_logo = models.BooleanField(default = True)
 
 class Course(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

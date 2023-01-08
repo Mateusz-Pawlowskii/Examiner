@@ -171,15 +171,7 @@ class PlatformCreateStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
     redirect = "platform_admin:student-search"
     base = "platform_base.html"
 
-    def get(self, request):
-        platform = Platform.objects.get(users=request.user)
-        form = self.form_class()
-        context = {"form" : form,
-                   "base" : self.base,
-                   "platform" : platform}
-        return render(request, self.template_name, context)
-    
-    def post(self, request):
+    def create_student(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
             user = form.save()
@@ -190,6 +182,29 @@ class PlatformCreateStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
             user.save()
         else:
             messages.error(request, _("Name taken"))
+
+    def get(self, request):
+        platform = Platform.objects.get(users=request.user)
+        form = self.form_class()
+        context = {"form" : form,
+                   "base" : self.base,
+                   "platform" : platform}
+        return render(request, self.template_name, context)
+    
+    def post(self, request):
+        platform = Platform.objects.get(users=request.user)
+        max_amount = platform.student_limit
+        if max_amount != 0:
+            student_amount = len(User.objects.filter(groups=1, platform=platform))
+            if student_amount >= max_amount:
+                context = {"base" : self.base,
+                           "kind" : _("students"),
+                           "max_amount" : max_amount}
+                return render(request, "limit_exceeded.html", context)
+            else:
+                self.create_student(request)
+        else:
+            self.create_student(request)
         return redirect(reverse_lazy(self.redirect))
 
 class EditStudent(LoginRequiredMixin, PermissionRequiredMixin, View):
