@@ -186,7 +186,7 @@ class CreateCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
                 self.create_course(request)
         else:
             self.create_course(request)
-        return HttpResponseRedirect(self.request.path_info)
+        return redirect(reverse_lazy("examiner_user:search-course"))
 
 class SearchCourse(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.view_course")
