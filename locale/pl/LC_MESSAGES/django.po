@@ -1743,7 +1743,7 @@ msgstr "Jeśli chcesz stworzyc więcej musisz dokonać kasacji."
 msgid ""
 "Maximal amount of students attached to one student group for your platform is"
 msgstr ""
-"Maksymalna ilośc studentów przydzielona do jendej grupy studenckiej dla "
+"Maksymalna ilośc studentów przydzielona do jednej grupy studenckiej dla "
 "twojej platformy to"
 
 #: .\platform_admin\templates\limit_exceeded.html:14
