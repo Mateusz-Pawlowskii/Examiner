@@ -7,15 +7,15 @@ import uuid
 from django.core.files.storage import FileSystemStorage
 
 
-logo_fs = FileSystemStorage(location='media/logos', base_url="/media/logos")
-lesson_fs = FileSystemStorage(location='media/lessons', base_url="/media/lessons")
+# logo_fs = FileSystemStorage(location='media/logos', base_url="/media/logos")
+# lesson_fs = FileSystemStorage(location='media/lessons', base_url="/media/lessons")
 
 # Create your models here.
 class Platform(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length = 3000)
     users = models.ManyToManyField(User)
-    logo = models.ImageField(storage=logo_fs, blank=True, null=True)
+    logo = models.ImageField(upload_to="logos", blank=True, null=True)
     inactive = models.BooleanField(default = False)
     student_limit = models.PositiveSmallIntegerField(default=0)
     course_limit = models.PositiveSmallIntegerField(default=0)
@@ -51,7 +51,7 @@ class Lesson(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     course = models.ForeignKey(Course, on_delete = models.CASCADE)
     topic = models.CharField(max_length=100)
-    material = models.FileField(storage=lesson_fs)
+    material = models.FileField(upload_to="lessons")
 
     def delete(self, *args, **kwargs):
         self.material.delete(self.material.name)

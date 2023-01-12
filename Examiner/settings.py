@@ -162,7 +162,6 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
 
 STATIC_URL = f'static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
-# PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = f"media/"
