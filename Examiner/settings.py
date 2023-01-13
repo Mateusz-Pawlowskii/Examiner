@@ -140,50 +140,33 @@ LOCALE_PATHS = [
     BASE_DIR / 'locale/',
 ]
 
-STATICFILES_LOCATION = 'static'
-MEDIAFILES_LOCATION = 'media'
-
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % os.environ['BUCKET_NAME']
-AWS_ACCESS_KEY_ID = os.environ['AWS_KEY']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_ACC_KEY']
-AWS_STORAGE_BUCKET_NAME = os.environ['BUCKET_NAME']
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# Amazon S3 Settings
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_DEFAULT_ACL = 'public-read'
+AWS_S3_OBJECT_PARAMETERS = {
+    "CacheControl" : "max-age=86400"
+}
+AWS_LOCATION = 'static'
+AWS_QUERYSTRING_AUTH = False
+AWS_HEADERS = {
+    "Access-Control-Allow-Origin" : "*"
+}
+DEFAUTLT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+MEDIAFILES_LOCATION = "media"
 
-MEDIA_ROOT = os.path.join (BASE_DIR, 'static/images/')
-STATIC_ROOT = os.path.join (BASE_DIR, 'static')
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
-# # Amazon S3 Settings
-# AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-# AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
-# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-# AWS_DEFAULT_ACL = 'public-read'
-# AWS_S3_OBJECT_PARAMETERS = {
-#     "CacheControl" : "max-age=86400"
-# }
-# AWS_LOCATION = 'static'
-# AWS_QUERYSTRING_AUTH = False
-# AWS_HEADERS = {
-#     "Access-Control-Allow-Origin" : "*"
-# }
-# DEFAUTLT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
-# MEDIAFILES_LOCATION = "media"
-
-# # Static files (CSS, JavaScript, Images)
-# # https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-# STATIC_URL = f'static/'
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
-# STATIC_ROOT = BASE_DIR / "staticfiles"
-# MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
-# MEDIA_URL = f"media/"
-# MEDIAFILES_DIRS = (os.path.join(BASE_DIR, 'media/'),)
+STATIC_URL = f'static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
+STATIC_ROOT = BASE_DIR / "staticfiles"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+MEDIA_URL = f"media/"
+MEDIAFILES_DIRS = (os.path.join(BASE_DIR, 'media/'),)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
