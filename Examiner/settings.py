@@ -156,7 +156,7 @@ AWS_HEADERS = {
 }
 DEFAUTLT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
-MEDIAFILES_LOCATION = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
+MEDIAFILES_LOCATION = "media"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
