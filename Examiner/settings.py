@@ -157,7 +157,8 @@ AWS_HEADERS = {
 }
 DEFAUTLT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
-MEDIAFILES_LOCATION = (os.path.join(BASE_DIR, 'media/'),)
+MEDIAFILES_LOCATION = "static/media"
+STATICFILES_LOCATION = 'static'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -165,8 +166,8 @@ MEDIAFILES_LOCATION = (os.path.join(BASE_DIR, 'media/'),)
 STATIC_URL = f'static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
 STATIC_ROOT = BASE_DIR / "staticfiles"
-MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = f"media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
