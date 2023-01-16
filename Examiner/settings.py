@@ -163,10 +163,10 @@ AWS_HEADERS = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = f'static/'
+STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, 'static')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'), os.path.join(BASE_DIR, 'media/'))
 STATIC_ROOT = BASE_DIR / "staticfiles"
-MEDIA_URL = f"media/"
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, "media")
 MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
