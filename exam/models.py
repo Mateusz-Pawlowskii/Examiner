@@ -15,7 +15,7 @@ class Platform(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length = 3000)
     users = models.ManyToManyField(User)
-    logo = models.ImageField(upload_to="logos", blank=True, null=True)
+    logo = models.ImageField(upload_to="media/", blank=True, null=True)
     inactive = models.BooleanField(default = False)
     student_limit = models.PositiveSmallIntegerField(default=0)
     course_limit = models.PositiveSmallIntegerField(default=0)
@@ -51,7 +51,7 @@ class Lesson(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     course = models.ForeignKey(Course, on_delete = models.CASCADE)
     topic = models.CharField(max_length=100)
-    material = models.FileField(upload_to="lessons")
+    material = models.FileField(upload_to="media/")
 
     def delete(self, *args, **kwargs):
         self.material.delete(self.material.name)
