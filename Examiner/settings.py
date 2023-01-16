@@ -142,6 +142,9 @@ LOCALE_PATHS = [
 ]
 
 # Amazon S3 Settings
+DEFAUTLT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
@@ -155,8 +158,6 @@ AWS_QUERYSTRING_AUTH = False
 AWS_HEADERS = {
     "Access-Control-Allow-Origin" : "*"
 }
-DEFAUTLT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
 
 
 # Static files (CSS, JavaScript, Images)
