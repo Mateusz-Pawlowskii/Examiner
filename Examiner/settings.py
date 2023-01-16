@@ -150,15 +150,14 @@ AWS_DEFAULT_ACL = 'public-read'
 AWS_S3_OBJECT_PARAMETERS = {
     "CacheControl" : "max-age=86400"
 }
-# AWS_LOCATION = 'static'
+AWS_LOCATION = 'static'
 AWS_QUERYSTRING_AUTH = False
 AWS_HEADERS = {
     "Access-Control-Allow-Origin" : "*"
 }
 DEFAUTLT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
-# MEDIAFILES_LOCATION = "static/media"
-# STATICFILES_LOCATION = 'static'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
