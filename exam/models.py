@@ -8,8 +8,8 @@ from django.core.files.storage import FileSystemStorage
 from storages.backends.s3boto3 import S3Boto3Storage
 
 
-logo_fs = S3Boto3Storage(location='media/logos', base_url="/media/logos")
-lesson_fs = S3Boto3Storage(location='media/lessons', base_url="/media/lessons")
+logo_fs = S3Boto3Storage(location='media/logos', base_url="/media/logos/")
+lesson_fs = S3Boto3Storage(location='media/lessons', base_url="/media/lessons/")
 
 # Create your models here.
 class Platform(models.Model):
