@@ -472,9 +472,9 @@ class ViewLesson(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         lesson = get_object_or_404(Lesson, pk=self.kwargs["pk"])
         if self.check_file(str(lesson.material)):
-            return FileResponse(open(f"media/lessons/{lesson.material}", "rb"), content_type="application/pdf")
+            return FileResponse(open(f"https://examiner-mp.s3.eu-central-1.amazonaws.com/media/lessons/{lesson.material}", "rb"), content_type="application/pdf")
         else:
-            return FileResponse(open(f"media/lessons/{lesson.material}", "rb"), as_attachment=True)
+            return FileResponse(open(f"https://examiner-mp.s3.eu-central-1.amazonaws.com/media/lessons/{lesson.material}", "rb"), as_attachment=True)
 
 class EditLessonContent(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = ("exam.change_lesson")
