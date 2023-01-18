@@ -24,7 +24,7 @@
 {% if platform.logo|length == 0 %}
   <div class="text-center"><img src="{% static 'img/logo3.png' %}" height="80" width="300"/></div>
 {% else %}
-  <div class="text-center"><img class="center_logo" src="/media/logos/{{platform.logo}}"/></div>
+  <div class="text-center"><img class="center_logo" src="https://examiner-mp.s3.eu-central-1.amazonaws.com/media/logos/{{platform.logo}}"/></div>
 {% endif %}
   <br>
   <h1 id="platform_name" class="text-center">{{platform.name}}</h1>

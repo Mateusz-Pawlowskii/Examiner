@@ -20,7 +20,7 @@
           {% if platform.logo|length == 0 %}
           <img src="{% static 'img/logo3.png' %}" height="50" width="170"/>
           {% else %}
-          <img class="side_logo" src="/media/logos/{{platform.logo}}"/>
+          <img class="side_logo" src="https://examiner-mp.s3.eu-central-1.amazonaws.com/media/logos/{{platform.logo}}"/>
           {% endif %}
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>&nbsp</span>
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span id="current_username">{% trans "Examiner" %}: <b>{{request.user.username}}</b></span>
