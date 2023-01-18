@@ -7,8 +7,8 @@ import uuid
 from django.core.files.storage import FileSystemStorage
 
 
-logo_fs = FileSystemStorage(location='media/logos', base_url="/media/logos")
-lesson_fs = FileSystemStorage(location='media/lessons', base_url="/media/lessons")
+logo_fs = FileSystemStorage(location='media/logos/', base_url="/media/logos/")
+lesson_fs = FileSystemStorage(location='media/lessons/', base_url="/media/lessons/")
 
 # Create your models here.
 class Platform(models.Model):
