@@ -7,15 +7,15 @@ import uuid
 from django.core.files.storage import FileSystemStorage
 
 
-# logo_fs = FileSystemStorage(location='media/logos', base_url="/media/logos")
-# lesson_fs = FileSystemStorage(location='media/lessons', base_url="/media/lessons")
+logo_fs = FileSystemStorage(location='static/logos', base_url="/static/logos")
+lesson_fs = FileSystemStorage(location='static/lessons', base_url="/static/lessons")
 
 # Create your models here.
 class Platform(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length = 3000)
     users = models.ManyToManyField(User)
-    logo = models.ImageField(upload_to="static/", blank=True, null=True)
+    logo = models.ImageField(storage=logo_fs, blank=True, null=True)
     inactive = models.BooleanField(default = False)
     student_limit = models.PositiveSmallIntegerField(default=0)
     course_limit = models.PositiveSmallIntegerField(default=0)
@@ -51,7 +51,7 @@ class Lesson(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     course = models.ForeignKey(Course, on_delete = models.CASCADE)
     topic = models.CharField(max_length=100)
-    material = models.FileField(upload_to="static/")
+    material = models.FileField(storage=lesson_fs)
 
     def delete(self, *args, **kwargs):
         self.material.delete(self.material.name)
@@ -102,51 +102,51 @@ class Activity(models.Model):
     kind = models.CharField(max_length = 50)
     time = models.DateTimeField(auto_now_add=True)
 
-# @receiver(models.signals.post_delete, sender=Lesson)
-# def auto_delete_material_on_delete(sender, instance, **kwargs):
-#     """Deletes file when lesson is deleted"""
-#     if instance.material:
-#         if os.path.isfile(instance.material.path):
-#             os.remove(instance.material.path)
+@receiver(models.signals.post_delete, sender=Lesson)
+def auto_delete_material_on_delete(sender, instance, **kwargs):
+    """Deletes file when lesson is deleted"""
+    if instance.material:
+        if os.path.isfile(instance.material.path):
+            os.remove(instance.material.path)
 
-# @receiver(models.signals.pre_save, sender=Lesson)
-# def auto_delete_material_on_change(sender, instance, **kwargs):
-#     """Deletes old file when new lesson material is uploaded"""
-#     if not instance.pk:
-#         return False
+@receiver(models.signals.pre_save, sender=Lesson)
+def auto_delete_material_on_change(sender, instance, **kwargs):
+    """Deletes old file when new lesson material is uploaded"""
+    if not instance.pk:
+        return False
 
-#     try:
-#         old_file = Lesson.objects.get(pk=instance.pk).material
-#     except Lesson.DoesNotExist:
-#         return False
+    try:
+        old_file = Lesson.objects.get(pk=instance.pk).material
+    except Lesson.DoesNotExist:
+        return False
 
-#     new_file = instance.material
-#     if not old_file == new_file:
-#         if os.path.isfile(old_file.path):
-#             os.remove(old_file.path)
+    new_file = instance.material
+    if not old_file == new_file:
+        if os.path.isfile(old_file.path):
+            os.remove(old_file.path)
 
-# @receiver(models.signals.post_delete, sender=Platform)
-# def auto_delete_logo_on_delete(sender, instance, **kwargs):
-#     """Deletes logo when platform is deleted"""
-#     if instance.logo:
-#         if os.path.isfile(instance.logo.path):
-#             os.remove(instance.logo.path)
+@receiver(models.signals.post_delete, sender=Platform)
+def auto_delete_logo_on_delete(sender, instance, **kwargs):
+    """Deletes logo when platform is deleted"""
+    if instance.logo:
+        if os.path.isfile(instance.logo.path):
+            os.remove(instance.logo.path)
 
-# @receiver(models.signals.pre_save, sender=Platform)
-# def auto_delete_logo_on_change(sender, instance, **kwargs):
-#     """Deletes old logo when new one is uploaded"""
-#     if not instance.pk:
-#         return False
+@receiver(models.signals.pre_save, sender=Platform)
+def auto_delete_logo_on_change(sender, instance, **kwargs):
+    """Deletes old logo when new one is uploaded"""
+    if not instance.pk:
+        return False
 
-#     try:
-#         try:
-#             old_file = Platform.objects.get(pk=instance.pk).logo
-#         except Platform.DoesNotExist:
-#             return False
+    try:
+        try:
+            old_file = Platform.objects.get(pk=instance.pk).logo
+        except Platform.DoesNotExist:
+            return False
 
-#         new_file = instance.logo
-#         if not old_file == new_file:
-#             if os.path.isfile(old_file.path):
-#                 os.remove(old_file.path)
-#     except:
-#         pass
+        new_file = instance.logo
+        if not old_file == new_file:
+            if os.path.isfile(old_file.path):
+                os.remove(old_file.path)
+    except:
+        pass
