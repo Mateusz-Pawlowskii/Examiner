@@ -154,7 +154,7 @@ AWS_S3_OBJECT_PARAMETERS = {
 }
 AWS_LOCATION = 'static'
 AWS_QUERYSTRING_AUTH = False
-AWS_S3_OBJECT_PARAMETERS = {
+AWS_HEADERS = {
     "Access-Control-Allow-Origin" : "*"
 }
 
