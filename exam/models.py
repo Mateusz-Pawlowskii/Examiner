@@ -4,7 +4,6 @@ from django.dispatch import receiver
 import os
 import json
 import uuid
-from django.core.files.storage import FileSystemStorage
 from storages.backends.s3boto3 import S3Boto3Storage
 
 
@@ -29,7 +28,6 @@ class Platform(models.Model):
 
 class Course(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    students = models.ManyToManyField(User)
     name = models.CharField(max_length = 100)
     multiple_answer_questions = models.BooleanField(default=False)
     time = models.PositiveSmallIntegerField(default=0)
